@@ -1,10 +1,11 @@
 <template>
-    <nav class="large-3 medium-4 columns" id="actions-sidebar">
-        <ul class="side-nav">
-            <li class="heading">Actions</li>
-            <!-- <button class="btn btn-primary">holaaaa</button> -->
-            <li v-for="action in actions">
-                <router-link :to="{ name: action.routeName }">{{ action.title }}</router-link>
+    <nav class="large-3 columns">
+        <ul class="side-nav bg-dark">
+            <li>
+                <router-link to="/home">Home</router-link>
+            </li>
+            <li>
+                <router-link to="/posts">Post</router-link>
             </li>
         </ul>
     </nav>
@@ -20,6 +21,7 @@
         mounted() {
             axios.get('/api/routes/get-sidebar')
                 .then(response => {
+                    console.log(this.actions.routeName);
                     this.actions = response.data;
                 })
                 .catch(error => {

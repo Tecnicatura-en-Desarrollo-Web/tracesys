@@ -1,5 +1,5 @@
 <template>
-    <div class="container clearfix">
+    <div>
         <notifications group="default" position="bottom right" :width="400" />
 
         <!-- Custom template example -->
