@@ -5,6 +5,7 @@ import PostsAdd from './views/Posts/PostsAdd.vue';
 import PostsEdit from './views/Posts/PostsEdit.vue';
 import PostsView from './views/Posts/PostsView.vue';
 import PageNotFound from './views/PageNotFound.vue';
+import profile from './views/Profile/Profile.vue';
 
 export const routes = new VueRouter({
     mode: 'history',
@@ -38,6 +39,11 @@ export const routes = new VueRouter({
             path: '/posts/view/:id',
             name: 'viewPost',
             component: PostsView
+        },
+        {
+            path: '/profile',
+            name: 'profile',
+            component: profile
         },
         {
             path: "*",
