@@ -6,6 +6,8 @@ import PostsEdit from './views/Posts/PostsEdit.vue';
 import PostsView from './views/Posts/PostsView.vue';
 import PageNotFound from './views/PageNotFound.vue';
 import profile from './views/Profile/Profile.vue';
+import Informes from './views/Informes.vue';
+import DetalleInforme from './views/DetalleInforme.vue';
 
 export const routes = new VueRouter({
     mode: 'history',
@@ -21,9 +23,19 @@ export const routes = new VueRouter({
             component: Home
         },
         {
+            path: '/detalleInforme',
+            name: 'detalleInforme',
+            component: DetalleInforme
+        },
+        {
             path: '/posts',
             name: 'posts',
             component: PostsIndex
+        },
+        {
+            path: '/informes',
+            name: 'informes',
+            component: Informes
         },
         {
             path: '/posts/add',

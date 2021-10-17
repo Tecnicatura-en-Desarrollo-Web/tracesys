@@ -1,11 +1,14 @@
 <template>
-    <nav class="large-3 columns">
-        <ul class="side-nav bg-dark">
+    <nav class="large-2 columns bg-dark ">
+        <ul class="side-nav ">
             <li>
                 <router-link to="/home">Home</router-link>
             </li>
             <li>
                 <router-link to="/posts">Post</router-link>
+            </li>
+            <li>
+                <router-link to="informes">Informes</router-link>
             </li>
         </ul>
     </nav>
