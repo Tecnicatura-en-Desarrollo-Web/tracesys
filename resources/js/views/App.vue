@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <notifications group="default" position="bottom right" :width="400" />
+  <div>
+    <notifications group="default" position="bottom right" :width="400" />
 
-        <!-- Custom template example -->
-        <!-- <notifications group="my-custom-notification"
+    <!-- Custom template example -->
+    <!-- <notifications group="my-custom-notification"
             :duration="5000"
             :width="1200"
             position="top center">
@@ -14,18 +14,18 @@
                 </div>
             </template>
         </notifications> -->
-        <sidebar></sidebar>
+    <sidebar></sidebar>
 
-        <router-view></router-view>
-    </div>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
-    import Sidebar from '../components/Sidebar.vue';
+import Sidebar from "../components/Sidebar.vue";
 
-    export default {
-        components: {
-            'sidebar': Sidebar,
-        }
-    }
+export default {
+  components: {
+    sidebar: Sidebar,
+  },
+};
 </script>
