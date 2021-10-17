@@ -1,6 +1,6 @@
 <template>
     <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
+        <ul class="title-area large-2 medium-4 columns">
             <li class="name">
                 <h1><router-link :to="{ name: title_url }">Usuario</router-link></h1>
             </li>

@@ -31,6 +31,10 @@ class RoutesController extends AppController
                 'title' => 'Posts',
                 'routeName' => 'posts',
             ],
+            [
+                'title' => 'Informes',
+                'routeName' => 'informes',
+            ],
         ];
 
         return $this->setJsonResponse($sidebar);

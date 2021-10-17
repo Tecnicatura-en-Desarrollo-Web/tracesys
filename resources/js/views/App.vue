@@ -14,7 +14,6 @@
                 </div>
             </template>
         </notifications> -->
-
         <sidebar></sidebar>
 
         <router-view></router-view>
