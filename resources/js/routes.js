@@ -8,6 +8,7 @@ import PageNotFound from './views/PageNotFound.vue';
 import profile from './views/Profile/Profile.vue';
 import Informes from './views/Informes.vue';
 import DetalleInforme from './views/DetalleInforme.vue';
+import crearInforme from './views/Informes/CrearInforme.vue';
 
 export const routes = new VueRouter({
     mode: 'history',
@@ -23,11 +24,6 @@ export const routes = new VueRouter({
             component: Home
         },
         {
-            path: '/detalleInforme',
-            name: 'detalleInforme',
-            component: DetalleInforme
-        },
-        {
             path: '/posts',
             name: 'posts',
             component: PostsIndex
@@ -36,6 +32,16 @@ export const routes = new VueRouter({
             path: '/informes',
             name: 'informes',
             component: Informes
+        },
+        {
+            path: '/detalleInforme',
+            name: 'detalleInforme',
+            component: DetalleInforme
+        },
+        {
+            path: '/informes/crear',
+            name: 'crearInforme',
+            component: crearInforme
         },
         {
             path: '/posts/add',
