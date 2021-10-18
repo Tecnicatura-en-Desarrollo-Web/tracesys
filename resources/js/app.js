@@ -28,8 +28,8 @@ const store = new Vuex.Store({
 const app = new Vue({
     el: '#app',
     components: {
-        App,
-        'top-header': Header
+        App
+        // 'top-header': Header
     },
     store: store,
     router: routes

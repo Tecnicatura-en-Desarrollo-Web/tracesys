@@ -14,7 +14,8 @@
                 </div>
             </template>
         </notifications> -->
-    <sidebar></sidebar>
+    <header2 v-show="login"></header2>
+    <sidebar v-show="login"></sidebar>
 
     <router-view></router-view>
   </div>
@@ -22,10 +23,17 @@
 
 <script>
 import Sidebar from "../components/Sidebar.vue";
+import Header2 from "../components/Header.vue";
 
 export default {
   components: {
     sidebar: Sidebar,
+    header2: Header2
   },
+  data(){
+      return {
+      login: true
+    }
+  }
 };
 </script>
