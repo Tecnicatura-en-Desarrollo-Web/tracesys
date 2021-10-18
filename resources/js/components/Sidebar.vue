@@ -8,7 +8,7 @@
         <router-link to="/posts">Post</router-link>
       </li>
       <li>
-        <router-link to="/informes">Informes</router-link>
+        <router-link to="/reports">Informes</router-link>
       </li>
       <li>
         <router-link to="/informes/crear">Cargar informe</router-link>

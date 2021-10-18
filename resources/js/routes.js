@@ -30,8 +30,8 @@ export const routes = new VueRouter({
             component: PostsIndex
         },
         {
-            path: '/informes',
-            name: 'informes',
+            path: '/reports',
+            name: 'reports',
             component: Informes
         },
         {
