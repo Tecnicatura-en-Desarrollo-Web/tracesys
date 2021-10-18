@@ -20,17 +20,17 @@ Vue.use(Vuex);
 Vue.component('app', App);
 
 const router = Vue.use(VueRouter);
-const store=new Vuex.Store({
-    state:{
-        nombre:'jona'
+const store = new Vuex.Store({
+    state: {
+        nombre: 'jona'
     }
 })
 const app = new Vue({
     el: '#app',
     components: {
-        App,
-        'top-header': Header
+        App
+        // 'top-header': Header
     },
-    store:store,
+    store: store,
     router: routes
 });

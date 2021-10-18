@@ -6,9 +6,10 @@ import PostsEdit from './views/Posts/PostsEdit.vue';
 import PostsView from './views/Posts/PostsView.vue';
 import PageNotFound from './views/PageNotFound.vue';
 import profile from './views/Profile/Profile.vue';
-import Informes from './views/Informes.vue';
-import DetalleInforme from './views/DetalleInforme.vue';
+import Informes from './views/Informes/Informes.vue';
+import DetalleInforme from './views/Informes/DetalleInforme.vue';
 import crearInforme from './views/Informes/CrearInforme.vue';
+import register from './views/Register/Register.vue';
 
 export const routes = new VueRouter({
     mode: 'history',
@@ -62,6 +63,11 @@ export const routes = new VueRouter({
             path: '/profile',
             name: 'profile',
             component: profile
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: register
         },
         {
             path: "*",

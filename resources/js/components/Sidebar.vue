@@ -19,6 +19,7 @@
 
 <script>
 export default {
+    name:'header2',
   data() {
     return {
       actions: [],
