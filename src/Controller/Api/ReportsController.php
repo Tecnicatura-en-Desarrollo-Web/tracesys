@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 
@@ -82,16 +84,23 @@ class ReportsController extends AppController
      */
     public function save()
     {
-        if (! $this->request->is('post')) {
+        if (!$this->request->is('post')) {
             return $this->setJsonResponse([
                 'error' => true,
                 'message' => 'Invalid request!',
             ]);
         }
 
+
         $report = $this->Reports->newEmptyEntity();
         $report = $this->Reports->patchEntity($report, $this->request->getData());
         $result = $this->Reports->save($report);
+        return $this->setJsonResponse(
+            [
+                'data' => $result
+            ],
+            201
+        );
         if ($result !== false) {
             return $this->setJsonResponse(
                 [
@@ -103,14 +112,6 @@ class ReportsController extends AppController
                 201
             );
         }
-
-        return $this->setJsonResponse(
-            [
-                'errors' => $report->getValidationErrors(),
-                'message' => __('The post could not be saved. Please, try again.'),
-            ],
-            422
-        );
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -59,28 +60,10 @@ class ReportsTable extends Table
             ->allowEmptyString('id', 'create');
 
         $validator
-            ->scalar('fecha')
-            ->maxLength('fecha', 255)
-            ->requirePresence('fecha', 'create')
-            ->notEmptyString('fecha');
-
-        $validator
-            ->scalar('hora')
-            ->maxLength('hora', 255)
-            ->requirePresence('hora', 'create')
-            ->notEmptyString('hora');
-
-        $validator
-            ->scalar('motivo')
-            ->maxLength('motivo', 255)
-            ->requirePresence('motivo', 'create')
-            ->notEmptyString('motivo');
-
-        $validator
-            ->scalar('estado')
-            ->maxLength('estado', 255)
-            ->requirePresence('estado', 'create')
-            ->notEmptyString('estado');
+            ->scalar('denominacion')
+            ->maxLength('denominacion', 255)
+            ->requirePresence('denominacion', 'create')
+            ->notEmptyString('denominacion');
 
         return $validator;
     }
