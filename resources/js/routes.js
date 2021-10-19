@@ -10,6 +10,7 @@ import Informes from './views/Informes/Informes.vue';
 import DetalleInforme from './views/Informes/DetalleInforme.vue';
 import crearInforme from './views/Informes/CrearInforme.vue';
 import register from './views/Register/Register.vue';
+import login from './views/Register/Login.vue';
 
 export const routes = new VueRouter({
     mode: 'history',
@@ -68,6 +69,11 @@ export const routes = new VueRouter({
             path: '/register',
             name: 'register',
             component: register
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: login
         },
         {
             path: "*",

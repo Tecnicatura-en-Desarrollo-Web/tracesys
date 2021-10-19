@@ -14,7 +14,12 @@ use App\Controller\Traits\ResponseTrait;
 class ReportsController extends AppController
 {
     use ResponseTrait;
+    public function initialize(): void
+    {
+        parent::initialize();
 
+        $this->viewBuilder()->setLayout('');
+    }
     /**
      * Index method
      *
@@ -75,19 +80,37 @@ class ReportsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function save()
     {
-        $report = $this->Reports->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $report = $this->Reports->patchEntity($report, $this->request->getData());
-            if ($this->Reports->save($report)) {
-                $this->Flash->success(__('The report has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The report could not be saved. Please, try again.'));
+        if (! $this->request->is('post')) {
+            return $this->setJsonResponse([
+                'error' => true,
+                'message' => 'Invalid request!',
+            ]);
         }
-        $this->set(compact('report'));
+
+        $report = $this->Reports->newEmptyEntity();
+        $report = $this->Reports->patchEntity($report, $this->request->getData());
+        $result = $this->Reports->save($report);
+        if ($result !== false) {
+            return $this->setJsonResponse(
+                [
+                    'data' => $result,
+                    'success' => true,
+                    'url' => '/reports',
+                    'message' => __('The post has been saved.'),
+                ],
+                201
+            );
+        }
+
+        return $this->setJsonResponse(
+            [
+                'errors' => $report->getValidationErrors(),
+                'message' => __('The post could not be saved. Please, try again.'),
+            ],
+            422
+        );
     }
 
     /**

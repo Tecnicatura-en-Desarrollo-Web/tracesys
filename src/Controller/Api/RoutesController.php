@@ -32,8 +32,8 @@ class RoutesController extends AppController
                 'routeName' => 'posts',
             ],
             [
-                'title' => 'Informes',
-                'routeName' => 'informes',
+                'title' => 'Reports',
+                'routeName' => 'reports',
             ],
         ];
 

@@ -1,8 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
-
+namespace App\Controller\api;
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 /**
  * Users Controller
  *
@@ -11,6 +12,7 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -18,9 +20,8 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $users = $this->paginate($this->Users);
-
-        $this->set(compact('users'));
+        $data['users'] = $this->paginate($this->Users);
+        return $this->setJsonResponse($data);
     }
 
     /**
@@ -36,9 +37,40 @@ class UsersController extends AppController
             'contain' => [],
         ]);
 
-        $this->set(compact('user'));
+        return $this->setJsonResponse(['user' => $user]);
     }
+    public function save()
+    {
+        if (! $this->request->is('post')) {
+            return $this->setJsonResponse([
+                'error' => true,
+                'message' => 'Invalid request!',
+            ]);
+        }
 
+        $user = $this->Users->newEmptyEntity();
+        $user = $this->Users->patchEntity($user, $this->request->getData());
+        $result = $this->Users->save($user);
+        if ($result !== false) {
+            return $this->setJsonResponse(
+                [
+                    'data' => $result,
+                    'success' => true,
+                    'url' => '/login',
+                    'message' => __('The post has been saved.'),
+                ],
+                201
+            );
+        }
+
+        return $this->setJsonResponse(
+            [
+                'errors' => $user->getValidationErrors(),
+                'message' => __('The post could not be saved. Please, try again.'),
+            ],
+            422
+        );
+    }
     /**
      * Add method
      *
