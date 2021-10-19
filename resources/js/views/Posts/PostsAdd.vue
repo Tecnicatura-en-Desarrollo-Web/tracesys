@@ -1,21 +1,19 @@
 <template>
     <div class="posts form large-9 medium-8 columns content">
-        <form method="post" :action="postUrl" novalidate="novalidate" @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
+        <form method="post" novalidate="novalidate" @submit.prevent="onSubmit" >
             <fieldset>
                 <legend>Add Post</legend>
-                <div class="input text required" v-bind:class="{ 'error': errors.has('title') }">
+                <div class="input text required">
                     <label for="title">Title</label>
                     <input type="text" name="title" v-model="title">
-                    <div v-show="errors.has('title')" class="error-message" v-text="errors.get('title')"></div>
+                    <h1>{{title}}</h1>
                 </div>
-                <div class="input textarea required" v-bind:class="{ 'error': errors.has('description') }">
+                <div class="input textarea required">
                     <label for="description">Description</label>
                     <textarea name="description" rows="5" v-model="description"></textarea>
-                    <div v-show="errors.has('description')" class="error-message" v-text="errors.get('description')"></div>
                 </div>
-                <button type="submit" class="button radius shadow primary" :disabled="errors.any()">Submit</button>
+                <button type="submit" class="button radius shadow primary" >Submit</button>
 
-                <a class="button shadow radius right mr-6" name="goBack" @click.prevent="$router.go(-1)">Back</a>
             </fieldset>
         </form>
     </div>
@@ -28,7 +26,6 @@
     export default {
         data() {
             return {
-                postUrl: '',
                 title: '',
                 description: '',
                 errors: new Errors()
@@ -46,6 +43,7 @@
                     })
                     .then(response => {
                         // Redirect on success
+                        console.log(response);
                         if (response.data.success) {
                             this.$notify({
                                 group: 'default',

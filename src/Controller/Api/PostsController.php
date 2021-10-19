@@ -100,8 +100,12 @@ class PostsController extends AppController
         }
 
         $post = $this->Posts->newEmptyEntity();
-        $post = $this->Posts->patchEntity($post, $this->request->getData());
+        //$post = $this->Posts->patchEntity($post, $this->request->getData());
+
         $result = $this->Posts->save($post);
+        return $this->setJsonResponse([
+            'datosEntidad' => $post,
+        ]);
         if ($result !== false) {
             return $this->setJsonResponse(
                 [
