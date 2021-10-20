@@ -55,32 +55,28 @@ class ReportsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer('id_informe')
+            ->allowEmptyString('id_informe', null, 'create');
 
         $validator
-            ->scalar('fecha')
-            ->maxLength('fecha', 255)
-            ->requirePresence('fecha', 'create')
-            ->notEmptyString('fecha');
+            ->integer('id_empleado')
+            ->requirePresence('id_empleado', 'create')
+            ->notEmptyString('id_empleado');
 
         $validator
-            ->scalar('hora')
-            ->maxLength('hora', 255)
-            ->requirePresence('hora', 'create')
-            ->notEmptyString('hora');
+            ->integer('id_estado')
+            ->requirePresence('id_estado', 'create')
+            ->notEmptyString('id_estado');
 
         $validator
-            ->scalar('motivo')
-            ->maxLength('motivo', 255)
-            ->requirePresence('motivo', 'create')
-            ->notEmptyString('motivo');
+            ->integer('id_producto')
+            ->requirePresence('id_producto', 'create')
+            ->notEmptyString('id_producto');
 
         $validator
-            ->scalar('estado2')
-            ->maxLength('estado2', 255)
-            ->requirePresence('estado2', 'create')
-            ->notEmptyString('estado2');
+            ->integer('id_factura')
+            ->requirePresence('id_factura', 'create')
+            ->notEmptyString('id_factura');
 
         return $validator;
     }

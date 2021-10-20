@@ -8,11 +8,11 @@ use Cake\ORM\Entity;
 /**
  * Report Entity
  *
- * @property int $id
- * @property string $fecha
- * @property string $hora
- * @property string $motivo
- * @property string $estado2
+ * @property int $id_informe
+ * @property int $id_empleado
+ * @property int $id_estado
+ * @property int $id_producto
+ * @property int $id_factura
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
@@ -28,10 +28,10 @@ class Report extends Entity
      * @var array
      */
     protected $_accessible = [
-        'fecha' => true,
-        'hora' => true,
-        'motivo' => true,
-        'estado2' => true,
+        'id_empleado' => true,
+        'id_estado' => true,
+        'id_producto' => true,
+        'id_factura' => true,
         'created' => true,
         'modified' => true,
     ];

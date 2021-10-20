@@ -32,16 +32,15 @@ export default {
   },
   data() {
     return {
-      login: true,
+      login: false,
     };
   },
-  created(){
-      //console.log(this.$session.exists());
-    if(this.$session.exists()){
-        this.login=true;
-        //console.log("info sesion:",this.login);
+  created() {
+    //console.log(this.$session.exists());
+    if (this.$session.exists()) {
+      this.login = true; //ESTO SIEMPRE VA EN TRUE
+      //console.log("info sesion:",this.login);
     }
-  }
-
+  },
 };
 </script>

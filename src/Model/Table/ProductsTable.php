@@ -55,14 +55,14 @@ class ProductsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer('id_producto')
+            ->allowEmptyString('id_producto', null, 'create');
 
         $validator
-            ->scalar('nombre')
-            ->maxLength('nombre', 100)
-            ->requirePresence('nombre', 'create')
-            ->notEmptyString('nombre');
+            ->scalar('tipo')
+            ->maxLength('tipo', 100)
+            ->requirePresence('tipo', 'create')
+            ->notEmptyString('tipo');
 
         $validator
             ->scalar('modelo')
@@ -71,10 +71,34 @@ class ProductsTable extends Table
             ->notEmptyString('modelo');
 
         $validator
+            ->scalar('marca')
+            ->maxLength('marca', 150)
+            ->requirePresence('marca', 'create')
+            ->notEmptyString('marca');
+
+        $validator
+            ->scalar('motivo')
+            ->maxLength('motivo', 150)
+            ->requirePresence('motivo', 'create')
+            ->notEmptyString('motivo');
+
+        $validator
+            ->scalar('prioridad')
+            ->maxLength('prioridad', 150)
+            ->requirePresence('prioridad', 'create')
+            ->notEmptyString('prioridad');
+
+        $validator
             ->scalar('descripcion')
             ->maxLength('descripcion', 255)
             ->requirePresence('descripcion', 'create')
             ->notEmptyString('descripcion');
+
+        $validator
+            ->scalar('cuit_user')
+            ->maxLength('cuit_user', 50)
+            ->requirePresence('cuit_user', 'create')
+            ->notEmptyString('cuit_user');
 
         return $validator;
     }

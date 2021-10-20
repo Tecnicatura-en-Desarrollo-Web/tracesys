@@ -145,7 +145,7 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $data['users'] = $this->paginate($this->Users);
             foreach ($data['users'] as $cadaUser) {
-                if ($cadaUser["email"] == $dataVue["email"] && $cadaUser["contrasena"] == $dataVue["contrasena"]) {
+                if ($cadaUser["email"] == $dataVue["email"] && $cadaUser["password"] == $dataVue["contrasena"]) {
                     return $this->setJsonResponse(
                         [
                             'message' => true,
@@ -159,8 +159,6 @@ class UsersController extends AppController
                     'message' => false,
                 ]
             );
-
-
         }
     }
 }

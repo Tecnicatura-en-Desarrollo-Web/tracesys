@@ -8,12 +8,16 @@ use Cake\ORM\Entity;
 /**
  * Product Entity
  *
- * @property int $id
- * @property string $nombre
+ * @property int $id_producto
+ * @property string $tipo
  * @property string $modelo
+ * @property string $marca
+ * @property string $motivo
+ * @property string $prioridad
  * @property string $descripcion
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string $cuit_user
  */
 class Product extends Entity
 {
@@ -27,10 +31,14 @@ class Product extends Entity
      * @var array
      */
     protected $_accessible = [
-        'nombre' => true,
+        'tipo' => true,
         'modelo' => true,
+        'marca' => true,
+        'motivo' => true,
+        'prioridad' => true,
         'descripcion' => true,
         'created' => true,
         'modified' => true,
+        'cuit_user' => true,
     ];
 }
