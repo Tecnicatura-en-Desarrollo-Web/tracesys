@@ -1,9 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\api;
+
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
+
 /**
  * Users Controller
  *
@@ -41,7 +44,7 @@ class UsersController extends AppController
     }
     public function save()
     {
-        if (! $this->request->is('post')) {
+        if (!$this->request->is('post')) {
             return $this->setJsonResponse([
                 'error' => true,
                 'message' => 'Invalid request!',
@@ -133,5 +136,28 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function login()
+    {
+        $dataVue =  $this->request->getData();
+
+        if ($this->request->is('post')) {
+            $data['users'] = $this->paginate($this->Users);
+            foreach ($data['users'] as $cadaUser) {
+                if ($cadaUser["email"] == $dataVue["email"] && $cadaUser["contrasena"] == $dataVue["contrasena"]) {
+                    return $this->setJsonResponse(
+                        [
+                            'message' => true,
+                        ]
+                    );
+                }
+                return $this->setJsonResponse(
+                    [
+                        'message' => false,
+                    ]
+                );
+            }
+        }
     }
 }

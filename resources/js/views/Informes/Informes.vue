@@ -20,7 +20,7 @@
               <td>{{ report.fecha }}</td>
               <td>{{ report.hora }}</td>
               <td>{{ report.motivo }}</td>
-              <td>{{ report.estado2 }}</td>
+              <td>{{ report.estado }}</td>
               <td><router-link to="/detalleInforme">+</router-link></td>
             </tr>
           </tbody>
