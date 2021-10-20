@@ -31,12 +31,8 @@
                     <td><?= h($report->motivo) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Estado') ?></th>
-                    <td><?= h($report->estado) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Midified') ?></th>
-                    <td><?= h($report->midified) ?></td>
+                    <th><?= __('Estado2') ?></th>
+                    <td><?= h($report->estado2) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Id') ?></th>
@@ -45,6 +41,10 @@
                 <tr>
                     <th><?= __('Created') ?></th>
                     <td><?= h($report->created) ?></td>
+                </tr>
+                <tr>
+                    <th><?= __('Modified') ?></th>
+                    <td><?= h($report->modified) ?></td>
                 </tr>
             </table>
         </div>

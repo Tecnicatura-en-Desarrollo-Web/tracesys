@@ -5,9 +5,6 @@
         <router-link to="/home">Home</router-link>
       </li>
       <li>
-        <router-link to="/posts">Post</router-link>
-      </li>
-      <li>
         <router-link to="/reports">Informes</router-link>
       </li>
       <li>
@@ -19,7 +16,7 @@
 
 <script>
 export default {
-    name:'header2',
+  name: "header2",
   data() {
     return {
       actions: [],

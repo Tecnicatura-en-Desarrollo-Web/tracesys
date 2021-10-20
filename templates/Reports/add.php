@@ -20,8 +20,7 @@
                     echo $this->Form->control('fecha');
                     echo $this->Form->control('hora');
                     echo $this->Form->control('motivo');
-                    echo $this->Form->control('estado');
-                    echo $this->Form->control('midified');
+                    echo $this->Form->control('estado2');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

@@ -12,9 +12,9 @@ use Cake\ORM\Entity;
  * @property string $fecha
  * @property string $hora
  * @property string $motivo
- * @property string $estado
+ * @property string $estado2
  * @property \Cake\I18n\FrozenTime $created
- * @property string $midified
+ * @property \Cake\I18n\FrozenTime $modified
  */
 class Report extends Entity
 {
@@ -31,8 +31,8 @@ class Report extends Entity
         'fecha' => true,
         'hora' => true,
         'motivo' => true,
-        'estado' => true,
+        'estado2' => true,
         'created' => true,
-        'midified' => true,
+        'modified' => true,
     ];
 }

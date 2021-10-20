@@ -28,12 +28,12 @@ import Header2 from "../components/Header.vue";
 export default {
   components: {
     sidebar: Sidebar,
-    header2: Header2
+    header2: Header2,
   },
-  data(){
-      return {
-      login: false
-    }
-  }
+  data() {
+    return {
+      login: true,
+    };
+  },
 };
 </script>

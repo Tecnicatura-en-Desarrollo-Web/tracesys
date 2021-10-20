@@ -15,9 +15,9 @@
                     <th><?= $this->Paginator->sort('fecha') ?></th>
                     <th><?= $this->Paginator->sort('hora') ?></th>
                     <th><?= $this->Paginator->sort('motivo') ?></th>
-                    <th><?= $this->Paginator->sort('estado') ?></th>
+                    <th><?= $this->Paginator->sort('estado2') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
-                    <th><?= $this->Paginator->sort('midified') ?></th>
+                    <th><?= $this->Paginator->sort('modified') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
@@ -28,9 +28,9 @@
                     <td><?= h($report->fecha) ?></td>
                     <td><?= h($report->hora) ?></td>
                     <td><?= h($report->motivo) ?></td>
-                    <td><?= h($report->estado) ?></td>
+                    <td><?= h($report->estado2) ?></td>
                     <td><?= h($report->created) ?></td>
-                    <td><?= h($report->midified) ?></td>
+                    <td><?= h($report->modified) ?></td>
                     <td class="actions">
                         <?= $this->Html->link(__('View'), ['action' => 'view', $report->id]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $report->id]) ?>

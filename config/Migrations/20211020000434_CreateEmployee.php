@@ -1,10 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateSuggestions extends AbstractMigration
+class CreateEmployee extends AbstractMigration
 {
+    public $autoId = false;
+
     /**
      * Change Method.
      *
@@ -14,30 +17,27 @@ class CreateSuggestions extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('suggestions');
-        $table->addColumn('nombre_sugerencia', 'string', [
+        $table = $this->table('employee');
+        $table->addColumn('cuit', 'integer', [
+            'autoIncrement' => true,
             'default' => null,
-            'limit' => 50,
+            'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('descripcion_sugerencia', 'text', [
+        $table->addColumn('legajo', 'string', [
             'default' => null,
             'limit' => 255,
             'null' => false,
         ]);
-        $table->addColumn('importancia', 'string', [
+        $table->addColumn('id_perfil', 'integer', [
             'default' => null,
-            'limit' => 20,
+            'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('created', 'datetime', [
-            'default' => null,
-            'null' => false,
+        $table->addPrimaryKey([
+            'cuit',
         ]);
-        $table->addColumn('modified', 'datetime', [
-            'default' => null,
-            'null' => false,
-        ]);
+        /* $table->addForeignKey('id_perfil', 'profile', 'id_perfil'); */
         $table->create();
     }
 }

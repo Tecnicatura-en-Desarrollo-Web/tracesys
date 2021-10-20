@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\AbstractMigration;
@@ -14,20 +15,20 @@ class CreateUsers extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('users');
-        $table->addColumn('nombre', 'string', [
+        $table = $this->table('users', ['id' => false, 'primary_key' => ['cuit']]);
+        $table->addColumn('cuit', 'string', [
             'default' => null,
             'limit' => 50,
+            'null' => false,
+        ]);
+        $table->addColumn('nombre', 'string', [
+            'default' => null,
+            'limit' => 200,
             'null' => false,
         ]);
         $table->addColumn('apellido', 'string', [
             'default' => null,
-            'limit' => 50,
-            'null' => false,
-        ]);
-        $table->addColumn('domicilio', 'string', [
-            'default' => null,
-            'limit' => 255,
+            'limit' => 200,
             'null' => false,
         ]);
         $table->addColumn('email', 'string', [
@@ -35,7 +36,12 @@ class CreateUsers extends AbstractMigration
             'limit' => 150,
             'null' => false,
         ]);
-        $table->addColumn('contrasena', 'string', [
+        $table->addColumn('password', 'string', [
+            'default' => null,
+            'limit' => 150,
+            'null' => false,
+        ]);
+        $table->addColumn('usuario', 'string', [
             'default' => null,
             'limit' => 150,
             'null' => false,
@@ -52,12 +58,6 @@ class CreateUsers extends AbstractMigration
         $table->addColumn('modified', 'datetime', [
             'default' => null,
             'null' => false,
-        ]);
-        $table->addIndex([
-            'email',
-            ], [
-            'name' => 'UNIQUE_EMAIL',
-            'unique' => true,
         ]);
         $table->create();
     }
