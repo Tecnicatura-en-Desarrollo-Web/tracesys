@@ -75,53 +75,59 @@ import formSerialize from "form-serialize";
 import Errors from "../../helpers/FormErrors.js";
 
 export default {
-  data() {
-    return {
-      nombre: "",
-      apellido: "",
-      domicilio: "",
-      telefono: "",
-      email: "",
-      contraseña: "",
-      errors: new Errors(),
-    };
-  },
-  methods: {
-    onSubmit(event) {
-      let data = formSerialize(event.target, {
-        hash: false,
-        empty: true,
-      });
-      console.log(data);
+    data() {
+        return {
+        nombre: "",
+        apellido: "",
+        domicilio: "",
+        telefono: "",
+        email: "",
+        contraseña: "",
+        errors: new Errors(),
+        };
+    },
+    methods: {
+        onSubmit(event) {
+        let data = formSerialize(event.target, {
+            hash: false,
+            empty: true,
+        });
+        console.log(data);
 
-      axios
-        .post("/api/users/save", data, {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        })
-        .then((response) => {
-          // Redirect on success
-          console.log(response.data);
-          if (response.data.success) {
+        axios
+            .post("/api/users/save", data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+            // Redirect on success
+            console.log(response.data);
+            if (response.data.success) {
+                this.$notify({
+                group: "default",
+                type: "success",
+                text: response.data.message,
+                });
+
+                this.$router.push({ path: response.data.url });
+            }
+            })
+            .catch((error) => {
             this.$notify({
-              group: "default",
-              type: "success",
-              text: response.data.message,
+                group: "default",
+                type: "error",
+                text: error.response.data.message,
             });
 
-            this.$router.push({ path: response.data.url });
-          }
-        })
-        .catch((error) => {
-          this.$notify({
-            group: "default",
-            type: "error",
-            text: error.response.data.message,
-          });
-
-          this.errors.add(error.response.data.errors);
-        });
+            this.errors.add(error.response.data.errors);
+            });
+        },
     },
-  },
+    created(){
+        if(this.$session.exists()){
+            this.$router.push('/');
+        }
+    }
+
 };
 </script>
 

@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=6ace365c87deeb58fb0b",
+=======
+    "/js/app.js": "/js/app.js?id=6d7aece8d5499a85eff7",
+>>>>>>> 5800aa9... se completo login
     "/css/main.css": "/css/main.css?id=66cb2aefb94cef08d132"
 }

@@ -75,10 +75,48 @@
             <div class="col col-lg-2">
                 <button class="btn btn-primary">Derivar</button>
             </div>
-
+        {{idInforme}}
         </div>
 
 
     </div>
 </template>
+<script>
+export default {
+    props:['idInforme'],
+    data(){
+        return{
+            datosInformes:[]
+        }
+
+    },
+    created(){
+        if(!this.$session.exists()){
+                this.$router.push('/login');
+        }
+    },
+    mounted() {
+        this.$emit('idInforme',this.idInforme);
+        console.log(this.idInforme);
+        // this.currentRoute = this.$router.currentRoute.name;
+        // this.getReports(this.$route.query);
+    },
+    methods: {
+        // getReports(query) {
+        // if (query.sort !== "undefined" && query.direction) {
+        //     this.defaultClass[query.sort] = query.direction;
+        // }
+        // axios
+        //     .get(`api/reports/view/${this.idInforme}`, { params: query })
+        //     .then((response) => {
+        //         console.log(response.data.reports);
+        //         this.datosInformes = response.data.reports;
+        //     })
+        //     .catch((error) => {
+        //         console.log("Error: " + error);
+        //     });
+        // },
+    },
+}
+</script>
 

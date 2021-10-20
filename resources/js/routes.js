@@ -11,6 +11,7 @@ import DetalleInforme from './views/Informes/DetalleInforme.vue';
 import crearInforme from './views/Informes/CrearInforme.vue';
 import register from './views/Register/Register.vue';
 import login from './views/Register/Login.vue';
+import app from './views/App.vue';
 
 export const routes = new VueRouter({
     mode: 'history',
@@ -75,6 +76,11 @@ export const routes = new VueRouter({
             name: 'login',
             component: login
         },
+        // {
+        //     path: '/app',
+        //     name: 'app',
+        //     component: app
+        // },
         {
             path: "*",
             component: PageNotFound
