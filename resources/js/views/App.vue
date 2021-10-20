@@ -35,5 +35,13 @@ export default {
       login: true,
     };
   },
+  created(){
+      //console.log(this.$session.exists());
+    if(this.$session.exists()){
+        this.login=true;
+        //console.log("info sesion:",this.login);
+    }
+  }
+
 };
 </script>

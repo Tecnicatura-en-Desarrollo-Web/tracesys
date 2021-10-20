@@ -21,7 +21,11 @@
               <td>{{ report.hora }}</td>
               <td>{{ report.motivo }}</td>
               <td>{{ report.estado }}</td>
-              <td><router-link to="/detalleInforme">+</router-link></td>
+              <td>
+                <router-link to="/detalleInforme" :numero="report.id"
+                  >+</router-link
+                >
+              </td>
             </tr>
           </tbody>
         </table>
@@ -29,15 +33,20 @@
     </ul>
   </div>
 </template>
-
 <script>
+import DetalleInforme from "../Informes/DetalleInforme.vue";
 export default {
+  components: {
+    DetalleInforme,
+  },
   data() {
     return {
       reports: [],
+      id: 0,
     };
   },
   mounted() {
+    this.$emit("nombreHijo", this.nombre);
     this.currentRoute = this.$router.currentRoute.name;
 
     this.getPosts(this.$route.query);
@@ -59,6 +68,15 @@ export default {
           console.log("Error: " + error);
         });
     },
+    capturarId(id) {
+      this.id = id;
+    },
+  },
+  //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
+  created() {
+    if (!this.$session.exists()) {
+      this.$router.push("/login");
+    }
   },
 };
 </script>

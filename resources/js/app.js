@@ -6,7 +6,8 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import Notifications from 'vue-notification';
 import { routes } from './routes';
 import App from './views/App.vue';
-import Header from './components/Header.vue';
+import VueSession from "vue-session";
+Vue.use(VueSession);
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -29,7 +30,6 @@ const app = new Vue({
     el: '#app',
     components: {
         App
-        // 'top-header': Header
     },
     store: store,
     router: routes
