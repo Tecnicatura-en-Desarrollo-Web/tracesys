@@ -5147,11 +5147,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'header2',
+  name: "header2",
   data: function data() {
     return {
       actions: []
@@ -5214,7 +5211,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      login: false
+      login: true
     };
   }
 });
@@ -5276,18 +5273,18 @@ __webpack_require__.r(__webpack_exports__);
     getPosts: function getPosts(query) {
       var _this = this;
 
-      if (query.sort !== 'undefined' && query.direction) {
+      if (query.sort !== "undefined" && query.direction) {
         this.defaultClass[query.sort] = query.direction;
       }
 
-      axios.get('api/reports', {
+      axios.get("api/reports", {
         params: query
       }).then(function (response) {
         console.log(response.data.reports);
         _this.reports = response.data.reports;
         _this.queryParams = response.data.query;
       })["catch"](function (error) {
-        console.log('Error: ' + error);
+        console.log("Error: " + error);
       });
     }
   }
@@ -5887,17 +5884,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      nombre: '',
-      apellido: '',
-      domicilio: '',
-      telefono: '',
-      email: '',
-      contraseña: '',
+      nombre: "",
+      apellido: "",
+      domicilio: "",
+      telefono: "",
+      email: "",
+      contraseña: "",
       errors: new _helpers_FormErrors_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
     };
   },
@@ -5910,9 +5908,9 @@ __webpack_require__.r(__webpack_exports__);
         empty: true
       });
       console.log(data);
-      axios.post('/api/users/save', data, {
+      axios.post("/api/users/save", data, {
         headers: {
-          'X-Requested-With': 'XMLHttpRequest'
+          "X-Requested-With": "XMLHttpRequest"
         }
       }).then(function (response) {
         // Redirect on success
@@ -5920,8 +5918,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.success) {
           _this.$notify({
-            group: 'default',
-            type: 'success',
+            group: "default",
+            type: "success",
             text: response.data.message
           });
 
@@ -5931,8 +5929,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (error) {
         _this.$notify({
-          group: 'default',
-          type: 'error',
+          group: "default",
+          type: "error",
           text: error.response.data.message
         });
 
@@ -33452,12 +33450,6 @@ var render = function() {
       _vm._v(" "),
       _c(
         "li",
-        [_c("router-link", { attrs: { to: "/posts" } }, [_vm._v("Post")])],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
         [
           _c("router-link", { attrs: { to: "/reports" } }, [_vm._v("Informes")])
         ],
@@ -34093,7 +34085,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(report.motivo))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.estado))]),
+                _c("td", [_vm._v(_vm._s(report.estado2))]),
                 _vm._v(" "),
                 _c(
                   "td",
@@ -34934,8 +34926,7 @@ var render = function() {
                   _vm.nombre = $event.target.value
                 }
               }
-            }),
-            _vm._v("\n                " + _vm._s(_vm.nombre) + "\n            ")
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
@@ -34968,10 +34959,7 @@ var render = function() {
                   _vm.apellido = $event.target.value
                 }
               }
-            }),
-            _vm._v(
-              "\n                " + _vm._s(_vm.apellido) + "\n            "
-            )
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
@@ -35004,10 +34992,7 @@ var render = function() {
                   _vm.domicilio = $event.target.value
                 }
               }
-            }),
-            _vm._v(
-              "\n                " + _vm._s(_vm.domicilio) + "\n            "
-            )
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-6" }, [
@@ -35040,10 +35025,7 @@ var render = function() {
                   _vm.telefono = $event.target.value
                 }
               }
-            }),
-            _vm._v(
-              "\n                " + _vm._s(_vm.telefono) + "\n            "
-            )
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12" }, [
@@ -35076,8 +35058,7 @@ var render = function() {
                   _vm.email = $event.target.value
                 }
               }
-            }),
-            _vm._v("\n                " + _vm._s(_vm.email) + "\n            ")
+            })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12" }, [
@@ -35110,10 +35091,7 @@ var render = function() {
                   _vm.contraseña = $event.target.value
                 }
               }
-            }),
-            _vm._v(
-              "\n                " + _vm._s(_vm.contraseña) + "\n            "
-            )
+            })
           ]),
           _vm._v(" "),
           _vm._m(0)
@@ -54020,7 +53998,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Jonawin10\tracesys\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\tracesys\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

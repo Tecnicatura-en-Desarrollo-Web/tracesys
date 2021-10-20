@@ -1,10 +1,13 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateReports extends AbstractMigration
+class CreateProblemaSugerencia extends AbstractMigration
 {
+    public $autoId = false;
+
     /**
      * Change Method.
      *
@@ -14,25 +17,15 @@ class CreateReports extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('reports');
-        $table->addColumn('fecha', 'string', [
+        $table = $this->table('problema_sugerencia');
+        $table->addColumn('id_problema', 'integer', [
             'default' => null,
-            'limit' => 255,
+            'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('hora', 'string', [
+        $table->addColumn('id_sugerencia', 'integer', [
             'default' => null,
-            'limit' => 255,
-            'null' => false,
-        ]);
-        $table->addColumn('motivo', 'string', [
-            'default' => null,
-            'limit' => 255,
-            'null' => false,
-        ]);
-        $table->addColumn('estado', 'string', [
-            'default' => null,
-            'limit' => 255,
+            'limit' => 11,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [
@@ -43,6 +36,12 @@ class CreateReports extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+        $table->addPrimaryKey([
+            'id_problema',
+            'id_sugerencia',
+        ]);
+        /* $table->addForeignKey('id_problema', 'issue', 'id_problema');
+        $table->addForeignKey('id_sugerencia', 'suggestions', 'id_sugerencia'); */
         $table->create();
     }
 }

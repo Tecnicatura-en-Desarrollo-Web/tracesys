@@ -56,7 +56,7 @@ class ReportsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('fecha')
@@ -77,10 +77,10 @@ class ReportsTable extends Table
             ->notEmptyString('motivo');
 
         $validator
-            ->scalar('estado')
-            ->maxLength('estado', 255)
-            ->requirePresence('estado', 'create')
-            ->notEmptyString('estado');
+            ->scalar('estado2')
+            ->maxLength('estado2', 255)
+            ->requirePresence('estado2', 'create')
+            ->notEmptyString('estado2');
 
         return $validator;
     }
