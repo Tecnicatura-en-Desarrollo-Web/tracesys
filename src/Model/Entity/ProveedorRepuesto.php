@@ -8,8 +8,8 @@ use Cake\ORM\Entity;
 /**
  * ProveedorRepuesto Entity
  *
- * @property int $id_repuesto
- * @property int $id_proveedor
+ * @property int $proveedor_repuesto_id
+ * @property int $provider_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */

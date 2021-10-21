@@ -18,12 +18,12 @@ class CreateProblemaSugerencia extends AbstractMigration
     public function change()
     {
         $table = $this->table('problema_sugerencia');
-        $table->addColumn('id_problema', 'integer', [
+        $table->addColumn('problema_sugerencia_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_sugerencia', 'integer', [
+        $table->addColumn('suggestion_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -37,11 +37,11 @@ class CreateProblemaSugerencia extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_problema',
-            'id_sugerencia',
+            'problema_sugerencia_id',
+            'suggestion_id',
         ]);
-        /* $table->addForeignKey('id_problema', 'issue', 'id_problema');
-        $table->addForeignKey('id_sugerencia', 'suggestions', 'id_sugerencia'); */
+        $table->addForeignKey('problema_sugerencia_id', 'issue', 'issue_id');
+        $table->addForeignKey('suggestion_id', 'suggestions', 'suggestion_id');
         $table->create();
     }
 }

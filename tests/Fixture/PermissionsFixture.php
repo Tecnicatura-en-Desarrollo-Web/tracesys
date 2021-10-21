@@ -17,10 +17,10 @@ class PermissionsFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_permiso' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'permission_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'nombre_permiso' => ['type' => 'string', 'length' => 200, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_permiso'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['permission_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -37,7 +37,7 @@ class PermissionsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_permiso' => 1,
+                'permission_id' => 1,
                 'nombre_permiso' => 'Lorem ipsum dolor sit amet',
             ],
         ];

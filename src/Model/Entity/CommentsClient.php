@@ -6,17 +6,12 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Report Entity
+ * CommentsClient Entity
  *
- * @property int $report_id
- * @property int $employee_id
- * @property int $state_id
- * @property int $product_id
- * @property int $bill_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime $modified
+ * @property int $comment_client_id
+ * @property string $descripcion
  */
-class Report extends Entity
+class CommentsClient extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -28,11 +23,6 @@ class Report extends Entity
      * @var array
      */
     protected $_accessible = [
-        'employee_id' => true,
-        'state_id' => true,
-        'product_id' => true,
-        'bill_id' => true,
-        'created' => true,
-        'modified' => true,
+        'descripcion' => true,
     ];
 }

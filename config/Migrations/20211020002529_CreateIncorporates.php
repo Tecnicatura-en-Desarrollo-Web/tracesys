@@ -18,12 +18,12 @@ class CreateIncorporates extends AbstractMigration
     public function change()
     {
         $table = $this->table('incorporates');
-        $table->addColumn('id_presupuesto', 'integer', [
+        $table->addColumn('incorporate_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_repuesto', 'integer', [
+        $table->addColumn('replacement_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -37,11 +37,11 @@ class CreateIncorporates extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_presupuesto',
-            'id_repuesto',
+            'incorporate_id',
+            'replacement_id',
         ]);
-        /* $table->addForeignKey('id_presupuesto', 'budget', 'id_presupuesto');
-        $table->addForeignKey('id_repuesto', 'replacement', 'id_repuesto'); */
+        $table->addForeignKey('incorporate_id', 'buget', 'buget_id');
+        $table->addForeignKey('replacement_id', 'replacement', 'replacement_id');
         $table->create();
     }
 }

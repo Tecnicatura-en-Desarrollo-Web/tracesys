@@ -55,8 +55,8 @@ class StateTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_estado')
-            ->allowEmptyString('id_estado', null, 'create');
+            ->integer('state_id')
+            ->allowEmptyString('state_id', null, 'create');
 
         $validator
             ->scalar('nombre_estado')

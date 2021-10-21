@@ -18,12 +18,12 @@ class CreateSugerenciaRepuesto extends AbstractMigration
     public function change()
     {
         $table = $this->table('sugerencia_repuesto');
-        $table->addColumn('id_sugerencia', 'integer', [
+        $table->addColumn('sugerencia_repuesto_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_repuesto', 'integer', [
+        $table->addColumn('replacement_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -45,11 +45,11 @@ class CreateSugerenciaRepuesto extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_sugerencia',
-            'id_repuesto',
+            'sugerencia_repuesto_id',
+            'replacement_id',
         ]);
-        /* $table->addForeignKey('id_sugerencia', 'suggestions', 'id_sugerencia');
-        $table->addForeignKey('id_repuesto', 'replacement', 'id_repuesto'); */
+        $table->addForeignKey('sugerencia_repuesto_id', 'suggestions', 'suggestion_id');
+        $table->addForeignKey('replacement_id', 'replacement', 'replacement_id');
         $table->create();
     }
 }

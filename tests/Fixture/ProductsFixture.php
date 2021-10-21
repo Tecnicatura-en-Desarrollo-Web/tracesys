@@ -17,7 +17,7 @@ class ProductsFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_producto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'product_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'tipo' => ['type' => 'string', 'length' => 100, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'modelo' => ['type' => 'string', 'length' => 150, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'marca' => ['type' => 'string', 'length' => 150, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
@@ -26,9 +26,13 @@ class ProductsFixture extends TestFixture
         'descripcion' => ['type' => 'text', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
-        'cuit_user' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
+        'client_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        '_indexes' => [
+            'client_id' => ['type' => 'index', 'columns' => ['client_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_producto'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['product_id'], 'length' => []],
+            'products_ibfk_1' => ['type' => 'foreign', 'columns' => ['client_id'], 'references' => ['clients', 'client_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -45,16 +49,16 @@ class ProductsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_producto' => 1,
+                'product_id' => 1,
                 'tipo' => 'Lorem ipsum dolor sit amet',
                 'modelo' => 'Lorem ipsum dolor sit amet',
                 'marca' => 'Lorem ipsum dolor sit amet',
                 'motivo' => 'Lorem ipsum dolor sit amet',
                 'prioridad' => 'Lorem ipsum dolor sit amet',
                 'descripcion' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-                'created' => '2021-10-20 22:29:48',
-                'modified' => '2021-10-20 22:29:48',
-                'cuit_user' => 'Lorem ipsum dolor sit amet',
+                'created' => '2021-10-21 22:30:13',
+                'modified' => '2021-10-21 22:30:13',
+                'client_id' => 1,
             ],
         ];
         parent::init();

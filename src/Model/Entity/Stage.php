@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Stage Entity
  *
- * @property int $id_etapa
+ * @property int $stage_id
  * @property string $nombre_etapa
  */
 class Stage extends Entity

@@ -22,11 +22,12 @@
             <fieldset>
                 <legend><?= __('Edit User') ?></legend>
                 <?php
+                    echo $this->Form->control('cuit');
                     echo $this->Form->control('nombre');
                     echo $this->Form->control('apellido');
-                    echo $this->Form->control('domicilio');
                     echo $this->Form->control('email');
-                    echo $this->Form->control('contrasena');
+                    echo $this->Form->control('password');
+                    echo $this->Form->control('usuario');
                     echo $this->Form->control('telefono');
                 ?>
             </fieldset>

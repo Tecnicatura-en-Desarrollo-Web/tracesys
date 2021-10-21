@@ -17,7 +17,7 @@ class CreateCommentsEmployee extends AbstractMigration
     public function change()
     {
         $table = $this->table('comments_employee');
-        $table->addColumn('id_comentario', 'integer', [
+        $table->addColumn('comment_employee_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -37,7 +37,7 @@ class CreateCommentsEmployee extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_comentario',
+            'comment_employee_id',
         ]);
         $table->create();
     }

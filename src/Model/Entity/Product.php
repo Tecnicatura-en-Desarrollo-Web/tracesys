@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Product Entity
  *
- * @property int $id_producto
+ * @property int $product_id
  * @property string $tipo
  * @property string $modelo
  * @property string $marca
@@ -17,7 +17,9 @@ use Cake\ORM\Entity;
  * @property string $descripcion
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
- * @property string $cuit_user
+ * @property int $client_id
+ *
+ * @property \App\Model\Entity\Client $client
  */
 class Product extends Entity
 {
@@ -39,6 +41,7 @@ class Product extends Entity
         'descripcion' => true,
         'created' => true,
         'modified' => true,
-        'cuit_user' => true,
+        'client_id' => true,
+        'client' => true,
     ];
 }

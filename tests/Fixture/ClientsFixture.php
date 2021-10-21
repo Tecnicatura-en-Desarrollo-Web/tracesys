@@ -17,6 +17,7 @@ class ClientsFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
+        'client_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'cuit' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'denominacion' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'domicilio' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
@@ -27,7 +28,7 @@ class ClientsFixture extends TestFixture
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['cuit'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['client_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -44,15 +45,16 @@ class ClientsFixture extends TestFixture
     {
         $this->records = [
             [
-                'cuit' => '9a734cba-aef5-4f55-8460-c78899998a4b',
+                'client_id' => 1,
+                'cuit' => 'Lorem ipsum dolor sit amet',
                 'denominacion' => 'Lorem ipsum dolor sit amet',
                 'domicilio' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
                 'password' => 'Lorem ipsum dolor sit amet',
                 'usuario' => 'Lorem ipsum dolor sit amet',
                 'telefono' => 1,
-                'created' => '2021-10-20 22:29:35',
-                'modified' => '2021-10-20 22:29:35',
+                'created' => '2021-10-21 22:29:45',
+                'modified' => '2021-10-21 22:29:45',
             ],
         ];
         parent::init();

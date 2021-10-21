@@ -55,8 +55,8 @@ class BillTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_factura')
-            ->allowEmptyString('id_factura', null, 'create');
+            ->integer('bill_id')
+            ->allowEmptyString('bill_id', null, 'create');
 
         $validator
             ->scalar('descripcion')

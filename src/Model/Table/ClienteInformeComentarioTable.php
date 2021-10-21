@@ -44,6 +44,19 @@ class ClienteInformeComentarioTable extends Table
         $this->setPrimaryKey(['cuit', 'id_comentario', 'id_informe']);
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Employee', [
+            'foreignKey' => 'cliente_informe_comentario_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('CommentsClients', [
+            'foreignKey' => 'comment_client_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'report_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -55,17 +68,27 @@ class ClienteInformeComentarioTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('cuit')
-            ->allowEmptyString('cuit', null, 'create');
-
-        $validator
-            ->integer('id_comentario')
-            ->allowEmptyString('id_comentario', null, 'create');
-
-        $validator
-            ->integer('id_informe')
-            ->allowEmptyString('id_informe', null, 'create');
+            ->scalar('cuit')
+            ->maxLength('cuit', 11)
+            ->requirePresence('cuit', 'create')
+            ->notEmptyString('cuit');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['cliente_informe_comentario_id'], 'Employee'), ['errorField' => 'cliente_informe_comentario_id']);
+        $rules->add($rules->existsIn(['comment_client_id'], 'CommentsClients'), ['errorField' => 'comment_client_id']);
+        $rules->add($rules->existsIn(['report_id'], 'Reports'), ['errorField' => 'report_id']);
+
+        return $rules;
     }
 }

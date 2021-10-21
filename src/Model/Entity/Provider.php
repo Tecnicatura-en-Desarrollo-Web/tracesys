@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Provider Entity
  *
- * @property int $id_proveedor
+ * @property int $provider_id
  * @property string $nombre
  * @property string $email
  * @property string $cuit

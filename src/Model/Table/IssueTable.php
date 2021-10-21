@@ -44,6 +44,11 @@ class IssueTable extends Table
         $this->setPrimaryKey('id_problema');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'report_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -55,8 +60,8 @@ class IssueTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_problema')
-            ->allowEmptyString('id_problema', null, 'create');
+            ->integer('issue_id')
+            ->allowEmptyString('issue_id', null, 'create');
 
         $validator
             ->scalar('titulo')
@@ -75,11 +80,20 @@ class IssueTable extends Table
             ->requirePresence('fecha', 'create')
             ->notEmptyDateTime('fecha');
 
-        $validator
-            ->integer('id_informe')
-            ->requirePresence('id_informe', 'create')
-            ->notEmptyString('id_informe');
-
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['report_id'], 'Reports'), ['errorField' => 'report_id']);
+
+        return $rules;
     }
 }

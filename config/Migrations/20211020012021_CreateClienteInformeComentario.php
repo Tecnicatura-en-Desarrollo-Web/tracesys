@@ -18,17 +18,22 @@ class CreateClienteInformeComentario extends AbstractMigration
     public function change()
     {
         $table = $this->table('cliente_informe_comentario');
-        $table->addColumn('cuit', 'integer', [
+        $table->addColumn('cliente_informe_comentario_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_comentario', 'integer', [
+        $table->addColumn('cuit', 'string', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_informe', 'integer', [
+        $table->addColumn('comment_client_id', 'integer', [
+            'default' => null,
+            'limit' => 100,
+            'null' => false,
+        ]);
+        $table->addColumn('report_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -42,13 +47,13 @@ class CreateClienteInformeComentario extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'cuit',
-            'id_comentario',
-            'id_informe',
+            'cliente_informe_comentario_id',
+            'comment_client_id',
+            'report_id',
         ]);
-        /* $table->addForeignKey('cuit', 'employee', 'cuit');
-        $table->addForeignKey('id_comentario', 'comments_clients', 'id_comentario');
-        $table->addForeignKey('id_informe', 'reports', 'id_informe'); */
+        $table->addForeignKey('cliente_informe_comentario_id', 'employee', 'employee_id');
+        $table->addForeignKey('comment_client_id', 'comments_clients', 'comment_client_id');
+        $table->addForeignKey('report_id', 'reports', 'report_id');
         $table->create();
     }
 }

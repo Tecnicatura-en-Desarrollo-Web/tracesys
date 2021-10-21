@@ -15,8 +15,8 @@ class CreateProducts extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('products', ['id' => false, 'primary_key' => ['id_producto']]);
-        $table->addColumn('id_producto', 'integer', [
+        $table = $this->table('products', ['id' => false, 'primary_key' => ['product_id']]);
+        $table->addColumn('product_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 100,
@@ -60,12 +60,12 @@ class CreateProducts extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addColumn('cuit_user', 'string', [
+        $table->addColumn('client_id', 'integer', [
             'default' => null,
             'limit' => 50,
             'null' => false,
         ]);
-        /* $table->addForeignKey('cuit_user', 'clients', 'cuit'); */
+        $table->addForeignKey('client_id', 'clients', 'client_id');
         /* $table->addForeignKey(name, tableName, columns, refTable, refColumns, delete, update) */
         $table->create();
     }

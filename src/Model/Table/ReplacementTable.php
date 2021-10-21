@@ -55,8 +55,8 @@ class ReplacementTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_repuesto')
-            ->allowEmptyString('id_repuesto', null, 'create');
+            ->integer('replacement_id')
+            ->allowEmptyString('replacement_id', null, 'create');
 
         $validator
             ->scalar('marca')

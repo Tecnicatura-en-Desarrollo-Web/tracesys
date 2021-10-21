@@ -18,7 +18,7 @@ class CreateIssue extends AbstractMigration
     public function change()
     {
         $table = $this->table('issue');
-        $table->addColumn('id_problema', 'integer', [
+        $table->addColumn('issue_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -38,7 +38,7 @@ class CreateIssue extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addColumn('id_informe', 'integer', [
+        $table->addColumn('report_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -52,9 +52,9 @@ class CreateIssue extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_problema',
+            'issue_id',
         ]);
-        /* $table->addForeignKey('id_informe', 'reports', 'id_informe'); */
+        $table->addForeignKey('report_id', 'reports', 'report_id');
         $table->create();
     }
 }

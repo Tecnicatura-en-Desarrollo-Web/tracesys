@@ -55,8 +55,8 @@ class ProviderTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_proveedor')
-            ->allowEmptyString('id_proveedor', null, 'create');
+            ->integer('provider_id')
+            ->allowEmptyString('provider_id', null, 'create');
 
         $validator
             ->scalar('nombre')

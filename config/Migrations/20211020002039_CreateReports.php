@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateUsers extends AbstractMigration
+class CreateReports extends AbstractMigration
 {
+    public $autoId = false;
+
     /**
      * Change Method.
      *
@@ -15,40 +17,31 @@ class CreateUsers extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('users', ['id' => false, 'primary_key' => ['cuit']]);
-        $table->addColumn('cuit', 'string', [
+        $table = $this->table('reports');
+        $table->addColumn('report_id', 'integer', [
+            'autoIncrement' => true,
             'default' => null,
-            'limit' => 50,
+            'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('nombre', 'string', [
+        $table->addColumn('employee_id', 'integer', [
             'default' => null,
-            'limit' => 200,
+            'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('apellido', 'string', [
+        $table->addColumn('state_id', 'integer', [
             'default' => null,
-            'limit' => 200,
+            'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('email', 'string', [
+        $table->addColumn('product_id', 'integer', [
             'default' => null,
-            'limit' => 150,
+            'limit' => 100,
             'null' => false,
         ]);
-        $table->addColumn('password', 'string', [
+        $table->addColumn('bill_id', 'integer', [
             'default' => null,
-            'limit' => 150,
-            'null' => false,
-        ]);
-        $table->addColumn('usuario', 'string', [
-            'default' => null,
-            'limit' => 150,
-            'null' => false,
-        ]);
-        $table->addColumn('telefono', 'integer', [
-            'default' => null,
-            'limit' => 30,
+            'limit' => 11,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [
@@ -59,6 +52,13 @@ class CreateUsers extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+        $table->addPrimaryKey([
+            'report_id',
+        ]);
+        $table->addForeignKey('employee_id', 'employee', 'employee_id');
+        $table->addForeignKey('state_id', 'state', 'state_id');
+        $table->addForeignKey('product_id', 'products', 'product_id');
+        $table->addForeignKey('bill_id', 'bill', 'bill_id');
         $table->create();
     }
 }

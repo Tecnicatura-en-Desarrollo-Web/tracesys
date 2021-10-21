@@ -40,8 +40,8 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField('cuit');
+        $this->setPrimaryKey('cuit');
 
         $this->addBehavior('Timestamp');
     }
@@ -55,38 +55,43 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->integer('user_id')
+            ->allowEmptyString('user_id', null, 'create');
+
+        $validator
+            ->scalar('cuit')
+            ->maxLength('cuit', 11)
+            ->requirePresence('cuit', 'create')
+            ->notEmptyString('cuit');
 
         $validator
             ->scalar('nombre')
-            ->maxLength('nombre', 50)
+            ->maxLength('nombre', 200)
             ->requirePresence('nombre', 'create')
             ->notEmptyString('nombre');
 
         $validator
             ->scalar('apellido')
-            ->maxLength('apellido', 50)
+            ->maxLength('apellido', 200)
             ->requirePresence('apellido', 'create')
             ->notEmptyString('apellido');
 
         $validator
-            ->scalar('domicilio')
-            ->maxLength('domicilio', 255)
-            ->requirePresence('domicilio', 'create')
-            ->notEmptyString('domicilio');
-
-        $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmptyString('email')
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->notEmptyString('email');
 
         $validator
-            ->scalar('contrasena')
-            ->maxLength('contrasena', 150)
-            ->requirePresence('contrasena', 'create')
-            ->notEmptyString('contrasena');
+            ->scalar('password')
+            ->maxLength('password', 150)
+            ->requirePresence('password', 'create')
+            ->notEmptyString('password');
+
+        $validator
+            ->scalar('usuario')
+            ->maxLength('usuario', 150)
+            ->requirePresence('usuario', 'create')
+            ->notEmptyString('usuario');
 
         $validator
             ->integer('telefono')

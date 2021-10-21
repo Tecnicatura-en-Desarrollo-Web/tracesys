@@ -44,24 +44,29 @@ class IncorporatesTable extends Table
         $this->setPrimaryKey(['id_presupuesto', 'id_repuesto']);
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Incorporates', [
+            'foreignKey' => 'incorporate_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Replacement', [
+            'foreignKey' => 'replacement_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
-     * Default validation rules.
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
-    public function validationDefault(Validator $validator): Validator
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $validator
-            ->integer('id_presupuesto')
-            ->allowEmptyString('id_presupuesto', null, 'create');
+        $rules->add($rules->existsIn(['incorporate_id'], 'Incorporates'), ['errorField' => 'incorporate_id']);
+        $rules->add($rules->existsIn(['replacement_id'], 'Replacement'), ['errorField' => 'replacement_id']);
 
-        $validator
-            ->integer('id_repuesto')
-            ->allowEmptyString('id_repuesto', null, 'create');
-
-        return $validator;
+        return $rules;
     }
 }

@@ -23,10 +23,10 @@ class ProfileFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_perfil' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'profile_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'nombre_perfil' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_perfil'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['profile_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -43,7 +43,7 @@ class ProfileFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_perfil' => 1,
+                'profile_id' => 1,
                 'nombre_perfil' => 'Lorem ipsum dolor sit amet',
             ],
         ];

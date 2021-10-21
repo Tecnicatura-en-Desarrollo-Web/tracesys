@@ -17,8 +17,8 @@ class CreateSector extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('sector', ['id' => false, 'primary_key' => ['id_sector']]);
-        $table->addColumn('id_sector', 'integer', [
+        $table = $this->table('sector', ['id' => false, 'primary_key' => ['sector_id']]);
+        $table->addColumn('sector_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -34,15 +34,15 @@ class CreateSector extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_etapa', 'string', [
+        $table->addColumn('stage_id', 'integer', [
             'default' => null,
             'limit' => 50,
             'null' => false,
         ]);
-        $table->addPrimaryKey([
-            'id_sector',
-        ]);
-        /* $table->addForeignKey('id_etapa', 'stages', 'id_etapa'); */
+        // $table->addPrimaryKey([
+        //     'sector_id',
+        // ]);
+        $table->addForeignKey('stage_id', 'stages', 'stage_id');
         $table->create();
     }
 }

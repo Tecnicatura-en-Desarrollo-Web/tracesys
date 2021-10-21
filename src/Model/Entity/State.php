@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * State Entity
  *
- * @property int $id_estado
+ * @property int $state_id
  * @property string $nombre_estado
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified

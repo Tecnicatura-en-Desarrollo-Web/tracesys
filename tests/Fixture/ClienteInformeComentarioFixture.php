@@ -23,13 +23,21 @@ class ClienteInformeComentarioFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'cuit' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'id_comentario' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'id_informe' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'cliente_informe_comentario_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'cuit' => ['type' => 'string', 'length' => 11, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
+        'comment_client_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'report_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
+        '_indexes' => [
+            'comment_client_id' => ['type' => 'index', 'columns' => ['comment_client_id'], 'length' => []],
+            'report_id' => ['type' => 'index', 'columns' => ['report_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['cuit', 'id_comentario', 'id_informe'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['cliente_informe_comentario_id', 'comment_client_id', 'report_id'], 'length' => []],
+            'cliente_informe_comentario_ibfk_3' => ['type' => 'foreign', 'columns' => ['report_id'], 'references' => ['reports', 'report_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'cliente_informe_comentario_ibfk_2' => ['type' => 'foreign', 'columns' => ['comment_client_id'], 'references' => ['comments_clients', 'comment_client_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'cliente_informe_comentario_ibfk_1' => ['type' => 'foreign', 'columns' => ['cliente_informe_comentario_id'], 'references' => ['employee', 'employee_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -46,11 +54,12 @@ class ClienteInformeComentarioFixture extends TestFixture
     {
         $this->records = [
             [
-                'cuit' => 1,
-                'id_comentario' => 1,
-                'id_informe' => 1,
-                'created' => '2021-10-20 22:29:35',
-                'modified' => '2021-10-20 22:29:35',
+                'cliente_informe_comentario_id' => 1,
+                'cuit' => 'Lorem ips',
+                'comment_client_id' => 1,
+                'report_id' => 1,
+                'created' => '2021-10-21 22:29:42',
+                'modified' => '2021-10-21 22:29:42',
             ],
         ];
         parent::init();

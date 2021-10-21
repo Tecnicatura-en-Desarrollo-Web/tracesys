@@ -18,23 +18,23 @@ class CreatePermisoEtapa extends AbstractMigration
     public function change()
     {
         $table = $this->table('permiso_etapa');
-        $table->addColumn('id_permiso', 'integer', [
+        $table->addColumn('permiso_etapa_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_etapa', 'integer', [
+        $table->addColumn('stage_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_permiso',
-            'id_etapa',
+            'permiso_etapa_id',
+            'stage_id',
         ]);
-        /* $table->addForeignKey('id_permiso', 'permissions', 'id_permiso');
-        $table->addForeignKey('id_etapa', 'stages', 'id_etapa');
- */
+        $table->addForeignKey('permiso_etapa_id', 'permissions', 'permission_id');
+        $table->addForeignKey('stage_id', 'stages', 'stage_id');
+
         $table->create();
     }
 }

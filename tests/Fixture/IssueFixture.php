@@ -23,15 +23,19 @@ class IssueFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_problema' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'issue_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'titulo' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'descripcion' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'fecha' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
-        'id_informe' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'report_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
+        '_indexes' => [
+            'report_id' => ['type' => 'index', 'columns' => ['report_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_problema'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['issue_id'], 'length' => []],
+            'issue_ibfk_1' => ['type' => 'foreign', 'columns' => ['report_id'], 'references' => ['reports', 'report_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -48,13 +52,13 @@ class IssueFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_problema' => 1,
+                'issue_id' => 1,
                 'titulo' => 'Lorem ipsum dolor sit amet',
                 'descripcion' => 'Lorem ipsum dolor sit amet',
-                'fecha' => '2021-10-20 22:29:36',
-                'id_informe' => 1,
-                'created' => '2021-10-20 22:29:36',
-                'modified' => '2021-10-20 22:29:36',
+                'fecha' => '2021-10-21 22:30:02',
+                'report_id' => 1,
+                'created' => '2021-10-21 22:30:02',
+                'modified' => '2021-10-21 22:30:02',
             ],
         ];
         parent::init();

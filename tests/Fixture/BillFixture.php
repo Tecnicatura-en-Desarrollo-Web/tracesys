@@ -23,7 +23,7 @@ class BillFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_factura' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'bill_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'descripcion' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'fecha' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'monto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
@@ -31,7 +31,7 @@ class BillFixture extends TestFixture
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_factura'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['bill_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -48,13 +48,13 @@ class BillFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_factura' => 1,
+                'bill_id' => 1,
                 'descripcion' => 'Lorem ipsum dolor sit amet',
-                'fecha' => '2021-10-20 22:29:35',
+                'fecha' => '2021-10-21 22:29:37',
                 'monto' => 1,
                 'url_factura' => 'Lorem ipsum dolor sit amet',
-                'created' => '2021-10-20 22:29:35',
-                'modified' => '2021-10-20 22:29:35',
+                'created' => '2021-10-21 22:29:37',
+                'modified' => '2021-10-21 22:29:37',
             ],
         ];
         parent::init();

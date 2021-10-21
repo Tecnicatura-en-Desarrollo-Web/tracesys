@@ -23,9 +23,11 @@ class AdministradorFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'cuit_admin' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'administrador_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'cuit_admin' => ['type' => 'string', 'length' => 11, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['cuit_admin'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['administrador_id'], 'length' => []],
+            'administrador_ibfk_1' => ['type' => 'foreign', 'columns' => ['administrador_id'], 'references' => ['users', 'user_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -42,7 +44,8 @@ class AdministradorFixture extends TestFixture
     {
         $this->records = [
             [
-                'cuit_admin' => 1,
+                'administrador_id' => 1,
+                'cuit_admin' => 'Lorem ips',
             ],
         ];
         parent::init();

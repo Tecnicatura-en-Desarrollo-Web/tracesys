@@ -8,10 +8,10 @@ use Cake\ORM\Entity;
 /**
  * Sector Entity
  *
- * @property int $id_sector
+ * @property int $sector_id
  * @property string $nombre_sector
  * @property int $orden
- * @property string $id_etapa
+ * @property int $stage_id
  */
 class Sector extends Entity
 {
@@ -27,6 +27,6 @@ class Sector extends Entity
     protected $_accessible = [
         'nombre_sector' => true,
         'orden' => true,
-        'id_etapa' => true,
+        'stage_id' => true,
     ];
 }

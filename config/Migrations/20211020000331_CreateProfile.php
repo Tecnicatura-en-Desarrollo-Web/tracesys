@@ -17,7 +17,7 @@ class CreateProfile extends AbstractMigration
     public function change()
     {
         $table = $this->table('profile');
-        $table->addColumn('id_perfil', 'integer', [
+        $table->addColumn('profile_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -29,7 +29,7 @@ class CreateProfile extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_perfil',
+            'profile_id',
         ]);
         $table->create();
     }

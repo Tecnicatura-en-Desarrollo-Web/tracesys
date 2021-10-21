@@ -18,7 +18,7 @@ class CreateReplacement extends AbstractMigration
     public function change()
     {
         $table = $this->table('replacement');
-        $table->addColumn('id_repuesto', 'integer', [
+        $table->addColumn('replacement_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -57,7 +57,7 @@ class CreateReplacement extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_repuesto',
+            'replacement_id',
         ]);
         $table->create();
     }

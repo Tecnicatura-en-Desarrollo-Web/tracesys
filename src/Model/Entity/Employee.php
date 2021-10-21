@@ -8,9 +8,10 @@ use Cake\ORM\Entity;
 /**
  * Employee Entity
  *
- * @property int $cuit
+ * @property int $employee_id
+ * @property string $cuit
  * @property string $legajo
- * @property int $id_perfil
+ * @property int $profile_id
  */
 class Employee extends Entity
 {
@@ -24,7 +25,8 @@ class Employee extends Entity
      * @var array
      */
     protected $_accessible = [
+        'cuit' => true,
         'legajo' => true,
-        'id_perfil' => true,
+        'profile_id' => true,
     ];
 }

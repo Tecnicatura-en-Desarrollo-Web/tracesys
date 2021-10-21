@@ -17,7 +17,7 @@ class CreateState extends AbstractMigration
     public function change()
     {
         $table = $this->table('state');
-        $table->addColumn('id_estado', 'integer', [
+        $table->addColumn('state_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -37,7 +37,7 @@ class CreateState extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_estado',
+            'state_id',
         ]);
         $table->create();
     }

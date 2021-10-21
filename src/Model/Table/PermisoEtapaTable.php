@@ -40,24 +40,29 @@ class PermisoEtapaTable extends Table
         $this->setTable('permiso_etapa');
         $this->setDisplayField('id_permiso');
         $this->setPrimaryKey(['id_permiso', 'id_etapa']);
+
+        $this->belongsTo('Permissions', [
+            'foreignKey' => 'permiso_etapa_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Stages', [
+            'foreignKey' => 'stage_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
-     * Default validation rules.
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
-    public function validationDefault(Validator $validator): Validator
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $validator
-            ->integer('id_permiso')
-            ->allowEmptyString('id_permiso', null, 'create');
+        $rules->add($rules->existsIn(['permiso_etapa_id'], 'Permissions'), ['errorField' => 'permiso_etapa_id']);
+        $rules->add($rules->existsIn(['stage_id'], 'Stages'), ['errorField' => 'stage_id']);
 
-        $validator
-            ->integer('id_etapa')
-            ->allowEmptyString('id_etapa', null, 'create');
-
-        return $validator;
+        return $rules;
     }
 }

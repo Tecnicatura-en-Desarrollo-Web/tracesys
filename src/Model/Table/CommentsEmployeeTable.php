@@ -55,8 +55,8 @@ class CommentsEmployeeTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_comentario')
-            ->allowEmptyString('id_comentario', null, 'create');
+            ->integer('comment_employee_id')
+            ->allowEmptyString('comment_employee_id', null, 'create');
 
         $validator
             ->scalar('descripcion')

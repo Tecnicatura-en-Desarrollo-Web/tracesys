@@ -11,12 +11,12 @@
         <table>
             <thead>
                 <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
+                    <th><?= $this->Paginator->sort('cuit') ?></th>
                     <th><?= $this->Paginator->sort('nombre') ?></th>
                     <th><?= $this->Paginator->sort('apellido') ?></th>
-                    <th><?= $this->Paginator->sort('domicilio') ?></th>
                     <th><?= $this->Paginator->sort('email') ?></th>
-                    <th><?= $this->Paginator->sort('contrasena') ?></th>
+                    <th><?= $this->Paginator->sort('password') ?></th>
+                    <th><?= $this->Paginator->sort('usuario') ?></th>
                     <th><?= $this->Paginator->sort('telefono') ?></th>
                     <th><?= $this->Paginator->sort('created') ?></th>
                     <th><?= $this->Paginator->sort('modified') ?></th>
@@ -26,12 +26,12 @@
             <tbody>
                 <?php foreach ($users as $user): ?>
                 <tr>
-                    <td><?= $this->Number->format($user->id) ?></td>
+                    <td><?= h($user->cuit) ?></td>
                     <td><?= h($user->nombre) ?></td>
                     <td><?= h($user->apellido) ?></td>
-                    <td><?= h($user->domicilio) ?></td>
                     <td><?= h($user->email) ?></td>
-                    <td><?= h($user->contrasena) ?></td>
+                    <td><?= h($user->password) ?></td>
+                    <td><?= h($user->usuario) ?></td>
                     <td><?= $this->Number->format($user->telefono) ?></td>
                     <td><?= h($user->created) ?></td>
                     <td><?= h($user->modified) ?></td>

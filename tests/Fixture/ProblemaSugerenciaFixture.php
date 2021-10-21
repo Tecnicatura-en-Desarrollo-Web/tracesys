@@ -23,12 +23,17 @@ class ProblemaSugerenciaFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_problema' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'id_sugerencia' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'problema_sugerencia_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'suggestion_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
+        '_indexes' => [
+            'suggestion_id' => ['type' => 'index', 'columns' => ['suggestion_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_problema', 'id_sugerencia'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['problema_sugerencia_id', 'suggestion_id'], 'length' => []],
+            'problema_sugerencia_ibfk_2' => ['type' => 'foreign', 'columns' => ['suggestion_id'], 'references' => ['suggestions', 'suggestion_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'problema_sugerencia_ibfk_1' => ['type' => 'foreign', 'columns' => ['problema_sugerencia_id'], 'references' => ['issue', 'issue_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -45,10 +50,10 @@ class ProblemaSugerenciaFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_problema' => 1,
-                'id_sugerencia' => 1,
-                'created' => '2021-10-20 22:29:36',
-                'modified' => '2021-10-20 22:29:36',
+                'problema_sugerencia_id' => 1,
+                'suggestion_id' => 1,
+                'created' => '2021-10-21 22:30:10',
+                'modified' => '2021-10-21 22:30:10',
             ],
         ];
         parent::init();

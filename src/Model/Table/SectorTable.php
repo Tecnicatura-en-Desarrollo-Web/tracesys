@@ -40,6 +40,11 @@ class SectorTable extends Table
         $this->setTable('sector');
         $this->setDisplayField('id_sector');
         $this->setPrimaryKey('id_sector');
+
+        $this->belongsTo('Stages', [
+            'foreignKey' => 'stage_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -51,8 +56,8 @@ class SectorTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_sector')
-            ->allowEmptyString('id_sector', null, 'create');
+            ->integer('sector_id')
+            ->allowEmptyString('sector_id', null, 'create');
 
         $validator
             ->scalar('nombre_sector')
@@ -65,12 +70,20 @@ class SectorTable extends Table
             ->requirePresence('orden', 'create')
             ->notEmptyString('orden');
 
-        $validator
-            ->scalar('id_etapa')
-            ->maxLength('id_etapa', 50)
-            ->requirePresence('id_etapa', 'create')
-            ->notEmptyString('id_etapa');
-
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['stage_id'], 'Stages'), ['errorField' => 'stage_id']);
+
+        return $rules;
     }
 }

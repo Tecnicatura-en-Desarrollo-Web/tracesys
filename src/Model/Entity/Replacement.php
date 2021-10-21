@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Replacement Entity
  *
- * @property int $id_repuesto
+ * @property int $replacement_id
  * @property string $marca
  * @property string $modelo
  * @property string $descripcion

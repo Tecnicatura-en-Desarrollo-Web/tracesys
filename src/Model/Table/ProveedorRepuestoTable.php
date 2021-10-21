@@ -44,24 +44,29 @@ class ProveedorRepuestoTable extends Table
         $this->setPrimaryKey(['id_repuesto', 'id_proveedor']);
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Replacement', [
+            'foreignKey' => 'proveedor_repuesto_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Provider', [
+            'foreignKey' => 'provider_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
-     * Default validation rules.
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
-    public function validationDefault(Validator $validator): Validator
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $validator
-            ->integer('id_repuesto')
-            ->allowEmptyString('id_repuesto', null, 'create');
+        $rules->add($rules->existsIn(['proveedor_repuesto_id'], 'Replacement'), ['errorField' => 'proveedor_repuesto_id']);
+        $rules->add($rules->existsIn(['provider_id'], 'Provider'), ['errorField' => 'provider_id']);
 
-        $validator
-            ->integer('id_proveedor')
-            ->allowEmptyString('id_proveedor', null, 'create');
-
-        return $validator;
+        return $rules;
     }
 }

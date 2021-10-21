@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateReports extends AbstractMigration
+class CreateUsers extends AbstractMigration
 {
-    public $autoId = false;
-
     /**
      * Change Method.
      *
@@ -17,31 +15,46 @@ class CreateReports extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('reports');
-        $table->addColumn('id_informe', 'integer', [
+        $table = $this->table('users', ['id' => false, 'primary_key' => ['user_id']]);
+        $table->addColumn('user_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_empleado', 'integer', [
+        $table->addColumn('cuit', 'string', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_estado', 'integer', [
+        $table->addColumn('nombre', 'string', [
             'default' => null,
-            'limit' => 11,
+            'limit' => 200,
             'null' => false,
         ]);
-        $table->addColumn('id_producto', 'integer', [
+        $table->addColumn('apellido', 'string', [
             'default' => null,
-            'limit' => 11,
+            'limit' => 200,
             'null' => false,
         ]);
-        $table->addColumn('id_factura', 'integer', [
+        $table->addColumn('email', 'string', [
             'default' => null,
-            'limit' => 11,
+            'limit' => 150,
+            'null' => false,
+        ]);
+        $table->addColumn('password', 'string', [
+            'default' => null,
+            'limit' => 150,
+            'null' => false,
+        ]);
+        $table->addColumn('usuario', 'string', [
+            'default' => null,
+            'limit' => 150,
+            'null' => false,
+        ]);
+        $table->addColumn('telefono', 'integer', [
+            'default' => null,
+            'limit' => 30,
             'null' => false,
         ]);
         $table->addColumn('created', 'datetime', [
@@ -52,13 +65,6 @@ class CreateReports extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addPrimaryKey([
-            'id_informe',
-        ]);
-        /* $table->addForeignKey('id_empleado', 'employee', 'id_empleado');
-        $table->addForeignKey('id_estado', 'state', 'id_estado');
-        $table->addForeignKey('id_producto', 'products', 'id_producto');
-        $table->addForeignKey('id_factura', 'bill', 'id_factura'); */
         $table->create();
     }
 }

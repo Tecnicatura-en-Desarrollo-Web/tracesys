@@ -8,12 +8,13 @@ use Cake\ORM\Entity;
 /**
  * Suggestion Entity
  *
- * @property int $id
+ * @property int $suggestion_id
  * @property string $nombre_sugerencia
  * @property string $descripcion_sugerencia
  * @property string $importancia
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property int $sector_id
  */
 class Suggestion extends Entity
 {
@@ -32,5 +33,6 @@ class Suggestion extends Entity
         'importancia' => true,
         'created' => true,
         'modified' => true,
+        'sector_id' => true,
     ];
 }

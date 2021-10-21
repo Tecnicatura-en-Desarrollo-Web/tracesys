@@ -17,12 +17,17 @@ class IncorporatesFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_presupuesto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'id_repuesto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'incorporate_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'replacement_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
+        '_indexes' => [
+            'replacement_id' => ['type' => 'index', 'columns' => ['replacement_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_presupuesto', 'id_repuesto'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['incorporate_id', 'replacement_id'], 'length' => []],
+            'incorporates_ibfk_2' => ['type' => 'foreign', 'columns' => ['replacement_id'], 'references' => ['replacement', 'replacement_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'incorporates_ibfk_1' => ['type' => 'foreign', 'columns' => ['incorporate_id'], 'references' => ['buget', 'buget_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -39,10 +44,10 @@ class IncorporatesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_presupuesto' => 1,
-                'id_repuesto' => 1,
-                'created' => '2021-10-20 22:29:35',
-                'modified' => '2021-10-20 22:29:35',
+                'incorporate_id' => 1,
+                'replacement_id' => 1,
+                'created' => '2021-10-21 22:29:54',
+                'modified' => '2021-10-21 22:29:54',
             ],
         ];
         parent::init();

@@ -8,9 +8,9 @@ use Cake\ORM\Entity;
 /**
  * InformeEmpleadoEstado Entity
  *
- * @property int $id_informe
- * @property int $cuit
- * @property int $id_estado
+ * @property int $informe_empleado_estado_id
+ * @property int $employee_id
+ * @property int $state_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */

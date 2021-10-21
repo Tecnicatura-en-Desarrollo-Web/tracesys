@@ -19,6 +19,10 @@
             <h3><?= h($user->id) ?></h3>
             <table>
                 <tr>
+                    <th><?= __('Cuit') ?></th>
+                    <td><?= h($user->cuit) ?></td>
+                </tr>
+                <tr>
                     <th><?= __('Nombre') ?></th>
                     <td><?= h($user->nombre) ?></td>
                 </tr>
@@ -27,20 +31,16 @@
                     <td><?= h($user->apellido) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Domicilio') ?></th>
-                    <td><?= h($user->domicilio) ?></td>
-                </tr>
-                <tr>
                     <th><?= __('Email') ?></th>
                     <td><?= h($user->email) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Contrasena') ?></th>
-                    <td><?= h($user->contrasena) ?></td>
+                    <th><?= __('Password') ?></th>
+                    <td><?= h($user->password) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($user->id) ?></td>
+                    <th><?= __('Usuario') ?></th>
+                    <td><?= h($user->usuario) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Telefono') ?></th>
