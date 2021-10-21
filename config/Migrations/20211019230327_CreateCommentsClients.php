@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateComentsClients extends AbstractMigration
+class CreateCommentsClients extends AbstractMigration
 {
     /**
      * Change Method.
@@ -15,10 +15,11 @@ class CreateComentsClients extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('coments_clients', ['id' => false, 'primary_key' => ['id_comentario']]);
-        $table->addColumn('id_comentario', 'integer', [
+        $table = $this->table('comments_clients', ['id' => false, 'primary_key' => ['comment_client_id']]);
+        $table->addColumn('comment_client_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
+            'limit' => 100,
             'null' => false,
         ]);
         $table->addColumn('descripcion', 'string', [

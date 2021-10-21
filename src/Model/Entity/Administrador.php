@@ -8,7 +8,8 @@ use Cake\ORM\Entity;
 /**
  * Administrador Entity
  *
- * @property int $cuit_admin
+ * @property int $administrador_id
+ * @property string $cuit_admin
  */
 class Administrador extends Entity
 {
@@ -22,7 +23,6 @@ class Administrador extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'cuit_admin' => false,
+        'cuit_admin' => true,
     ];
 }

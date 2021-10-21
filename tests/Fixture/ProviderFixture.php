@@ -23,14 +23,14 @@ class ProviderFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_proveedor' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'provider_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'nombre' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'email' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'cuit' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_proveedor'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['provider_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -47,12 +47,12 @@ class ProviderFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_proveedor' => 1,
+                'provider_id' => 1,
                 'nombre' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
                 'cuit' => 'Lorem ipsum dolor sit amet',
-                'created' => '2021-10-20 22:48:34',
-                'modified' => '2021-10-20 22:48:34',
+                'created' => '2021-10-21 22:30:21',
+                'modified' => '2021-10-21 22:30:21',
             ],
         ];
         parent::init();

@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Bill Entity
  *
- * @property int $id_factura
+ * @property int $bill_id
  * @property string $descripcion
  * @property \Cake\I18n\FrozenTime $fecha
  * @property int $monto

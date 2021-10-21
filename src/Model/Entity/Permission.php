@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Permission Entity
  *
- * @property int $id_permiso
+ * @property int $permission_id
  * @property string $nombre_permiso
  */
 class Permission extends Entity

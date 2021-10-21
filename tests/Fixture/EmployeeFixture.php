@@ -23,11 +23,17 @@ class EmployeeFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'cuit' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'employee_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'cuit' => ['type' => 'string', 'length' => 11, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'legajo' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
-        'id_perfil' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'profile_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        '_indexes' => [
+            'profile_id' => ['type' => 'index', 'columns' => ['profile_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['cuit'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['employee_id'], 'length' => []],
+            'employee_ibfk_2' => ['type' => 'foreign', 'columns' => ['employee_id'], 'references' => ['users', 'user_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'employee_ibfk_1' => ['type' => 'foreign', 'columns' => ['profile_id'], 'references' => ['profile', 'profile_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -44,9 +50,10 @@ class EmployeeFixture extends TestFixture
     {
         $this->records = [
             [
-                'cuit' => 1,
+                'employee_id' => 1,
+                'cuit' => 'Lorem ips',
                 'legajo' => 'Lorem ipsum dolor sit amet',
-                'id_perfil' => 1,
+                'profile_id' => 1,
             ],
         ];
         parent::init();

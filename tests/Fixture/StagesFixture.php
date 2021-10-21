@@ -17,10 +17,10 @@ class StagesFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_etapa' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'stage_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'nombre_etapa' => ['type' => 'string', 'length' => 200, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_etapa'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['stage_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -37,7 +37,7 @@ class StagesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_etapa' => 1,
+                'stage_id' => 1,
                 'nombre_etapa' => 'Lorem ipsum dolor sit amet',
             ],
         ];

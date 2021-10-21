@@ -51,8 +51,8 @@ class PermissionsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_permiso')
-            ->allowEmptyString('id_permiso', null, 'create');
+            ->integer('permission_id')
+            ->allowEmptyString('permission_id', null, 'create');
 
         $validator
             ->scalar('nombre_permiso')

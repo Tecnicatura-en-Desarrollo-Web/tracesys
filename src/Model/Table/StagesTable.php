@@ -51,8 +51,8 @@ class StagesTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_etapa')
-            ->allowEmptyString('id_etapa', null, 'create');
+            ->integer('stage_id')
+            ->allowEmptyString('stage_id', null, 'create');
 
         $validator
             ->scalar('nombre_etapa')

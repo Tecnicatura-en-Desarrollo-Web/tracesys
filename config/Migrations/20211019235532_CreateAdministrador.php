@@ -18,16 +18,20 @@ class CreateAdministrador extends AbstractMigration
     public function change()
     {
         $table = $this->table('administrador');
-        $table->addColumn('cuit_admin', 'integer', [
-            'autoIncrement' => true,
+        $table->addColumn('administrador_id', 'integer', [
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ]);
+        $table->addColumn('cuit_admin', 'string', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'cuit_admin',
+            'administrador_id',
         ]);
-        /* $table->addForeignKey('cuit_admin', 'users', 'cuit'); */
+        $table->addForeignKey('administrador_id', 'users', 'user_id');
         $table->create();
     }
 }

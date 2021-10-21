@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Profile Entity
  *
- * @property int $id_perfil
+ * @property int $profile_id
  * @property string $nombre_perfil
  */
 class Profile extends Entity

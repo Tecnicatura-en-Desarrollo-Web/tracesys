@@ -3,7 +3,13 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 use App\Controller\AppController;
+use App\Controller\ProductsController;
 use App\Controller\Traits\ResponseTrait;
+use App\Model\Entity\Product;
+use App\Model\Table\BillTable;
+use App\Model\Table\EmployeeTable;
+use App\Model\Table\ProductsTable;
+use App\Model\Table\StateTable;
 
 /**
  * Reports Controller
@@ -54,8 +60,38 @@ class ReportsController extends AppController
 
         //     $data['query'][$this->getRequest()->getQuery('sort')]['direction'] = $direction;
         // }
-
-        $data['reports'] = $this->paginate($this->Reports);
+        $objProducto=new ProductsTable();
+        $objEmpleado=new EmployeeTable();
+        $objEstado=new StateTable();
+        $objFactura=new BillTable();
+        $reports=$this->paginate($this->Reports);
+        $data['reports']=array();
+        foreach ($reports as $report) {
+            $producto=$objProducto
+                ->find()
+                ->where(['id_producto' => $report['id_producto']])
+                ->first();
+            $empleado=$objEmpleado
+                ->find()
+                ->where(['cuit' => $report['id_empleado']])
+                ->first();
+            $estado=$objEstado
+                ->find()
+                ->where(['id_estado' => $report['id_estado']])
+                ->first();
+            $factura=$objFactura
+                ->find()
+                ->where(['id_factura' => $report['id_factura']])
+                ->first();
+            $infoReport=[
+                        'id_informe'=>$report['id_informe'],
+                        'producto'=>$producto,
+                        'empleado'=>$empleado,
+                        'estado'=>$estado,
+                        'factura'=>$factura
+            ];
+            array_push($data['reports'],$infoReport);
+        }
         return $this->setJsonResponse($data);
     }
 
@@ -68,11 +104,16 @@ class ReportsController extends AppController
      */
     public function view($id = null)
     {
+
+        return $this->setJsonResponse([
+            'MOtivoooooo' => "jonaaaaaaaaaa"
+        ]);
         $report = $this->Reports->get($id, [
             'contain' => [],
         ]);
+        $motivo=$this->Reports->get($report[0]['id_producto'])['motivo'];
 
-        return $this->setJsonResponse(['report' => $report]);
+        //return $this->setJsonResponse(['report' => $report]);
     }
 
     /**

@@ -11,6 +11,8 @@ use Cake\Validation\Validator;
 /**
  * Products Model
  *
+ * @property \App\Model\Table\ClientsTable&\Cake\ORM\Association\BelongsTo $Clients
+ *
  * @method \App\Model\Entity\Product newEmptyEntity()
  * @method \App\Model\Entity\Product newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Product[] newEntities(array $data, array $options = [])
@@ -40,10 +42,15 @@ class ProductsTable extends Table
         parent::initialize($config);
 
         $this->setTable('products');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField('product_id');
+        $this->setPrimaryKey('product_id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Clients', [
+            'foreignKey' => 'client_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -55,8 +62,8 @@ class ProductsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_producto')
-            ->allowEmptyString('id_producto', null, 'create');
+            ->integer('product_id')
+            ->allowEmptyString('product_id', null, 'create');
 
         $validator
             ->scalar('tipo')
@@ -94,12 +101,20 @@ class ProductsTable extends Table
             ->requirePresence('descripcion', 'create')
             ->notEmptyString('descripcion');
 
-        $validator
-            ->scalar('cuit_user')
-            ->maxLength('cuit_user', 50)
-            ->requirePresence('cuit_user', 'create')
-            ->notEmptyString('cuit_user');
-
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['client_id'], 'Clients'), ['errorField' => 'client_id']);
+
+        return $rules;
     }
 }

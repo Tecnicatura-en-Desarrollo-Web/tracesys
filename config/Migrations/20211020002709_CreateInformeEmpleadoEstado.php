@@ -18,17 +18,17 @@ class CreateInformeEmpleadoEstado extends AbstractMigration
     public function change()
     {
         $table = $this->table('informe_empleado_estado');
-        $table->addColumn('id_informe', 'integer', [
+        $table->addColumn('informe_empleado_estado_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('cuit', 'integer', [
+        $table->addColumn('employee_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_estado', 'integer', [
+        $table->addColumn('state_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -42,13 +42,13 @@ class CreateInformeEmpleadoEstado extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_informe',
-            'cuit',
-            'id_estado',
+            'informe_empleado_estado_id',
+            'employee_id',
+            'state_id',
         ]);
-        /* $table->addForeignKey('id_informe', 'reports', 'id_informe');
-        $table->addForeignKey('cuit', 'employee', 'cuit');
-        $table->addForeignKey('id_estado', 'state', 'id_estado'); */
+        $table->addForeignKey('informe_empleado_estado_id', 'reports', 'report_id');
+        $table->addForeignKey('employee_id', 'employee', 'employee_id');
+        $table->addForeignKey('state_id', 'state', 'state_id');
         $table->create();
     }
 }

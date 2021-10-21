@@ -44,6 +44,11 @@ class SuggestionsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Sector', [
+            'foreignKey' => 'sector_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -55,12 +60,12 @@ class SuggestionsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer('suggestion_id')
+            ->allowEmptyString('suggestion_id', null, 'create');
 
         $validator
             ->scalar('nombre_sugerencia')
-            ->maxLength('nombre_sugerencia', 50)
+            ->maxLength('nombre_sugerencia', 100)
             ->requirePresence('nombre_sugerencia', 'create')
             ->notEmptyString('nombre_sugerencia');
 
@@ -77,5 +82,19 @@ class SuggestionsTable extends Table
             ->notEmptyString('importancia');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['sector_id'], 'Sector'), ['errorField' => 'sector_id']);
+
+        return $rules;
     }
 }

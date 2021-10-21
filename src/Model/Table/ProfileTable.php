@@ -51,8 +51,8 @@ class ProfileTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_perfil')
-            ->allowEmptyString('id_perfil', null, 'create');
+            ->integer('profile_id')
+            ->allowEmptyFile('profile_id', null, 'create');
 
         $validator
             ->scalar('nombre_perfil')

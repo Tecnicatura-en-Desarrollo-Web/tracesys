@@ -23,7 +23,7 @@ class ReplacementFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_repuesto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'replacement_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'marca' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'modelo' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'descripcion' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
@@ -32,7 +32,7 @@ class ReplacementFixture extends TestFixture
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_repuesto'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['replacement_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -49,14 +49,14 @@ class ReplacementFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_repuesto' => 1,
+                'replacement_id' => 1,
                 'marca' => 'Lorem ipsum dolor sit amet',
                 'modelo' => 'Lorem ipsum dolor sit amet',
                 'descripcion' => 'Lorem ipsum dolor sit amet',
-                'fecha_ingreso' => '2021-10-20 22:29:50',
+                'fecha_ingreso' => '2021-10-21 22:30:25',
                 'cantidad' => 1,
-                'created' => '2021-10-20 22:29:50',
-                'modified' => '2021-10-20 22:29:50',
+                'created' => '2021-10-21 22:30:25',
+                'modified' => '2021-10-21 22:30:25',
             ],
         ];
         parent::init();

@@ -44,28 +44,34 @@ class InformeEmpleadoEstadoTable extends Table
         $this->setPrimaryKey(['id_informe', 'cuit', 'id_estado']);
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'informe_empleado_estado_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Employee', [
+            'foreignKey' => 'employee_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('State', [
+            'foreignKey' => 'state_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
-     * Default validation rules.
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
-    public function validationDefault(Validator $validator): Validator
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $validator
-            ->integer('id_informe')
-            ->allowEmptyString('id_informe', null, 'create');
+        $rules->add($rules->existsIn(['informe_empleado_estado_id'], 'Reports'), ['errorField' => 'informe_empleado_estado_id']);
+        $rules->add($rules->existsIn(['employee_id'], 'Employee'), ['errorField' => 'employee_id']);
+        $rules->add($rules->existsIn(['state_id'], 'State'), ['errorField' => 'state_id']);
 
-        $validator
-            ->integer('cuit')
-            ->allowEmptyString('cuit', null, 'create');
-
-        $validator
-            ->integer('id_estado')
-            ->allowEmptyString('id_estado', null, 'create');
-
-        return $validator;
+        return $rules;
     }
 }

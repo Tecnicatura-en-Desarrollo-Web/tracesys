@@ -15,7 +15,13 @@ class CreateClients extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('clients', ['id' => false, 'primary_key' => ['cuit']]);
+        $table = $this->table('clients', ['id' => false, 'primary_key' => ['client_id']]);
+        $table->addColumn('client_id', 'integer', [
+            'autoIncrement' => true,
+            'default' => null,
+            'limit' => 50,
+            'null' => false,
+        ]);
         $table->addColumn('cuit', 'string', [
             'default' => null,
             'limit' => 50,

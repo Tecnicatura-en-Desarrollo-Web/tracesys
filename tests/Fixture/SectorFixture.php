@@ -23,12 +23,16 @@ class SectorFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_sector' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'sector_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'nombre_sector' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'orden' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'id_etapa' => ['type' => 'string', 'length' => 50, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
+        'stage_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        '_indexes' => [
+            'stage_id' => ['type' => 'index', 'columns' => ['stage_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_sector'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['sector_id'], 'length' => []],
+            'sector_ibfk_1' => ['type' => 'foreign', 'columns' => ['stage_id'], 'references' => ['stages', 'stage_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -45,10 +49,10 @@ class SectorFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_sector' => 1,
+                'sector_id' => 1,
                 'nombre_sector' => 'Lorem ipsum dolor sit amet',
                 'orden' => 1,
-                'id_etapa' => 'Lorem ipsum dolor sit amet',
+                'stage_id' => 1,
             ],
         ];
         parent::init();

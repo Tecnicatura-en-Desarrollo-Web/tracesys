@@ -8,8 +8,8 @@ use Cake\ORM\Entity;
 /**
  * Incorporate Entity
  *
- * @property int $id_presupuesto
- * @property int $id_repuesto
+ * @property int $incorporate_id
+ * @property int $replacement_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */

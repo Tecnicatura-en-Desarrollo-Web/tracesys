@@ -44,6 +44,15 @@ class SugerenciaRepuestoTable extends Table
         $this->setPrimaryKey(['id_sugerencia', 'id_repuesto']);
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Suggestions', [
+            'foreignKey' => 'sugerencia_repuesto_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Replacement', [
+            'foreignKey' => 'replacement_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -55,14 +64,6 @@ class SugerenciaRepuestoTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_sugerencia')
-            ->allowEmptyString('id_sugerencia', null, 'create');
-
-        $validator
-            ->integer('id_repuesto')
-            ->allowEmptyString('id_repuesto', null, 'create');
-
-        $validator
             ->dateTime('fecha')
             ->requirePresence('fecha', 'create')
             ->notEmptyDateTime('fecha');
@@ -73,5 +74,20 @@ class SugerenciaRepuestoTable extends Table
             ->notEmptyDateTime('hora');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['sugerencia_repuesto_id'], 'Suggestions'), ['errorField' => 'sugerencia_repuesto_id']);
+        $rules->add($rules->existsIn(['replacement_id'], 'Replacement'), ['errorField' => 'replacement_id']);
+
+        return $rules;
     }
 }

@@ -18,7 +18,7 @@ class CreateProvider extends AbstractMigration
     public function change()
     {
         $table = $this->table('provider');
-        $table->addColumn('id_proveedor', 'integer', [
+        $table->addColumn('provider_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -48,7 +48,7 @@ class CreateProvider extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_proveedor',
+            'provider_id',
         ]);
         $table->create();
     }

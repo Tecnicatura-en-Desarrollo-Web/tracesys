@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\ProductsTable;
+use App\Model\Table\CommentsClientsTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\ProductsTable Test Case
+ * App\Model\Table\CommentsClientsTable Test Case
  */
-class ProductsTableTest extends TestCase
+class CommentsClientsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\ProductsTable
+     * @var \App\Model\Table\CommentsClientsTable
      */
-    protected $Products;
+    protected $CommentsClients;
 
     /**
      * Fixtures
@@ -24,8 +24,7 @@ class ProductsTableTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.Products',
-        'app.Clients',
+        'app.CommentsClients',
     ];
 
     /**
@@ -36,8 +35,8 @@ class ProductsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Products') ? [] : ['className' => ProductsTable::class];
-        $this->Products = $this->getTableLocator()->get('Products', $config);
+        $config = $this->getTableLocator()->exists('CommentsClients') ? [] : ['className' => CommentsClientsTable::class];
+        $this->CommentsClients = $this->getTableLocator()->get('CommentsClients', $config);
     }
 
     /**
@@ -47,7 +46,7 @@ class ProductsTableTest extends TestCase
      */
     public function tearDown(): void
     {
-        unset($this->Products);
+        unset($this->CommentsClients);
 
         parent::tearDown();
     }
@@ -58,16 +57,6 @@ class ProductsTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

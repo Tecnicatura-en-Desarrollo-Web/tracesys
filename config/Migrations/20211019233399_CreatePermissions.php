@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class CreateStages extends AbstractMigration
+class CreatePermissions extends AbstractMigration
 {
     /**
      * Change Method.
@@ -15,14 +15,14 @@ class CreateStages extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('stages', ['id' => false, 'primary_key' => ['id_etapa']]);
-        $table->addColumn('id_etapa', 'integer', [
+        $table = $this->table('permissions', ['id' => false, 'primary_key' => ['permission_id']]);
+        $table->addColumn('permission_id', 'integer', [
             'default' => null,
             'limit' => 50,
             'null' => false,
-            'autoIncrement' => true,
+            'autoIncrement' => true
         ]);
-        $table->addColumn('nombre_etapa', 'string', [
+        $table->addColumn('nombre_permiso', 'string', [
             'default' => null,
             'limit' => 200,
             'null' => false,

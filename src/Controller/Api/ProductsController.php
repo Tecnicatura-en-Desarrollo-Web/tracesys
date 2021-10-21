@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Products Controller
@@ -11,6 +13,7 @@ namespace App\Controller;
  */
 class ProductsController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -18,12 +21,10 @@ class ProductsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Clients'],
-        ];
-        $products = $this->paginate($this->Products);
-
-        $this->set(compact('products'));
+        $query = $this->Products->find('all')->contain(['Clients'])->all();
+        // $data['users'] = $this->paginate($this->Users);
+        $data['reports']=$query;
+        return $this->setJsonResponse($data['reports']);
     }
 
     /**
@@ -36,7 +37,7 @@ class ProductsController extends AppController
     public function view($id = null)
     {
         $product = $this->Products->get($id, [
-            'contain' => ['Clients'],
+            'contain' => [],
         ]);
 
         $this->set(compact('product'));
@@ -59,8 +60,7 @@ class ProductsController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-        $clients = $this->Products->Clients->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'clients'));
+        $this->set(compact('product'));
     }
 
     /**
@@ -84,8 +84,7 @@ class ProductsController extends AppController
             }
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
-        $clients = $this->Products->Clients->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'clients'));
+        $this->set(compact('product'));
     }
 
     /**

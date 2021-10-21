@@ -8,7 +8,7 @@ use Cake\ORM\Entity;
 /**
  * CommentsEmployee Entity
  *
- * @property int $id_comentario
+ * @property int $comment_employee_id
  * @property string $descripcion
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified

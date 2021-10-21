@@ -8,9 +8,10 @@ use Cake\ORM\Entity;
 /**
  * ClienteInformeComentario Entity
  *
- * @property int $cuit
- * @property int $id_comentario
- * @property int $id_informe
+ * @property int $cliente_informe_comentario_id
+ * @property string $cuit
+ * @property int $comment_client_id
+ * @property int $report_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
@@ -26,6 +27,7 @@ class ClienteInformeComentario extends Entity
      * @var array
      */
     protected $_accessible = [
+        'cuit' => true,
         'created' => true,
         'modified' => true,
     ];

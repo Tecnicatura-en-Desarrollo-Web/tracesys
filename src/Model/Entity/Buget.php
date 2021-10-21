@@ -8,10 +8,10 @@ use Cake\ORM\Entity;
 /**
  * Buget Entity
  *
- * @property int $id_presupuesto
+ * @property int $buget_id
  * @property int $monto
  * @property \Cake\I18n\FrozenTime $fecha
- * @property int $id_informe
+ * @property int $report_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
@@ -29,7 +29,7 @@ class Buget extends Entity
     protected $_accessible = [
         'monto' => true,
         'fecha' => true,
-        'id_informe' => true,
+        'report_id' => true,
         'created' => true,
         'modified' => true,
     ];

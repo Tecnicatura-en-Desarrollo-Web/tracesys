@@ -44,24 +44,29 @@ class ProblemaSugerenciaTable extends Table
         $this->setPrimaryKey(['id_problema', 'id_sugerencia']);
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Issue', [
+            'foreignKey' => 'problema_sugerencia_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Suggestions', [
+            'foreignKey' => 'suggestion_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
-     * Default validation rules.
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
-    public function validationDefault(Validator $validator): Validator
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $validator
-            ->integer('id_problema')
-            ->allowEmptyString('id_problema', null, 'create');
+        $rules->add($rules->existsIn(['problema_sugerencia_id'], 'Issue'), ['errorField' => 'problema_sugerencia_id']);
+        $rules->add($rules->existsIn(['suggestion_id'], 'Suggestions'), ['errorField' => 'suggestion_id']);
 
-        $validator
-            ->integer('id_sugerencia')
-            ->allowEmptyString('id_sugerencia', null, 'create');
-
-        return $validator;
+        return $rules;
     }
 }

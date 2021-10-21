@@ -17,7 +17,7 @@ class CreateBill extends AbstractMigration
     public function change()
     {
         $table = $this->table('bill');
-        $table->addColumn('id_factura', 'integer', [
+        $table->addColumn('bill_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -51,7 +51,7 @@ class CreateBill extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_factura',
+            'bill_id',
         ]);
         $table->create();
     }

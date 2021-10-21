@@ -40,8 +40,8 @@ class ClientsTable extends Table
         parent::initialize($config);
 
         $this->setTable('clients');
-        $this->setDisplayField('cuit');
-        $this->setPrimaryKey('cuit');
+        $this->setDisplayField('client_id');
+        $this->setPrimaryKey('client_id');
 
         $this->addBehavior('Timestamp');
     }
@@ -55,9 +55,14 @@ class ClientsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
+            ->integer('client_id')
+            ->allowEmptyString('client_id', null, 'create');
+
+        $validator
             ->scalar('cuit')
             ->maxLength('cuit', 50)
-            ->allowEmptyString('cuit', null, 'create');
+            ->requirePresence('cuit', 'create')
+            ->notEmptyString('cuit');
 
         $validator
             ->scalar('denominacion')

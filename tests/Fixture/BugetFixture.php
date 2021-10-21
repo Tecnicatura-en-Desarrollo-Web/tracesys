@@ -23,14 +23,18 @@ class BugetFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_presupuesto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'buget_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'monto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'fecha' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
-        'id_informe' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'report_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
+        '_indexes' => [
+            'report_id' => ['type' => 'index', 'columns' => ['report_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_presupuesto'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['buget_id'], 'length' => []],
+            'buget_ibfk_1' => ['type' => 'foreign', 'columns' => ['report_id'], 'references' => ['reports', 'report_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -47,12 +51,12 @@ class BugetFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_presupuesto' => 1,
+                'buget_id' => 1,
                 'monto' => 1,
-                'fecha' => '2021-10-20 22:29:35',
-                'id_informe' => 1,
-                'created' => '2021-10-20 22:29:35',
-                'modified' => '2021-10-20 22:29:35',
+                'fecha' => '2021-10-21 22:29:40',
+                'report_id' => 1,
+                'created' => '2021-10-21 22:29:40',
+                'modified' => '2021-10-21 22:29:40',
             ],
         ];
         parent::init();

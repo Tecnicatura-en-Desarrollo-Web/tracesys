@@ -18,12 +18,12 @@ class CreateProveedorRepuesto extends AbstractMigration
     public function change()
     {
         $table = $this->table('proveedor_repuesto');
-        $table->addColumn('id_repuesto', 'integer', [
+        $table->addColumn('proveedor_repuesto_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('id_proveedor', 'integer', [
+        $table->addColumn('provider_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -37,11 +37,11 @@ class CreateProveedorRepuesto extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_repuesto',
-            'id_proveedor',
+            'proveedor_repuesto_id',
+            'provider_id',
         ]);
-        /* $table->addForeignKey('id_repuesto', 'replacement', 'id_repuesto');
-        $table->addForeignKey('id_proveedor', 'provider', 'id_proveedor'); */
+        $table->addForeignKey('proveedor_repuesto_id', 'replacement', 'replacement_id');
+        $table->addForeignKey('provider_id', 'provider', 'provider_id');
         $table->create();
     }
 }

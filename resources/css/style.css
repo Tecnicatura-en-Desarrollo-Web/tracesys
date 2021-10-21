@@ -1,3 +1,6 @@
+body{
+    background-color: rgb(68, 68, 68);
+}
 .disabled a,
 a.disabled {
     pointer-events: none;

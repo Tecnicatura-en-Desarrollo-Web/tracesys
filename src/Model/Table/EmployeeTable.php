@@ -40,6 +40,11 @@ class EmployeeTable extends Table
         $this->setTable('employee');
         $this->setDisplayField('cuit');
         $this->setPrimaryKey('cuit');
+
+        $this->belongsTo('Profile', [
+            'foreignKey' => 'profile_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -51,8 +56,14 @@ class EmployeeTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('cuit')
-            ->allowEmptyString('cuit', null, 'create');
+            ->integer('employee_id')
+            ->allowEmptyString('employee_id', null, 'create');
+
+        $validator
+            ->scalar('cuit')
+            ->maxLength('cuit', 11)
+            ->requirePresence('cuit', 'create')
+            ->notEmptyString('cuit');
 
         $validator
             ->scalar('legajo')
@@ -60,11 +71,20 @@ class EmployeeTable extends Table
             ->requirePresence('legajo', 'create')
             ->notEmptyString('legajo');
 
-        $validator
-            ->integer('id_perfil')
-            ->requirePresence('id_perfil', 'create')
-            ->notEmptyString('id_perfil');
-
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['profile_id'], 'Profile'), ['errorField' => 'profile_id']);
+
+        return $rules;
     }
 }

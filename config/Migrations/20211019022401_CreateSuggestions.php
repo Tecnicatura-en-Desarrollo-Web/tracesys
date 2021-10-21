@@ -15,8 +15,8 @@ class CreateSuggestions extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('suggestions', ['id' => false, 'primary_key' => ['id_sugerencia']]);
-        $table->addColumn('id_sugerencia', 'integer', [
+        $table = $this->table('suggestions', ['id' => false, 'primary_key' => ['suggestion_id']]);
+        $table->addColumn('suggestion_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -45,12 +45,12 @@ class CreateSuggestions extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addColumn('id_sector', 'integer', [
+        $table->addColumn('sector_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
         ]);
-        /* $table->addForeignKey('id_sector', 'stages', 'id_sector'); */
+        $table->addForeignKey('sector_id', 'sector', 'sector_id');
         $table->create();
     }
 }

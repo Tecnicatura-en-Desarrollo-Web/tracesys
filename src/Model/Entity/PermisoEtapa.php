@@ -8,8 +8,8 @@ use Cake\ORM\Entity;
 /**
  * PermisoEtapa Entity
  *
- * @property int $id_permiso
- * @property int $id_etapa
+ * @property int $permiso_etapa_id
+ * @property int $stage_id
  */
 class PermisoEtapa extends Entity
 {

@@ -23,12 +23,17 @@ class ProveedorRepuestoFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_repuesto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'id_proveedor' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'proveedor_repuesto_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'provider_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
+        '_indexes' => [
+            'provider_id' => ['type' => 'index', 'columns' => ['provider_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_repuesto', 'id_proveedor'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['proveedor_repuesto_id', 'provider_id'], 'length' => []],
+            'proveedor_repuesto_ibfk_2' => ['type' => 'foreign', 'columns' => ['provider_id'], 'references' => ['provider', 'provider_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'proveedor_repuesto_ibfk_1' => ['type' => 'foreign', 'columns' => ['proveedor_repuesto_id'], 'references' => ['replacement', 'replacement_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -45,10 +50,10 @@ class ProveedorRepuestoFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_repuesto' => 1,
-                'id_proveedor' => 1,
-                'created' => '2021-10-20 22:29:50',
-                'modified' => '2021-10-20 22:29:50',
+                'proveedor_repuesto_id' => 1,
+                'provider_id' => 1,
+                'created' => '2021-10-21 22:30:19',
+                'modified' => '2021-10-21 22:30:19',
             ],
         ];
         parent::init();

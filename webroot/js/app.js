@@ -5872,6 +5872,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -5890,18 +5892,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getPosts: function getPosts(query) {
-      var _this = this;
-
       if (query.sort !== "undefined" && query.direction) {
         this.defaultClass[query.sort] = query.direction;
       }
 
-      axios.get("api/reports", {
+      axios.get("api/products", {
         params: query
       }).then(function (response) {
-        console.log(response.data.reports);
-        _this.reports = response.data.reports;
-        _this.queryParams = response.data.query;
+        console.log(response.data); //   this.reports = response.data.reports;
+        //   this.queryParams = response.data.query;
       })["catch"](function (error) {
         console.log("Error: " + error);
       });
@@ -6629,17 +6628,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      cuit: "",
       nombre: "",
       apellido: "",
       domicilio: "",
       telefono: "",
       email: "",
-      contraseña: "",
+      usuario: "",
+      password: "",
       errors: new _helpers_FormErrors_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
     };
   },
@@ -6652,9 +6672,9 @@ __webpack_require__.r(__webpack_exports__);
         empty: true
       });
       console.log(data);
-      axios.post("/api/users/save", data, {
+      axios.post('/api/users/save', data, {
         headers: {
-          "X-Requested-With": "XMLHttpRequest"
+          'X-Requested-With': 'XMLHttpRequest'
         }
       }).then(function (response) {
         // Redirect on success
@@ -6662,8 +6682,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.success) {
           _this.$notify({
-            group: "default",
-            type: "success",
+            group: 'default',
+            type: 'success',
             text: response.data.message
           });
 
@@ -6673,8 +6693,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       })["catch"](function (error) {
         _this.$notify({
-          group: "default",
-          type: "error",
+          group: 'default',
+          type: 'error',
           text: error.response.data.message
         });
 
@@ -34850,15 +34870,17 @@ var render = function() {
             "tbody",
             _vm._l(_vm.reports, function(report) {
               return _c("tr", [
-                _c("td", [_vm._v(_vm._s(report.id))]),
+                _c("td", [_vm._v(_vm._s(report.id_informe))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.fecha))]),
+                _c("td", [_vm._v(_vm._s(report.created))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.hora))]),
+                _c("td", [_vm._v(_vm._s(report.created))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.motivo))]),
+                _c("td", [_vm._v(_vm._s(report.producto.tipo))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.estado))]),
+                _c("td", [_vm._v(_vm._s(report.producto.motivo))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(report.estado.nombre_estado))]),
                 _vm._v(" "),
                 _c(
                   "td",
@@ -34892,6 +34914,8 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Hora")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Producto")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Motivo")]),
         _vm._v(" "),
@@ -35677,7 +35701,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "d-flex justify-content-center mt-5" }, [
-    _c("div", { staticClass: "card p-3", staticStyle: { width: "30rem" } }, [
+    _c("div", { staticClass: "card p-3", staticStyle: { width: "50rem" } }, [
       _c("h3", { staticClass: "text-center" }, [_vm._v("Registro de usuario")]),
       _vm._v(" "),
       _c(
@@ -35699,6 +35723,39 @@ var render = function() {
               {
                 staticClass: "form-label",
                 attrs: { for: "validationDefault01" }
+              },
+              [_vm._v("Cuit")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.cuit,
+                  expression: "cuit"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "cuit", value: "12313" },
+              domProps: { value: _vm.cuit },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.cuit = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c(
+              "label",
+              {
+                staticClass: "form-label",
+                attrs: { for: "validationDefault02" }
               },
               [_vm._v("Nombre")]
             ),
@@ -35731,7 +35788,7 @@ var render = function() {
               "label",
               {
                 staticClass: "form-label",
-                attrs: { for: "validationDefault02" }
+                attrs: { for: "validationDefault03" }
               },
               [_vm._v("Apellido")]
             ),
@@ -35797,7 +35854,7 @@ var render = function() {
               "label",
               {
                 staticClass: "form-label",
-                attrs: { for: "validationDefault03" }
+                attrs: { for: "validationDefault04" }
               },
               [_vm._v("Telefono")]
             ),
@@ -35830,7 +35887,7 @@ var render = function() {
               "label",
               {
                 staticClass: "form-label",
-                attrs: { for: "validationDefault04" }
+                attrs: { for: "validationDefault05" }
               },
               [_vm._v("Email")]
             ),
@@ -35863,7 +35920,40 @@ var render = function() {
               "label",
               {
                 staticClass: "form-label",
-                attrs: { for: "validationDefault05" }
+                attrs: { for: "validationDefault06" }
+              },
+              [_vm._v("Usuario")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.usuario,
+                  expression: "usuario"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", name: "usuario" },
+              domProps: { value: _vm.usuario },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.usuario = $event.target.value
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-12" }, [
+            _c(
+              "label",
+              {
+                staticClass: "form-label",
+                attrs: { for: "validationDefault07" }
               },
               [_vm._v("Contraseña")]
             ),
@@ -35873,19 +35963,19 @@ var render = function() {
                 {
                   name: "model",
                   rawName: "v-model",
-                  value: _vm.contraseña,
-                  expression: "contraseña"
+                  value: _vm.password,
+                  expression: "password"
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "password", name: "contrasena" },
-              domProps: { value: _vm.contraseña },
+              attrs: { type: "password", name: "password" },
+              domProps: { value: _vm.password },
               on: {
                 input: function($event) {
                   if ($event.target.composing) {
                     return
                   }
-                  _vm.contraseña = $event.target.value
+                  _vm.password = $event.target.value
                 }
               }
             })

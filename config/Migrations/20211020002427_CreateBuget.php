@@ -18,7 +18,7 @@ class CreateBuget extends AbstractMigration
     public function change()
     {
         $table = $this->table('buget');
-        $table->addColumn('id_presupuesto', 'integer', [
+        $table->addColumn('buget_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 11,
@@ -33,7 +33,7 @@ class CreateBuget extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addColumn('id_informe', 'integer', [
+        $table->addColumn('report_id', 'integer', [
             'default' => null,
             'limit' => 11,
             'null' => false,
@@ -47,9 +47,11 @@ class CreateBuget extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
-            'id_presupuesto',
+            'buget_id',
         ]);
-        /* $table->addForeignKey('id_informe', 'reports', 'id_informe'); */
+        $table->addForeignKey('report_id', 'reports', 'report_id');
         $table->create();
+
+
     }
 }

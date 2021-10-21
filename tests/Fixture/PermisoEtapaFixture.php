@@ -23,10 +23,15 @@ class PermisoEtapaFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'id_permiso' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'id_etapa' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'permiso_etapa_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'stage_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        '_indexes' => [
+            'stage_id' => ['type' => 'index', 'columns' => ['stage_id'], 'length' => []],
+        ],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id_permiso', 'id_etapa'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['permiso_etapa_id', 'stage_id'], 'length' => []],
+            'permiso_etapa_ibfk_2' => ['type' => 'foreign', 'columns' => ['stage_id'], 'references' => ['stages', 'stage_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'permiso_etapa_ibfk_1' => ['type' => 'foreign', 'columns' => ['permiso_etapa_id'], 'references' => ['permissions', 'permission_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -43,8 +48,8 @@ class PermisoEtapaFixture extends TestFixture
     {
         $this->records = [
             [
-                'id_permiso' => 1,
-                'id_etapa' => 1,
+                'permiso_etapa_id' => 1,
+                'stage_id' => 1,
             ],
         ];
         parent::init();

@@ -8,11 +8,11 @@ use Cake\ORM\Entity;
 /**
  * Issue Entity
  *
- * @property int $id_problema
+ * @property int $issue_id
  * @property string $titulo
  * @property string $descripcion
  * @property \Cake\I18n\FrozenTime $fecha
- * @property int $id_informe
+ * @property int $report_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
@@ -31,7 +31,7 @@ class Issue extends Entity
         'titulo' => true,
         'descripcion' => true,
         'fecha' => true,
-        'id_informe' => true,
+        'report_id' => true,
         'created' => true,
         'modified' => true,
     ];

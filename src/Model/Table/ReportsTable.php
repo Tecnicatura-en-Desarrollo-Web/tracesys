@@ -44,6 +44,23 @@ class ReportsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Employee', [
+            'foreignKey' => 'employee_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('State', [
+            'foreignKey' => 'state_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Products', [
+            'foreignKey' => 'product_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Bill', [
+            'foreignKey' => 'bill_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -55,29 +72,26 @@ class ReportsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id_informe')
-            ->allowEmptyString('id_informe', null, 'create');
-
-        $validator
-            ->integer('id_empleado')
-            ->requirePresence('id_empleado', 'create')
-            ->notEmptyString('id_empleado');
-
-        $validator
-            ->integer('id_estado')
-            ->requirePresence('id_estado', 'create')
-            ->notEmptyString('id_estado');
-
-        $validator
-            ->integer('id_producto')
-            ->requirePresence('id_producto', 'create')
-            ->notEmptyString('id_producto');
-
-        $validator
-            ->integer('id_factura')
-            ->requirePresence('id_factura', 'create')
-            ->notEmptyString('id_factura');
+            ->integer('report_id')
+            ->allowEmptyString('report_id', null, 'create');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['employee_id'], 'Employee'), ['errorField' => 'employee_id']);
+        $rules->add($rules->existsIn(['state_id'], 'State'), ['errorField' => 'state_id']);
+        $rules->add($rules->existsIn(['product_id'], 'Products'), ['errorField' => 'product_id']);
+        $rules->add($rules->existsIn(['bill_id'], 'Bill'), ['errorField' => 'bill_id']);
+
+        return $rules;
     }
 }

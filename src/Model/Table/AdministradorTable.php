@@ -51,8 +51,14 @@ class AdministradorTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('cuit_admin')
-            ->allowEmptyString('cuit_admin', null, 'create');
+            ->integer('administrador_id')
+            ->allowEmptyString('administrador_id', null, 'create');
+
+        $validator
+            ->scalar('cuit_admin')
+            ->maxLength('cuit_admin', 11)
+            ->requirePresence('cuit_admin', 'create')
+            ->notEmptyString('cuit_admin');
 
         return $validator;
     }
