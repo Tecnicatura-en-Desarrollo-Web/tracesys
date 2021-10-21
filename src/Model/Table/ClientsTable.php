@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -63,40 +64,6 @@ class ClientsTable extends Table
             ->maxLength('cuit', 50)
             ->requirePresence('cuit', 'create')
             ->notEmptyString('cuit');
-
-        $validator
-            ->scalar('denominacion')
-            ->maxLength('denominacion', 50)
-            ->requirePresence('denominacion', 'create')
-            ->notEmptyString('denominacion');
-
-        $validator
-            ->scalar('domicilio')
-            ->maxLength('domicilio', 255)
-            ->requirePresence('domicilio', 'create')
-            ->notEmptyString('domicilio');
-
-        $validator
-            ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmptyString('email');
-
-        $validator
-            ->scalar('password')
-            ->maxLength('password', 150)
-            ->requirePresence('password', 'create')
-            ->notEmptyString('password');
-
-        $validator
-            ->scalar('usuario')
-            ->maxLength('usuario', 150)
-            ->requirePresence('usuario', 'create')
-            ->notEmptyString('usuario');
-
-        $validator
-            ->integer('telefono')
-            ->requirePresence('telefono', 'create')
-            ->notEmptyString('telefono');
 
         return $validator;
     }

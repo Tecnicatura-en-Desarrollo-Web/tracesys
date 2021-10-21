@@ -5311,10 +5311,10 @@ module.exports = {
 /*!*****************************************!*\
   !*** ./node_modules/axios/package.json ***!
   \*****************************************/
-/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, bundlesize, dependencies, deprecated, description, devDependencies, homepage, jsdelivr, keywords, license, main, name, repository, scripts, typings, unpkg, version, default */
+/*! exports provided: _args, _development, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, bundlesize, dependencies, description, devDependencies, homepage, jsdelivr, keywords, license, main, name, repository, scripts, typings, unpkg, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_from\":\"axios@0.21.4\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.4\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.4\",\"saveSpec\":null,\"fetchSpec\":\"0.21.4\"},\"_requiredBy\":[\"#DEV:/\",\"#USER\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@0.21.4\",\"_where\":\"C:\\\\Users\\\\Jonawin10\\\\tracesys\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
+module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.4\",\"C:\\\\xampp\\\\htdocs\\\\tracesys\"]],\"_development\":true,\"_from\":\"axios@0.21.4\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.4\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.4\",\"saveSpec\":null,\"fetchSpec\":\"0.21.4\"},\"_requiredBy\":[\"#DEV:/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_spec\":\"0.21.4\",\"_where\":\"C:\\\\xampp\\\\htdocs\\\\tracesys\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
 
 /***/ }),
 
@@ -5511,6 +5511,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var form_serialize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! form-serialize */ "./node_modules/form-serialize/index.js");
+/* harmony import */ var form_serialize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(form_serialize__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _helpers_FormErrors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/FormErrors.js */ "./resources/js/helpers/FormErrors.js");
 //
 //
 //
@@ -5689,10 +5692,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  created: function created() {
-    if (!this.$session.exists()) {
-      this.$router.push('/login');
+  data: function data() {
+    return {
+      denominacion: ""
+    };
+  },
+  methods: {
+    onSubmit: function onSubmit(event) {
+      var _this = this;
+
+      var data = form_serialize__WEBPACK_IMPORTED_MODULE_0___default()(event.target, {
+        hash: false,
+        empty: true
+      });
+      axios.post("/api/reports/save", data, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(function (response) {
+        // Redirect on success
+        console.log(response);
+
+        if (response.data.success) {
+          /* this.$notify({
+            group: "default",
+            type: "success",
+            text: response.data.message,
+          });
+          this.$router.push({ path: response.data.url }); */
+        }
+      })["catch"](function (error) {
+        _this.$notify({
+          group: "default",
+          type: "error",
+          text: error.response.data.message
+        });
+      });
     }
   }
 });
@@ -6468,6 +6512,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6476,7 +6537,7 @@ __webpack_require__.r(__webpack_exports__);
       // email:'',
       // contrasena:'',
       login: false,
-      mensaje: '',
+      mensaje: "",
       errors: new _helpers_FormErrors_js__WEBPACK_IMPORTED_MODULE_1__["default"]()
     };
   },
@@ -6510,15 +6571,17 @@ __webpack_require__.r(__webpack_exports__);
           _this.$session.start(); //***Seteo el nombre del usuario logueado en la variable sesion para mostrar su nombre en su home******
 
 
-          _this.$session.set(_this.$session.id(), response.data.user); //***Redirigimos al usuario a su lista de informes******//
+          _this.$session.set(_this.$session.id(), response.data.user);
+
+          _this.$session.set("", response.data.user); //***Redirigimos al usuario a su lista de informes******//
 
 
-          window.location.href = 'http://localhost:8765/home';
+          window.location.href = "http://localhost:8765/home";
         }
       })["catch"](function (error) {
         _this.$notify({
-          group: 'default',
-          type: 'error',
+          group: "default",
+          type: "error",
           text: error.response.data.message
         });
 
@@ -6537,7 +6600,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     if (this.$session.exists()) {
-      this.$router.push('/');
+      this.$router.push("/");
     }
   }
 });
@@ -34344,318 +34407,329 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "large-10 medium-8 columns" }, [
+    _c("h1", [_vm._v("Cargar Informe")]),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
+          }
+        }
+      },
+      [_vm._m(0), _vm._v(" "), _vm._m(1)]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "large-10 medium-8 columns" }, [
-      _c("h1", [_vm._v("Cargar Informe")]),
+    return _c("div", { staticClass: "row callout callout-danger bg-light" }, [
+      _c("h5", [_vm._v("Datos del cliente")]),
       _vm._v(" "),
-      _c("form", [
-        _c("div", { staticClass: "row callout callout-danger bg-light" }, [
-          _c("h5", [_vm._v("Datos del cliente")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Nombre y apellido o razon social"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("CUIT"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-4 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Email"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-2 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Telefono"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Dirección"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("h5", [_vm._v("Datos del producto")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Tipo"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Marca"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Modelo"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Motivo de la reparación"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "text", required: "" }
-              }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-text", attrs: { id: "emailHelp" } },
-                [
-                  _vm._v(
-                    '\n            Debe agregar el problema en palabras claves, por ejemplo:\n            "Pantalla negra"\n          '
-                  )
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Seleccione prioridad"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-check" }, [
-                _c("input", {
-                  staticClass: "form-check-input",
-                  attrs: {
-                    type: "radio",
-                    name: "flexRadioDefault",
-                    id: "flexRadioDefault1"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "form-check-label",
-                    attrs: { for: "flexRadioDefault1" }
-                  },
-                  [_vm._v("\n              Alta\n            ")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-check" }, [
-                _c("input", {
-                  staticClass: "form-check-input",
-                  attrs: {
-                    type: "radio",
-                    name: "flexRadioDefault",
-                    id: "flexRadioDefault1"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "form-check-label",
-                    attrs: { for: "flexRadioDefault1" }
-                  },
-                  [_vm._v("\n              Normal\n            ")]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-12" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "product_name" } }, [
-                _vm._v("Comentarios"),
-                _c(
-                  "small",
-                  {
-                    staticClass: "font-weight-bold text-primary",
-                    attrs: { id: "obligatory_field" }
-                  },
-                  [_vm._v("*")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("textarea", {
-                staticClass: "form-control",
-                staticStyle: { height: "100px" },
-                attrs: { required: "" }
-              })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-12 d-flex justify-content-center mt-3" },
-          [
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Nombre y apellido o razon social"),
             _c(
-              "button",
+              "small",
               {
-                staticClass: "btn btn-success text-uppercase",
-                attrs: { type: "submit", id: "button_submit" }
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
               },
-              [_vm._v("\n        Crear\n      ")]
+              [_vm._v("*")]
             )
-          ]
-        )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "denominacion" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("CUIT"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "cuit" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Email"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "email" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-2 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Telefono"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "telefono" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Dirección"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "direccion" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("h5", [_vm._v("Datos del producto")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Tipo"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "tipo" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Marca"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "marca" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Modelo"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "modelo" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Motivo de la reparación"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "motivo" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-text", attrs: { id: "emailHelp" } }, [
+            _vm._v(
+              '\n            Debe agregar el problema en palabras claves, por ejemplo:\n            "Pantalla negra"\n          '
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6 col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Seleccione prioridad"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-check" }, [
+            _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "radio",
+                name: "prioridad",
+                id: "obligatory_field",
+                value: "alta"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "form-check-label",
+                attrs: { for: "obligatory_field" }
+              },
+              [_vm._v("\n              Alta\n            ")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-check" }, [
+            _c("input", {
+              staticClass: "form-check-input",
+              attrs: {
+                type: "radio",
+                name: "prioridad",
+                id: "obligatory_field",
+                value: "normal"
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "form-check-label",
+                attrs: { for: "obligatory_field" }
+              },
+              [_vm._v("\n              Normal\n            ")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "product_name" } }, [
+            _vm._v("Comentarios"),
+            _c(
+              "small",
+              {
+                staticClass: "font-weight-bold text-primary",
+                attrs: { id: "obligatory_field" }
+              },
+              [_vm._v("*")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("textarea", {
+            staticClass: "form-control",
+            staticStyle: { height: "100px" },
+            attrs: { name: "descripcion" }
+          })
+        ])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-12 d-flex justify-content-center mt-3" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success text-uppercase",
+            attrs: { type: "submit", id: "button_submit" }
+          },
+          [_vm._v("\n        Crear\n      ")]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -35620,7 +35694,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("Inicar Sesion")]
+                [_vm._v("\n            Inicar Sesion\n          ")]
               )
             ]
           ),
@@ -35636,7 +35710,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group " }, [
+    return _c("div", { staticClass: "form-group" }, [
       _c("label", { attrs: { for: "exampleInputEmail1" } }, [
         _vm._v("Email address")
       ]),
@@ -55075,7 +55149,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\Jonawin10\tracesys\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\tracesys\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

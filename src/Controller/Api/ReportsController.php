@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\ProductsController;
 use App\Controller\Traits\ResponseTrait;
@@ -11,6 +13,8 @@ use App\Model\Table\BillTable;
 use App\Model\Table\EmployeeTable;
 use App\Model\Table\ProductsTable;
 use App\Model\Table\StateTable;
+use App\Model\Table\ClientsTable;
+use App\Model\Table\UsersTable;
 
 /**
  * Reports Controller
@@ -69,7 +73,7 @@ class ReportsController extends AppController
         $report = $this->Reports->get($id, [
             'contain' => [],
         ]);
-        $motivo=$this->Reports->get($report[0]['id_producto'])['motivo'];
+        $motivo = $this->Reports->get($report[0]['id_producto'])['motivo'];
 
         //return $this->setJsonResponse(['report' => $report]);
     }
@@ -81,11 +85,59 @@ class ReportsController extends AppController
      */
     public function save()
     {
-        if (! $this->request->is('post')) {
+        if (!$this->request->is('post')) {
             return $this->setJsonResponse([
                 'error' => true,
                 'message' => 'Invalid request!',
             ]);
+        }
+
+        $dataVue =  $this->request->getData();
+
+        $classClients = new ClientsTable();
+        $user = $classClients->newEmptyEntity();
+        $dataClients = [
+            "cuit" => $dataVue["cuit"],
+            "denominacion" => $dataVue["denominacion"],
+            "direccion" => $dataVue["denominacion"],
+            "email" => $dataVue["email"],
+            "password" => "123",
+            "usuario" => "prueba",
+            "telefono" => 1112,
+        ];
+
+        $user = $classClients->patchEntity($user, $dataClients);
+
+        $resultUser = $classClients->save($user);
+
+        if ($resultUser !== false) {
+
+            $classProduct = new ProductsTable();
+            $product = $classProduct->newEmptyEntity();
+            $dataProduct = [
+                "tipo" => $dataVue["tipo"],
+                "modelo" => $dataVue["modelo"],
+                "marca" => $dataVue["marca"],
+                "motivo" => $dataVue["motivo"],
+                "prioridad" => $dataVue["prioridad"],
+                "descripcion" => $dataVue["descripcion"],
+                "cuit_user" => $dataVue["cuit"],
+            ];
+
+            $product = $classProduct->patchEntity($product, $dataProduct);
+
+            $resultProduct = $classProduct->save($product);
+
+            if ($resultProduct !== false) {
+
+                $dataInforme = [];
+
+                return $this->setJsonResponse(
+                    [
+                        "message" =>  $resultProduct,
+                    ]
+                );
+            }
         }
 
         $report = $this->Reports->newEmptyEntity();
@@ -102,14 +154,6 @@ class ReportsController extends AppController
                 201
             );
         }
-
-        return $this->setJsonResponse(
-            [
-                'errors' => $report->getValidationErrors(),
-                'message' => __('The post could not be saved. Please, try again.'),
-            ],
-            422
-        );
     }
 
     /**
