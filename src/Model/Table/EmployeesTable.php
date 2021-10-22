@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -45,6 +46,10 @@ class EmployeesTable extends Table
 
         $this->belongsTo('Profiles', [
             'foreignKey' => 'profile_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'employee_id',
             'joinType' => 'INNER',
         ]);
     }

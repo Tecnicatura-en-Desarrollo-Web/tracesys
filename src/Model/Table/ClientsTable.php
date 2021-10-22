@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -56,7 +57,7 @@ class ClientsTable extends Table
     {
         $validator
             ->integer('client_id')
-            ->allowEmptyString('client_id', null, 'create');
+            ->allowEmptyString('client_id', 'create');
 
         $validator
             ->scalar('cuit')
@@ -64,6 +65,7 @@ class ClientsTable extends Table
             ->requirePresence('cuit', 'create')
             ->notEmptyString('cuit');
 
+        /*
         $validator
             ->scalar('denominacion')
             ->maxLength('denominacion', 50)
@@ -96,8 +98,22 @@ class ClientsTable extends Table
         $validator
             ->integer('telefono')
             ->requirePresence('telefono', 'create')
-            ->notEmptyString('telefono');
+            ->notEmptyString('telefono'); */
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['cuit']), ['errorField' => 'cuit']);
+
+        return $rules;
     }
 }

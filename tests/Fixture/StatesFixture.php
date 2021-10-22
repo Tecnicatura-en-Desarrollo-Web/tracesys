@@ -41,8 +41,8 @@ class StatesFixture extends TestFixture
             [
                 'state_id' => 1,
                 'nombre_estado' => 'Lorem ipsum dolor sit amet',
-                'created' => '2021-10-22 00:06:01',
-                'modified' => '2021-10-22 00:06:01',
+                'created' => '2021-10-22 00:31:55',
+                'modified' => '2021-10-22 00:31:55',
             ],
         ];
         parent::init();

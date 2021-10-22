@@ -48,10 +48,10 @@ class SugerenciarepuestosFixture extends TestFixture
             [
                 'sugerenciarepuestos_id' => 1,
                 'replacement_id' => 1,
-                'fecha' => '2021-10-22 00:06:01',
-                'hora' => '2021-10-22 00:06:01',
-                'created' => '2021-10-22 00:06:01',
-                'modified' => '2021-10-22 00:06:01',
+                'fecha' => '2021-10-22 00:31:57',
+                'hora' => '2021-10-22 00:31:57',
+                'created' => '2021-10-22 00:31:57',
+                'modified' => '2021-10-22 00:31:57',
             ],
         ];
         parent::init();

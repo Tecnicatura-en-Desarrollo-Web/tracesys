@@ -45,8 +45,8 @@ class ProvidersFixture extends TestFixture
                 'nombre' => 'Lorem ipsum dolor sit amet',
                 'email' => 'Lorem ipsum dolor sit amet',
                 'cuit' => 'Lorem ipsum dolor sit amet',
-                'created' => '2021-10-22 00:05:56',
-                'modified' => '2021-10-22 00:05:56',
+                'created' => '2021-10-22 00:31:49',
+                'modified' => '2021-10-22 00:31:49',
             ],
         ];
         parent::init();

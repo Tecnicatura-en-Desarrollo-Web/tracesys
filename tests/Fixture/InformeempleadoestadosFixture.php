@@ -50,8 +50,8 @@ class InformeempleadoestadosFixture extends TestFixture
                 'informeempleadoestados_id' => 1,
                 'employee_id' => 1,
                 'state_id' => 1,
-                'created' => '2021-10-22 00:05:52',
-                'modified' => '2021-10-22 00:05:52',
+                'created' => '2021-10-22 00:31:38',
+                'modified' => '2021-10-22 00:31:38',
             ],
         ];
         parent::init();

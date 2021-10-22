@@ -47,10 +47,10 @@ class BudgetsFixture extends TestFixture
             [
                 'budget_id' => 1,
                 'monto' => 1,
-                'fecha' => '2021-10-22 00:05:40',
+                'fecha' => '2021-10-22 00:31:26',
                 'report_id' => 1,
-                'created' => '2021-10-22 00:05:40',
-                'modified' => '2021-10-22 00:05:40',
+                'created' => '2021-10-22 00:31:26',
+                'modified' => '2021-10-22 00:31:26',
             ],
         ];
         parent::init();

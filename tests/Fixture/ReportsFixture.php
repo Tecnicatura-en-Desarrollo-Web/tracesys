@@ -57,8 +57,8 @@ class ReportsFixture extends TestFixture
                 'state_id' => 1,
                 'product_id' => 1,
                 'bill_id' => 1,
-                'created' => '2021-10-22 00:05:56',
-                'modified' => '2021-10-22 00:05:56',
+                'created' => '2021-10-22 00:31:51',
+                'modified' => '2021-10-22 00:31:51',
             ],
         ];
         parent::init();

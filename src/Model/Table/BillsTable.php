@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -58,7 +59,7 @@ class BillsTable extends Table
             ->integer('bill_id')
             ->allowEmptyString('bill_id', null, 'create');
 
-        $validator
+        /*  $validator
             ->scalar('descripcion')
             ->maxLength('descripcion', 255)
             ->requirePresence('descripcion', 'create')
@@ -78,7 +79,7 @@ class BillsTable extends Table
             ->scalar('url_factura')
             ->maxLength('url_factura', 255)
             ->requirePresence('url_factura', 'create')
-            ->notEmptyString('url_factura');
+            ->notEmptyString('url_factura'); */
 
         return $validator;
     }

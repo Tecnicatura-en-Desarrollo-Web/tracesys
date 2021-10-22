@@ -44,11 +44,11 @@ class BillsFixture extends TestFixture
             [
                 'bill_id' => 1,
                 'descripcion' => 'Lorem ipsum dolor sit amet',
-                'fecha' => '2021-10-22 00:05:40',
+                'fecha' => '2021-10-22 00:31:24',
                 'monto' => 1,
                 'url_factura' => 'Lorem ipsum dolor sit amet',
-                'created' => '2021-10-22 00:05:40',
-                'modified' => '2021-10-22 00:05:40',
+                'created' => '2021-10-22 00:31:24',
+                'modified' => '2021-10-22 00:31:24',
             ],
         ];
         parent::init();

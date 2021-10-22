@@ -47,10 +47,10 @@ class ReplacementsFixture extends TestFixture
                 'marca' => 'Lorem ipsum dolor sit amet',
                 'modelo' => 'Lorem ipsum dolor sit amet',
                 'descripcion' => 'Lorem ipsum dolor sit amet',
-                'fecha_ingreso' => '2021-10-22 00:05:56',
+                'fecha_ingreso' => '2021-10-22 00:31:50',
                 'cantidad' => 1,
-                'created' => '2021-10-22 00:05:56',
-                'modified' => '2021-10-22 00:05:56',
+                'created' => '2021-10-22 00:31:50',
+                'modified' => '2021-10-22 00:31:50',
             ],
         ];
         parent::init();

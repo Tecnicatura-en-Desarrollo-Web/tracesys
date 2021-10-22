@@ -52,8 +52,8 @@ class ClienteinformecomentariosFixture extends TestFixture
                 'cuit' => 'Lorem ips',
                 'comment_client_id' => 1,
                 'report_id' => 1,
-                'created' => '2021-10-22 00:05:40',
-                'modified' => '2021-10-22 00:05:40',
+                'created' => '2021-10-22 00:31:28',
+                'modified' => '2021-10-22 00:31:28',
             ],
         ];
         parent::init();

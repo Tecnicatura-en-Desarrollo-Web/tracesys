@@ -1,16 +1,21 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\ProductsController;
 use App\Controller\Traits\ResponseTrait;
 use App\Model\Entity\Employee;
 use App\Model\Entity\Product;
+use App\Model\Table\BillsTable;
 use App\Model\Table\BillTable;
 use App\Model\Table\EmployeeTable;
 use App\Model\Table\ProductsTable;
 use App\Model\Table\StateTable;
+use App\Model\Table\ClientsTable;
+use App\Model\Table\IssuesTable;
 
 /**
  * Reports Controller
@@ -69,7 +74,7 @@ class ReportsController extends AppController
         $report = $this->Reports->get($id, [
             'contain' => [],
         ]);
-        $motivo=$this->Reports->get($report[0]['id_producto'])['motivo'];
+        $motivo = $this->Reports->get($report[0]['id_producto'])['motivo'];
 
         //return $this->setJsonResponse(['report' => $report]);
     }
@@ -81,35 +86,107 @@ class ReportsController extends AppController
      */
     public function save()
     {
-        if (! $this->request->is('post')) {
+        if (!$this->request->is('post')) {
             return $this->setJsonResponse([
                 'error' => true,
                 'message' => 'Invalid request!',
             ]);
         }
 
-        $report = $this->Reports->newEmptyEntity();
-        $report = $this->Reports->patchEntity($report, $this->request->getData());
-        $result = $this->Reports->save($report);
-        if ($result !== false) {
-            return $this->setJsonResponse(
-                [
-                    'data' => $result,
-                    'success' => true,
-                    'url' => '/reports',
-                    'message' => __('The post has been saved.'),
-                ],
-                201
-            );
-        }
+        $dataVue =  $this->request->getData();
 
-        return $this->setJsonResponse(
-            [
-                'errors' => $report->getValidationErrors(),
-                'message' => __('The post could not be saved. Please, try again.'),
-            ],
-            422
-        );
+        $classClients = new ClientsTable();
+        $client = $classClients->newEmptyEntity();
+        $dataClients = [
+            "cuit" => $dataVue["cuit"],
+            "denominacion" => $dataVue["denominacion"],
+            "direccion" => $dataVue["direccion"],
+            "email" => $dataVue["email"],
+            "password" => "123",
+            "usuario" => "prueba",
+            "telefono" => $dataVue["telefono"],
+        ];
+
+        $client = $classClients->patchEntity($client, $dataClients);
+
+        $resultUser = $classClients->save($client);
+        $idCliente = $resultUser["client_id"];
+
+        if ($resultUser !== false) {
+
+            $classProduct = new ProductsTable();
+            $product = $classProduct->newEmptyEntity();
+            $dataProduct = [
+                "tipo" => $dataVue["tipo"],
+                "modelo" => $dataVue["modelo"],
+                "marca" => $dataVue["marca"],
+                "motivo" => $dataVue["motivo"],
+                "prioridad" => $dataVue["prioridad"],
+                "descripcion" => $dataVue["descripcion"],
+                "client_id" => $idCliente,
+            ];
+
+            $product = $classProduct->patchEntity($product, $dataProduct);
+
+            $resultProduct = $classProduct->save($product);
+            $idProduct = $resultProduct["product_id"];
+
+            if ($resultProduct !== false) {
+
+                $classBill = new BillsTable();
+                $bill = $classBill->newEmptyEntity();
+                $dataBill = [
+                    "descripcion" => "Factura generada",
+                    "monto" => 0,
+                    "url_factura" => "/facturas",
+                ];
+
+                $bill = $classBill->patchEntity($bill, $dataBill);
+                $resultBill = $classBill->save($bill);
+                $idBill = $resultBill["bill_id"];
+
+                if ($resultBill !== false) {
+                    $report = $this->Reports->newEmptyEntity();
+
+                    $dataInforme = [
+                        "employee_id" => (int)$dataVue["user_id_loggin"],
+                        "state_id" => 1,
+                        "product_id" => $idProduct,
+                        "bill_id" => $idBill,
+                    ];
+
+                    $report = $this->Reports->patchEntity($report, $dataInforme);
+                    $resultReport = $this->Reports->save($report);
+                    $idReport = $resultReport["report_id"];
+
+                    if ($resultReport !== false) {
+
+                        $classIssue = new IssuesTable();
+                        $issue = $classIssue->newEmptyEntity();
+
+                        $dataIssue = [
+                            "titulo" => $dataVue["motivo"],
+                            "descripcion" => $dataVue["descripcion"],
+                            "report_id" => $idReport,
+                        ];
+
+                        $issue = $classIssue->patchEntity($issue, $dataIssue);
+                        $resultIssue = $classIssue->save($issue);
+
+                        if ($resultIssue !== false) {
+                            return $this->setJsonResponse(
+                                [
+                                    'success' => true,
+                                    'url' => '/reports',
+                                    'message' => __('The post has been saved.'),
+                                ],
+                                201
+                            );
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
