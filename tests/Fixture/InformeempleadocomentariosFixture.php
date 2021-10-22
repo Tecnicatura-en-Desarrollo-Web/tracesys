@@ -52,8 +52,8 @@ class InformeempleadocomentariosFixture extends TestFixture
                 'cuit' => 'Lorem ips',
                 'comment_employee_id' => 1,
                 'report_id' => 1,
-                'created' => '2021-10-22 00:05:52',
-                'modified' => '2021-10-22 00:05:52',
+                'created' => '2021-10-22 00:31:36',
+                'modified' => '2021-10-22 00:31:36',
             ],
         ];
         parent::init();

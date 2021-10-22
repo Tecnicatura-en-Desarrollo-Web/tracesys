@@ -57,7 +57,7 @@ class ClientsTable extends Table
     {
         $validator
             ->integer('client_id')
-            ->allowEmptyString('client_id', null, 'create');
+            ->allowEmptyString('client_id', 'create');
 
         $validator
             ->scalar('cuit')
@@ -65,6 +65,55 @@ class ClientsTable extends Table
             ->requirePresence('cuit', 'create')
             ->notEmptyString('cuit');
 
+        /*
+        $validator
+            ->scalar('denominacion')
+            ->maxLength('denominacion', 50)
+            ->requirePresence('denominacion', 'create')
+            ->notEmptyString('denominacion');
+
+        $validator
+            ->scalar('domicilio')
+            ->maxLength('domicilio', 255)
+            ->requirePresence('domicilio', 'create')
+            ->notEmptyString('domicilio');
+
+        $validator
+            ->email('email')
+            ->requirePresence('email', 'create')
+            ->notEmptyString('email');
+
+        $validator
+            ->scalar('password')
+            ->maxLength('password', 150)
+            ->requirePresence('password', 'create')
+            ->notEmptyString('password');
+
+        $validator
+            ->scalar('usuario')
+            ->maxLength('usuario', 150)
+            ->requirePresence('usuario', 'create')
+            ->notEmptyString('usuario');
+
+        $validator
+            ->integer('telefono')
+            ->requirePresence('telefono', 'create')
+            ->notEmptyString('telefono'); */
+
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['cuit']), ['errorField' => 'cuit']);
+
+        return $rules;
     }
 }

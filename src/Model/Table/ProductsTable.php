@@ -64,9 +64,9 @@ class ProductsTable extends Table
     {
         $validator
             ->integer('product_id')
-            ->allowEmptyString('product_id', null, 'create');
+            ->allowEmptyString('product_id', 'create');
 
-        $validator
+        /*  $validator
             ->scalar('tipo')
             ->maxLength('tipo', 100)
             ->requirePresence('tipo', 'create')
@@ -100,22 +100,8 @@ class ProductsTable extends Table
             ->scalar('descripcion')
             ->maxLength('descripcion', 255)
             ->requirePresence('descripcion', 'create')
-            ->notEmptyString('descripcion');
+            ->notEmptyString('descripcion'); */
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['client_id'], 'Clients'), ['errorField' => 'client_id']);
-
-        return $rules;
     }
 }

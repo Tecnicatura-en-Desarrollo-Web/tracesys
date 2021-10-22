@@ -46,8 +46,8 @@ class IncorporatesFixture extends TestFixture
             [
                 'incorporate_id' => 1,
                 'replacement_id' => 1,
-                'created' => '2021-10-22 00:05:50',
-                'modified' => '2021-10-22 00:05:50',
+                'created' => '2021-10-22 00:31:35',
+                'modified' => '2021-10-22 00:31:35',
             ],
         ];
         parent::init();

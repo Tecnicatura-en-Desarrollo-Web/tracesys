@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -78,25 +79,8 @@ class ReportsTable extends Table
     {
         $validator
             ->integer('report_id')
-            ->allowEmptyString('report_id', null, 'create');
+            ->allowEmptyString('report_id', 'create');
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['employee_id'], 'Employees'), ['errorField' => 'employee_id']);
-        $rules->add($rules->existsIn(['state_id'], 'States'), ['errorField' => 'state_id']);
-        $rules->add($rules->existsIn(['product_id'], 'Products'), ['errorField' => 'product_id']);
-        $rules->add($rules->existsIn(['bill_id'], 'Bills'), ['errorField' => 'bill_id']);
-
-        return $rules;
     }
 }

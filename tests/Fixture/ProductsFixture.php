@@ -56,8 +56,8 @@ class ProductsFixture extends TestFixture
                 'motivo' => 'Lorem ipsum dolor sit amet',
                 'prioridad' => 'Lorem ipsum dolor sit amet',
                 'descripcion' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-                'created' => '2021-10-22 00:05:54',
-                'modified' => '2021-10-22 00:05:54',
+                'created' => '2021-10-22 00:31:45',
+                'modified' => '2021-10-22 00:31:45',
                 'client_id' => 1,
             ],
         ];

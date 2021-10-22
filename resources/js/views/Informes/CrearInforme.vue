@@ -189,6 +189,7 @@ export default {
   data() {
     return {
       denominacion: "",
+      user_id_loggin: "",
     };
   },
   methods: {
@@ -197,6 +198,7 @@ export default {
         hash: false,
         empty: true,
       });
+      data += "&user_id_loggin=" + this.user_id_loggin;
       axios
         .post("/api/reports/save", data, {
           headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -205,12 +207,12 @@ export default {
           // Redirect on success
           console.log(response);
           if (response.data.success) {
-            /* this.$notify({
+            this.$notify({
               group: "default",
               type: "success",
               text: response.data.message,
             });
-            this.$router.push({ path: response.data.url }); */
+            this.$router.push({ path: response.data.url });
           }
         })
         .catch((error) => {
@@ -221,6 +223,11 @@ export default {
           });
         });
     },
+  },
+  created() {
+    if (this.$session.exists()) {
+      this.user_id_loggin = this.$session.get("user_id");
+    }
   },
 };
 </script>

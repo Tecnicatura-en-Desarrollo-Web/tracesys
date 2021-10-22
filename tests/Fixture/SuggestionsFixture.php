@@ -50,8 +50,8 @@ class SuggestionsFixture extends TestFixture
                 'nombre_sugerencia' => 'Lorem ipsum dolor sit amet',
                 'descripcion_sugerencia' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
                 'importancia' => 'Lorem ipsum dolor ',
-                'created' => '2021-10-22 00:06:02',
-                'modified' => '2021-10-22 00:06:02',
+                'created' => '2021-10-22 00:31:58',
+                'modified' => '2021-10-22 00:31:58',
                 'sector_id' => 1,
             ],
         ];

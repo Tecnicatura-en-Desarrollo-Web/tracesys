@@ -46,8 +46,8 @@ class ProblemasugerenciasFixture extends TestFixture
             [
                 'problemasugerencia_id' => 1,
                 'suggestion_id' => 1,
-                'created' => '2021-10-22 00:05:54',
-                'modified' => '2021-10-22 00:05:54',
+                'created' => '2021-10-22 00:31:43',
+                'modified' => '2021-10-22 00:31:43',
             ],
         ];
         parent::init();

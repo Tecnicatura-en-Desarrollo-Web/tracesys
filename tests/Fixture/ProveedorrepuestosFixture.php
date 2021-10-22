@@ -46,8 +46,8 @@ class ProveedorrepuestosFixture extends TestFixture
             [
                 'proveedorrepuesto_id' => 1,
                 'provider_id' => 1,
-                'created' => '2021-10-22 00:05:56',
-                'modified' => '2021-10-22 00:05:56',
+                'created' => '2021-10-22 00:31:47',
+                'modified' => '2021-10-22 00:31:47',
             ],
         ];
         parent::init();

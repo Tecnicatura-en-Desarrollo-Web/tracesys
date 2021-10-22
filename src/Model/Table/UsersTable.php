@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -111,7 +110,7 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['cuit']), ['errorField' => 'cuit']);
+        $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
 
         return $rules;
     }

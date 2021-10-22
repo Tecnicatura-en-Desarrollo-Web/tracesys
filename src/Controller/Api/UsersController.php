@@ -149,7 +149,8 @@ class UsersController extends AppController
                     return $this->setJsonResponse(
                         [
                             'message' => true,
-                            'user' => $cadaUser["nombre"]
+                            'user' => $cadaUser["nombre"],
+                            'user_id' => $cadaUser["user_id"],
                         ]
                     );
                 }

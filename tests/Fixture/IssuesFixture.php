@@ -49,10 +49,10 @@ class IssuesFixture extends TestFixture
                 'issue_id' => 1,
                 'titulo' => 'Lorem ipsum dolor sit amet',
                 'descripcion' => 'Lorem ipsum dolor sit amet',
-                'fecha' => '2021-10-22 00:05:52',
+                'fecha' => '2021-10-22 00:31:39',
                 'report_id' => 1,
-                'created' => '2021-10-22 00:05:52',
-                'modified' => '2021-10-22 00:05:52',
+                'created' => '2021-10-22 00:31:39',
+                'modified' => '2021-10-22 00:31:39',
             ],
         ];
         parent::init();
