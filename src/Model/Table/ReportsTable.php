@@ -67,6 +67,10 @@ class ReportsTable extends Table
             'foreignKey' => 'bill_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Users', [
+            'foreignKey' => 'employee_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**

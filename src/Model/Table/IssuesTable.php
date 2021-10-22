@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -51,6 +52,8 @@ class IssuesTable extends Table
             'foreignKey' => 'report_id',
             'joinType' => 'INNER',
         ]);
+
+        $this->belongsToMany('Suggestions');
     }
 
     /**
@@ -65,7 +68,7 @@ class IssuesTable extends Table
             ->integer('issue_id')
             ->allowEmptyString('issue_id', null, 'create');
 
-        $validator
+        /*         $validator
             ->scalar('titulo')
             ->maxLength('titulo', 255)
             ->requirePresence('titulo', 'create')
@@ -80,7 +83,7 @@ class IssuesTable extends Table
         $validator
             ->dateTime('fecha')
             ->requirePresence('fecha', 'create')
-            ->notEmptyDateTime('fecha');
+            ->notEmptyDateTime('fecha'); */
 
         return $validator;
     }

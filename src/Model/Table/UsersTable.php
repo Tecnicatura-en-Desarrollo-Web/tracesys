@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -44,6 +45,11 @@ class UsersTable extends Table
         $this->setPrimaryKey('user_id');
 
         $this->addBehavior('Timestamp');
+
+        $this->belongsTo('Stages', [
+            'foreignKey' => 'stage_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**

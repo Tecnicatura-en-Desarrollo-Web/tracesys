@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -54,6 +55,10 @@ class ProblemasugerenciasTable extends Table
         ]);
         $this->belongsTo('Suggestions', [
             'foreignKey' => 'suggestion_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Issues', [
+            'foreignKey' => 'problemasugerencia_id',
             'joinType' => 'INNER',
         ]);
     }

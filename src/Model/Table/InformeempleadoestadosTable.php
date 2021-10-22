@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -59,6 +60,10 @@ class InformeempleadoestadosTable extends Table
         ]);
         $this->belongsTo('States', [
             'foreignKey' => 'state_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'informeempleadoestados_id',
             'joinType' => 'INNER',
         ]);
     }

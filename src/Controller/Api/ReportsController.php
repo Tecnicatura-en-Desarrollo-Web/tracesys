@@ -9,11 +9,13 @@ use App\Controller\ProductsController;
 use App\Controller\Traits\ResponseTrait;
 use App\Model\Entity\Employee;
 use App\Model\Entity\Product;
+use App\Model\Table\BillsTable;
 use App\Model\Table\BillTable;
 use App\Model\Table\EmployeeTable;
 use App\Model\Table\ProductsTable;
 use App\Model\Table\StateTable;
 use App\Model\Table\ClientsTable;
+use App\Model\Table\IssuesTable;
 
 /**
  * Reports Controller
@@ -131,25 +133,57 @@ class ReportsController extends AppController
 
             if ($resultProduct !== false) {
 
-                $dataInforme = [
-                    "employee_id" => (int)$dataVue["user_id_loggin"],
-                    "state_id" => 1,
-                    "product_id" => $idProduct,
-                    "bill_id" => 1,
+                $classBill = new BillsTable();
+                $bill = $classBill->newEmptyEntity();
+                $dataBill = [
+                    "descripcion" => "Factura generada",
+                    "monto" => 0,
+                    "url_factura" => "/facturas",
                 ];
 
-                $report = $this->Reports->newEmptyEntity();
-                $report = $this->Reports->patchEntity($report, $dataInforme);
-                return $this->setJsonResponse(
-                    [
-                        'success' => true,
-                        'url' => '/reports',
-                        'message' => __('The post has been saved.'),
-                    ],
-                    201
-                );
-                $resultProduct = $this->Reports->save($report);
-                if ($resultProduct !== false) {
+                $bill = $classBill->patchEntity($bill, $dataBill);
+                $resultBill = $classBill->save($bill);
+                $idBill = $resultBill["bill_id"];
+
+                if ($resultBill !== false) {
+                    $report = $this->Reports->newEmptyEntity();
+
+                    $dataInforme = [
+                        "employee_id" => (int)$dataVue["user_id_loggin"],
+                        "state_id" => 1,
+                        "product_id" => $idProduct,
+                        "bill_id" => $idBill,
+                    ];
+
+                    $report = $this->Reports->patchEntity($report, $dataInforme);
+                    $resultReport = $this->Reports->save($report);
+                    $idReport = $resultReport["report_id"];
+
+                    if ($resultReport !== false) {
+
+                        $classIssue = new IssuesTable();
+                        $issue = $classIssue->newEmptyEntity();
+
+                        $dataIssue = [
+                            "titulo" => $dataVue["motivo"],
+                            "descripcion" => $dataVue["descripcion"],
+                            "report_id" => $idReport,
+                        ];
+
+                        $issue = $classIssue->patchEntity($issue, $dataIssue);
+                        $resultIssue = $classIssue->save($issue);
+
+                        if ($resultIssue !== false) {
+                            return $this->setJsonResponse(
+                                [
+                                    'success' => true,
+                                    'url' => '/reports',
+                                    'message' => __('The post has been saved.'),
+                                ],
+                                201
+                            );
+                        }
+                    }
                 }
             }
         }

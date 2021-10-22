@@ -5703,7 +5703,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      denominacion: ""
+      denominacion: "",
+      user_id_loggin: ""
     };
   },
   methods: {
@@ -5714,6 +5715,7 @@ __webpack_require__.r(__webpack_exports__);
         hash: false,
         empty: true
       });
+      data += "&user_id_loggin=" + this.user_id_loggin;
       axios.post("/api/reports/save", data, {
         headers: {
           "X-Requested-With": "XMLHttpRequest"
@@ -5723,12 +5725,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
 
         if (response.data.success) {
-          /* this.$notify({
+          _this.$notify({
             group: "default",
             type: "success",
-            text: response.data.message,
+            text: response.data.message
           });
-          this.$router.push({ path: response.data.url }); */
+
+          _this.$router.push({
+            path: response.data.url
+          });
         }
       })["catch"](function (error) {
         _this.$notify({
@@ -5737,6 +5742,11 @@ __webpack_require__.r(__webpack_exports__);
           text: error.response.data.message
         });
       });
+    }
+  },
+  created: function created() {
+    if (this.$session.exists()) {
+      this.user_id_loggin = this.$session.get("user_id");
     }
   }
 });
@@ -6573,7 +6583,7 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$session.set(_this.$session.id(), response.data.user);
 
-          _this.$session.set("", response.data.user); //***Redirigimos al usuario a su lista de informes******//
+          _this.$session.set("user_id", response.data.user_id); //***Redirigimos al usuario a su lista de informes******//
 
 
           window.location.href = "http://localhost:8765/home";
