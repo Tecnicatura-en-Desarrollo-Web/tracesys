@@ -23,6 +23,7 @@ class IncorporatesControllerTest extends TestCase
      */
     protected $fixtures = [
         'app.Incorporates',
+        'app.Replacements',
     ];
 
     /**

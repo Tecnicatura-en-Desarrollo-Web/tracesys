@@ -29,7 +29,7 @@ class SuggestionsFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['suggestion_id'], 'length' => []],
-            'suggestions_ibfk_1' => ['type' => 'foreign', 'columns' => ['sector_id'], 'references' => ['sector', 'sector_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'suggestions_ibfk_1' => ['type' => 'foreign', 'columns' => ['sector_id'], 'references' => ['sectors', 'sector_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -50,8 +50,8 @@ class SuggestionsFixture extends TestFixture
                 'nombre_sugerencia' => 'Lorem ipsum dolor sit amet',
                 'descripcion_sugerencia' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
                 'importancia' => 'Lorem ipsum dolor ',
-                'created' => '2021-10-21 22:30:42',
-                'modified' => '2021-10-21 22:30:42',
+                'created' => '2021-10-22 00:06:02',
+                'modified' => '2021-10-22 00:06:02',
                 'sector_id' => 1,
             ],
         ];

@@ -18,6 +18,9 @@ class SuggestionsController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Sectors'],
+        ];
         $suggestions = $this->paginate($this->Suggestions);
 
         $this->set(compact('suggestions'));
@@ -33,7 +36,7 @@ class SuggestionsController extends AppController
     public function view($id = null)
     {
         $suggestion = $this->Suggestions->get($id, [
-            'contain' => [],
+            'contain' => ['Sectors'],
         ]);
 
         $this->set(compact('suggestion'));
@@ -56,7 +59,8 @@ class SuggestionsController extends AppController
             }
             $this->Flash->error(__('The suggestion could not be saved. Please, try again.'));
         }
-        $this->set(compact('suggestion'));
+        $sectors = $this->Suggestions->Sectors->find('list', ['limit' => 200]);
+        $this->set(compact('suggestion', 'sectors'));
     }
 
     /**
@@ -80,7 +84,8 @@ class SuggestionsController extends AppController
             }
             $this->Flash->error(__('The suggestion could not be saved. Please, try again.'));
         }
-        $this->set(compact('suggestion'));
+        $sectors = $this->Suggestions->Sectors->find('list', ['limit' => 200]);
+        $this->set(compact('suggestion', 'sectors'));
     }
 
     /**

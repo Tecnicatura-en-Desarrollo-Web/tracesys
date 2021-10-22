@@ -6,16 +6,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * SugerenciaRepuesto Entity
+ * Sugerenciarepuesto Entity
  *
- * @property int $sugerencia_repuesto_id
+ * @property int $sugerenciarepuestos_id
  * @property int $replacement_id
  * @property \Cake\I18n\FrozenTime $fecha
  * @property \Cake\I18n\FrozenTime $hora
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Sugerenciarepuesto $sugerenciarepuesto
+ * @property \App\Model\Entity\Replacement $replacement
  */
-class SugerenciaRepuesto extends Entity
+class Sugerenciarepuesto extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -31,5 +34,7 @@ class SugerenciaRepuesto extends Entity
         'hora' => true,
         'created' => true,
         'modified' => true,
+        'sugerenciarepuesto' => true,
+        'replacement' => true,
     ];
 }

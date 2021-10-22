@@ -26,8 +26,8 @@ class IncorporatesFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['incorporate_id', 'replacement_id'], 'length' => []],
-            'incorporates_ibfk_2' => ['type' => 'foreign', 'columns' => ['replacement_id'], 'references' => ['replacement', 'replacement_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
-            'incorporates_ibfk_1' => ['type' => 'foreign', 'columns' => ['incorporate_id'], 'references' => ['buget', 'buget_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'incorporates_ibfk_2' => ['type' => 'foreign', 'columns' => ['replacement_id'], 'references' => ['replacements', 'replacement_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'incorporates_ibfk_1' => ['type' => 'foreign', 'columns' => ['incorporate_id'], 'references' => ['budgets', 'budget_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -46,8 +46,8 @@ class IncorporatesFixture extends TestFixture
             [
                 'incorporate_id' => 1,
                 'replacement_id' => 1,
-                'created' => '2021-10-21 22:29:54',
-                'modified' => '2021-10-21 22:29:54',
+                'created' => '2021-10-22 00:05:50',
+                'modified' => '2021-10-22 00:05:50',
             ],
         ];
         parent::init();

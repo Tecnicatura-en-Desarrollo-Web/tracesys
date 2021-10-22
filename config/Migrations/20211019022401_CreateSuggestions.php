@@ -50,7 +50,7 @@ class CreateSuggestions extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addForeignKey('sector_id', 'sector', 'sector_id');
+        $table->addForeignKey('sector_id', 'sectors', 'sector_id');
         $table->create();
     }
 }

@@ -6,12 +6,15 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * PermisoEtapa Entity
+ * Permisoetapa Entity
  *
- * @property int $permiso_etapa_id
+ * @property int $permisoetapas_id
  * @property int $stage_id
+ *
+ * @property \App\Model\Entity\Permisoetapa $permisoetapa
+ * @property \App\Model\Entity\Stage $stage
  */
-class PermisoEtapa extends Entity
+class Permisoetapa extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -23,8 +26,7 @@ class PermisoEtapa extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id_permiso' => false,
-        'id_etapa' => false,
+        'permisoetapa' => true,
+        'stage' => true,
     ];
 }

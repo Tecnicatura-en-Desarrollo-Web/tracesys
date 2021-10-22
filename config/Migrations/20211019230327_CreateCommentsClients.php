@@ -15,8 +15,8 @@ class CreateCommentsClients extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('comments_clients', ['id' => false, 'primary_key' => ['comment_client_id']]);
-        $table->addColumn('comment_client_id', 'integer', [
+        $table = $this->table('commentsclients', ['id' => false, 'primary_key' => ['commentclient_id']]);
+        $table->addColumn('commentclient_id', 'integer', [
             'autoIncrement' => true,
             'default' => null,
             'limit' => 100,

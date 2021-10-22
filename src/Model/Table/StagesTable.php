@@ -38,8 +38,8 @@ class StagesTable extends Table
         parent::initialize($config);
 
         $this->setTable('stages');
-        $this->setDisplayField('id_etapa');
-        $this->setPrimaryKey('id_etapa');
+        $this->setDisplayField('stage_id');
+        $this->setPrimaryKey('stage_id');
     }
 
     /**

@@ -6,14 +6,17 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ProveedorRepuesto Entity
+ * Proveedorrepuesto Entity
  *
- * @property int $proveedor_repuesto_id
+ * @property int $proveedorrepuesto_id
  * @property int $provider_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Proveedorrepuesto $proveedorrepuesto
+ * @property \App\Model\Entity\Provider $provider
  */
-class ProveedorRepuesto extends Entity
+class Proveedorrepuesto extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -27,5 +30,7 @@ class ProveedorRepuesto extends Entity
     protected $_accessible = [
         'created' => true,
         'modified' => true,
+        'proveedorrepuesto' => true,
+        'provider' => true,
     ];
 }

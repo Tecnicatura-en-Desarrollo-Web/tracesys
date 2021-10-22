@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 /**
- * CommentsClients Controller
+ * Commentsclients Controller
  *
- * @property \App\Model\Table\CommentsClientsTable $CommentsClients
- * @method \App\Model\Entity\CommentsClient[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\CommentsclientsTable $Commentsclients
+ * @method \App\Model\Entity\Commentsclient[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class CommentsClientsController extends AppController
+class CommentsclientsController extends AppController
 {
     /**
      * Index method
@@ -18,25 +18,25 @@ class CommentsClientsController extends AppController
      */
     public function index()
     {
-        $commentsClients = $this->paginate($this->CommentsClients);
+        $commentsclients = $this->paginate($this->Commentsclients);
 
-        $this->set(compact('commentsClients'));
+        $this->set(compact('commentsclients'));
     }
 
     /**
      * View method
      *
-     * @param string|null $id Comments Client id.
+     * @param string|null $id Commentsclient id.
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
-        $commentsClient = $this->CommentsClients->get($id, [
+        $commentsclient = $this->Commentsclients->get($id, [
             'contain' => [],
         ]);
 
-        $this->set(compact('commentsClient'));
+        $this->set(compact('commentsclient'));
     }
 
     /**
@@ -46,58 +46,58 @@ class CommentsClientsController extends AppController
      */
     public function add()
     {
-        $commentsClient = $this->CommentsClients->newEmptyEntity();
+        $commentsclient = $this->Commentsclients->newEmptyEntity();
         if ($this->request->is('post')) {
-            $commentsClient = $this->CommentsClients->patchEntity($commentsClient, $this->request->getData());
-            if ($this->CommentsClients->save($commentsClient)) {
-                $this->Flash->success(__('The comments client has been saved.'));
+            $commentsclient = $this->Commentsclients->patchEntity($commentsclient, $this->request->getData());
+            if ($this->Commentsclients->save($commentsclient)) {
+                $this->Flash->success(__('The commentsclient has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The comments client could not be saved. Please, try again.'));
+            $this->Flash->error(__('The commentsclient could not be saved. Please, try again.'));
         }
-        $this->set(compact('commentsClient'));
+        $this->set(compact('commentsclient'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Comments Client id.
+     * @param string|null $id Commentsclient id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
-        $commentsClient = $this->CommentsClients->get($id, [
+        $commentsclient = $this->Commentsclients->get($id, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $commentsClient = $this->CommentsClients->patchEntity($commentsClient, $this->request->getData());
-            if ($this->CommentsClients->save($commentsClient)) {
-                $this->Flash->success(__('The comments client has been saved.'));
+            $commentsclient = $this->Commentsclients->patchEntity($commentsclient, $this->request->getData());
+            if ($this->Commentsclients->save($commentsclient)) {
+                $this->Flash->success(__('The commentsclient has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The comments client could not be saved. Please, try again.'));
+            $this->Flash->error(__('The commentsclient could not be saved. Please, try again.'));
         }
-        $this->set(compact('commentsClient'));
+        $this->set(compact('commentsclient'));
     }
 
     /**
      * Delete method
      *
-     * @param string|null $id Comments Client id.
+     * @param string|null $id Commentsclient id.
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $commentsClient = $this->CommentsClients->get($id);
-        if ($this->CommentsClients->delete($commentsClient)) {
-            $this->Flash->success(__('The comments client has been deleted.'));
+        $commentsclient = $this->Commentsclients->get($id);
+        if ($this->Commentsclients->delete($commentsclient)) {
+            $this->Flash->success(__('The commentsclient has been deleted.'));
         } else {
-            $this->Flash->error(__('The comments client could not be deleted. Please, try again.'));
+            $this->Flash->error(__('The commentsclient could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);

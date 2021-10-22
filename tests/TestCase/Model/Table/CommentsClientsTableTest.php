@@ -3,20 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\CommentsClientsTable;
+use App\Model\Table\CommentsclientsTable;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CommentsClientsTable Test Case
+ * App\Model\Table\CommentsclientsTable Test Case
  */
-class CommentsClientsTableTest extends TestCase
+class CommentsclientsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CommentsClientsTable
+     * @var \App\Model\Table\CommentsclientsTable
      */
-    protected $CommentsClients;
+    protected $Commentsclients;
 
     /**
      * Fixtures
@@ -24,7 +24,7 @@ class CommentsClientsTableTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.CommentsClients',
+        'app.Commentsclients',
     ];
 
     /**
@@ -35,8 +35,8 @@ class CommentsClientsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('CommentsClients') ? [] : ['className' => CommentsClientsTable::class];
-        $this->CommentsClients = $this->getTableLocator()->get('CommentsClients', $config);
+        $config = $this->getTableLocator()->exists('Commentsclients') ? [] : ['className' => CommentsclientsTable::class];
+        $this->Commentsclients = $this->getTableLocator()->get('Commentsclients', $config);
     }
 
     /**
@@ -46,7 +46,7 @@ class CommentsClientsTableTest extends TestCase
      */
     public function tearDown(): void
     {
-        unset($this->CommentsClients);
+        unset($this->Commentsclients);
 
         parent::tearDown();
     }

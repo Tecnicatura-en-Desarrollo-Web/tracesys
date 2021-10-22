@@ -55,10 +55,10 @@ class CreateReports extends AbstractMigration
         $table->addPrimaryKey([
             'report_id',
         ]);
-        $table->addForeignKey('employee_id', 'employee', 'employee_id');
-        $table->addForeignKey('state_id', 'state', 'state_id');
+        $table->addForeignKey('employee_id', 'employees', 'employee_id');
+        $table->addForeignKey('state_id', 'states', 'state_id');
         $table->addForeignKey('product_id', 'products', 'product_id');
-        $table->addForeignKey('bill_id', 'bill', 'bill_id');
+        $table->addForeignKey('bill_id', 'bills', 'bill_id');
         $table->create();
     }
 }

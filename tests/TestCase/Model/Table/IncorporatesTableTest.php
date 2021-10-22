@@ -25,6 +25,7 @@ class IncorporatesTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Incorporates',
+        'app.Replacements',
     ];
 
     /**
@@ -52,11 +53,11 @@ class IncorporatesTableTest extends TestCase
     }
 
     /**
-     * Test validationDefault method
+     * Test buildRules method
      *
      * @return void
      */
-    public function testValidationDefault(): void
+    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

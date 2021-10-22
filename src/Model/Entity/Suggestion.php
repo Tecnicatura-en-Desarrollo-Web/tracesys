@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property int $sector_id
+ *
+ * @property \App\Model\Entity\Sector $sector
  */
 class Suggestion extends Entity
 {
@@ -34,5 +36,6 @@ class Suggestion extends Entity
         'created' => true,
         'modified' => true,
         'sector_id' => true,
+        'sector' => true,
     ];
 }

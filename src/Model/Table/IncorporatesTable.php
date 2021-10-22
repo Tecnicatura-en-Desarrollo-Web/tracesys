@@ -11,6 +11,9 @@ use Cake\Validation\Validator;
 /**
  * Incorporates Model
  *
+ * @property \App\Model\Table\IncorporatesTable&\Cake\ORM\Association\BelongsTo $Incorporates
+ * @property \App\Model\Table\ReplacementsTable&\Cake\ORM\Association\BelongsTo $Replacements
+ *
  * @method \App\Model\Entity\Incorporate newEmptyEntity()
  * @method \App\Model\Entity\Incorporate newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Incorporate[] newEntities(array $data, array $options = [])
@@ -40,8 +43,8 @@ class IncorporatesTable extends Table
         parent::initialize($config);
 
         $this->setTable('incorporates');
-        $this->setDisplayField('id_presupuesto');
-        $this->setPrimaryKey(['id_presupuesto', 'id_repuesto']);
+        $this->setDisplayField('incorporate_id');
+        $this->setPrimaryKey(['incorporate_id', 'replacement_id']);
 
         $this->addBehavior('Timestamp');
 
@@ -49,7 +52,7 @@ class IncorporatesTable extends Table
             'foreignKey' => 'incorporate_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Replacement', [
+        $this->belongsTo('Replacements', [
             'foreignKey' => 'replacement_id',
             'joinType' => 'INNER',
         ]);
@@ -65,7 +68,7 @@ class IncorporatesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['incorporate_id'], 'Incorporates'), ['errorField' => 'incorporate_id']);
-        $rules->add($rules->existsIn(['replacement_id'], 'Replacement'), ['errorField' => 'replacement_id']);
+        $rules->add($rules->existsIn(['replacement_id'], 'Replacements'), ['errorField' => 'replacement_id']);
 
         return $rules;
     }

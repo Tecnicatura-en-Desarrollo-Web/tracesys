@@ -11,6 +11,11 @@ use Cake\Validation\Validator;
 /**
  * Reports Model
  *
+ * @property \App\Model\Table\EmployeesTable&\Cake\ORM\Association\BelongsTo $Employees
+ * @property \App\Model\Table\StatesTable&\Cake\ORM\Association\BelongsTo $States
+ * @property \App\Model\Table\ProductsTable&\Cake\ORM\Association\BelongsTo $Products
+ * @property \App\Model\Table\BillsTable&\Cake\ORM\Association\BelongsTo $Bills
+ *
  * @method \App\Model\Entity\Report newEmptyEntity()
  * @method \App\Model\Entity\Report newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Report[] newEntities(array $data, array $options = [])
@@ -40,16 +45,16 @@ class ReportsTable extends Table
         parent::initialize($config);
 
         $this->setTable('reports');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField('report_id');
+        $this->setPrimaryKey('report_id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Employee', [
+        $this->belongsTo('Employees', [
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('State', [
+        $this->belongsTo('States', [
             'foreignKey' => 'state_id',
             'joinType' => 'INNER',
         ]);
@@ -57,7 +62,7 @@ class ReportsTable extends Table
             'foreignKey' => 'product_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Bill', [
+        $this->belongsTo('Bills', [
             'foreignKey' => 'bill_id',
             'joinType' => 'INNER',
         ]);
@@ -87,10 +92,10 @@ class ReportsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['employee_id'], 'Employee'), ['errorField' => 'employee_id']);
-        $rules->add($rules->existsIn(['state_id'], 'State'), ['errorField' => 'state_id']);
+        $rules->add($rules->existsIn(['employee_id'], 'Employees'), ['errorField' => 'employee_id']);
+        $rules->add($rules->existsIn(['state_id'], 'States'), ['errorField' => 'state_id']);
         $rules->add($rules->existsIn(['product_id'], 'Products'), ['errorField' => 'product_id']);
-        $rules->add($rules->existsIn(['bill_id'], 'Bill'), ['errorField' => 'bill_id']);
+        $rules->add($rules->existsIn(['bill_id'], 'Bills'), ['errorField' => 'bill_id']);
 
         return $rules;
     }

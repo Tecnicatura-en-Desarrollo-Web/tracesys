@@ -3,16 +3,16 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\CommentsClientsController;
+use App\Controller\CommentsclientsController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\CommentsClientsController Test Case
+ * App\Controller\CommentsclientsController Test Case
  *
- * @uses \App\Controller\CommentsClientsController
+ * @uses \App\Controller\CommentsclientsController
  */
-class CommentsClientsControllerTest extends TestCase
+class CommentsclientsControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
@@ -22,7 +22,7 @@ class CommentsClientsControllerTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.CommentsClients',
+        'app.Commentsclients',
     ];
 
     /**

@@ -9,23 +9,23 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * CommentsClients Model
+ * Commentsclients Model
  *
- * @method \App\Model\Entity\CommentsClient newEmptyEntity()
- * @method \App\Model\Entity\CommentsClient newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\CommentsClient[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CommentsClient get($primaryKey, $options = [])
- * @method \App\Model\Entity\CommentsClient findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\CommentsClient patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CommentsClient[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\CommentsClient|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CommentsClient saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CommentsClient[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CommentsClient[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\CommentsClient[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CommentsClient[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Commentsclient newEmptyEntity()
+ * @method \App\Model\Entity\Commentsclient newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Commentsclient[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Commentsclient get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Commentsclient findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Commentsclient patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Commentsclient[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Commentsclient|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Commentsclient saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Commentsclient[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Commentsclient[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Commentsclient[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Commentsclient[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
-class CommentsClientsTable extends Table
+class CommentsclientsTable extends Table
 {
     /**
      * Initialize method
@@ -37,9 +37,9 @@ class CommentsClientsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('comments_clients');
-        $this->setDisplayField('id_comentario');
-        $this->setPrimaryKey('id_comentario');
+        $this->setTable('commentsclients');
+        $this->setDisplayField('commentclient_id');
+        $this->setPrimaryKey('commentclient_id');
     }
 
     /**
@@ -51,8 +51,8 @@ class CommentsClientsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('comment_client_id')
-            ->allowEmptyString('comment_client_id', null, 'create');
+            ->integer('commentclient_id')
+            ->allowEmptyString('commentclient_id', null, 'create');
 
         $validator
             ->scalar('descripcion')

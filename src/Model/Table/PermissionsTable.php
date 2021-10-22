@@ -38,8 +38,8 @@ class PermissionsTable extends Table
         parent::initialize($config);
 
         $this->setTable('permissions');
-        $this->setDisplayField('id_permiso');
-        $this->setPrimaryKey('id_permiso');
+        $this->setDisplayField('permission_id');
+        $this->setPrimaryKey('permission_id');
     }
 
     /**
