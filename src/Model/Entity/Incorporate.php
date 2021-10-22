@@ -12,6 +12,9 @@ use Cake\ORM\Entity;
  * @property int $replacement_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Incorporate $incorporate
+ * @property \App\Model\Entity\Replacement $replacement
  */
 class Incorporate extends Entity
 {
@@ -27,5 +30,7 @@ class Incorporate extends Entity
     protected $_accessible = [
         'created' => true,
         'modified' => true,
+        'incorporate' => true,
+        'replacement' => true,
     ];
 }

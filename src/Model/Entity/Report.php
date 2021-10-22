@@ -15,6 +15,11 @@ use Cake\ORM\Entity;
  * @property int $bill_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Employee $employee
+ * @property \App\Model\Entity\State $state
+ * @property \App\Model\Entity\Product $product
+ * @property \App\Model\Entity\Bill $bill
  */
 class Report extends Entity
 {
@@ -34,5 +39,9 @@ class Report extends Entity
         'bill_id' => true,
         'created' => true,
         'modified' => true,
+        'employee' => true,
+        'state' => true,
+        'product' => true,
+        'bill' => true,
     ];
 }

@@ -60,7 +60,7 @@ export default {
       }
 
       axios
-        .get("api/products", { params: query })
+        .get("api/reports", { params: query })
         .then((response) => {
           console.log(response.data);
         //   this.reports = response.data.reports;

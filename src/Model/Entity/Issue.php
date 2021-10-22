@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property int $report_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Report $report
  */
 class Issue extends Entity
 {
@@ -34,5 +36,6 @@ class Issue extends Entity
         'report_id' => true,
         'created' => true,
         'modified' => true,
+        'report' => true,
     ];
 }

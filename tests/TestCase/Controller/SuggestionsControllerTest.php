@@ -23,6 +23,7 @@ class SuggestionsControllerTest extends TestCase
      */
     protected $fixtures = [
         'app.Suggestions',
+        'app.Sectors',
     ];
 
     /**

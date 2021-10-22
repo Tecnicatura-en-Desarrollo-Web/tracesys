@@ -5896,7 +5896,7 @@ __webpack_require__.r(__webpack_exports__);
         this.defaultClass[query.sort] = query.direction;
       }
 
-      axios.get("api/products", {
+      axios.get("api/reports", {
         params: query
       }).then(function (response) {
         console.log(response.data); //   this.reports = response.data.reports;

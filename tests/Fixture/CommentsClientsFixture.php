@@ -6,9 +6,9 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * CommentsClientsFixture
+ * CommentsclientsFixture
  */
-class CommentsClientsFixture extends TestFixture
+class CommentsclientsFixture extends TestFixture
 {
     /**
      * Fields
@@ -17,10 +17,10 @@ class CommentsClientsFixture extends TestFixture
      */
     // phpcs:disable
     public $fields = [
-        'comment_client_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
+        'commentclient_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'descripcion' => ['type' => 'string', 'length' => 300, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['comment_client_id'], 'length' => []],
+            'primary' => ['type' => 'primary', 'columns' => ['commentclient_id'], 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -37,7 +37,7 @@ class CommentsClientsFixture extends TestFixture
     {
         $this->records = [
             [
-                'comment_client_id' => 1,
+                'commentclient_id' => 1,
                 'descripcion' => 'Lorem ipsum dolor sit amet',
             ],
         ];

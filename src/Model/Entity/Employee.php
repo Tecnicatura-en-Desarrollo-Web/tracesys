@@ -12,6 +12,8 @@ use Cake\ORM\Entity;
  * @property string $cuit
  * @property string $legajo
  * @property int $profile_id
+ *
+ * @property \App\Model\Entity\Profile $profile
  */
 class Employee extends Entity
 {
@@ -28,5 +30,6 @@ class Employee extends Entity
         'cuit' => true,
         'legajo' => true,
         'profile_id' => true,
+        'profile' => true,
     ];
 }

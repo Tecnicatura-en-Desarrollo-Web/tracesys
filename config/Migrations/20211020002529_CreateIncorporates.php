@@ -40,8 +40,8 @@ class CreateIncorporates extends AbstractMigration
             'incorporate_id',
             'replacement_id',
         ]);
-        $table->addForeignKey('incorporate_id', 'buget', 'buget_id');
-        $table->addForeignKey('replacement_id', 'replacement', 'replacement_id');
+        $table->addForeignKey('incorporate_id', 'budgets', 'budget_id');
+        $table->addForeignKey('replacement_id', 'replacements', 'replacement_id');
         $table->create();
     }
 }

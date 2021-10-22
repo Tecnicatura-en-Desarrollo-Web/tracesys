@@ -6,14 +6,14 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * CommentsEmployee Entity
+ * Commentsemployee Entity
  *
- * @property int $comment_employee_id
+ * @property int $commentsemployee_id
  * @property string $descripcion
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
-class CommentsEmployee extends Entity
+class Commentsemployee extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

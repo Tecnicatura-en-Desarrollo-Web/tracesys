@@ -6,15 +6,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * InformeEmpleadoEstado Entity
+ * Informeempleadoestado Entity
  *
- * @property int $informe_empleado_estado_id
+ * @property int $informeempleadoestados_id
  * @property int $employee_id
  * @property int $state_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Informeempleadoestado $informeempleadoestado
+ * @property \App\Model\Entity\Employee $employee
+ * @property \App\Model\Entity\State $state
  */
-class InformeEmpleadoEstado extends Entity
+class Informeempleadoestado extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -28,5 +32,8 @@ class InformeEmpleadoEstado extends Entity
     protected $_accessible = [
         'created' => true,
         'modified' => true,
+        'informeempleadoestado' => true,
+        'employee' => true,
+        'state' => true,
     ];
 }

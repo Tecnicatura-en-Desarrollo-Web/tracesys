@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Controller\AppController;
 use App\Controller\ProductsController;
 use App\Controller\Traits\ResponseTrait;
+use App\Model\Entity\Employee;
 use App\Model\Entity\Product;
 use App\Model\Table\BillTable;
 use App\Model\Table\EmployeeTable;
@@ -33,66 +34,23 @@ class ReportsController extends AppController
      */
     public function index()
     {
-        // $data['query'] = [
-        //     'id' => [
-        //         'sort' => 'id',
-        //         'direction' => 'asc',
-        //     ],
-        //     'fecha' => [
-        //         'sort' => 'title',
-        //         'direction' => 'asc',
-        //     ],
-        //     'motivo' => [
-        //         'sort' => 'created',
-        //         'direction' => 'asc',
-        //     ],
-        //     'estado' => [
-        //         'sort' => 'modified',
-        //         'direction' => 'asc',
-        //     ],
-        // ];
-
-        // if ($this->getRequest()->getQuery()) {
-        //     $direction = 'asc';
-        //     if ($this->getRequest()->getQuery('direction') === 'asc') {
-        //         $direction = 'desc';
-        //     }
 
         //     $data['query'][$this->getRequest()->getQuery('sort')]['direction'] = $direction;
         // }
-        $objProducto=new ProductsTable();
-        $objEmpleado=new EmployeeTable();
-        $objEstado=new StateTable();
-        $objFactura=new BillTable();
-        $reports=$this->paginate($this->Reports);
-        $data['reports']=array();
-        foreach ($reports as $report) {
-            $producto=$objProducto
-                ->find()
-                ->where(['id_producto' => $report['id_producto']])
-                ->first();
-            $empleado=$objEmpleado
-                ->find()
-                ->where(['cuit' => $report['id_empleado']])
-                ->first();
-            $estado=$objEstado
-                ->find()
-                ->where(['id_estado' => $report['id_estado']])
-                ->first();
-            $factura=$objFactura
-                ->find()
-                ->where(['id_factura' => $report['id_factura']])
-                ->first();
-            $infoReport=[
-                        'id_informe'=>$report['id_informe'],
-                        'producto'=>$producto,
-                        'empleado'=>$empleado,
-                        'estado'=>$estado,
-                        'factura'=>$factura
-            ];
-            array_push($data['reports'],$infoReport);
-        }
-        return $this->setJsonResponse($data);
+        //$reports = $this->Reports->find('all');
+        //$query = $this->Reports->find('all', ['contain' => ['Products','States']]);
+        // $query = $this->paginate = [
+        //     'contain' => ['Employees', 'States', 'Products', 'Bills'],
+        // ];
+        // $data['reports']=$query;
+        // return $this->setJsonResponse($data['reports']);
+
+        $this->paginate = [
+            'contain' => ['Employees', 'States', 'Products', 'Bills'],
+        ];
+        $data['reports'] = $this->paginate($this->Reports);
+
+        return $this->setJsonResponse($data['reports']);
     }
 
     /**

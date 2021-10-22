@@ -18,6 +18,9 @@ class IncorporatesController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['Incorporates', 'Replacements'],
+        ];
         $incorporates = $this->paginate($this->Incorporates);
 
         $this->set(compact('incorporates'));
@@ -33,7 +36,7 @@ class IncorporatesController extends AppController
     public function view($id = null)
     {
         $incorporate = $this->Incorporates->get($id, [
-            'contain' => [],
+            'contain' => ['Incorporates', 'Replacements'],
         ]);
 
         $this->set(compact('incorporate'));
@@ -56,7 +59,9 @@ class IncorporatesController extends AppController
             }
             $this->Flash->error(__('The incorporate could not be saved. Please, try again.'));
         }
-        $this->set(compact('incorporate'));
+        $incorporates = $this->Incorporates->Incorporates->find('list', ['limit' => 200]);
+        $replacements = $this->Incorporates->Replacements->find('list', ['limit' => 200]);
+        $this->set(compact('incorporate', 'incorporates', 'replacements'));
     }
 
     /**
@@ -80,7 +85,9 @@ class IncorporatesController extends AppController
             }
             $this->Flash->error(__('The incorporate could not be saved. Please, try again.'));
         }
-        $this->set(compact('incorporate'));
+        $incorporates = $this->Incorporates->Incorporates->find('list', ['limit' => 200]);
+        $replacements = $this->Incorporates->Replacements->find('list', ['limit' => 200]);
+        $this->set(compact('incorporate', 'incorporates', 'replacements'));
     }
 
     /**

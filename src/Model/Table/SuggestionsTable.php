@@ -11,6 +11,8 @@ use Cake\Validation\Validator;
 /**
  * Suggestions Model
  *
+ * @property \App\Model\Table\SectorsTable&\Cake\ORM\Association\BelongsTo $Sectors
+ *
  * @method \App\Model\Entity\Suggestion newEmptyEntity()
  * @method \App\Model\Entity\Suggestion newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Suggestion[] newEntities(array $data, array $options = [])
@@ -40,12 +42,12 @@ class SuggestionsTable extends Table
         parent::initialize($config);
 
         $this->setTable('suggestions');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField('suggestion_id');
+        $this->setPrimaryKey('suggestion_id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Sector', [
+        $this->belongsTo('Sectors', [
             'foreignKey' => 'sector_id',
             'joinType' => 'INNER',
         ]);
@@ -93,7 +95,7 @@ class SuggestionsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['sector_id'], 'Sector'), ['errorField' => 'sector_id']);
+        $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
 
         return $rules;
     }

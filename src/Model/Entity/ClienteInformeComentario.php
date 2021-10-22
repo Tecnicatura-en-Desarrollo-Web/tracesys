@@ -6,16 +6,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * ClienteInformeComentario Entity
+ * Clienteinformecomentario Entity
  *
- * @property int $cliente_informe_comentario_id
+ * @property int $clienteinformecomentario_id
  * @property string $cuit
  * @property int $comment_client_id
  * @property int $report_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \App\Model\Entity\Clienteinformecomentario $clienteinformecomentario
+ * @property \App\Model\Entity\Commentsclient $commentsclient
+ * @property \App\Model\Entity\Report $report
  */
-class ClienteInformeComentario extends Entity
+class Clienteinformecomentario extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -30,5 +34,8 @@ class ClienteInformeComentario extends Entity
         'cuit' => true,
         'created' => true,
         'modified' => true,
+        'clienteinformecomentario' => true,
+        'commentsclient' => true,
+        'report' => true,
     ];
 }

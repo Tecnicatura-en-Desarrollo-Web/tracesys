@@ -32,10 +32,10 @@ class ReportsFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['report_id'], 'length' => []],
-            'reports_ibfk_4' => ['type' => 'foreign', 'columns' => ['bill_id'], 'references' => ['bill', 'bill_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'reports_ibfk_4' => ['type' => 'foreign', 'columns' => ['bill_id'], 'references' => ['bills', 'bill_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
             'reports_ibfk_3' => ['type' => 'foreign', 'columns' => ['product_id'], 'references' => ['products', 'product_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
-            'reports_ibfk_2' => ['type' => 'foreign', 'columns' => ['state_id'], 'references' => ['state', 'state_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
-            'reports_ibfk_1' => ['type' => 'foreign', 'columns' => ['employee_id'], 'references' => ['employee', 'employee_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'reports_ibfk_2' => ['type' => 'foreign', 'columns' => ['state_id'], 'references' => ['states', 'state_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'reports_ibfk_1' => ['type' => 'foreign', 'columns' => ['employee_id'], 'references' => ['employees', 'employee_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -57,8 +57,8 @@ class ReportsFixture extends TestFixture
                 'state_id' => 1,
                 'product_id' => 1,
                 'bill_id' => 1,
-                'created' => '2021-10-21 22:30:28',
-                'modified' => '2021-10-21 22:30:28',
+                'created' => '2021-10-22 00:05:56',
+                'modified' => '2021-10-22 00:05:56',
             ],
         ];
         parent::init();

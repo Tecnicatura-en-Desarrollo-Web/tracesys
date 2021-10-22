@@ -12,6 +12,8 @@ use Cake\ORM\Entity;
  * @property string $nombre_sector
  * @property int $orden
  * @property int $stage_id
+ *
+ * @property \App\Model\Entity\Stage $stage
  */
 class Sector extends Entity
 {
@@ -28,5 +30,6 @@ class Sector extends Entity
         'nombre_sector' => true,
         'orden' => true,
         'stage_id' => true,
+        'stage' => true,
     ];
 }
