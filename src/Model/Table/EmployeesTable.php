@@ -52,6 +52,10 @@ class EmployeesTable extends Table
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER',
         ]);
+        // $this->belongsTo('Users', [
+        //     'foreignKey' => 'user_id',
+        //     'joinType' => 'INNER',
+        // ]);
     }
 
     /**

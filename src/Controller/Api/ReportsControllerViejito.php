@@ -1,7 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+use App\Controller\AppController;
+use App\Controller\ProductsController;
+use App\Controller\Traits\ResponseTrait;
+use App\Model\Entity\Employee;
+use App\Model\Entity\Product;
+use App\Model\Table\BillTable;
+use App\Model\Table\EmployeeTable;
+use App\Model\Table\ProductsTable;
+use App\Model\Table\StateTable;
 
 /**
  * Reports Controller
@@ -11,6 +20,13 @@ namespace App\Controller;
  */
 class ReportsController extends AppController
 {
+    use ResponseTrait;
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->viewBuilder()->setLayout('');
+    }
     /**
      * Index method
      *
@@ -18,12 +34,23 @@ class ReportsController extends AppController
      */
     public function index()
     {
+
+        //     $data['query'][$this->getRequest()->getQuery('sort')]['direction'] = $direction;
+        // }
+        //$reports = $this->Reports->find('all');
+        //$query = $this->Reports->find('all', ['contain' => ['Products','States']]);
+        // $query = $this->paginate = [
+        //     'contain' => ['Employees', 'States', 'Products', 'Bills'],
+        // ];
+        // $data['reports']=$query;
+        // return $this->setJsonResponse($data['reports']);
+
         $this->paginate = [
             'contain' => ['Employees', 'States', 'Products', 'Bills'],
         ];
-        $reports = $this->paginate($this->Reports);
+        $data['reports'] = $this->paginate($this->Reports);
 
-        $this->set(compact('reports'));
+        return $this->setJsonResponse($data['reports']);
     }
 
     /**
@@ -35,11 +62,16 @@ class ReportsController extends AppController
      */
     public function view($id = null)
     {
-        $report = $this->Reports->get($id, [
-            'contain' => ['Employees', 'States', 'Products', 'Bills'],
-        ]);
 
-        $this->set(compact('report'));
+        return $this->setJsonResponse([
+            'MOtivoooooo' => "jonaaaaaaaaaa"
+        ]);
+        $report = $this->Reports->get($id, [
+            'contain' => [],
+        ]);
+        $motivo=$this->Reports->get($report[0]['id_producto'])['motivo'];
+
+        //return $this->setJsonResponse(['report' => $report]);
     }
 
     /**
@@ -47,23 +79,37 @@ class ReportsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function save()
     {
-        $report = $this->Reports->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $report = $this->Reports->patchEntity($report, $this->request->getData());
-            if ($this->Reports->save($report)) {
-                $this->Flash->success(__('The report has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The report could not be saved. Please, try again.'));
+        if (! $this->request->is('post')) {
+            return $this->setJsonResponse([
+                'error' => true,
+                'message' => 'Invalid request!',
+            ]);
         }
-        $employees = $this->Reports->Employees->find('list', ['limit' => 200]);
-        $states = $this->Reports->States->find('list', ['limit' => 200]);
-        $products = $this->Reports->Products->find('list', ['limit' => 200]);
-        $bills = $this->Reports->Bills->find('list', ['limit' => 200]);
-        $this->set(compact('report', 'employees', 'states', 'products', 'bills'));
+
+        $report = $this->Reports->newEmptyEntity();
+        $report = $this->Reports->patchEntity($report, $this->request->getData());
+        $result = $this->Reports->save($report);
+        if ($result !== false) {
+            return $this->setJsonResponse(
+                [
+                    'data' => $result,
+                    'success' => true,
+                    'url' => '/reports',
+                    'message' => __('The post has been saved.'),
+                ],
+                201
+            );
+        }
+
+        return $this->setJsonResponse(
+            [
+                'errors' => $report->getValidationErrors(),
+                'message' => __('The post could not be saved. Please, try again.'),
+            ],
+            422
+        );
     }
 
     /**
@@ -87,11 +133,7 @@ class ReportsController extends AppController
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
-        $employees = $this->Reports->Employees->find('list', ['limit' => 200]);
-        $states = $this->Reports->States->find('list', ['limit' => 200]);
-        $products = $this->Reports->Products->find('list', ['limit' => 200]);
-        $bills = $this->Reports->Bills->find('list', ['limit' => 200]);
-        $this->set(compact('report', 'employees', 'states', 'products', 'bills'));
+        $this->set(compact('report'));
     }
 
     /**

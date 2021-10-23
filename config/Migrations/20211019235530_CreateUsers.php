@@ -65,7 +65,6 @@ class CreateUsers extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-
         $table->addColumn('stage_id', 'integer', [
             'default' => null,
             'limit' => 50,

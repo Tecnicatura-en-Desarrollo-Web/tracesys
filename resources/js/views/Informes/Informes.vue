@@ -27,7 +27,6 @@
               <td>{{ report.report.product.tipo }}</td>
               <td>{{ report.report.product.motivo }}</td>
               <td>{{ report.state.nombre_estado }}</td>
-              <!-- <td>{{ nombre_etapa }}</td> -->
               <td>
                 <!-- <router-link :to="{ `/detalleInforme/${report.report_id}`}" idInforme='idInforme'>+</router-link -->
                 <router-link
@@ -79,21 +78,18 @@ export default {
           console.log("Error: " + error);
         });
     },
-    capturarId(id) {
-      this.id = id;
+    //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
+    created() {
+      if (!this.$session.exists()) {
+        this.nombre_etapa = "asdasd";
+        this.$router.push("/login");
+        console.log("saaale", nombre_etapa);
+      }
+      if (this.$session.exists()) {
+        this.nombre_etapa = this.$session.get("nombre_etapa");
+        this.etapa_id = this.$session.get("etapa_id");
+      }
     },
-  },
-  //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
-  created() {
-    if (!this.$session.exists()) {
-      this.nombre_etapa = "asdasd";
-      this.$router.push("/login");
-      console.log("saaale", nombre_etapa);
-    }
-    if (this.$session.exists()) {
-      this.nombre_etapa = this.$session.get("nombre_etapa");
-      this.etapa_id = this.$session.get("etapa_id");
-    }
   },
 };
 </script>

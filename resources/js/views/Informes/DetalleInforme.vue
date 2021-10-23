@@ -5,90 +5,102 @@
                 <tr>
                     <th scope="col">Fecha y hora</th>
                     <th scope="col">Derivado Por</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Modelo</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Motivo</th>
-                    <th scope="col">Comentario</th>
+                    <th scope="col">Comentarios</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>13-05-21 13:06</td>
-                    <td>Atencion al cliente</td>
-                    <td>Entrante</td>
-                    <td>Pantalla negra</td>
-                    <td>Cada vez que el cliente quiere encenderla tira error y se reinicia</td>
+                    <td>{{report.created}}</td>
+                    <td>{{report.employee.user.nombre}} {{report.employee.user.apellido}}</td>
+                    <td>{{report.report.product.tipo}}</td>
+                    <td>{{report.report.product.modelo}}</td>
+                    <td>{{report.state.nombre_estado}}</td>
+                    <td>{{report.report.product.motivo}}</td>
+                    <td>{{report.report.product.motivo}}</td>
                 </tr>
-                <tr>
-                    <td>13-05-21 13:06</td>
-                    <td>Diagnosticador</td>
-                    <td>En preparacion</td>
-                    <td>Pantalla negra</td>
-                    <td>Reinstalar windows</td>
-                </tr>
-                <tr>
-                    <td>13-05-21 13:06</td>
-                    <td>Tecnico</td>
-                    <td>En reparacion</td>
-                    <td>Pantalla negra</td>
-                    <td>Windows 10 reinstalado</td>
-                </tr>
-
             </tbody>
         </table>
-        <div class="row align-items-center">
-            <div class="col col-lg-2">
-                <h5>Derivar a:</h5>
-            </div>
-            <div class="col col-lg-10">
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-        </div>
-        <div class="row align-items-center mt-2">
-            <div class="col col-lg-2">
-                <h5>Sugerencias:</h5>
-            </div>
-            <div class="col col-lg-10">
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option selected>Choose...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-        </div>
-        <div class="row align-items-center mt-2">
-            <div class="col col-lg-2">
-                <h5>Comentarios:</h5>
-            </div>
-            <div class="col col-lg-10">
-                <div class="form-group">
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <form @submit.prevent="onSubmit" novalidate="novalidate">
+            <div class="row align-items-center">
+                <div class="col col-lg-2">
+                    <h5>Derivar a:</h5>
+                </div>
+                <div class="col col-lg-10">
+                    <select class="custom-select" id="inputGroupSelect01" name="selectSector">
+                        <option selected>Elija Sector...</option>
+                            <option v-for="sectorADerivar in sectoresADerivar" v-if="sectorADerivar.sector_id != 1" :key="sectorADerivar.sector_id" v-bind:value="sectorADerivar.sector_id">
+                                <text >{{sectorADerivar.nombre_sector}}</text>
+                            </option>
+                    </select>
                 </div>
             </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col col-lg-2">
-                <button class="btn btn-primary">Derivar</button>
+            <div class="row align-items-center mt-2">
+                <div class="col col-lg-2">
+                    <h5>Sugerencias:</h5>
+                </div>
+                <div class="col col-lg-10">
+                    <select class="custom-select" id="inputGroupSelect01" name="selectSugerencia">
+                        <option selected>Asigne sugerencia...</option>
+                            <option v-for="sugerencia in sugerencias" :key="sugerencia.suggestion.suggestion_id" v-bind:value="sugerencia.suggestion.suggestion_id">
+                                {{sugerencia.suggestion.nombre_sugerencia}}
+                            </option>
+                    </select>
+                </div>
             </div>
-        {{idInforme}}
-        </div>
-
-
+            <div class="row align-items-center mt-2">
+                <div class="col col-lg-2">
+                    <h5>Comentarios:</h5>
+                </div>
+                <div class="col col-lg-10">
+                    <div class="form-group">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" name="comentarios" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col col-lg-2">
+                    <button class="btn btn-primary" type="submit">Derivar</button>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 <script>
+import formSerialize from "form-serialize";
+import Errors from "../../helpers/FormErrors.js";
 export default {
-    props:['idInforme'],
     data(){
         return{
-            datosInformes:[]
-        }
+            idInforme:null,
+            usuarioADerivarSeleccionado:'',
+            sectoresADerivar:[],
+            sugerencias:[],
 
+            report:{
+                employee:{
+                    user:{
+                        nombre:'',
+                        apellido:''
+                    }
+
+                },
+                report:{
+
+                    product:{
+                        tipo:'',
+                        modelo:'',
+                        motivo:''
+                    }
+                },
+                state:{
+                    nombre_estado:''
+                }
+            }
+        }
     },
     created(){
         if(!this.$session.exists()){
@@ -96,26 +108,80 @@ export default {
         }
     },
     mounted() {
-        this.$emit('idInforme',this.idInforme);
-        console.log(this.idInforme);
-        // this.currentRoute = this.$router.currentRoute.name;
-        // this.getReports(this.$route.query);
+        this.idInforme = this.$route.params.id;
+        this.verInforme(this.$route.query);
+        this.obtenerSugerencias(this.$route.query);
+        this.obtenerSectores(this.$route.query);
     },
     methods: {
-        // getReports(query) {
-        // if (query.sort !== "undefined" && query.direction) {
-        //     this.defaultClass[query.sort] = query.direction;
-        // }
-        // axios
-        //     .get(`api/reports/view/${this.idInforme}`, { params: query })
-        //     .then((response) => {
-        //         console.log(response.data.reports);
-        //         this.datosInformes = response.data.reports;
-        //     })
-        //     .catch((error) => {
-        //         console.log("Error: " + error);
-        //     });
-        // },
+        verInforme(query){
+                axios.get(`/api/informeempleadoestados/informesCambiosEstados/${this.idInforme}`, { params: query })
+                .then(response => {
+                    //ver mas adelante mejorar la estructura del arreglo devuelto
+                    this.report = response.data.cambiosEstadoInforme[0];
+                    console.log(this.report);
+                    // console.log(this.report);
+                })
+                .catch(error => {
+                    console.log('Error: ' + error);
+                });
+        },
+        obtenerSugerencias(query) {
+            axios.get(`/api/problemasugerencias/issuesByReport/${this.idInforme}`, { params: query })
+                .then(response => {
+                    this.sugerencias=response.data.suggestions;
+                    console.log(response.data.suggestions);
+                    //this.sugerencias = response.data.suggestions;
+                })
+                .catch(error => {
+                    console.log('Error: ' + error);
+                });
+        },
+        obtenerSectores(query) {
+            axios.get("/api/sectors", { params: query })
+                .then(response => {
+                    console.log(response.data.sectors);
+                    this.sectoresADerivar=response.data.sectors;
+                    //this.usersDerivar = response.data.users;
+                })
+                .catch(error => {
+                    console.log('Error: ' + error);
+                });
+        },
+        onSubmit(event) {
+                let data = formSerialize(event.target, {
+                    hash: false,
+                    empty: true
+                });
+                data+='&idInforme='+this.idInforme;
+                data+='&idEmpleado='+this.report.employee.employee_id;
+                // console.log(data);
+                axios.post(`/api/informeempleadoestados/save`, data, {
+                        headers: {'X-Requested-With': 'XMLHttpRequest'}
+                    })
+                    .then(response => {
+                        // Redirect on success
+                        console.log(response);
+                        if (response.data.success) {
+                            this.$notify({
+                                group: 'default',
+                                type: 'success',
+                                text: response.data.message
+                            });
+
+                            this.$router.push({ path: response.data.url });
+                        }
+                    })
+                    .catch(error => {
+                        this.$notify({
+                            group: 'default',
+                            type: 'error',
+                            text: error.response.data.message
+                        });
+
+                        this.errors.add(error.response.data.errors);
+                    });
+            }
     },
 }
 </script>

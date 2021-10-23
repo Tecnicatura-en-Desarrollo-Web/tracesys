@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Controller\AppController;
-use App\Controller\ProductsController;
 use App\Controller\Traits\ResponseTrait;
 use App\Model\Entity\Employee;
 use App\Model\Entity\Product;
@@ -16,6 +15,7 @@ use App\Model\Table\ProductsTable;
 use App\Model\Table\StateTable;
 use App\Model\Table\ClientsTable;
 use App\Model\Table\IssuesTable;
+use App\Model\Table\UsersTable;
 
 /**
  * Reports Controller
@@ -26,12 +26,7 @@ use App\Model\Table\IssuesTable;
 class ReportsController extends AppController
 {
     use ResponseTrait;
-    public function initialize(): void
-    {
-        parent::initialize();
 
-        $this->viewBuilder()->setLayout('');
-    }
     /**
      * Index method
      *
@@ -62,16 +57,25 @@ class ReportsController extends AppController
      */
     public function view($id = null)
     {
-
-        return $this->setJsonResponse([
-            'MOtivoooooo' => "jonaaaaaaaaaa"
-        ]);
         $report = $this->Reports->get($id, [
-            'contain' => [],
+            'contain' => ['Employees', 'States', 'Products.Clients', 'Bills', 'Employees.Users'],
         ]);
         $motivo = $this->Reports->get($report[0]['id_producto'])['motivo'];
 
-        //return $this->setJsonResponse(['report' => $report]);
+        //****Usuario encargado y usuarios a derivar*****/
+        // $objUser=new UsersTable();
+        // $userEncargado=$objUser
+        //     ->find()
+        //     ->where(['user_id =' => $report['employee_id']])
+        //     ->first();
+        // $usersDerivar=$objUser
+        //     ->find();
+
+        // $report['userEncargado']=$userEncargado;
+        // $report['usersDerivar']=$usersDerivar;
+        /************************************************/
+
+        return $this->setJsonResponse(['report' => $report]);
     }
 
     /**
@@ -79,7 +83,7 @@ class ReportsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function save()
+    public function add()
     {
         if (!$this->request->is('post')) {
             return $this->setJsonResponse([
@@ -205,7 +209,11 @@ class ReportsController extends AppController
             }
             $this->Flash->error(__('The report could not be saved. Please, try again.'));
         }
-        $this->set(compact('report'));
+        $employees = $this->Reports->Employees->find('list', ['limit' => 200]);
+        $states = $this->Reports->States->find('list', ['limit' => 200]);
+        $products = $this->Reports->Products->find('list', ['limit' => 200]);
+        $bills = $this->Reports->Bills->find('list', ['limit' => 200]);
+        $this->set(compact('report', 'employees', 'states', 'products', 'bills'));
     }
 
     /**

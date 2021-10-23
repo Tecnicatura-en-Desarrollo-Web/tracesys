@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Sectors Controller
@@ -11,6 +13,7 @@ namespace App\Controller;
  */
 class SectorsController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -19,11 +22,10 @@ class SectorsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Stages'],
+            'contain' => [],
         ];
         $sectors = $this->paginate($this->Sectors);
-
-        $this->set(compact('sectors'));
+        return $this->setJsonResponse(['sectors' => $sectors]);
     }
 
     /**

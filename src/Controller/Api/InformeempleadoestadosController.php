@@ -44,7 +44,21 @@ class InformeempleadoestadosController extends AppController
 
         return $this->setJsonResponse($informeempleadoestados);
     }
+    public function informesCambiosEstados($id = null)
+    {
+        $this->paginate = [
+            'contain' => ['Employees.Users', 'Reports.Products', 'States'],
+            'conditions' => ['informeempleadoestados_id' => $id]
+        ];
+        $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
+        return $this->setJsonResponse($cambiosEstadoInforme);
 
+        // $cambiosEstadoInforme=$this->Informeempleadoestados->get($id, [
+        //     'contain' => ['Employees.Users','Reports.Products','States'],
+        //     'conditions' => ['informeempleadoestados_id' => $id]
+        //     ]);
+        // return $this->setJsonResponse(['cambiosEstadoInforme' => $cambiosEstadoInforme]);
+    }
     /**
      * View method
      *
@@ -66,6 +80,69 @@ class InformeempleadoestadosController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
+    public function save()
+    {
+
+
+        $dataVue =  $this->request->getData();
+        $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
+        $dataNueva = [
+            "informeempleadoestados_id" => (int)$dataVue['idInforme'],
+            "employee_id" => (int)$dataVue['idEmpleado'],
+            "state_id" => (int)$dataVue['selectSector'],
+        ];
+        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
+        return $this->setJsonResponse([
+            'datosEntidad' => $informeempleadoestado,
+
+        ]);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado);
+        return $this->setJsonResponse([
+            'resultado' => $result,
+        ]);
+
+
+
+
+        // if (! $this->request->is('post')) {
+        //     return $this->setJsonResponse([
+        //         'error' => true,
+        //         'message' => 'Invalid request!',
+        //     ]);
+        // }
+
+        // $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
+        // $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $this->request->getData());
+        // $result = $this->Informeempleadoestados->save($informeempleadoestado);
+        // return $this->setJsonResponse(
+        //     [
+        //         'datos' => $result,
+        //     ],
+        // );
+
+        // return $this->setJsonResponse([
+        //     'datosEntidad' => $post,
+        // ]);
+        // if ($result !== false) {
+        //     return $this->setJsonResponse(
+        //         [
+        //             'data' => $result,
+        //             'success' => true,
+        //             'url' => '/posts',
+        //             'message' => __('The post has been saved.'),
+        //         ],
+        //         201
+        //     );
+        // }
+
+        // return $this->setJsonResponse(
+        //     [
+        //         'errors' => $post->getValidationErrors(),
+        //         'message' => __('The post could not be saved. Please, try again.'),
+        //     ],
+        //     422
+        // );
+    }
     public function add()
     {
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
@@ -82,6 +159,9 @@ class InformeempleadoestadosController extends AppController
         $employees = $this->Informeempleadoestados->Employees->find('list', ['limit' => 200]);
         $states = $this->Informeempleadoestados->States->find('list', ['limit' => 200]);
         $this->set(compact('informeempleadoestado', 'informeempleadoestados', 'employees', 'states'));
+
+        // $formu['formularioinfo'] = "llego jonaaaaaaaaaaa";
+        // return $this->setJsonResponse($formu);
     }
 
     /**

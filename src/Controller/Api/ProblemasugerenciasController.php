@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Problemasugerencias Controller
@@ -11,6 +13,7 @@ namespace App\Controller;
  */
 class ProblemasugerenciasController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -18,12 +21,12 @@ class ProblemasugerenciasController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Problemasugerencias', 'Suggestions'],
-        ];
-        $problemasugerencias = $this->paginate($this->Problemasugerencias);
 
-        $this->set(compact('problemasugerencias'));
+        $this->paginate = [
+            'contain' => ['Suggestions','Issues'],
+        ];
+        $Problemasugerencias['suggestions'] = $this->paginate($this->Problemasugerencias);
+        return $this->setJsonResponse($Problemasugerencias);
     }
 
     /**
@@ -33,6 +36,15 @@ class ProblemasugerenciasController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    public function issuesByReport($id = null){
+        $this->paginate = [
+            'contain' => ['Suggestions'],
+            'conditions'=>['problemasugerencia_id' => $id]
+        ];
+        $problemasugerencia ['suggestions'] = $this->paginate($this->Problemasugerencias);
+        return $this->setJsonResponse($problemasugerencia);
+
+    }
     public function view($id = null)
     {
         $problemasugerencia = $this->Problemasugerencias->get($id, [
