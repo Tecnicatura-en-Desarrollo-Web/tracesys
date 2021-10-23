@@ -48,8 +48,9 @@ class InformeempleadoestadosController extends AppController
     {
         $this->paginate = [
             'contain' => ['Employees.Users', 'Reports.Products', 'States'],
-            'conditions' => ['informeempleadoestados_id' => $id]
+            'conditions' => ['informeempleadoestado_id' => $id]
         ];
+
         $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
         return $this->setJsonResponse($cambiosEstadoInforme);
 
@@ -87,18 +88,14 @@ class InformeempleadoestadosController extends AppController
         $dataVue =  $this->request->getData();
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
         $dataNueva = [
-            "informeempleadoestados_id" => (int)$dataVue['idInforme'],
+            "informeempleadoestado_id" => (int)$dataVue['idInforme'],
             "employee_id" => (int)$dataVue['idEmpleado'],
             "state_id" => (int)$dataVue['selectSector'],
         ];
         $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
-        return $this->setJsonResponse([
-            'datosEntidad' => $informeempleadoestado,
-
-        ]);
         $result = $this->Informeempleadoestados->save($informeempleadoestado);
         return $this->setJsonResponse([
-            'resultado' => $result,
+            'datosEntidad' => $result,
         ]);
 
 

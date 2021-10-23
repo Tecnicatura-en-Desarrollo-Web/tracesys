@@ -52,14 +52,4 @@ class InformeempleadoestadosTableTest extends TestCase
 
         parent::tearDown();
     }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
 }
