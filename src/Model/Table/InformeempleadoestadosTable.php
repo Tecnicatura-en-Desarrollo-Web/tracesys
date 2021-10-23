@@ -50,10 +50,10 @@ class InformeempleadoestadosTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Informeempleadoestados', [
+        /* $this->belongsTo('Informeempleadoestados', [
             'foreignKey' => 'informeempleadoestados_id',
             'joinType' => 'INNER',
-        ]);
+        ]); */
         $this->belongsTo('Employees', [
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER',

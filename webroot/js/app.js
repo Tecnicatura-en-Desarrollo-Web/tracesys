@@ -5346,20 +5346,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      title: 'CakeVue',
-      title_url: 'root',
-      usuario: ''
+      title: "CakeVue",
+      title_url: "root",
+      usuario: "",
+      nombre_etapa: ""
     };
   },
   methods: {
     logout: function logout() {
       this.$session.destroy();
-      window.location.href = 'http://localhost:8765/home';
+      window.location.href = "http://localhost:8765/home";
     }
   },
   created: function created() {
     if (this.$session.exists()) {
-      this.usuario = this.$session.get(this.$session.id()); // this.$router.push('login');
+      this.usuario = this.$session.get(this.$session.id());
+      this.nombre_etapa = this.$session.get("nombre_etapa"); // this.$router.push('login');
     }
   }
 });
@@ -5928,6 +5930,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -5935,8 +5940,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      reports: [],
-      id: 0
+      reports: []
     };
   },
   mounted: function mounted() {
@@ -5946,6 +5950,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getPosts: function getPosts(query) {
+      var _this = this;
+
       if (query.sort !== "undefined" && query.direction) {
         this.defaultClass[query.sort] = query.direction;
       }
@@ -5953,8 +5959,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("api/reports", {
         params: query
       }).then(function (response) {
-        console.log(response.data); //   this.reports = response.data.reports;
-        //   this.queryParams = response.data.query;
+        console.log(response.data);
+        _this.reports = response.data.reports;
+        _this.queryParams = response.data.query;
       })["catch"](function (error) {
         console.log("Error: " + error);
       });
@@ -6564,8 +6571,6 @@ __webpack_require__.r(__webpack_exports__);
           "X-Requested-With": "XMLHttpRequest"
         }
       }).then(function (response) {
-        console.log(response.data);
-
         if (response.data.message) {
           //***Mensaje de notificacion si llego una respuesta******//
           _this.$notify({
@@ -6576,14 +6581,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
           _this.login = true;
-          console.log(response.data.user); //***Se inicia session******//
+          console.log(response.data); //***Se inicia session******//
 
           _this.$session.start(); //***Seteo el nombre del usuario logueado en la variable sesion para mostrar su nombre en su home******
 
 
           _this.$session.set(_this.$session.id(), response.data.user);
 
-          _this.$session.set("user_id", response.data.user_id); //***Redirigimos al usuario a su lista de informes******//
+          _this.$session.set("user_id", response.data.user_id);
+
+          _this.$session.set("nombre_etapa", response.data.nombre_etapa); //***Redirigimos al usuario a su lista de informes******//
 
 
           window.location.href = "http://localhost:8765/home";
@@ -34222,15 +34229,9 @@ var render = function() {
     [
       _c("ul", { staticClass: "title-area large-2 medium-4 columns" }, [
         _c("li", { staticClass: "name" }, [
-          _c(
-            "h1",
-            [
-              _c("router-link", { attrs: { to: { name: _vm.title_url } } }, [
-                _vm._v(_vm._s(_vm.usuario))
-              ])
-            ],
-            1
-          )
+          _c("h1", { attrs: { id: "nombre-etapa" } }, [
+            _vm._v(_vm._s(_vm.nombre_etapa))
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -34954,24 +34955,29 @@ var render = function() {
             "tbody",
             _vm._l(_vm.reports, function(report) {
               return _c("tr", [
-                _c("td", [_vm._v(_vm._s(report.id_informe))]),
+                _c("td", [_vm._v(_vm._s(report.report_id))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(report.created))]),
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(report.created))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.producto.tipo))]),
+                _c("td", [_vm._v(_vm._s(report.product.tipo))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.producto.motivo))]),
+                _c("td", [_vm._v(_vm._s(report.product.motivo))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.estado.nombre_estado))]),
+                _c("td", [_vm._v(_vm._s(report.state.nombre_estado))]),
                 _vm._v(" "),
                 _c(
                   "td",
                   [
                     _c(
                       "router-link",
-                      { attrs: { to: "/detalleInforme", numero: report.id } },
+                      {
+                        attrs: {
+                          to: { path: "/detalleInforme/" + report.report_id },
+                          idInforme: "idInforme"
+                        }
+                      },
                       [_vm._v("+")]
                     )
                   ],

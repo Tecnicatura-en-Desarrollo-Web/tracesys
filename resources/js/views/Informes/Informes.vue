@@ -17,14 +17,17 @@
           </thead>
           <tbody>
             <tr v-for="report in reports">
-              <td>{{ report.id_informe }}</td>
+              <td>{{ report.report_id }}</td>
               <td>{{ report.created }}</td>
               <td>{{ report.created }}</td>
-              <td>{{ report.producto.tipo }}</td>
-              <td>{{ report.producto.motivo }}</td>
-              <td>{{ report.estado.nombre_estado }}</td>
+              <td>{{ report.product.tipo }}</td>
+              <td>{{ report.product.motivo }}</td>
+              <td>{{ report.state.nombre_estado }}</td>
               <td>
-                <router-link to="/detalleInforme" :numero="report.id"
+                <!-- <router-link :to="{ `/detalleInforme/${report.report_id}`}" idInforme='idInforme'>+</router-link -->
+                <router-link
+                  :to="{ path: `/detalleInforme/${report.report_id}` }"
+                  idInforme="idInforme"
                   >+</router-link
                 >
               </td>
@@ -44,7 +47,6 @@ export default {
   data() {
     return {
       reports: [],
-      id: 0,
     };
   },
   mounted() {
@@ -63,8 +65,8 @@ export default {
         .get("api/reports", { params: query })
         .then((response) => {
           console.log(response.data);
-        //   this.reports = response.data.reports;
-        //   this.queryParams = response.data.query;
+          this.reports = response.data.reports;
+          this.queryParams = response.data.query;
         })
         .catch((error) => {
           console.log("Error: " + error);

@@ -40,7 +40,7 @@ class CreateProducts extends AbstractMigration
         $table->addColumn('motivo', 'string', [
             'default' => null,
             'limit' => 150,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('prioridad', 'string', [
             'default' => null,
@@ -50,7 +50,7 @@ class CreateProducts extends AbstractMigration
         $table->addColumn('descripcion', 'text', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
+            'null' => true,
         ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
