@@ -62,9 +62,9 @@ class UsersTable extends Table
     {
         $validator
             ->integer('user_id')
-            ->allowEmptyString('user_id', null, 'create');
+            ->allowEmptyString('user_id', 'create');
 
-        $validator
+        /* $validator
             ->scalar('cuit')
             ->maxLength('cuit', 11)
             ->requirePresence('cuit', 'create')
@@ -102,22 +102,8 @@ class UsersTable extends Table
         $validator
             ->integer('telefono')
             ->requirePresence('telefono', 'create')
-            ->notEmptyString('telefono');
+            ->notEmptyString('telefono'); */
 
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
-
-        return $rules;
     }
 }

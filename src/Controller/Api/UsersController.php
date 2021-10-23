@@ -143,6 +143,9 @@ class UsersController extends AppController
         $dataVue =  $this->request->getData();
 
         if ($this->request->is('post')) {
+            $this->paginate = [
+                'contain' => ['Stages'],
+            ];
             $data['users'] = $this->paginate($this->Users);
             foreach ($data['users'] as $cadaUser) {
                 if ($cadaUser["email"] == $dataVue["email"] && $cadaUser["password"] == $dataVue["contrasena"]) {
@@ -151,6 +154,8 @@ class UsersController extends AppController
                             'message' => true,
                             'user' => $cadaUser["nombre"],
                             'user_id' => $cadaUser["user_id"],
+                            'nombre_etapa' => $cadaUser["stage"]["nombre_etapa"],
+                            'etapa_id' => $cadaUser["stage"]["stage_id"],
                         ]
                     );
                 }

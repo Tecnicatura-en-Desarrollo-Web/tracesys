@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use Migrations\AbstractMigration;
@@ -26,10 +27,6 @@ class CreateBills extends AbstractMigration
         $table->addColumn('descripcion', 'string', [
             'default' => null,
             'limit' => 255,
-            'null' => false,
-        ]);
-        $table->addColumn('fecha', 'datetime', [
-            'default' => null,
             'null' => false,
         ]);
         $table->addColumn('monto', 'integer', [

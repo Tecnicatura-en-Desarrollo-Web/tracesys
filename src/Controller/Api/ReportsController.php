@@ -39,23 +39,18 @@ class ReportsController extends AppController
      */
     public function index()
     {
-
-        //     $data['query'][$this->getRequest()->getQuery('sort')]['direction'] = $direction;
-        // }
-        //$reports = $this->Reports->find('all');
-        //$query = $this->Reports->find('all', ['contain' => ['Products','States']]);
-        // $query = $this->paginate = [
-        //     'contain' => ['Employees', 'States', 'Products', 'Bills'],
-        // ];
-        // $data['reports']=$query;
-        // return $this->setJsonResponse($data['reports']);
-
         $this->paginate = [
             'contain' => ['Employees', 'States', 'Products', 'Bills'],
         ];
-        $data['reports'] = $this->paginate($this->Reports);
+        $reports['reports'] = $this->paginate($this->Reports);
+        return $this->setJsonResponse($reports);
 
-        return $this->setJsonResponse($data['reports']);
+        /* $this->paginate = [
+            'contain' => ['Employees.Users','Reports.Products','States'],
+            'conditions'=>['informeempleadoestados_id' => $id]
+        ];
+        $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
+        return $this->setJsonResponse($cambiosEstadoInforme); */
     }
 
     /**

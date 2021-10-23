@@ -1051,7 +1051,7 @@ meta.foundation-version{font-family:"{{ VERSION }}"}meta.foundation-mq-small{fon
 .fi-zoom-in:before { content: "\f219"; }
 .fi-zoom-out:before { content: "\f21a"; }
 
-body{
+body {
     background-color: rgb(68, 68, 68);
 }
 .disabled a,
@@ -1592,5 +1592,8 @@ div.button-group.right a i {
     margin-right: 6px;
 }
 
-.side-nav li {
+/* ESTILOS PROPIOS */
+
+#nombre-etapa {
+    color: white;
 }
