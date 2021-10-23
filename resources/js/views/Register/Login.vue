@@ -84,6 +84,7 @@ export default {
             this.$session.set(this.$session.id(), response.data.user);
             this.$session.set("user_id", response.data.user_id);
             this.$session.set("nombre_etapa", response.data.nombre_etapa);
+            this.$session.set("etapa_id", response.data.etapa_id);
             //***Redirigimos al usuario a su lista de informes******//
             window.location.href = "http://localhost:8765/home";
           }

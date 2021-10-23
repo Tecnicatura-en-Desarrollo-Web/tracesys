@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Informeempleadoestados Controller
@@ -11,6 +15,13 @@ namespace App\Controller;
  */
 class InformeempleadoestadosController extends AppController
 {
+    use ResponseTrait;
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->viewBuilder()->setLayout('');
+    }
     /**
      * Index method
      *
@@ -18,12 +29,20 @@ class InformeempleadoestadosController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Informeempleadoestados', 'Employees', 'States'],
-        ];
-        $informeempleadoestados = $this->paginate($this->Informeempleadoestados);
 
-        $this->set(compact('informeempleadoestados'));
+        $this->paginate = [
+            'contain' => ['Employees', 'States', 'Reports', 'Reports.Products'],
+        ];
+        $informeempleadoestados['reports'] = $this->paginate($this->Informeempleadoestados);
+        /* return $this->setJsonResponse(
+            [
+                'success' => $informeempleadoestados,
+            ],
+            201
+        ); */
+
+
+        return $this->setJsonResponse($informeempleadoestados);
     }
 
     /**
@@ -39,7 +58,7 @@ class InformeempleadoestadosController extends AppController
             'contain' => ['Informeempleadoestados', 'Employees', 'States'],
         ]);
 
-        $this->set(compact('informeempleadoestado'));
+        /* $this->set(compact('informeempleadoestado')); */
     }
 
     /**

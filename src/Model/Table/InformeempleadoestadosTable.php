@@ -45,13 +45,13 @@ class InformeempleadoestadosTable extends Table
         parent::initialize($config);
 
         $this->setTable('informeempleadoestados');
-        $this->setDisplayField('informeempleadoestados_id');
-        $this->setPrimaryKey(['informeempleadoestados_id', 'employee_id', 'state_id']);
+        $this->setDisplayField('informeempleadoestado_id');
+        $this->setPrimaryKey(['informeempleadoestado_id', 'employee_id', 'state_id']);
 
         $this->addBehavior('Timestamp');
 
         /* $this->belongsTo('Informeempleadoestados', [
-            'foreignKey' => 'informeempleadoestados_id',
+            'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
         ]); */
         $this->belongsTo('Employees', [
@@ -63,7 +63,7 @@ class InformeempleadoestadosTable extends Table
             'joinType' => 'INNER',
         ]);
         $this->belongsTo('Reports', [
-            'foreignKey' => 'informeempleadoestados_id',
+            'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
         ]);
     }

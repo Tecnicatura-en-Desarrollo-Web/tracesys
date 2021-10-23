@@ -16,17 +16,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="report in reports">
-              <td>{{ report.report_id }}</td>
-              <td>{{ report.created }}</td>
-              <td>{{ report.created }}</td>
-              <td>{{ report.product.tipo }}</td>
-              <td>{{ report.product.motivo }}</td>
+            <tr
+              v-for="report in reports"
+              :v-bind="report.report.report_id"
+              v-if="report.state_id == etapa_id"
+            >
+              <td>{{ report.report.report_id }}</td>
+              <td>{{ report.report.created }}</td>
+              <td>{{ report.report.created }}</td>
+              <td>{{ report.report.product.tipo }}</td>
+              <td>{{ report.report.product.motivo }}</td>
               <td>{{ report.state.nombre_estado }}</td>
+              <!-- <td>{{ nombre_etapa }}</td> -->
               <td>
                 <!-- <router-link :to="{ `/detalleInforme/${report.report_id}`}" idInforme='idInforme'>+</router-link -->
                 <router-link
-                  :to="{ path: `/detalleInforme/${report.report_id}` }"
+                  :to="{ path: `/detalleInforme/` + report.report.report_id }"
                   idInforme="idInforme"
                   >+</router-link
                 >
@@ -47,6 +52,8 @@ export default {
   data() {
     return {
       reports: [],
+      nombre_etapa: "",
+      etapa_id: "",
     };
   },
   mounted() {
@@ -62,7 +69,7 @@ export default {
       }
 
       axios
-        .get("api/reports", { params: query })
+        .get("api/informeempleadoestados", { params: query })
         .then((response) => {
           console.log(response.data);
           this.reports = response.data.reports;
@@ -79,7 +86,13 @@ export default {
   //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
   created() {
     if (!this.$session.exists()) {
+      this.nombre_etapa = "asdasd";
       this.$router.push("/login");
+      console.log("saaale", nombre_etapa);
+    }
+    if (this.$session.exists()) {
+      this.nombre_etapa = this.$session.get("nombre_etapa");
+      this.etapa_id = this.$session.get("etapa_id");
     }
   },
 };

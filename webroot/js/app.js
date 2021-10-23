@@ -5933,6 +5933,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -5940,7 +5945,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      reports: []
+      reports: [],
+      nombre_etapa: "",
+      etapa_id: ""
     };
   },
   mounted: function mounted() {
@@ -5956,7 +5963,7 @@ __webpack_require__.r(__webpack_exports__);
         this.defaultClass[query.sort] = query.direction;
       }
 
-      axios.get("api/reports", {
+      axios.get("api/informeempleadoestados", {
         params: query
       }).then(function (response) {
         console.log(response.data);
@@ -5973,7 +5980,14 @@ __webpack_require__.r(__webpack_exports__);
   //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
   created: function created() {
     if (!this.$session.exists()) {
+      this.nombre_etapa = "asdasd";
       this.$router.push("/login");
+      console.log("saaale", nombre_etapa);
+    }
+
+    if (this.$session.exists()) {
+      this.nombre_etapa = this.$session.get("nombre_etapa");
+      this.etapa_id = this.$session.get("etapa_id");
     }
   }
 });
@@ -6590,7 +6604,9 @@ __webpack_require__.r(__webpack_exports__);
 
           _this.$session.set("user_id", response.data.user_id);
 
-          _this.$session.set("nombre_etapa", response.data.nombre_etapa); //***Redirigimos al usuario a su lista de informes******//
+          _this.$session.set("nombre_etapa", response.data.nombre_etapa);
+
+          _this.$session.set("etapa_id", response.data.etapa_id); //***Redirigimos al usuario a su lista de informes******//
 
 
           window.location.href = "http://localhost:8765/home";
@@ -34954,36 +34970,41 @@ var render = function() {
           _c(
             "tbody",
             _vm._l(_vm.reports, function(report) {
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(report.report_id))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.created))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.created))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.product.tipo))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.product.motivo))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.state.nombre_estado))]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
+              return report.state_id == _vm.etapa_id
+                ? _c("tr", { attrs: { "v-bind": report.report.report_id } }, [
+                    _c("td", [_vm._v(_vm._s(report.report.report_id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(report.report.created))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(report.report.created))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(report.report.product.tipo))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(report.report.product.motivo))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(report.state.nombre_estado))]),
+                    _vm._v(" "),
                     _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: { path: "/detalleInforme/" + report.report_id },
-                          idInforme: "idInforme"
-                        }
-                      },
-                      [_vm._v("+")]
+                      "td",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                path:
+                                  "/detalleInforme/" + report.report.report_id
+                              },
+                              idInforme: "idInforme"
+                            }
+                          },
+                          [_vm._v("+")]
+                        )
+                      ],
+                      1
                     )
-                  ],
-                  1
-                )
-              ])
+                  ])
+                : _vm._e()
             }),
             0
           )

@@ -40,8 +40,7 @@ class ReportsController extends AppController
     public function index()
     {
         $this->paginate = [
-            /* 'contain' => ['Employees', 'States', 'Products', 'Bills'], */
-            'contain' => ['Informeempleadoestados'],
+            'contain' => ['Employees', 'States', 'Products', 'Bills'],
         ];
         $reports['reports'] = $this->paginate($this->Reports);
         return $this->setJsonResponse($reports);

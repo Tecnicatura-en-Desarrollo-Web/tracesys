@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -32,8 +33,8 @@ class Informeempleadoestado extends Entity
     protected $_accessible = [
         'created' => true,
         'modified' => true,
-        'informeempleadoestado' => true,
-        'employee' => true,
-        'state' => true,
+        'informeempleadoestado_id' => true,
+        'employee_id' => true,
+        'state_id' => true,
     ];
 }
