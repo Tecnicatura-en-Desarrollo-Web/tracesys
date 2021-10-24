@@ -53,28 +53,28 @@ class ProblemasugerenciasTable extends Table
             'foreignKey' => 'problemasugerencia_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Suggestions', [
-            'foreignKey' => 'suggestion_id',
-            'joinType' => 'INNER',
-        ]);
         $this->belongsTo('Issues', [
             'foreignKey' => 'problemasugerencia_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Suggestions', [
+            'foreignKey' => 'suggestion_id',
             'joinType' => 'INNER',
         ]);
     }
 
     /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
+     * Default validation rules.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
+    public function validationDefault(Validator $validator): Validator
     {
-        $rules->add($rules->existsIn(['problemasugerencia_id'], 'Problemasugerencias'), ['errorField' => 'problemasugerencia_id']);
-        $rules->add($rules->existsIn(['suggestion_id'], 'Suggestions'), ['errorField' => 'suggestion_id']);
+        $validator
+            ->boolean('activo')
+            ->notEmptyString('activo');
 
-        return $rules;
+        return $validator;
     }
 }

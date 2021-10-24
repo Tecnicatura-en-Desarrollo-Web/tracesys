@@ -5766,7 +5766,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var form_serialize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! form-serialize */ "./node_modules/form-serialize/index.js");
 /* harmony import */ var form_serialize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(form_serialize__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers_FormErrors_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../helpers/FormErrors.js */ "./resources/js/helpers/FormErrors.js");
 //
 //
 //
@@ -5838,38 +5837,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+ // import Errors from "../../helpers/FormErrors.js";
+// import {mapState,mapMutations} from "vuex";
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      i: 0,
       idInforme: null,
-      usuarioADerivarSeleccionado: '',
+      idEmpleado: null,
+      cuitEmpleado: null,
+      usuarioADerivarSeleccionado: "",
       sectoresADerivar: [],
       sugerencias: [],
-      report: {
-        employee: {
-          user: {
-            nombre: '',
-            apellido: ''
-          }
-        },
-        report: {
-          product: {
-            tipo: '',
-            modelo: '',
-            motivo: ''
-          }
-        },
-        state: {
-          nombre_estado: ''
-        }
-      }
+      idIssuesSelect: null,
+      comentarioEmpleado: '',
+      reports: [] //*******NO ELIMINAR ESTOS COMENTANTARIOS SIRVEN PARA DPS */
+      //   reports: {
+      //     employee: {
+      //       user: {
+      //         nombre: "",
+      //         apellido: "",
+      //       },
+      //     },
+      //     report: {
+      //       product: {
+      //         tipo: "",
+      //         modelo: "",
+      //         motivo: "",
+      //       },
+      //     },
+      //     state: {
+      //       nombre_estado: "",
+      //     },
+      //   },
+
     };
   },
+  // computed:{
+  //     //...mapState(['idComentario']),
+  // },
   created: function created() {
     if (!this.$session.exists()) {
-      this.$router.push('/login');
+      this.$router.push("/login");
     }
   },
   mounted: function mounted() {
@@ -5879,6 +5914,7 @@ __webpack_require__.r(__webpack_exports__);
     this.obtenerSectores(this.$route.query);
   },
   methods: {
+    //...mapMutations(['actualizarIdComentario']),
     verInforme: function verInforme(query) {
       var _this = this;
 
@@ -5886,10 +5922,14 @@ __webpack_require__.r(__webpack_exports__);
         params: query
       }).then(function (response) {
         //ver mas adelante mejorar la estructura del arreglo devuelto
-        _this.report = response.data.cambiosEstadoInforme[0];
-        console.log(_this.report); // console.log(this.report);
+        //console.log("aca lee jonaaaaa",response.data);
+        _this.reports = response.data;
+        console.log("aca lee jonaaaaa222", _this.reports);
+        _this.idEmpleado = _this.reports.cambiosEstadoInforme[0].employee.employee_id;
+        _this.cuitEmpleado = _this.reports.cambiosEstadoInforme[0].employee.cuit;
+        console.log("aca trae", response.data.cambiosEstadoInforme); // console.log(this.report);
       })["catch"](function (error) {
-        console.log('Error: ' + error);
+        console.log("Error: " + error);
       });
     },
     obtenerSugerencias: function obtenerSugerencias(query) {
@@ -5899,9 +5939,12 @@ __webpack_require__.r(__webpack_exports__);
         params: query
       }).then(function (response) {
         _this2.sugerencias = response.data.suggestions;
-        console.log(response.data.suggestions); //this.sugerencias = response.data.suggestions;
+        console.log(response.data.suggestions);
+        _this2.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
+        /* console.log(response.data.suggestions); */
+        //this.sugerencias = response.data.suggestions;
       })["catch"](function (error) {
-        console.log('Error: ' + error);
+        console.log("Error: " + error);
       });
     },
     obtenerSectores: function obtenerSectores(query) {
@@ -5910,25 +5953,31 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/sectors", {
         params: query
       }).then(function (response) {
-        console.log(response.data.sectors);
+        /* console.log(response.data.sectors); */
         _this3.sectoresADerivar = response.data.sectors; //this.usersDerivar = response.data.users;
       })["catch"](function (error) {
-        console.log('Error: ' + error);
+        console.log("Error: " + error);
       });
     },
     onSubmit: function onSubmit(event) {
-      var _this4 = this;
-
       var data = form_serialize__WEBPACK_IMPORTED_MODULE_0___default()(event.target, {
         hash: false,
         empty: true
       });
-      data += '&idInforme=' + this.idInforme;
-      data += '&idEmpleado=' + this.report.employee.employee_id; // console.log(data);
+      data += "&idIssueReport=" + this.idIssuesSelect;
+      data += "&idInforme=" + this.idInforme;
+      data += "&idEmpleado=" + this.idEmpleado;
+      data += "&cuitEmpleado=" + this.cuitEmpleado;
+      this.registrarCambioEstado(data);
+      this.registrarComentario(data);
+      this.registrarSugerencia(data);
+    },
+    registrarCambioEstado: function registrarCambioEstado(data) {
+      var _this4 = this;
 
       axios.post("/api/informeempleadoestados/save", data, {
         headers: {
-          'X-Requested-With': 'XMLHttpRequest'
+          "X-Requested-With": "XMLHttpRequest"
         }
       }).then(function (response) {
         // Redirect on success
@@ -5936,23 +5985,79 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.data.success) {
           _this4.$notify({
-            group: 'default',
-            type: 'success',
+            group: "default",
+            type: "success",
             text: response.data.message
-          });
+          }); // this.$router.push('/reports');
 
-          _this4.$router.push({
-            path: response.data.url
-          });
         }
       })["catch"](function (error) {
         _this4.$notify({
-          group: 'default',
-          type: 'error',
+          group: "default",
+          type: "error",
           text: error.response.data.message
         });
 
         _this4.errors.add(error.response.data.errors);
+      });
+    },
+    registrarComentario: function registrarComentario(data) {
+      var _this5 = this;
+
+      //****Guardo el comentario en la tabla empleadoscomentarios */
+      axios.post("/api/commentsemployees/save", data, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(function (response) {
+        //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
+        console.log(response);
+        _this5.comentarioEmpleado = response.data.comentario;
+        console.log(_this5.comentarioEmpleado);
+
+        if (response.data.success) {
+          data += "&idComentarioEmpleado=" + response.data.idComentarioEmpleado; //this.actualizarIdComentario(response.data.idComentarioEmpleado);
+          //this.registrarComentario2(data);
+
+          axios.post("/api/informeempleadocomentarios/save", data, {
+            headers: {
+              "X-Requested-With": "XMLHttpRequest"
+            }
+          }).then(function (response) {
+            console.log(response);
+          })["catch"](function (error) {
+            _this5.$notify({
+              group: "default",
+              type: "error",
+              text: error.response.data.message
+            });
+
+            _this5.errors.add(error.response.data.errors);
+          });
+        }
+      })["catch"](function (error) {
+        _this5.$notify({
+          group: "default",
+          type: "error",
+          text: error.response.data.message
+        });
+
+        _this5.errors.add(error.response.data.errors);
+      });
+    },
+    registrarSugerencia: function registrarSugerencia(data) {
+      var _this6 = this;
+
+      axios.post("/api/problemasugerencias/edit", data, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(function (response) {
+        _this6.$router.push('/reports');
+
+        console.log(response);
+
+        if (response.data.success) {}
       });
     }
   }
@@ -34865,29 +34970,39 @@ var render = function() {
     _c("table", { staticClass: "table" }, [
       _vm._m(0),
       _vm._v(" "),
-      _c("tbody", [
-        _c("tr", [
-          _c("td", [_vm._v(_vm._s(_vm.report.created))]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v(
-              _vm._s(_vm.report.employee.user.nombre) +
-                " " +
-                _vm._s(_vm.report.employee.user.apellido)
-            )
-          ]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.report.report.product.tipo))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.report.report.product.modelo))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.report.state.nombre_estado))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.report.report.product.motivo))]),
-          _vm._v(" "),
-          _c("td", [_vm._v(_vm._s(_vm.report.report.product.motivo))])
-        ])
-      ])
+      _c(
+        "tbody",
+        _vm._l(_vm.reports.cambiosEstadoInforme, function(report) {
+          return _c("tr", [
+            _c("td", [_vm._v(_vm._s(report.created))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(report.employee.user.nombre) +
+                  "\n                    " +
+                  _vm._s(report.employee.user.apellido) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.report.product.tipo))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.report.product.modelo))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.state.nombre_estado))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.report.product.motivo))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(report.comentarioEmpleado.commentsemployee.descripcion)
+              )
+            ])
+          ])
+        }),
+        0
+      )
     ]),
     _vm._v(" "),
     _c(
@@ -34963,9 +35078,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                            " +
+                        "\n                " +
                           _vm._s(sugerencia.suggestion.nombre_sugerencia) +
-                          "\n                        "
+                          "\n                "
                       )
                     ]
                   )
@@ -54126,6 +54241,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_11__);
 
 
 
@@ -54138,6 +54255,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_session__WEBPACK_IMPORTED_MODULE_8___default.a);
 
 
+
 window.axios = axios__WEBPACK_IMPORTED_MODULE_3___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED_MODULE_4__["default"]);
@@ -54147,7 +54265,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app', _views_App_vue__WEBP
 var router = vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    nombre: 'jona'
+    idComentario: null
+  },
+  mutations: {
+    actualizarIdComentario: function actualizarIdComentario(state, n) {
+      state.idComentario = n;
+    }
   }
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({

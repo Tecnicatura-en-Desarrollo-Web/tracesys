@@ -6,6 +6,9 @@ namespace App\Controller\Api;
 
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
+use App\Model\Entity\Informeempleadocomentario;
+use App\Model\Table\InformeempleadocomentariosTable;
+use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
 
 /**
  * Informeempleadoestados Controller
@@ -50,15 +53,17 @@ class InformeempleadoestadosController extends AppController
             'contain' => ['Employees.Users', 'Reports.Products', 'States'],
             'conditions' => ['informeempleadoestado_id' => $id]
         ];
-
         $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
+        $objComentario=new InformeempleadocomentariosTable();
+        $comentarios = $objComentario->find('all', ['contain'=>['Commentsemployees'],'conditions' => ['report_id' => $id]]);
+        $comentarios=json_encode($comentarios);
+        $i=0;
+        foreach ($cambiosEstadoInforme['cambiosEstadoInforme'] as $cambioEstadoInforme) {
+            $cambioEstadoInforme->{"comentarioEmpleado"}=json_decode($comentarios)[$i];
+            $i++;
+        }
         return $this->setJsonResponse($cambiosEstadoInforme);
 
-        // $cambiosEstadoInforme=$this->Informeempleadoestados->get($id, [
-        //     'contain' => ['Employees.Users','Reports.Products','States'],
-        //     'conditions' => ['informeempleadoestados_id' => $id]
-        //     ]);
-        // return $this->setJsonResponse(['cambiosEstadoInforme' => $cambiosEstadoInforme]);
     }
     /**
      * View method
@@ -83,8 +88,6 @@ class InformeempleadoestadosController extends AppController
      */
     public function save()
     {
-
-
         $dataVue =  $this->request->getData();
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
         $dataNueva = [
@@ -97,48 +100,6 @@ class InformeempleadoestadosController extends AppController
         return $this->setJsonResponse([
             'datosEntidad' => $result,
         ]);
-
-
-
-
-        // if (! $this->request->is('post')) {
-        //     return $this->setJsonResponse([
-        //         'error' => true,
-        //         'message' => 'Invalid request!',
-        //     ]);
-        // }
-
-        // $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
-        // $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $this->request->getData());
-        // $result = $this->Informeempleadoestados->save($informeempleadoestado);
-        // return $this->setJsonResponse(
-        //     [
-        //         'datos' => $result,
-        //     ],
-        // );
-
-        // return $this->setJsonResponse([
-        //     'datosEntidad' => $post,
-        // ]);
-        // if ($result !== false) {
-        //     return $this->setJsonResponse(
-        //         [
-        //             'data' => $result,
-        //             'success' => true,
-        //             'url' => '/posts',
-        //             'message' => __('The post has been saved.'),
-        //         ],
-        //         201
-        //     );
-        // }
-
-        // return $this->setJsonResponse(
-        //     [
-        //         'errors' => $post->getValidationErrors(),
-        //         'message' => __('The post could not be saved. Please, try again.'),
-        //     ],
-        //     422
-        // );
     }
     public function add()
     {

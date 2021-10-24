@@ -10,6 +10,7 @@ import VueSession from "vue-session";
 Vue.use(VueSession);
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { normalizeUnits, now } from 'moment';
 
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -23,7 +24,13 @@ Vue.component('app', App);
 const router = Vue.use(VueRouter);
 const store = new Vuex.Store({
     state: {
-        nombre: 'jona'
+        idComentario: null
+    },
+    mutations:{
+        actualizarIdComentario(state,n){
+            state.idComentario=n
+        },
+
     }
 })
 const app = new Vue({

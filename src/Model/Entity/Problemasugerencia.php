@@ -10,11 +10,13 @@ use Cake\ORM\Entity;
  *
  * @property int $problemasugerencia_id
  * @property int $suggestion_id
+ * @property bool $activo
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Problemasugerencia $problemasugerencia
  * @property \App\Model\Entity\Suggestion $suggestion
+ * @property \App\Model\Entity\Issue $issue
  */
 class Problemasugerencia extends Entity
 {
@@ -28,9 +30,11 @@ class Problemasugerencia extends Entity
      * @var array
      */
     protected $_accessible = [
+        'activo' => true,
         'created' => true,
         'modified' => true,
         'problemasugerencia' => true,
         'suggestion' => true,
+        'issue' => true,
     ];
 }
