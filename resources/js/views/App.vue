@@ -44,3 +44,21 @@ export default {
   },
 };
 </script>
+
+<style>
+/* @font-face {
+  font-family: "futura";
+  src: local("futura"),
+    url("../../fonts/futura/Futura Heavy font.ttf") format("truetype");
+} */
+
+@font-face {
+  font-family: "proxima";
+  src: local("proxima"),
+    url("../../fonts/proxima-nova/ProximaNova-Bold.ttf") format("truetype");
+}
+
+* {
+  font-family: "proxima";
+}
+</style>

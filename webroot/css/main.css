@@ -1051,9 +1051,15 @@ meta.foundation-version{font-family:"{{ VERSION }}"}meta.foundation-mq-small{fon
 .fi-zoom-in:before { content: "\f219"; }
 .fi-zoom-out:before { content: "\f21a"; }
 
-body {
-    background-color: rgb(68, 68, 68);
+@font-face {
+    font-family: "fe-font";
+    src: url("../fonts/FE-FONT.TTF");
 }
+
+body {
+    background-color: rgb(214, 23, 23);
+}
+
 .disabled a,
 a.disabled {
     pointer-events: none;
@@ -1298,7 +1304,8 @@ p.error {
 }
 
 pre {
-    background: none repeat scroll 0% 0% #fff;
+    background-color: red;
+    /* background: none repeat scroll 0% 0% #fff; */
     box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.24);
     margin: 15px 0px;
     color: rgba(0, 0, 0, 0.74);
@@ -1383,7 +1390,8 @@ pre {
 .top-bar,
 .top-bar-section ul li,
 .top-bar-section li:not(.has-form) a:not(.button) {
-    background: #116d76;
+    background: #286b74;
+    /* background: #79a3b1; */
 }
 
 .top-bar-section li:not(.has-form) a:not(.button):hover {
@@ -1592,7 +1600,7 @@ div.button-group.right a i {
     margin-right: 6px;
 }
 
-/* ESTILOS PROPIOS */
+/* ****************** ESTILOS PROPIOS ******************** */
 
 #nombre-etapa {
     color: white;
@@ -1605,6 +1613,12 @@ div.button-group.right a i {
 .contenido-central-crear {
     margin-left: 15.5em;
 }
+
+.cabecera-table th {
+    color: white;
+}
+
+/* ****************** ESTILOS PROPIOS ******************** */
 
 .nav-link:hover,
 .nav-link:focus {
@@ -1860,7 +1874,7 @@ body {
 }
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown > a:after {
-    font-family: "Font Awesome 5 Free";
+    font-family: "fe-font";
     font-weight: 900;
     content: "\f105";
     font-style: normal;
@@ -1888,7 +1902,7 @@ body {
 
 .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu li a:before {
     content: "\f111";
-    font-family: "Font Awesome 5 Free";
+    font-family: "fe-font";
     font-weight: 400;
     font-style: normal;
     display: inline-block;
@@ -2023,7 +2037,7 @@ body {
 /*-----------------------------chiller-theme-------------------------------------------------*/
 
 .chiller-theme .sidebar-wrapper {
-    background: #31353d;
+    background: #212121;
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-header,

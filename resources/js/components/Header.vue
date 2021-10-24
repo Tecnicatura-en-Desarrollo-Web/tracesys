@@ -4,10 +4,11 @@
       <ul class="right">
         <li class="header-menu">
           <router-link :to="{ name: 'profile' }" class="nav-link"
-            >Profile</router-link
+            >Profile <b-icon-file-person-fill></b-icon-file-person-fill>
+              </router-link
           >
         </li class="header-menu">
-        <li><a class="nav-link" @click="logout()">Logout</a></li>
+        <li><a class="nav-link" @click="logout()">Logout <b-icon-box-arrow-right></b-icon-box-arrow-right></a></li>
       </ul>
     </div>
   </nav>

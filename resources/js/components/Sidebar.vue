@@ -24,13 +24,20 @@
         <div class="sidebar-menu">
           <ul>
             <li class="header-menu">
-              <router-link to="/home" class="nav-link">Home</router-link>
+              <router-link to="/home" class="nav-link"
+                >Home <b-icon-shop></b-icon-shop
+              ></router-link>
             </li>
             <li class="header-menu">
-              <router-link to="/reports">Informes</router-link>
+              <router-link to="/reports"
+                >Informes <b-icon-file-text></b-icon-file-text
+              ></router-link>
             </li>
             <li class="header-menu">
-              <router-link to="/informes/crear">Cargar informe</router-link>
+              <router-link to="/informes/crear"
+                >Cargar informe
+                <b-icon-journal-arrow-up></b-icon-journal-arrow-up
+              ></router-link>
             </li>
           </ul>
         </div>
