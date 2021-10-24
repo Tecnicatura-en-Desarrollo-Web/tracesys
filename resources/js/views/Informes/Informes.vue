@@ -1,7 +1,7 @@
 <template>
   <div>
     <ul>
-      <div class="posts view large-10 medium-8 columns">
+      <div class="posts view large-10 medium-8 columns contenido-central">
         <h1>Listado de informes</h1>
         <table class="table">
           <thead>
@@ -26,7 +26,6 @@
               <td>{{ report.report.product.motivo }}</td>
               <td>{{ report.state.nombre_estado }}</td>
               <td>
-                <!-- <router-link :to="{ `/detalleInforme/${report.report_id}`}" idInforme='idInforme'>+</router-link -->
                 <router-link
                   :to="{ path: `/detalleInforme/` + report.report.report_id }"
                   idInforme="idInforme"

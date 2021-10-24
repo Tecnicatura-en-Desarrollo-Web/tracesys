@@ -1,5 +1,5 @@
 <template>
-  <div class="large-10 medium-8 columns">
+  <div class="large-10 medium-8 columns contenido-central-crear">
     <h1>Cargar Informe</h1>
     <form @submit.prevent="onSubmit">
       <div class="row callout callout-danger bg-light">
