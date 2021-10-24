@@ -1,14 +1,13 @@
 <template>
   <nav class="top-bar expanded" data-topbar role="navigation">
-    <ul class="title-area large-2 medium-4 columns">
-      <li class="name">
-        <h1 id="nombre-etapa">{{ nombre_etapa }}</h1>
-      </li>
-    </ul>
     <div class="top-bar-section">
       <ul class="right">
-        <li><router-link :to="{ name: 'profile' }">Profile</router-link></li>
-        <li><a class="text-white" @click="logout()">Logout</a></li>
+        <li class="header-menu">
+          <router-link :to="{ name: 'profile' }" class="nav-link"
+            >Profile</router-link
+          >
+        </li class="header-menu">
+        <li><a class="nav-link" @click="logout()">Logout</a></li>
       </ul>
     </div>
   </nav>

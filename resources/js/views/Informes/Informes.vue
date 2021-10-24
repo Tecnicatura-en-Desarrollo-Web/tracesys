@@ -3,9 +3,9 @@
     <ul>
       <div class="posts view large-10 medium-8 columns contenido-central">
         <h1>Listado de informes</h1>
-        <table class="table">
-          <thead>
-            <tr>
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr class="cabecera-table">
               <th scope="col">#</th>
               <th scope="col">Fecha</th>
               <th scope="col">Hora</th>

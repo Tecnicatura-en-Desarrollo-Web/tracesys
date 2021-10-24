@@ -539,7 +539,7 @@ div.button-group.right a i {
     margin-right: 6px;
 }
 
-/* ESTILOS PROPIOS */
+/* ****************** ESTILOS PROPIOS ******************** */
 
 #nombre-etapa {
     color: white;
@@ -552,6 +552,12 @@ div.button-group.right a i {
 .contenido-central-crear {
     margin-left: 15.5em;
 }
+
+.cabecera-table th {
+    color: white;
+}
+
+/* ****************** ESTILOS PROPIOS ******************** */
 
 .nav-link:hover,
 .nav-link:focus {

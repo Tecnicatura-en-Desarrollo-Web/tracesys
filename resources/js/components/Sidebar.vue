@@ -29,12 +29,15 @@
             <li class="header-menu">
               <router-link to="/reports">Informes</router-link>
             </li>
-            <li>
+            <li class="header-menu">
               <router-link to="/informes/crear">Cargar informe</router-link>
             </li>
           </ul>
         </div>
       </div>
+      <!--       <span class="user-name">
+        <strong>TraceSys Web</strong>
+      </span> -->
     </nav>
   </div>
   <!--   <div class="page-wrapper chiller-theme toggled">
