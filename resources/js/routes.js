@@ -36,8 +36,13 @@ export const routes = new VueRouter({
             name: 'reports',
             component: Informes
         },
+        // {
+        //     path: '/detalleInforme',
+        //     name: 'detalleInforme',
+        //     component: DetalleInforme
+        // },
         {
-            path: '/detalleInforme',
+            path: '/detalleInforme/:id',
             name: 'detalleInforme',
             component: DetalleInforme
         },

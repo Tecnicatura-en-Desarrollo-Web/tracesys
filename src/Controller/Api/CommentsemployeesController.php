@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Commentsemployees Controller
@@ -11,6 +14,7 @@ namespace App\Controller;
  */
 class CommentsemployeesController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -37,6 +41,29 @@ class CommentsemployeesController extends AppController
         ]);
 
         $this->set(compact('commentsemployee'));
+    }
+    public function save()
+    {
+        $dataVue =  $this->request->getData();
+        $commentsemployees = $this->Commentsemployees->newEmptyEntity();
+        $dataNueva = [
+            "descripcion" => $dataVue['comentarios'],
+        ];
+        $commentsemployees = $this->Commentsemployees->patchEntity($commentsemployees, $dataNueva);
+        $result=$this->Commentsemployees->save($commentsemployees);
+        $idComentarioEmpleado=$this->Commentsemployees->find()->select(['commentsemployee_id'])->last()['commentsemployee_id'];
+        $comentario=$this->Commentsemployees->find()->select(['descripcion'])->last()['descripcion'];
+        // return $this->setJsonResponse([
+        //     'probandoelcomentarios' => $comentario
+        // ]);
+        if($result!==false){
+            return $this->setJsonResponse([
+                'idComentarioEmpleado'=>$idComentarioEmpleado,
+                'comentario'=>$comentario,
+                'success'=>true
+            ]);
+        }
+
     }
 
     /**

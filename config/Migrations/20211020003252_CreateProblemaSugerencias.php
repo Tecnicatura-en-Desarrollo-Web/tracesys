@@ -28,6 +28,10 @@ class CreateProblemaSugerencias extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
+        $table->addColumn('activo', 'boolean', [
+            'default' => false,
+            'null' => false,
+        ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,

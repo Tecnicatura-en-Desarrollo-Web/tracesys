@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Problemasugerencias Controller
@@ -11,6 +13,7 @@ namespace App\Controller;
  */
 class ProblemasugerenciasController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -18,12 +21,12 @@ class ProblemasugerenciasController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Problemasugerencias', 'Suggestions'],
-        ];
-        $problemasugerencias = $this->paginate($this->Problemasugerencias);
 
-        $this->set(compact('problemasugerencias'));
+        $this->paginate = [
+            'contain' => ['Suggestions','Issues'],
+        ];
+        $Problemasugerencias['suggestions'] = $this->paginate($this->Problemasugerencias);
+        return $this->setJsonResponse($Problemasugerencias);
     }
 
     /**
@@ -33,6 +36,16 @@ class ProblemasugerenciasController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    public function issuesByReport($id = null){
+        $this->paginate = [
+            'contain' => [
+                'Suggestions','Issues'],
+            'conditions'=>['problemasugerencia_id' => $id , 'activo'=>0]
+        ];
+        $problemasugerencia ['suggestions'] = $this->paginate($this->Problemasugerencias);
+        return $this->setJsonResponse($problemasugerencia);
+
+    }
     public function view($id = null)
     {
         $problemasugerencia = $this->Problemasugerencias->get($id, [
@@ -71,23 +84,26 @@ class ProblemasugerenciasController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit()
     {
-        $problemasugerencia = $this->Problemasugerencias->get($id, [
-            'contain' => [],
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $problemasugerencia = $this->Problemasugerencias->patchEntity($problemasugerencia, $this->request->getData());
-            if ($this->Problemasugerencias->save($problemasugerencia)) {
-                $this->Flash->success(__('The problemasugerencia has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The problemasugerencia could not be saved. Please, try again.'));
-        }
-        $problemasugerencias = $this->Problemasugerencias->Problemasugerencias->find('list', ['limit' => 200]);
-        $suggestions = $this->Problemasugerencias->Suggestions->find('list', ['limit' => 200]);
-        $this->set(compact('problemasugerencia', 'problemasugerencias', 'suggestions'));
+        $dataVue =  $this->request->getData();
+        $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'],$dataVue['selectSugerencia']]);
+        $dataNueva = [
+            "problemasugerencia_id" => (int)$dataVue['idEmpleado'],
+            "suggestion_id" => (int)$dataVue['idComentarioEmpleado'],
+            "activo" => 1,
+        ];
+        $problemasugerencia = $this->Problemasugerencias->patchEntity($problemasugerencia, $dataNueva);
+        $result = $this->Problemasugerencias->save($problemasugerencia);
+        return $this->setJsonResponse([
+            'probandoinfo' => $result
+        ]);
+
+
+
+        //***************************************************** */
+        //***************************************************** */
     }
 
     /**

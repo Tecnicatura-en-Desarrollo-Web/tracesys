@@ -1,7 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Informeempleadocomentarios Controller
@@ -11,6 +14,7 @@ namespace App\Controller;
  */
 class InformeempleadocomentariosController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -22,7 +26,6 @@ class InformeempleadocomentariosController extends AppController
             'contain' => ['Informeempleadocomentarios', 'Commentsemployees', 'Reports'],
         ];
         $informeempleadocomentarios = $this->paginate($this->Informeempleadocomentarios);
-
         $this->set(compact('informeempleadocomentarios'));
     }
 
@@ -41,7 +44,24 @@ class InformeempleadocomentariosController extends AppController
 
         $this->set(compact('informeempleadocomentario'));
     }
-
+    public function save(){
+        $dataVue =  $this->request->getData();
+        $informeempleadocomentario = $this->Informeempleadocomentarios->newEmptyEntity();
+        $dataNueva = [
+            "informeempleadocomentario_id" => (int)$dataVue['idEmpleado'],
+            "comment_employee_id" => (int)$dataVue['idComentarioEmpleado'],
+            "report_id" => (int)$dataVue['idInforme'],
+            "cuit" =>$dataVue['cuitEmpleado']
+        ];
+        $informeempleadocomentario = $this->Informeempleadocomentarios->patchEntity($informeempleadocomentario, $dataNueva);
+        $result = $this->Informeempleadocomentarios->save($informeempleadocomentario);
+        return $this->setJsonResponse([
+            'traemeElresult' => $result,
+        ]);
+        // return $this->setJsonResponse([
+        //     'success' => $result,
+        // ]);
+    }
     /**
      * Add method
      *

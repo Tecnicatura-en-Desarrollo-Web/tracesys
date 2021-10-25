@@ -1,7 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Issues Controller
@@ -10,7 +12,7 @@ namespace App\Controller;
  * @method \App\Model\Entity\Issue[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class IssuesController extends AppController
-{
+{use ResponseTrait;
     /**
      * Index method
      *
@@ -19,11 +21,10 @@ class IssuesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Reports'],
+            'contain' => ['Suggestions'],
         ];
-        $issues = $this->paginate($this->Issues);
-
-        $this->set(compact('issues'));
+        $issues['issues'] = $this->paginate($this->Issues);
+        return $this->setJsonResponse($issues);
     }
 
     /**

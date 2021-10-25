@@ -34,8 +34,8 @@ class Informeempleadocomentario extends Entity
         'cuit' => true,
         'created' => true,
         'modified' => true,
-        'informeempleadocomentario' => true,
-        'commentsemployee' => true,
-        'report' => true,
+        'informeempleadocomentario_id' => true,
+        'comment_employee_id' => true,
+        'report_id' => true,
     ];
 }

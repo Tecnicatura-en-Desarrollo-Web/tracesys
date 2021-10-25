@@ -52,7 +52,6 @@ class IssuesTable extends Table
             'foreignKey' => 'report_id',
             'joinType' => 'INNER',
         ]);
-
         $this->belongsToMany('Suggestions');
     }
 

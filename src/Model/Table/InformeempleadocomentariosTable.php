@@ -76,7 +76,6 @@ class InformeempleadocomentariosTable extends Table
             ->maxLength('cuit', 11)
             ->requirePresence('cuit', 'create')
             ->notEmptyString('cuit');
-
         return $validator;
     }
 
@@ -87,12 +86,12 @@ class InformeempleadocomentariosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['informeempleadocomentario_id'], 'Informeempleadocomentarios'), ['errorField' => 'informeempleadocomentario_id']);
-        $rules->add($rules->existsIn(['comment_employee_id'], 'Commentsemployees'), ['errorField' => 'comment_employee_id']);
-        $rules->add($rules->existsIn(['report_id'], 'Reports'), ['errorField' => 'report_id']);
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->existsIn(['informeempleadocomentario_id'], 'Informeempleadocomentarios'), ['errorField' => 'informeempleadocomentario_id']);
+    //     $rules->add($rules->existsIn(['comment_employee_id'], 'Commentsemployees'), ['errorField' => 'comment_employee_id']);
+    //     $rules->add($rules->existsIn(['report_id'], 'Reports'), ['errorField' => 'report_id']);
 
-        return $rules;
-    }
+    //     return $rules;
+    // }
 }

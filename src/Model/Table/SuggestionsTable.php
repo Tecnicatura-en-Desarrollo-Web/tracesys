@@ -51,6 +51,7 @@ class SuggestionsTable extends Table
             'foreignKey' => 'sector_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsToMany('Issues');
     }
 
     /**

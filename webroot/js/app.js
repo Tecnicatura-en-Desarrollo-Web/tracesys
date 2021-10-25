@@ -5764,6 +5764,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var form_serialize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! form-serialize */ "./node_modules/form-serialize/index.js");
+/* harmony import */ var form_serialize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(form_serialize__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -5847,37 +5849,217 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+ // import Errors from "../../helpers/FormErrors.js";
+// import {mapState,mapMutations} from "vuex";
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['idInforme'],
   data: function data() {
     return {
-      datosInformes: []
+      i: 0,
+      idInforme: null,
+      idEmpleado: null,
+      cuitEmpleado: null,
+      usuarioADerivarSeleccionado: "",
+      sectoresADerivar: [],
+      sugerencias: [],
+      idIssuesSelect: null,
+      comentarioEmpleado: '',
+      reports: [] //*******NO ELIMINAR ESTOS COMENTANTARIOS SIRVEN PARA DPS */
+      //   reports: {
+      //     employee: {
+      //       user: {
+      //         nombre: "",
+      //         apellido: "",
+      //       },
+      //     },
+      //     report: {
+      //       product: {
+      //         tipo: "",
+      //         modelo: "",
+      //         motivo: "",
+      //       },
+      //     },
+      //     state: {
+      //       nombre_estado: "",
+      //     },
+      //   },
+
     };
   },
+  // computed:{
+  //     //...mapState(['idComentario']),
+  // },
   created: function created() {
     if (!this.$session.exists()) {
-      this.$router.push('/login');
+      this.$router.push("/login");
     }
   },
   mounted: function mounted() {
-    this.$emit('idInforme', this.idInforme);
-    console.log(this.idInforme); // this.currentRoute = this.$router.currentRoute.name;
-    // this.getReports(this.$route.query);
+    this.idInforme = this.$route.params.id;
+    this.verInforme(this.$route.query);
+    this.obtenerSugerencias(this.$route.query);
+    this.obtenerSectores(this.$route.query);
   },
-  methods: {// getReports(query) {
-    // if (query.sort !== "undefined" && query.direction) {
-    //     this.defaultClass[query.sort] = query.direction;
-    // }
-    // axios
-    //     .get(`api/reports/view/${this.idInforme}`, { params: query })
-    //     .then((response) => {
-    //         console.log(response.data.reports);
-    //         this.datosInformes = response.data.reports;
-    //     })
-    //     .catch((error) => {
-    //         console.log("Error: " + error);
-    //     });
-    // },
+  methods: {
+    //...mapMutations(['actualizarIdComentario']),
+    verInforme: function verInforme(query) {
+      var _this = this;
+
+      axios.get("/api/informeempleadoestados/informesCambiosEstados/".concat(this.idInforme), {
+        params: query
+      }).then(function (response) {
+        //ver mas adelante mejorar la estructura del arreglo devuelto
+        //console.log("aca lee jonaaaaa",response.data);
+        _this.reports = response.data;
+        console.log("aca lee jonaaaaa222", _this.reports);
+        _this.idEmpleado = _this.reports.cambiosEstadoInforme[0].employee.employee_id;
+        _this.cuitEmpleado = _this.reports.cambiosEstadoInforme[0].employee.cuit;
+        console.log("aca trae", response.data.cambiosEstadoInforme); // console.log(this.report);
+      })["catch"](function (error) {
+        console.log("Error: " + error);
+      });
+    },
+    obtenerSugerencias: function obtenerSugerencias(query) {
+      var _this2 = this;
+
+      axios.get("/api/problemasugerencias/issuesByReport/".concat(this.idInforme), {
+        params: query
+      }).then(function (response) {
+        _this2.sugerencias = response.data.suggestions;
+        console.log(response.data.suggestions);
+        _this2.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
+        /* console.log(response.data.suggestions); */
+        //this.sugerencias = response.data.suggestions;
+      })["catch"](function (error) {
+        console.log("Error: " + error);
+      });
+    },
+    obtenerSectores: function obtenerSectores(query) {
+      var _this3 = this;
+
+      axios.get("/api/sectors", {
+        params: query
+      }).then(function (response) {
+        /* console.log(response.data.sectors); */
+        _this3.sectoresADerivar = response.data.sectors; //this.usersDerivar = response.data.users;
+      })["catch"](function (error) {
+        console.log("Error: " + error);
+      });
+    },
+    onSubmit: function onSubmit(event) {
+      var data = form_serialize__WEBPACK_IMPORTED_MODULE_0___default()(event.target, {
+        hash: false,
+        empty: true
+      });
+      data += "&idIssueReport=" + this.idIssuesSelect;
+      data += "&idInforme=" + this.idInforme;
+      data += "&idEmpleado=" + this.idEmpleado;
+      data += "&cuitEmpleado=" + this.cuitEmpleado;
+      this.registrarCambioEstado(data);
+      this.registrarComentario(data);
+      this.registrarSugerencia(data);
+    },
+    registrarCambioEstado: function registrarCambioEstado(data) {
+      var _this4 = this;
+
+      axios.post("/api/informeempleadoestados/save", data, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(function (response) {
+        // Redirect on success
+        console.log(response);
+
+        if (response.data.success) {
+          _this4.$notify({
+            group: "default",
+            type: "success",
+            text: response.data.message
+          }); // this.$router.push('/reports');
+
+        }
+      })["catch"](function (error) {
+        _this4.$notify({
+          group: "default",
+          type: "error",
+          text: error.response.data.message
+        });
+
+        _this4.errors.add(error.response.data.errors);
+      });
+    },
+    registrarComentario: function registrarComentario(data) {
+      var _this5 = this;
+
+      //****Guardo el comentario en la tabla empleadoscomentarios */
+      axios.post("/api/commentsemployees/save", data, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(function (response) {
+        //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
+        console.log(response);
+        _this5.comentarioEmpleado = response.data.comentario;
+        console.log(_this5.comentarioEmpleado);
+
+        if (response.data.success) {
+          data += "&idComentarioEmpleado=" + response.data.idComentarioEmpleado; //this.actualizarIdComentario(response.data.idComentarioEmpleado);
+          //this.registrarComentario2(data);
+
+          axios.post("/api/informeempleadocomentarios/save", data, {
+            headers: {
+              "X-Requested-With": "XMLHttpRequest"
+            }
+          }).then(function (response) {
+            console.log(response);
+          })["catch"](function (error) {
+            _this5.$notify({
+              group: "default",
+              type: "error",
+              text: error.response.data.message
+            });
+
+            _this5.errors.add(error.response.data.errors);
+          });
+        }
+      })["catch"](function (error) {
+        _this5.$notify({
+          group: "default",
+          type: "error",
+          text: error.response.data.message
+        });
+
+        _this5.errors.add(error.response.data.errors);
+      });
+    },
+    registrarSugerencia: function registrarSugerencia(data) {
+      var _this6 = this;
+
+      axios.post("/api/problemasugerencias/edit", data, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(function (response) {
+        _this6.$router.push('/reports');
+
+        console.log(response);
+
+        if (response.data.success) {}
+      });
+    }
   }
 });
 
@@ -5945,9 +6127,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+<<<<<<< HEAD
       reports: [],
       nombre_etapa: "",
       etapa_id: ""
+=======
+      reports: []
+>>>>>>> 6f54c74... Se continua con mostrar sugerencias
     };
   },
   mounted: function mounted() {
@@ -34781,18 +34967,135 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "posts view large-10 medium-8 columns" }, [
-    _vm._m(0),
+    _c("table", { staticClass: "table" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.reports.cambiosEstadoInforme, function(report) {
+          return _c("tr", [
+            _c("td", [_vm._v(_vm._s(report.created))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(report.employee.user.nombre) +
+                  "\n                    " +
+                  _vm._s(report.employee.user.apellido) +
+                  "\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.report.product.tipo))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.report.product.modelo))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.state.nombre_estado))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(report.report.product.motivo))]),
+            _vm._v(" "),
+            _c("td", [
+              _vm._v(
+                _vm._s(report.comentarioEmpleado.commentsemployee.descripcion)
+              )
+            ])
+          ])
+        }),
+        0
+      )
+    ]),
     _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _vm._m(2),
-    _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-4" }, [
-      _vm._m(4),
-      _vm._v("\n    " + _vm._s(_vm.idInforme) + "\n    ")
-    ])
+    _c(
+      "form",
+      {
+        attrs: { novalidate: "novalidate" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "row align-items-center" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "col col-lg-10" }, [
+            _c(
+              "select",
+              {
+                staticClass: "custom-select",
+                attrs: { id: "inputGroupSelect01", name: "selectSector" }
+              },
+              [
+                _c("option", { attrs: { selected: "" } }, [
+                  _vm._v("Elija Sector...")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.sectoresADerivar, function(sectorADerivar) {
+                  return sectorADerivar.sector_id != 1
+                    ? _c(
+                        "option",
+                        {
+                          key: sectorADerivar.sector_id,
+                          domProps: { value: sectorADerivar.sector_id }
+                        },
+                        [
+                          _c("text", [
+                            _vm._v(_vm._s(sectorADerivar.nombre_sector))
+                          ])
+                        ]
+                      )
+                    : _vm._e()
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row align-items-center mt-2" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "col col-lg-10" }, [
+            _c(
+              "select",
+              {
+                staticClass: "custom-select",
+                attrs: { id: "inputGroupSelect01", name: "selectSugerencia" }
+              },
+              [
+                _c("option", { attrs: { selected: "" } }, [
+                  _vm._v("Asigne sugerencia...")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.sugerencias, function(sugerencia) {
+                  return _c(
+                    "option",
+                    {
+                      key: sugerencia.suggestion.suggestion_id,
+                      domProps: { value: sugerencia.suggestion.suggestion_id }
+                    },
+                    [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(sugerencia.suggestion.nombre_sugerencia) +
+                          "\n                "
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(3),
+        _vm._v(" "),
+        _vm._m(4)
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -34800,61 +35103,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "table" }, [
-      _c("thead", [
-        _c("tr", [
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha y hora")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Derivado Por")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Motivo")]),
-          _vm._v(" "),
-          _c("th", { attrs: { scope: "col" } }, [_vm._v("Comentario")])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("tbody", [
-        _c("tr", [
-          _c("td", [_vm._v("13-05-21 13:06")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Atencion al cliente")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Entrante")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Pantalla negra")]),
-          _vm._v(" "),
-          _c("td", [
-            _vm._v(
-              "Cada vez que el cliente quiere encenderla tira error y se reinicia"
-            )
-          ])
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha y hora")]),
         _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("13-05-21 13:06")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Diagnosticador")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("En preparacion")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Pantalla negra")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Reinstalar windows")])
-        ]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Derivado Por")]),
         _vm._v(" "),
-        _c("tr", [
-          _c("td", [_vm._v("13-05-21 13:06")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Tecnico")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("En reparacion")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Pantalla negra")]),
-          _vm._v(" "),
-          _c("td", [_vm._v("Windows 10 reinstalado")])
-        ])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Modelo")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Motivo")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Comentarios")])
       ])
     ])
   },
@@ -34862,52 +35125,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row align-items-center" }, [
-      _c("div", { staticClass: "col col-lg-2" }, [
-        _c("h5", [_vm._v("Derivar a:")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col col-lg-10" }, [
-        _c(
-          "select",
-          { staticClass: "custom-select", attrs: { id: "inputGroupSelect01" } },
-          [
-            _c("option", { attrs: { selected: "" } }, [_vm._v("Choose...")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1" } }, [_vm._v("One")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "2" } }, [_vm._v("Two")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "3" } }, [_vm._v("Three")])
-          ]
-        )
-      ])
+    return _c("div", { staticClass: "col col-lg-2" }, [
+      _c("h5", [_vm._v("Derivar a:")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row align-items-center mt-2" }, [
-      _c("div", { staticClass: "col col-lg-2" }, [
-        _c("h5", [_vm._v("Sugerencias:")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col col-lg-10" }, [
-        _c(
-          "select",
-          { staticClass: "custom-select", attrs: { id: "inputGroupSelect01" } },
-          [
-            _c("option", { attrs: { selected: "" } }, [_vm._v("Choose...")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "1" } }, [_vm._v("One")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "2" } }, [_vm._v("Two")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "3" } }, [_vm._v("Three")])
-          ]
-        )
-      ])
+    return _c("div", { staticClass: "col col-lg-2" }, [
+      _c("h5", [_vm._v("Sugerencias:")])
     ])
   },
   function() {
@@ -34923,7 +35150,11 @@ var staticRenderFns = [
         _c("div", { staticClass: "form-group" }, [
           _c("textarea", {
             staticClass: "form-control",
-            attrs: { id: "exampleFormControlTextarea1", rows: "3" }
+            attrs: {
+              id: "exampleFormControlTextarea1",
+              name: "comentarios",
+              rows: "3"
+            }
           })
         ])
       ])
@@ -34933,8 +35164,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col col-lg-2" }, [
-      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Derivar")])
+    return _c("div", { staticClass: "row mt-4" }, [
+      _c("div", { staticClass: "col col-lg-2" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+          [_vm._v("Derivar")]
+        )
+      ])
     ])
   }
 ]
@@ -34970,6 +35207,7 @@ var render = function() {
           _c(
             "tbody",
             _vm._l(_vm.reports, function(report) {
+<<<<<<< HEAD
               return report.state_id == _vm.etapa_id
                 ? _c("tr", { attrs: { "v-bind": report.report.report_id } }, [
                     _c("td", [_vm._v(_vm._s(report.report.report_id))]),
@@ -35002,6 +35240,33 @@ var render = function() {
                         )
                       ],
                       1
+=======
+              return _c("tr", [
+                _c("td", [_vm._v(_vm._s(report.report_id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(report.created))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(report.created))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(report.product.tipo))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(report.product.motivo))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(report.state.nombre_estado))]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: { path: "/detalleInforme/" + report.report_id },
+                          idInforme: "idInforme"
+                        }
+                      },
+                      [_vm._v("+")]
+>>>>>>> 6f54c74... Se continua con mostrar sugerencias
                     )
                   ])
                 : _vm._e()
@@ -53976,6 +54241,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! bootstrap/dist/css/bootstrap.min.css */ "./node_modules/bootstrap/dist/css/bootstrap.min.css");
 /* harmony import */ var bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(bootstrap_dist_css_bootstrap_min_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_11__);
 
 
 
@@ -53988,6 +54255,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_session__WEBPACK_IMPORTED_MODULE_8___default.a);
 
 
+
 window.axios = axios__WEBPACK_IMPORTED_MODULE_3___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_sweetalert2__WEBPACK_IMPORTED_MODULE_4__["default"]);
@@ -53997,7 +54265,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app', _views_App_vue__WEBP
 var router = vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    nombre: 'jona'
+    idComentario: null
+  },
+  mutations: {
+    actualizarIdComentario: function actualizarIdComentario(state, n) {
+      state.idComentario = n;
+    }
   }
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
@@ -54269,8 +54542,13 @@ var routes = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
     path: '/reports',
     name: 'reports',
     component: _views_Informes_Informes_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
-  }, {
-    path: '/detalleInforme',
+  }, // {
+  //     path: '/detalleInforme',
+  //     name: 'detalleInforme',
+  //     component: DetalleInforme
+  // },
+  {
+    path: '/detalleInforme/:id',
     name: 'detalleInforme',
     component: _views_Informes_DetalleInforme_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
   }, {

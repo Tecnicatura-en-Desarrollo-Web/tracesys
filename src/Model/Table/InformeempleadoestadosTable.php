@@ -50,10 +50,10 @@ class InformeempleadoestadosTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        /* $this->belongsTo('Informeempleadoestados', [
+        $this->belongsTo('Informeempleadoestados', [
             'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
-        ]); */
+        ]);
         $this->belongsTo('Employees', [
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER',
@@ -66,21 +66,5 @@ class InformeempleadoestadosTable extends Table
             'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
         ]);
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['informeempleadoestados_id'], 'Informeempleadoestados'), ['errorField' => 'informeempleadoestados_id']);
-        $rules->add($rules->existsIn(['employee_id'], 'Employees'), ['errorField' => 'employee_id']);
-        $rules->add($rules->existsIn(['state_id'], 'States'), ['errorField' => 'state_id']);
-
-        return $rules;
     }
 }

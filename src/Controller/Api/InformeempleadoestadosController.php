@@ -6,6 +6,9 @@ namespace App\Controller\Api;
 
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
+use App\Model\Entity\Informeempleadocomentario;
+use App\Model\Table\InformeempleadocomentariosTable;
+use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
 
 /**
  * Informeempleadoestados Controller
@@ -44,7 +47,24 @@ class InformeempleadoestadosController extends AppController
 
         return $this->setJsonResponse($informeempleadoestados);
     }
+    public function informesCambiosEstados($id = null)
+    {
+        $this->paginate = [
+            'contain' => ['Employees.Users', 'Reports.Products', 'States'],
+            'conditions' => ['informeempleadoestado_id' => $id]
+        ];
+        $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
+        $objComentario=new InformeempleadocomentariosTable();
+        $comentarios = $objComentario->find('all', ['contain'=>['Commentsemployees'],'conditions' => ['report_id' => $id]]);
+        $comentarios=json_encode($comentarios);
+        $i=0;
+        foreach ($cambiosEstadoInforme['cambiosEstadoInforme'] as $cambioEstadoInforme) {
+            $cambioEstadoInforme->{"comentarioEmpleado"}=json_decode($comentarios)[$i];
+            $i++;
+        }
+        return $this->setJsonResponse($cambiosEstadoInforme);
 
+    }
     /**
      * View method
      *
@@ -66,6 +86,21 @@ class InformeempleadoestadosController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
+    public function save()
+    {
+        $dataVue =  $this->request->getData();
+        $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
+        $dataNueva = [
+            "informeempleadoestado_id" => (int)$dataVue['idInforme'],
+            "employee_id" => (int)$dataVue['idEmpleado'],
+            "state_id" => (int)$dataVue['selectSector'],
+        ];
+        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado);
+        return $this->setJsonResponse([
+            'datosEntidad' => $result,
+        ]);
+    }
     public function add()
     {
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
@@ -82,6 +117,9 @@ class InformeempleadoestadosController extends AppController
         $employees = $this->Informeempleadoestados->Employees->find('list', ['limit' => 200]);
         $states = $this->Informeempleadoestados->States->find('list', ['limit' => 200]);
         $this->set(compact('informeempleadoestado', 'informeempleadoestados', 'employees', 'states'));
+
+        // $formu['formularioinfo'] = "llego jonaaaaaaaaaaa";
+        // return $this->setJsonResponse($formu);
     }
 
     /**
