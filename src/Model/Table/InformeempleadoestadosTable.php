@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -54,6 +53,10 @@ class InformeempleadoestadosTable extends Table
             'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'informeempleadoestado_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Employees', [
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER',
@@ -62,9 +65,36 @@ class InformeempleadoestadosTable extends Table
             'foreignKey' => 'state_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Reports', [
-            'foreignKey' => 'informeempleadoestado_id',
-            'joinType' => 'INNER',
-        ]);
     }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator): Validator
+    {
+        $validator
+            ->boolean('ultimoEstado')
+            ->notEmptyString('ultimoEstado');
+
+        return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->existsIn(['informeempleadoestado_id'], 'Informeempleadoestados'), ['errorField' => 'informeempleadoestado_id']);
+    //     $rules->add($rules->existsIn(['employee_id'], 'Employees'), ['errorField' => 'employee_id']);
+    //     $rules->add($rules->existsIn(['state_id'], 'States'), ['errorField' => 'state_id']);
+
+    //     return $rules;
+    // }
 }

@@ -41,6 +41,10 @@ class CreateInformeEmpleadoEstados extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+        $table->addColumn('ultimoEstado', 'boolean', [
+            'default' => true,
+            'null' => false,
+        ]);
         $table->addPrimaryKey([
             'informeempleadoestado_id',
             'employee_id',
