@@ -24,9 +24,9 @@ a {
     color: #15848f;
 }
 
-.side-nav li a:not(.button):hover {
+/* .side-nav li a:not(.button):hover {
     color: #15848f;
-}
+} */
 
 header {
     background-color: #d33c44;
@@ -565,6 +565,17 @@ div.button-group.right a i {
     color: white;
 }
 
+.boton-classic {
+    background-color: #6d9886;
+    border: 2px solid;
+    border-radius: 25px;
+}
+
+.boton-classic:hover {
+    background: #5fb692;
+    color: #fff !important;
+}
+
 /* ****************** ESTILOS PROPIOS ******************** */
 
 .nav-link:hover,
@@ -1033,10 +1044,10 @@ body {
     li
     a:hover:before,
 .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu:focus + span,
-.chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a i {
+/* .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a i {
     color: #16c7ff;
     text-shadow: 0px 0px 10px rgba(22, 199, 255, 0.5);
-}
+} */
 
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li a i,
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown div,

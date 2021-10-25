@@ -1,42 +1,52 @@
 <template>
   <div>
     <div class="d-flex justify-content-center mt-5">
-      <div class="card p-3" style="width: 18rem">
-        <div class="columns align-content-end">
-          <form method="POST" @submit.prevent="iniciarSesion">
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email address</label>
-              <input
-                type="email"
-                class="form-control"
-                id="username2"
-                name="email"
-                placeholder="Ingrese email"
-              />
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password2"
-                name="contrasena"
-                placeholder="Ingrese Password"
-              />
-            </div>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              @click="mostrarMensaje()"
-            >
-              Inicar Sesion
-            </button>
-          </form>
-          <div>
-            <hr />
-            <!-- <div v-show="!login" class="alert alert-danger" :class="colorAlerta" role="alert">
+      <div>
+        <div class="mb-5">
+          <img src="../../../img/LogoTracesys.png" alt="Logo del sistema" />
+        </div>
+        <div
+          class="card p-3 shadow-lg p-3 mb-5 bg-white rounded"
+          style="width: 18rem"
+        >
+          <div class="columns align-content-end">
+            <form method="POST" @submit.prevent="iniciarSesion">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="username2"
+                  name="email"
+                  placeholder="Ingrese email"
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password2"
+                  name="contrasena"
+                  placeholder="Ingrese Password"
+                />
+              </div>
+              <div class="d-flex justify-content-center">
+                <button
+                  type="submit"
+                  class="boton-classic"
+                  @click="mostrarMensaje()"
+                >
+                  Inicar Sesion
+                </button>
+              </div>
+            </form>
+            <div>
+              <hr />
+              <!-- <div v-show="!login" class="alert alert-danger" :class="colorAlerta" role="alert">
                         {{mensaje}}
                     </div> -->
+            </div>
           </div>
         </div>
       </div>

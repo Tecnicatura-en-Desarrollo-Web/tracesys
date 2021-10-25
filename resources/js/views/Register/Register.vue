@@ -1,90 +1,84 @@
 <template>
   <div class="d-flex justify-content-center mt-5">
-    <div class="card p-3" style="width: 50rem">
-      <h3 class="text-center">Registro de usuario</h3>
-        <form class="row g-3" @submit.prevent="onSubmit" novalidate="novalidate" >
-            <div class="col-md-6">
-                <label for="validationDefault01" class="form-label">Cuit</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="cuit"
-                    value="12313"
-                    v-model="cuit"
-                />
-            </div>
-            <div class="col-md-6">
-                <label for="validationDefault02" class="form-label">Nombre</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="nombre"
-                    value="Jona"
-                    v-model="nombre"
-                />
-            </div>
-            <div class="col-md-6">
-                <label for="validationDefault03" class="form-label">Apellido</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="apellido"
-                    value="Rios"
-                    v-model="apellido"
-                />
-            </div>
-            <div class="col-md-6">
-                <label for="validationDefaultUsername" class="form-label"
-                    >Domicilio</label
-                >
-                <input
-                    type="text"
-                    class="form-control"
-                    name="domicilio"
-                    value="Neuquen"
-                    v-model="domicilio"
-                />
-            </div>
-            <div class="col-md-6">
-                <label for="validationDefault04" class="form-label">Telefono</label>
-                <input
-                    type="number"
-                    class="form-control"
-                    name="telefono"
-                    v-model="telefono"
-                />
-            </div>
-            <div class="col-md-12">
-                <label for="validationDefault05" class="form-label">Email</label>
-                <input
-                    type="email"
-                    class="form-control"
-                    name="email"
-                    v-model="email"
-                />
-            </div>
-            <div class="col-md-12">
-                <label for="validationDefault06" class="form-label">Usuario</label>
-                <input
-                    type="text"
-                    class="form-control"
-                    name="usuario"
-                    v-model="usuario"
-                />
-            </div>
-            <div class="col-md-12">
-                <label for="validationDefault07" class="form-label">Contraseña</label>
-                <input
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    v-model="password"
-                />
-            </div>
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">Registrarse</button>
-            </div>
-        </form>
+    <div
+      class="card p-3 shadow-lg p-3 mb-5 bg-white rounded"
+      style="width: 50rem"
+    >
+      <h2 class="text-center">Registro de usuario</h2>
+      <form class="row g-3" @submit.prevent="onSubmit" novalidate="novalidate">
+        <div class="col-md-6">
+          <label for="validationDefault02" class="form-label">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            name="nombre"
+            v-model="nombre"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault03" class="form-label">Apellido</label>
+          <input
+            type="text"
+            class="form-control"
+            name="apellido"
+            v-model="apellido"
+          />
+        </div>
+        <div class="col-md-3">
+          <label for="validationDefault01" class="form-label">Cuit</label>
+          <input type="text" class="form-control" name="cuit" v-model="cuit" />
+        </div>
+        <div class="col-md-3">
+          <label for="validationDefault04" class="form-label">Telefono</label>
+          <input
+            type="number"
+            class="form-control"
+            name="telefono"
+            v-model="telefono"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefaultUsername" class="form-label"
+            >Domicilio</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="domicilio"
+            v-model="domicilio"
+          />
+        </div>
+        <div class="col-md-12">
+          <label for="validationDefault05" class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            v-model="email"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault06" class="form-label">Usuario</label>
+          <input
+            type="text"
+            class="form-control"
+            name="usuario"
+            v-model="usuario"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="validationDefault07" class="form-label">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            v-model="password"
+          />
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+          <button class="boton-classic" type="submit">Registrarse</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -94,60 +88,60 @@ import formSerialize from "form-serialize";
 import Errors from "../../helpers/FormErrors.js";
 
 export default {
-    data() {
-        return {
-            cuit:"",
-            nombre: "",
-            apellido: "",
-            domicilio: "",
-            telefono: "",
-            email: "",
-            usuario: "",
-            password: "",
-            errors: new Errors(),
-        };
+  data() {
+    return {
+      cuit: "",
+      nombre: "",
+      apellido: "",
+      domicilio: "",
+      telefono: "",
+      email: "",
+      usuario: "",
+      password: "",
+      errors: new Errors(),
+    };
+  },
+  methods: {
+    onSubmit(event) {
+      let data = formSerialize(event.target, {
+        hash: false,
+        empty: true,
+      });
+      console.log(data);
+
+      axios
+        .post("/api/users/save", data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then((response) => {
+          // Redirect on success
+          console.log(response.data);
+          if (response.data.success) {
+            this.$notify({
+              group: "default",
+              type: "success",
+              text: response.data.message,
+            });
+
+            this.$router.push({ path: response.data.url });
+          }
+        })
+        .catch((error) => {
+          this.$notify({
+            group: "default",
+            type: "error",
+            text: error.response.data.message,
+          });
+
+          this.errors.add(error.response.data.errors);
+        });
     },
-    methods: {
-            onSubmit(event) {
-                let data = formSerialize(event.target, {
-                    hash: false,
-                    empty: true
-                });
-                console.log(data);
-
-                axios.post('/api/users/save', data, {
-                        headers: {'X-Requested-With': 'XMLHttpRequest'}
-                    })
-                    .then(response => {
-                        // Redirect on success
-                        console.log(response.data);
-                        if (response.data.success) {
-                            this.$notify({
-                                group: 'default',
-                                type: 'success',
-                                text: response.data.message
-                            });
-
-                            this.$router.push({ path: response.data.url });
-                        }
-                    })
-                    .catch(error => {
-                        this.$notify({
-                            group: 'default',
-                            type: 'error',
-                            text: error.response.data.message
-                        });
-
-                        this.errors.add(error.response.data.errors);
-                    });
-            }
-        },
-    created(){
-        if(this.$session.exists()){
-            this.$router.push('/');
-        }
+  },
+  created() {
+    if (this.$session.exists()) {
+      this.$router.push("/");
     }
-
+  },
 };
 </script>
 

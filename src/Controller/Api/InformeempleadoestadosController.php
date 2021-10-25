@@ -38,15 +38,6 @@ class InformeempleadoestadosController extends AppController
         ];
         $informeempleadoestados['reports'] = $this->paginate($this->Informeempleadoestados);
 
-        //$query['reports'] = $this->Informeempleadoestados->find();
-
-
-        //$query['reports']->where(['state_id'=>2]);
-        // $informeempleadoestados['reports']=$this->Informeempleadoestados
-        // ->find()
-        // ->where(['state_id' => 2])
-        // ->last();
-
         return $this->setJsonResponse($informeempleadoestados);
     }
     public function informesCambiosEstados($id = null)
@@ -57,16 +48,15 @@ class InformeempleadoestadosController extends AppController
             'conditions' => ['informeempleadoestado_id' => $id]
         ];
         $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
-        $objComentario=new InformeempleadocomentariosTable();
-        $comentarios = $objComentario->find('all', ['contain'=>['Commentsemployees'],'conditions' => ['report_id' => $id]]);
-        $comentarios=json_encode($comentarios);
-        $i=0;
+        $objComentario = new InformeempleadocomentariosTable();
+        $comentarios = $objComentario->find('all', ['contain' => ['Commentsemployees'], 'conditions' => ['report_id' => $id]]);
+        $comentarios = json_encode($comentarios);
+        $i = 0;
         foreach ($cambiosEstadoInforme['cambiosEstadoInforme'] as $cambioEstadoInforme) {
-            $cambioEstadoInforme->{"comentarioEmpleado"}=json_decode($comentarios)[$i];
+            $cambioEstadoInforme->{"comentarioEmpleado"} = json_decode($comentarios)[$i];
             $i++;
         }
         return $this->setJsonResponse($cambiosEstadoInforme);
-
     }
     /**
      * View method
@@ -89,25 +79,27 @@ class InformeempleadoestadosController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function editInformeempleadoestados(){
-        $dataVue=$this->request->getData();
-        $idReport=$dataVue["idInforme"];
-        $idEmpleado=$dataVue["idEmpleado"];
-        $idState=$dataVue["idEstado"];
-        $informeempleadoestado = $this->Informeempleadoestados->get([$idReport,$idEmpleado,$idState],
-        [
-            'contain' => [],
-        ]);
+    public function editInformeempleadoestados()
+    {
+        $dataVue = $this->request->getData();
+        $idReport = $dataVue["idInforme"];
+        $idEmpleado = $dataVue["idEmpleado"];
+        $idState = $dataVue["idEstado"];
+        $informeempleadoestado = $this->Informeempleadoestados->get(
+            [$idReport, $idEmpleado, $idState],
+            [
+                'contain' => [],
+            ]
+        );
 
         $dataNueva = [
             "ultimoEstado" => 0,
         ];
-        $informeempleadoestado=$this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
+        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
         $result = $this->Informeempleadoestados->save($informeempleadoestado);
         return $this->setJsonResponse([
             'mensaje' => $result,
         ]);
-
     }
     public function save()
     {
