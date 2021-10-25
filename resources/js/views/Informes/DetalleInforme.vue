@@ -159,11 +159,11 @@ export default {
             //ver mas adelante mejorar la estructura del arreglo devuelto
             //console.log("aca lee jonaaaaa",response.data);
             this.reports = response.data;
-            console.log("aca lee jonaaaaa222",this.reports);
+            //console.log("aca lee jonaaaaa222",this.reports);
             this.idEmpleado=this.reports.cambiosEstadoInforme[0].employee.employee_id;
             this.cuitEmpleado=this.reports.cambiosEstadoInforme[0].employee.cuit;
 
-            console.log("aca trae", response.data.cambiosEstadoInforme);
+            //console.log("aca trae", response.data.cambiosEstadoInforme);
             // console.log(this.report);
             })
             .catch((error) => {
@@ -177,8 +177,9 @@ export default {
             })
             .then((response) => {
             this.sugerencias = response.data.suggestions;
-            console.log(response.data.suggestions);
-            this.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
+            console.log("aca lee jonaaaaaaaaa",response.data.suggestions);
+            //QUITA ESE COMENTARIO JONAAAAAAAAAAAAAAAAAAAAA
+            //this.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
             /* console.log(response.data.suggestions); */
             //this.sugerencias = response.data.suggestions;
             })
@@ -207,11 +208,38 @@ export default {
             data += "&idInforme=" + this.idInforme;
             data += "&idEmpleado=" + this.idEmpleado;
             data += "&cuitEmpleado=" + this.cuitEmpleado;
+            data +="&idEstado=" + this.$session.get("etapa_id");
+            this.actualizarCambioEstadoAnterior(data);
             this.registrarCambioEstado(data);
             this.registrarComentario(data);
             this.registrarSugerencia(data);
 
 
+        },
+        actualizarCambioEstadoAnterior(data){
+            axios.post(`/api/informeempleadoestados/editInformeempleadoestados`, data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+            // Redirect on success
+            //console.log(response);
+            if (response.data.success) {
+                this.$notify({
+                group: "default",
+                type: "success",
+                text: response.data.message,
+                });
+                this.$router.push('/reports');
+            }
+            })
+            .catch((error) => {
+            this.$notify({
+                group: "default",
+                type: "error",
+                text: error.response.data.message,
+            });
+            this.errors.add(error.response.data.errors);
+            });
         },
         registrarCambioEstado(data){
             axios.post(`/api/informeempleadoestados/save`, data, {
@@ -219,7 +247,7 @@ export default {
             })
             .then((response) => {
             // Redirect on success
-            console.log(response);
+            //console.log(response);
             if (response.data.success) {
                 this.$notify({
                 group: "default",
@@ -246,9 +274,9 @@ export default {
             })
             .then((response) => {
             //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
-                console.log(response);
+                //console.log(response);
                 this.comentarioEmpleado=response.data.comentario;
-                console.log(this.comentarioEmpleado);
+                //console.log(this.comentarioEmpleado);
                 if (response.data.success) {
                     data += "&idComentarioEmpleado=" + response.data.idComentarioEmpleado;
                     //this.actualizarIdComentario(response.data.idComentarioEmpleado);
@@ -257,7 +285,7 @@ export default {
                     headers: { "X-Requested-With": "XMLHttpRequest" },
                     })
                     .then((response) => {
-                        console.log(response);
+                        //console.log(response);
                     })
                     .catch((error) => {
                     this.$notify({
@@ -286,7 +314,7 @@ export default {
             })
             .then((response) => {
                 this.$router.push('/reports');
-                console.log(response);
+                //console.log(response);
                 if (response.data.success) {
                 }
             })

@@ -40,7 +40,7 @@ class ProblemasugerenciasController extends AppController
         $this->paginate = [
             'contain' => [
                 'Suggestions','Issues'],
-            'conditions'=>['problemasugerencia_id' => $id , 'activo'=>0]
+            'conditions'=>['Issues.report_id' => $id , 'activo'=>0]
         ];
         $problemasugerencia ['suggestions'] = $this->paginate($this->Problemasugerencias);
         return $this->setJsonResponse($problemasugerencia);

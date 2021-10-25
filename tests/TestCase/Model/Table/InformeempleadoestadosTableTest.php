@@ -27,6 +27,7 @@ class InformeempleadoestadosTableTest extends TestCase
         'app.Informeempleadoestados',
         'app.Employees',
         'app.States',
+        'app.Reports',
     ];
 
     /**

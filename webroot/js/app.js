@@ -5311,10 +5311,10 @@ module.exports = {
 /*!*****************************************!*\
   !*** ./node_modules/axios/package.json ***!
   \*****************************************/
-/*! exports provided: _args, _development, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, bundlesize, dependencies, description, devDependencies, homepage, jsdelivr, keywords, license, main, name, repository, scripts, typings, unpkg, version, default */
+/*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, browser, bugs, bundleDependencies, bundlesize, dependencies, deprecated, description, devDependencies, homepage, jsdelivr, keywords, license, main, name, repository, scripts, typings, unpkg, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_args\":[[\"axios@0.21.4\",\"C:\\\\xampp\\\\htdocs\\\\tracesys\"]],\"_development\":true,\"_from\":\"axios@0.21.4\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.4\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.4\",\"saveSpec\":null,\"fetchSpec\":\"0.21.4\"},\"_requiredBy\":[\"#DEV:/\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_spec\":\"0.21.4\",\"_where\":\"C:\\\\xampp\\\\htdocs\\\\tracesys\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
+module.exports = JSON.parse("{\"_from\":\"axios@0.21.4\",\"_id\":\"axios@0.21.4\",\"_inBundle\":false,\"_integrity\":\"sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==\",\"_location\":\"/axios\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"axios@0.21.4\",\"name\":\"axios\",\"escapedName\":\"axios\",\"rawSpec\":\"0.21.4\",\"saveSpec\":null,\"fetchSpec\":\"0.21.4\"},\"_requiredBy\":[\"#DEV:/\",\"#USER\"],\"_resolved\":\"https://registry.npmjs.org/axios/-/axios-0.21.4.tgz\",\"_shasum\":\"c67b90dc0568e5c1cf2b0b858c43ba28e2eda575\",\"_spec\":\"axios@0.21.4\",\"_where\":\"C:\\\\Users\\\\Jonawin10\\\\tracesys\",\"author\":{\"name\":\"Matt Zabriskie\"},\"browser\":{\"./lib/adapters/http.js\":\"./lib/adapters/xhr.js\"},\"bugs\":{\"url\":\"https://github.com/axios/axios/issues\"},\"bundleDependencies\":false,\"bundlesize\":[{\"path\":\"./dist/axios.min.js\",\"threshold\":\"5kB\"}],\"dependencies\":{\"follow-redirects\":\"^1.14.0\"},\"deprecated\":false,\"description\":\"Promise based HTTP client for the browser and node.js\",\"devDependencies\":{\"coveralls\":\"^3.0.0\",\"es6-promise\":\"^4.2.4\",\"grunt\":\"^1.3.0\",\"grunt-banner\":\"^0.6.0\",\"grunt-cli\":\"^1.2.0\",\"grunt-contrib-clean\":\"^1.1.0\",\"grunt-contrib-watch\":\"^1.0.0\",\"grunt-eslint\":\"^23.0.0\",\"grunt-karma\":\"^4.0.0\",\"grunt-mocha-test\":\"^0.13.3\",\"grunt-ts\":\"^6.0.0-beta.19\",\"grunt-webpack\":\"^4.0.2\",\"istanbul-instrumenter-loader\":\"^1.0.0\",\"jasmine-core\":\"^2.4.1\",\"karma\":\"^6.3.2\",\"karma-chrome-launcher\":\"^3.1.0\",\"karma-firefox-launcher\":\"^2.1.0\",\"karma-jasmine\":\"^1.1.1\",\"karma-jasmine-ajax\":\"^0.1.13\",\"karma-safari-launcher\":\"^1.0.0\",\"karma-sauce-launcher\":\"^4.3.6\",\"karma-sinon\":\"^1.0.5\",\"karma-sourcemap-loader\":\"^0.3.8\",\"karma-webpack\":\"^4.0.2\",\"load-grunt-tasks\":\"^3.5.2\",\"minimist\":\"^1.2.0\",\"mocha\":\"^8.2.1\",\"sinon\":\"^4.5.0\",\"terser-webpack-plugin\":\"^4.2.3\",\"typescript\":\"^4.0.5\",\"url-search-params\":\"^0.10.0\",\"webpack\":\"^4.44.2\",\"webpack-dev-server\":\"^3.11.0\"},\"homepage\":\"https://axios-http.com\",\"jsdelivr\":\"dist/axios.min.js\",\"keywords\":[\"xhr\",\"http\",\"ajax\",\"promise\",\"node\"],\"license\":\"MIT\",\"main\":\"index.js\",\"name\":\"axios\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/axios/axios.git\"},\"scripts\":{\"build\":\"NODE_ENV=production grunt build\",\"coveralls\":\"cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js\",\"examples\":\"node ./examples/server.js\",\"fix\":\"eslint --fix lib/**/*.js\",\"postversion\":\"git push && git push --tags\",\"preversion\":\"npm test\",\"start\":\"node ./sandbox/server.js\",\"test\":\"grunt test\",\"version\":\"npm run build && grunt version && git add -A dist && git add CHANGELOG.md bower.json package.json\"},\"typings\":\"./index.d.ts\",\"unpkg\":\"dist/axios.min.js\",\"version\":\"0.21.4\"}");
 
 /***/ }),
 
@@ -5923,11 +5923,11 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //ver mas adelante mejorar la estructura del arreglo devuelto
         //console.log("aca lee jonaaaaa",response.data);
-        _this.reports = response.data;
-        console.log("aca lee jonaaaaa222", _this.reports);
+        _this.reports = response.data; //console.log("aca lee jonaaaaa222",this.reports);
+
         _this.idEmpleado = _this.reports.cambiosEstadoInforme[0].employee.employee_id;
-        _this.cuitEmpleado = _this.reports.cambiosEstadoInforme[0].employee.cuit;
-        console.log("aca trae", response.data.cambiosEstadoInforme); // console.log(this.report);
+        _this.cuitEmpleado = _this.reports.cambiosEstadoInforme[0].employee.cuit; //console.log("aca trae", response.data.cambiosEstadoInforme);
+        // console.log(this.report);
       })["catch"](function (error) {
         console.log("Error: " + error);
       });
@@ -5939,8 +5939,9 @@ __webpack_require__.r(__webpack_exports__);
         params: query
       }).then(function (response) {
         _this2.sugerencias = response.data.suggestions;
-        console.log(response.data.suggestions);
-        _this2.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
+        console.log("aca lee jonaaaaaaaaa", response.data.suggestions); //QUITA ESE COMENTARIO JONAAAAAAAAAAAAAAAAAAAAA
+        //this.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
+
         /* console.log(response.data.suggestions); */
         //this.sugerencias = response.data.suggestions;
       })["catch"](function (error) {
@@ -5968,28 +5969,30 @@ __webpack_require__.r(__webpack_exports__);
       data += "&idInforme=" + this.idInforme;
       data += "&idEmpleado=" + this.idEmpleado;
       data += "&cuitEmpleado=" + this.cuitEmpleado;
+      data += "&idEstado=" + this.$session.get("etapa_id");
+      this.actualizarCambioEstadoAnterior(data);
       this.registrarCambioEstado(data);
       this.registrarComentario(data);
       this.registrarSugerencia(data);
     },
-    registrarCambioEstado: function registrarCambioEstado(data) {
+    actualizarCambioEstadoAnterior: function actualizarCambioEstadoAnterior(data) {
       var _this4 = this;
 
-      axios.post("/api/informeempleadoestados/save", data, {
+      axios.post("/api/informeempleadoestados/editInformeempleadoestados", data, {
         headers: {
           "X-Requested-With": "XMLHttpRequest"
         }
       }).then(function (response) {
         // Redirect on success
-        console.log(response);
-
+        //console.log(response);
         if (response.data.success) {
           _this4.$notify({
             group: "default",
             type: "success",
             text: response.data.message
-          }); // this.$router.push('/reports');
+          });
 
+          _this4.$router.push('/reports');
         }
       })["catch"](function (error) {
         _this4.$notify({
@@ -6001,39 +6004,23 @@ __webpack_require__.r(__webpack_exports__);
         _this4.errors.add(error.response.data.errors);
       });
     },
-    registrarComentario: function registrarComentario(data) {
+    registrarCambioEstado: function registrarCambioEstado(data) {
       var _this5 = this;
 
-      //****Guardo el comentario en la tabla empleadoscomentarios */
-      axios.post("/api/commentsemployees/save", data, {
+      axios.post("/api/informeempleadoestados/save", data, {
         headers: {
           "X-Requested-With": "XMLHttpRequest"
         }
       }).then(function (response) {
-        //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
-        console.log(response);
-        _this5.comentarioEmpleado = response.data.comentario;
-        console.log(_this5.comentarioEmpleado);
-
+        // Redirect on success
+        //console.log(response);
         if (response.data.success) {
-          data += "&idComentarioEmpleado=" + response.data.idComentarioEmpleado; //this.actualizarIdComentario(response.data.idComentarioEmpleado);
-          //this.registrarComentario2(data);
+          _this5.$notify({
+            group: "default",
+            type: "success",
+            text: response.data.message
+          }); // this.$router.push('/reports');
 
-          axios.post("/api/informeempleadocomentarios/save", data, {
-            headers: {
-              "X-Requested-With": "XMLHttpRequest"
-            }
-          }).then(function (response) {
-            console.log(response);
-          })["catch"](function (error) {
-            _this5.$notify({
-              group: "default",
-              type: "error",
-              text: error.response.data.message
-            });
-
-            _this5.errors.add(error.response.data.errors);
-          });
         }
       })["catch"](function (error) {
         _this5.$notify({
@@ -6045,17 +6032,58 @@ __webpack_require__.r(__webpack_exports__);
         _this5.errors.add(error.response.data.errors);
       });
     },
-    registrarSugerencia: function registrarSugerencia(data) {
+    registrarComentario: function registrarComentario(data) {
       var _this6 = this;
+
+      //****Guardo el comentario en la tabla empleadoscomentarios */
+      axios.post("/api/commentsemployees/save", data, {
+        headers: {
+          "X-Requested-With": "XMLHttpRequest"
+        }
+      }).then(function (response) {
+        //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
+        //console.log(response);
+        _this6.comentarioEmpleado = response.data.comentario; //console.log(this.comentarioEmpleado);
+
+        if (response.data.success) {
+          data += "&idComentarioEmpleado=" + response.data.idComentarioEmpleado; //this.actualizarIdComentario(response.data.idComentarioEmpleado);
+          //this.registrarComentario2(data);
+
+          axios.post("/api/informeempleadocomentarios/save", data, {
+            headers: {
+              "X-Requested-With": "XMLHttpRequest"
+            }
+          }).then(function (response) {//console.log(response);
+          })["catch"](function (error) {
+            _this6.$notify({
+              group: "default",
+              type: "error",
+              text: error.response.data.message
+            });
+
+            _this6.errors.add(error.response.data.errors);
+          });
+        }
+      })["catch"](function (error) {
+        _this6.$notify({
+          group: "default",
+          type: "error",
+          text: error.response.data.message
+        });
+
+        _this6.errors.add(error.response.data.errors);
+      });
+    },
+    registrarSugerencia: function registrarSugerencia(data) {
+      var _this7 = this;
 
       axios.post("/api/problemasugerencias/edit", data, {
         headers: {
           "X-Requested-With": "XMLHttpRequest"
         }
       }).then(function (response) {
-        _this6.$router.push('/reports');
+        _this7.$router.push('/reports'); //console.log(response);
 
-        console.log(response);
 
         if (response.data.success) {}
       });
@@ -6117,9 +6145,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -6127,13 +6152,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-<<<<<<< HEAD
       reports: [],
       nombre_etapa: "",
-      etapa_id: ""
-=======
-      reports: []
->>>>>>> 6f54c74... Se continua con mostrar sugerencias
+      etapa_id: null
     };
   },
   mounted: function mounted() {
@@ -6152,18 +6173,15 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("api/informeempleadoestados", {
         params: query
       }).then(function (response) {
-        console.log(response.data);
         _this.reports = response.data.reports;
+        console.log("lee aca maxiiii", _this.reports);
         _this.queryParams = response.data.query;
       })["catch"](function (error) {
         console.log("Error: " + error);
       });
-    },
-    capturarId: function capturarId(id) {
-      this.id = id;
-    }
+    } //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
+
   },
-  //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
   created: function created() {
     if (!this.$session.exists()) {
       this.nombre_etapa = "asdasd";
@@ -35207,7 +35225,6 @@ var render = function() {
           _c(
             "tbody",
             _vm._l(_vm.reports, function(report) {
-<<<<<<< HEAD
               return report.state_id == _vm.etapa_id
                 ? _c("tr", { attrs: { "v-bind": report.report.report_id } }, [
                     _c("td", [_vm._v(_vm._s(report.report.report_id))]),
@@ -35240,33 +35257,6 @@ var render = function() {
                         )
                       ],
                       1
-=======
-              return _c("tr", [
-                _c("td", [_vm._v(_vm._s(report.report_id))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.created))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.created))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.product.tipo))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.product.motivo))]),
-                _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(report.state.nombre_estado))]),
-                _vm._v(" "),
-                _c(
-                  "td",
-                  [
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: { path: "/detalleInforme/" + report.report_id },
-                          idInforme: "idInforme"
-                        }
-                      },
-                      [_vm._v("+")]
->>>>>>> 6f54c74... Se continua con mostrar sugerencias
                     )
                   ])
                 : _vm._e()
@@ -55464,7 +55454,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\tracesys\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Jonawin10\tracesys\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })

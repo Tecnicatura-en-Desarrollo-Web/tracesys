@@ -32,23 +32,26 @@ class InformeempleadoestadosController extends AppController
      */
     public function index()
     {
-
         $this->paginate = [
             'contain' => ['Employees', 'States', 'Reports', 'Reports.Products'],
+            'conditions' => ['ultimoEstado' => 1]
         ];
         $informeempleadoestados['reports'] = $this->paginate($this->Informeempleadoestados);
-        /* return $this->setJsonResponse(
-            [
-                'success' => $informeempleadoestados,
-            ],
-            201
-        ); */
 
+        //$query['reports'] = $this->Informeempleadoestados->find();
+
+
+        //$query['reports']->where(['state_id'=>2]);
+        // $informeempleadoestados['reports']=$this->Informeempleadoestados
+        // ->find()
+        // ->where(['state_id' => 2])
+        // ->last();
 
         return $this->setJsonResponse($informeempleadoestados);
     }
     public function informesCambiosEstados($id = null)
     {
+
         $this->paginate = [
             'contain' => ['Employees.Users', 'Reports.Products', 'States'],
             'conditions' => ['informeempleadoestado_id' => $id]
@@ -86,6 +89,26 @@ class InformeempleadoestadosController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
+    public function editInformeempleadoestados(){
+        $dataVue=$this->request->getData();
+        $idReport=$dataVue["idInforme"];
+        $idEmpleado=$dataVue["idEmpleado"];
+        $idState=$dataVue["idEstado"];
+        $informeempleadoestado = $this->Informeempleadoestados->get([$idReport,$idEmpleado,$idState],
+        [
+            'contain' => [],
+        ]);
+
+        $dataNueva = [
+            "ultimoEstado" => 0,
+        ];
+        $informeempleadoestado=$this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado);
+        return $this->setJsonResponse([
+            'mensaje' => $result,
+        ]);
+
+    }
     public function save()
     {
         $dataVue =  $this->request->getData();

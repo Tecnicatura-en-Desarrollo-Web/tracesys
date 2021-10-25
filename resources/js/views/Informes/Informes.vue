@@ -69,7 +69,7 @@ export default {
             .get("api/informeempleadoestados", { params: query })
             .then((response) => {
                 this.reports = response.data.reports;
-                console.log("lee aca jonaaaa",this.reports);
+                console.log("lee aca maxiiii",this.reports);
                 this.queryParams = response.data.query;
             })
             .catch((error) => {
