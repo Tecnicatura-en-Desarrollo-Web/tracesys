@@ -34,5 +34,10 @@ $cakeDescription = 'CakeVue Application';
         <footer></footer>
     </span>
 </body>
+<style>
+body {
+    background-color: #F6F6F6;
+}
+</style>
 
 </html>
