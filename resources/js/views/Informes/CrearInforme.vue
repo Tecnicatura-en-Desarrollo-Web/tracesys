@@ -171,11 +171,7 @@
         </div>
       </div>
       <div class="col-12 d-flex justify-content-center mt-3">
-        <button
-          type="submit"
-          class="btn btn-success text-uppercase"
-          id="button_submit"
-        >
+        <button type="submit" class="boton-classic" id="button_submit">
           Crear
         </button>
       </div>
