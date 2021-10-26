@@ -47,3 +47,5 @@ nbproject/*
 /node_modules/*
 
 /.github/*
+webroot/mix-manifest.json
+webroot/js/app.js
