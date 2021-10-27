@@ -27,13 +27,8 @@ class CreateStages extends AbstractMigration
             'limit' => 200,
             'null' => false,
         ]);
-        $table->addColumn('sector_id', 'integer', [
-            'default' => null,
-            'limit' => 11,
-            'null' => false,
-        ]);
 
-        $table->addForeignKey('sector_id', 'sectors', 'sector_id');
+
         $table->create();
     }
 }

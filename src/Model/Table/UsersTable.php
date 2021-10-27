@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -46,8 +45,8 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Stages', [
-            'foreignKey' => 'stage_id',
+        $this->belongsTo('Sectors', [
+            'foreignKey' => 'sector_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -62,48 +61,63 @@ class UsersTable extends Table
     {
         $validator
             ->integer('user_id')
-            ->allowEmptyString('user_id', 'create');
+            ->allowEmptyString('user_id', null, 'create');
 
-        /* $validator
-            ->scalar('cuit')
-            ->maxLength('cuit', 11)
-            ->requirePresence('cuit', 'create')
-            ->notEmptyString('cuit');
+        // $validator
+        //     ->scalar('cuit')
+        //     ->maxLength('cuit', 11)
+        //     ->requirePresence('cuit', 'create')
+        //     ->notEmptyString('cuit');
 
-        $validator
-            ->scalar('nombre')
-            ->maxLength('nombre', 200)
-            ->requirePresence('nombre', 'create')
-            ->notEmptyString('nombre');
+        // $validator
+        //     ->scalar('nombre')
+        //     ->maxLength('nombre', 200)
+        //     ->requirePresence('nombre', 'create')
+        //     ->notEmptyString('nombre');
 
-        $validator
-            ->scalar('apellido')
-            ->maxLength('apellido', 200)
-            ->requirePresence('apellido', 'create')
-            ->notEmptyString('apellido');
+        // $validator
+        //     ->scalar('apellido')
+        //     ->maxLength('apellido', 200)
+        //     ->requirePresence('apellido', 'create')
+        //     ->notEmptyString('apellido');
 
-        $validator
-            ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmptyString('email');
+        // $validator
+        //     ->email('email')
+        //     ->requirePresence('email', 'create')
+        //     ->notEmptyString('email');
 
-        $validator
-            ->scalar('password')
-            ->maxLength('password', 150)
-            ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+        // $validator
+        //     ->scalar('password')
+        //     ->maxLength('password', 150)
+        //     ->requirePresence('password', 'create')
+        //     ->notEmptyString('password');
 
-        $validator
-            ->scalar('usuario')
-            ->maxLength('usuario', 150)
-            ->requirePresence('usuario', 'create')
-            ->notEmptyString('usuario');
+        // $validator
+        //     ->scalar('usuario')
+        //     ->maxLength('usuario', 150)
+        //     ->requirePresence('usuario', 'create')
+        //     ->notEmptyString('usuario');
 
-        $validator
-            ->integer('telefono')
-            ->requirePresence('telefono', 'create')
-            ->notEmptyString('telefono'); */
+        // $validator
+        //     ->integer('telefono')
+        //     ->requirePresence('telefono', 'create')
+        //     ->notEmptyString('telefono');
 
         return $validator;
     }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
+    //     $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
+
+    //     return $rules;
+    // }
 }

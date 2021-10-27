@@ -90,14 +90,14 @@ class ProblemasugerenciasController extends AppController
         $dataVue =  $this->request->getData();
         $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'],$dataVue['selectSugerencia']]);
         $dataNueva = [
-            "problemasugerencia_id" => (int)$dataVue['idEmpleado'],
-            "suggestion_id" => (int)$dataVue['idComentarioEmpleado'],
+            "problemasugerencia_id" => (int)$dataVue['idIssueReport'],
+            "suggestion_id" => (int)$dataVue['selectSugerencia'],
             "activo" => 1,
         ];
         $problemasugerencia = $this->Problemasugerencias->patchEntity($problemasugerencia, $dataNueva);
         $result = $this->Problemasugerencias->save($problemasugerencia);
         return $this->setJsonResponse([
-            'probandoinfo' => $result
+            'probandoinfo' => $dataVue
         ]);
 
 

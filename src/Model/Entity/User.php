@@ -18,7 +18,9 @@ use Cake\ORM\Entity;
  * @property int $telefono
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
- * @property int $stage_id
+ * @property int $sector_id
+ *
+ * @property \App\Model\Entity\Stage $stage
  */
 class User extends Entity
 {
@@ -41,7 +43,8 @@ class User extends Entity
         'telefono' => true,
         'created' => true,
         'modified' => true,
-        'stage_id' => true,
+        'sector_id' => true,
+        // 'stage' => true,
     ];
 
     /**

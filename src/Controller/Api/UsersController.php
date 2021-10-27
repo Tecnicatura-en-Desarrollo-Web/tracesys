@@ -53,6 +53,9 @@ class UsersController extends AppController
 
         $user = $this->Users->newEmptyEntity();
         $user = $this->Users->patchEntity($user, $this->request->getData());
+        // return $this->setJsonResponse([
+        //     'aca jonaaaaaaaaaa' => $user,
+        // ]);
         $result = $this->Users->save($user);
         if ($result !== false) {
             return $this->setJsonResponse(
@@ -144,7 +147,7 @@ class UsersController extends AppController
 
         if ($this->request->is('post')) {
             $this->paginate = [
-                'contain' => ['Stages'],
+                'contain' => ['Sectors'],
             ];
             $data['users'] = $this->paginate($this->Users);
             foreach ($data['users'] as $cadaUser) {
@@ -152,10 +155,10 @@ class UsersController extends AppController
                     return $this->setJsonResponse(
                         [
                             'message' => true,
-                            'user' => $cadaUser["nombre"],
+                            'user' => $cadaUser["nombre"]." ".$cadaUser["apellido"],
                             'user_id' => $cadaUser["user_id"],
-                            'nombre_etapa' => $cadaUser["stage"]["nombre_etapa"],
-                            'etapa_id' => $cadaUser["stage"]["stage_id"],
+                            'nombre_sector' => $cadaUser["sector"]["nombre_sector"],
+                            'sector_id' => $cadaUser["sector"]["sector_id"],
                         ]
                     );
                 }

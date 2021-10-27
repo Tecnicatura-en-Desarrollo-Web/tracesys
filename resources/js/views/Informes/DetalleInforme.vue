@@ -50,11 +50,11 @@
             <option selected>Elija Sector...</option>
             <option
               v-for="sectorADerivar in sectoresADerivar"
-              v-if="sectorADerivar.sector_id != 1"
-              :key="sectorADerivar.sector_id"
-              v-bind:value="sectorADerivar.sector_id"
+              v-if="sectorADerivar.stage_id != 1"
+              :key="sectorADerivar.stage_id"
+              v-bind:value="sectorADerivar.stage_id"
             >
-              <text>{{ sectorADerivar.nombre_sector }}</text>
+              <text>{{ sectorADerivar.nombre_etapa }}</text>
             </option>
           </select>
         </div>
@@ -64,20 +64,34 @@
           <h5>Sugerencias:</h5>
         </div>
         <div class="col col-lg-10">
-          <select
-            class="custom-select"
-            id="inputGroupSelect01"
-            name="selectSugerencia"
-          >
-            <option selected>Asigne sugerencia...</option>
-            <option
-              v-for="sugerencia in sugerencias"
-              :key="sugerencia.suggestion.suggestion_id"
-              v-bind:value="sugerencia.suggestion.suggestion_id"
-            >
-              {{ sugerencia.suggestion.nombre_sugerencia }}
-            </option>
-          </select>
+
+
+            <!-- **********PROBANDO NUEVOS SELECTS **S*************** -->
+
+            <!-- <input v-for="sugerencia in sugerencias" v-bind:value="sugerencia.suggestion.nombre_sugerencia" /> -->
+
+
+            <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="true" :show-labels="true" placeholder="Seleccione una sugerencia">
+                <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.name }}</strong> is written in<strong>  {{ option.language }}</strong></template>
+            </multiselect>
+            {{value}}
+            <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
+
+
+            <!-- **********PROBANDO NUEVOS SELECTS ***************** -->
+            <!-- <select
+                    class="custom-select"
+                    id="inputGroupSelect01"
+                    name="selectSugerencia">
+                    <option selected>Asigne sugerencia...</option>
+                    <option
+                    v-for="sugerencia in sugerencias"
+                    :key="sugerencia.suggestion.suggestion_id"
+                    v-bind:value="sugerencia.suggestion.suggestion_id"
+                    >
+                    {{ sugerencia.suggestion.nombre_sugerencia }}
+                    </option>
+            </select> -->
         </div>
       </div>
       <div class="row align-items-center mt-2">
@@ -103,6 +117,8 @@
     </form>
   </div>
 </template>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <script>
 import formSerialize from "form-serialize";
 // import Errors from "../../helpers/FormErrors.js";
@@ -120,30 +136,10 @@ export default {
       idIssuesSelect: null,
       comentarioEmpleado: "",
       reports: [],
-      //*******NO ELIMINAR ESTOS COMENTANTARIOS SIRVEN PARA DPS */
-      //   reports: {
-      //     employee: {
-      //       user: {
-      //         nombre: "",
-      //         apellido: "",
-      //       },
-      //     },
-      //     report: {
-      //       product: {
-      //         tipo: "",
-      //         modelo: "",
-      //         motivo: "",
-      //       },
-      //     },
-      //     state: {
-      //       nombre_estado: "",
-      //     },
-      //   },
+      value: '',
+      options:''
     };
   },
-  // computed:{
-  //     //...mapState(['idComentario']),
-  // },
   created() {
     if (!this.$session.exists()) {
       this.$router.push("/login");
@@ -153,7 +149,7 @@ export default {
     this.idInforme = this.$route.params.id;
     this.verInforme(this.$route.query);
     this.obtenerSugerencias(this.$route.query);
-    this.obtenerSectores(this.$route.query);
+    this.obtenerEtapas(this.$route.query);
   },
   methods: {
     //...mapMutations(['actualizarIdComentario']),
@@ -187,9 +183,8 @@ export default {
         })
         .then((response) => {
           this.sugerencias = response.data.suggestions;
-          console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
-          //QUITA ESE COMENTARIO JONAAAAAAAAAAAAAAAAAAAAA
-          //this.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
+          //console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
+          this.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
           /* console.log(response.data.suggestions); */
           //this.sugerencias = response.data.suggestions;
         })
@@ -197,12 +192,12 @@ export default {
           console.log("Error: " + error);
         });
     },
-    obtenerSectores(query) {
+    obtenerEtapas(query) {
       axios
-        .get("/api/sectors", { params: query })
+        .get("/api/stages", { params: query })
         .then((response) => {
           /* console.log(response.data.sectors); */
-          this.sectoresADerivar = response.data.sectors;
+          this.sectoresADerivar = response.data.stages;
           //this.usersDerivar = response.data.users;
         })
         .catch((error) => {
@@ -238,7 +233,7 @@ export default {
               type: "success",
               text: response.data.message,
             });
-            this.$router.push("/reports");
+            //this.$router.push("/reports");
           }
         })
         .catch((error) => {
@@ -257,7 +252,7 @@ export default {
         })
         .then((response) => {
           // Redirect on success
-          //console.log(response);
+          console.log(response);
           if (response.data.success) {
             this.$notify({
               group: "default",
@@ -265,7 +260,7 @@ export default {
               text: response.data.message,
             });
 
-            // this.$router.push('/reports');
+            this.$router.push('/reports');
           }
         })
         .catch((error) => {
@@ -328,7 +323,7 @@ export default {
         })
         .then((response) => {
           this.$router.push("/reports");
-          //console.log(response);
+          console.log(response);
           if (response.data.success) {
           }
         });

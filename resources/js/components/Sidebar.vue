@@ -15,10 +15,10 @@
           </div>
           <div class="user-info">
             <span class="user-name"
-              >Maxi
-              <strong>Villalba</strong>
+              >
+              <strong>{{nombreUsuario}}</strong>
             </span>
-            <span class="user-role">Administrador</span>
+            <span class="user-role">{{sector}}</span>
           </div>
         </div>
         <div class="sidebar-menu">
@@ -93,18 +93,24 @@ export default {
   data() {
     return {
       actions: [],
+      nombreUsuario:'',
+      sector:''
     };
   },
+  created(){
+      this.nombreUsuario=this.$session.get("nombreDeUsuario");
+      this.sector=this.$session.get("nombre_sector");
+  },
   mounted() {
-    axios
-      .get("/api/routes/get-sidebar")
-      .then((response) => {
-        console.log(this.actions.routeName);
-        this.actions = response.data;
-      })
-      .catch((error) => {
-        console.log("Error: " + error);
-      });
+    // axios
+    //     .get("/api/routes/get-sidebar")
+    //     .then((response) => {
+    //         console.log(this.actions.routeName);
+    //         this.actions = response.data;
+    //         })
+    //         .catch((error) => {
+    //         console.log("Error: " + error);
+    //         });
   },
 };
 </script>

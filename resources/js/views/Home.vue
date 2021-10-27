@@ -1,4 +1,11 @@
-<template></template>
+<template>
+<div class="columns contenido-central-detalleInforme">
+
+    <h1>Bienvenido {{usuario}}</h1>
+
+</div>
+
+</template>
 
 <script>
 export default {
@@ -9,7 +16,8 @@ export default {
   },
   created() {
     if (this.$session.exists()) {
-      this.usuario = this.$session.get(this.$session.id());
+      this.usuario = this.nombreUsuario=this.$session.get("nombreDeUsuario");;
+
     } else {
       this.$router.push("/login");
     }

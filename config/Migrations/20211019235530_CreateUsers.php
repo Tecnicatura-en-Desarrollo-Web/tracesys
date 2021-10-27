@@ -65,12 +65,12 @@ class CreateUsers extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
-        $table->addColumn('stage_id', 'integer', [
+        $table->addColumn('sector_id', 'integer', [
             'default' => null,
-            'limit' => 50,
+            'limit' => 11,
             'null' => false,
         ]);
-        $table->addForeignKey('stage_id', 'stages', 'stage_id');
+        $table->addForeignKey('sector_id', 'sectors', 'sector_id');
         $table->create();
     }
 }

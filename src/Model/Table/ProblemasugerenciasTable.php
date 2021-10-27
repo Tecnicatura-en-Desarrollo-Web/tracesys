@@ -53,6 +53,10 @@ class ProblemasugerenciasTable extends Table
             'foreignKey' => 'problemasugerencia_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'problemasugerencia_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Issues', [
             'foreignKey' => 'problemasugerencia_id',
             'joinType' => 'INNER',
@@ -69,12 +73,12 @@ class ProblemasugerenciasTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): Validator
-    {
-        $validator
-            ->boolean('activo')
-            ->notEmptyString('activo');
+    // public function validationDefault(Validator $validator): Validator
+    // {
+    //     $validator
+    //         ->boolean('activo')
+    //         ->notEmptyString('activo');
 
-        return $validator;
-    }
+    //     return $validator;
+    // }
 }
