@@ -44,7 +44,7 @@ class User extends Entity
         'created' => true,
         'modified' => true,
         'sector_id' => true,
-        'stage' => true,
+        // 'stage' => true,
     ];
 
     /**

@@ -98,7 +98,7 @@ export default {
       email: "",
       usuario: "",
       password: "",
-      sectorTrabaja:'',
+      sector_id:2,
       errors: new Errors(),
     };
   },
@@ -109,7 +109,7 @@ export default {
         empty: true,
       });
       console.log(data);
-        this.
+      data += "&sector_id=" + this.sector_id;
       axios
         .post("/api/users/save", data, {
           headers: { "X-Requested-With": "XMLHttpRequest" },

@@ -53,6 +53,9 @@ class UsersController extends AppController
 
         $user = $this->Users->newEmptyEntity();
         $user = $this->Users->patchEntity($user, $this->request->getData());
+        // return $this->setJsonResponse([
+        //     'aca jonaaaaaaaaaa' => $user,
+        // ]);
         $result = $this->Users->save($user);
         if ($result !== false) {
             return $this->setJsonResponse(

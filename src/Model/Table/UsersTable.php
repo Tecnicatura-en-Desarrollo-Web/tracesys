@@ -63,45 +63,45 @@ class UsersTable extends Table
             ->integer('user_id')
             ->allowEmptyString('user_id', null, 'create');
 
-        $validator
-            ->scalar('cuit')
-            ->maxLength('cuit', 11)
-            ->requirePresence('cuit', 'create')
-            ->notEmptyString('cuit');
+        // $validator
+        //     ->scalar('cuit')
+        //     ->maxLength('cuit', 11)
+        //     ->requirePresence('cuit', 'create')
+        //     ->notEmptyString('cuit');
 
-        $validator
-            ->scalar('nombre')
-            ->maxLength('nombre', 200)
-            ->requirePresence('nombre', 'create')
-            ->notEmptyString('nombre');
+        // $validator
+        //     ->scalar('nombre')
+        //     ->maxLength('nombre', 200)
+        //     ->requirePresence('nombre', 'create')
+        //     ->notEmptyString('nombre');
 
-        $validator
-            ->scalar('apellido')
-            ->maxLength('apellido', 200)
-            ->requirePresence('apellido', 'create')
-            ->notEmptyString('apellido');
+        // $validator
+        //     ->scalar('apellido')
+        //     ->maxLength('apellido', 200)
+        //     ->requirePresence('apellido', 'create')
+        //     ->notEmptyString('apellido');
 
-        $validator
-            ->email('email')
-            ->requirePresence('email', 'create')
-            ->notEmptyString('email');
+        // $validator
+        //     ->email('email')
+        //     ->requirePresence('email', 'create')
+        //     ->notEmptyString('email');
 
-        $validator
-            ->scalar('password')
-            ->maxLength('password', 150)
-            ->requirePresence('password', 'create')
-            ->notEmptyString('password');
+        // $validator
+        //     ->scalar('password')
+        //     ->maxLength('password', 150)
+        //     ->requirePresence('password', 'create')
+        //     ->notEmptyString('password');
 
-        $validator
-            ->scalar('usuario')
-            ->maxLength('usuario', 150)
-            ->requirePresence('usuario', 'create')
-            ->notEmptyString('usuario');
+        // $validator
+        //     ->scalar('usuario')
+        //     ->maxLength('usuario', 150)
+        //     ->requirePresence('usuario', 'create')
+        //     ->notEmptyString('usuario');
 
-        $validator
-            ->integer('telefono')
-            ->requirePresence('telefono', 'create')
-            ->notEmptyString('telefono');
+        // $validator
+        //     ->integer('telefono')
+        //     ->requirePresence('telefono', 'create')
+        //     ->notEmptyString('telefono');
 
         return $validator;
     }
