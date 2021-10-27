@@ -56,13 +56,13 @@ class StatesTable extends Table
     {
         $validator
             ->integer('state_id')
-            ->allowEmptyString('state_id', null, 'create');
+            ->allowEmptyString('state_id','create');
 
-        $validator
-            ->scalar('nombre_estado')
-            ->maxLength('nombre_estado', 255)
-            ->requirePresence('nombre_estado', 'create')
-            ->notEmptyString('nombre_estado');
+        // $validator
+        //     ->scalar('nombre_estado')
+        //     ->maxLength('nombre_estado', 255)
+        //     ->requirePresence('nombre_estado', 'create')
+        //     ->notEmptyString('nombre_estado');
 
         return $validator;
     }

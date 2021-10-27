@@ -144,7 +144,7 @@ class UsersController extends AppController
 
         if ($this->request->is('post')) {
             $this->paginate = [
-                'contain' => ['Stages'],
+                'contain' => ['Sectors'],
             ];
             $data['users'] = $this->paginate($this->Users);
             foreach ($data['users'] as $cadaUser) {
@@ -152,10 +152,10 @@ class UsersController extends AppController
                     return $this->setJsonResponse(
                         [
                             'message' => true,
-                            'user' => $cadaUser["nombre"],
+                            'user' => $cadaUser["nombre"]." ".$cadaUser["apellido"],
                             'user_id' => $cadaUser["user_id"],
-                            'nombre_etapa' => $cadaUser["stage"]["nombre_etapa"],
-                            'etapa_id' => $cadaUser["stage"]["stage_id"],
+                            'nombre_sector' => $cadaUser["sector"]["nombre_sector"],
+                            'sector_id' => $cadaUser["sector"]["sector_id"],
                         ]
                     );
                 }

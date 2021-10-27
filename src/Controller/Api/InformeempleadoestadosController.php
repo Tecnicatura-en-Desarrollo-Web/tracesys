@@ -9,6 +9,7 @@ use App\Controller\Traits\ResponseTrait;
 use App\Model\Entity\Informeempleadocomentario;
 use App\Model\Table\InformeempleadocomentariosTable;
 use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
+use Cake\Mailer\Mailer;
 
 /**
  * Informeempleadoestados Controller
@@ -18,6 +19,7 @@ use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
  */
 class InformeempleadoestadosController extends AppController
 {
+
     use ResponseTrait;
     public function initialize(): void
     {
@@ -33,7 +35,7 @@ class InformeempleadoestadosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Employees', 'States', 'Reports', 'Reports.Products'],
+            'contain' => ['Employees.Users.Sectors.Stages', 'States', 'Reports', 'Reports.Products'],
             'conditions' => ['ultimoEstado' => 1]
         ];
         $informeempleadoestados['reports'] = $this->paginate($this->Informeempleadoestados);
@@ -105,16 +107,66 @@ class InformeempleadoestadosController extends AppController
     {
         $dataVue =  $this->request->getData();
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
+        $idReport=(int)$dataVue['idInforme'];
+        $idEmpleado=(int)$dataVue['idEmpleado'];
+        $idState=(int)$dataVue['selectSector'];
         $dataNueva = [
-            "informeempleadoestado_id" => (int)$dataVue['idInforme'],
-            "employee_id" => (int)$dataVue['idEmpleado'],
-            "state_id" => (int)$dataVue['selectSector'],
+            "informeempleadoestado_id" => $idReport,
+            "employee_id" =>  $idEmpleado,
+            "state_id" => $idState,
         ];
         $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
         $result = $this->Informeempleadoestados->save($informeempleadoestado);
+
+        $this->envioEmail($idState,$idReport,$idEmpleado);
         return $this->setJsonResponse([
             'datosEntidad' => $result,
         ]);
+        // return $this->setJsonResponse([
+            //     'resultado' => $estadosActuales,
+            // ]);
+        }
+    public function envioEmail($idState,$idReport,$idEmpleado){
+
+        $estadosActuales = $this->Informeempleadoestados->Informeempleadoestados->find('all')
+        ->contain(['States','Reports.Products'])
+        ->where(['Informeempleadoestados.state_id' => $idState , "Informeempleadoestados.informeempleadoestado_id" => $idReport, "Informeempleadoestados.employee_id" =>  $idEmpleado])
+        ->all();
+        foreach ($estadosActuales as $estado) {
+            $tipoProducto=$estado->report->product->tipo;
+            $marcaProducto=$estado->report->product->marca;
+            $modeloProducto=$estado->report->product->modelo;
+            $estadoActual=$estado->state->nombre_estado;
+        }
+        // $mailer = new Mailer('default');
+        // $mailer->setTransport('gmail');
+        // $mailer->setFrom(['me@example.com' => 'My Site'])
+        //     ->setTo('maximiliano.villalba@est.fi.uncoma.edu.ar')
+        //     ->setSubject('About')
+        //     ->deliver('maxi jefe negrero deja descansar a los pibes');
+        //$dato="Reparacioooon naziiiiiii";
+        $mailer = new Mailer();
+        $mailer->setTransport('gmail');
+        $mailer
+                    ->setEmailFormat('html')
+                    ->setTo('yonamixlfr@gmail.com')
+                    ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
+                    ->setSubject('Su producto cambio de estado')
+
+                    ->deliver('
+                            <table>
+                            <tr>
+                            <img src="https://i.ibb.co/jZcV0Lb/logo-Tracesysy-Chiquito.png" alt="Logo del sistema" />
+                                    <hr>
+                                    <p>Se le envia este email para notificarle que su "<b>'.$tipoProducto.' '.$marcaProducto.' '.$modeloProducto.' "</b>
+                                     paso a la etapa de "<b>'.$estadoActual.'"</b></p>
+                            </tr>
+                            </table>
+                    ');
+
+
+        $mailer->deliver();
+
     }
     public function add()
     {

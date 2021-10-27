@@ -33,8 +33,8 @@ class Problemasugerencia extends Entity
         'activo' => true,
         'created' => true,
         'modified' => true,
-        'problemasugerencia' => true,
-        'suggestion' => true,
-        'issue' => true,
+        'problemasugerencia_id' => true,
+        'suggestion_id' => true,
+        'issue_id' => true,
     ];
 }

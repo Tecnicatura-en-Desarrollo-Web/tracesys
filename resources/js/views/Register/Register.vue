@@ -98,6 +98,7 @@ export default {
       email: "",
       usuario: "",
       password: "",
+      sectorTrabaja:'',
       errors: new Errors(),
     };
   },
@@ -108,7 +109,7 @@ export default {
         empty: true,
       });
       console.log(data);
-
+        this.
       axios
         .post("/api/users/save", data, {
           headers: { "X-Requested-With": "XMLHttpRequest" },

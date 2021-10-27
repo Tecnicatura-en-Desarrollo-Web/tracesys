@@ -12,6 +12,8 @@ Vue.use(VueSession);
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { normalizeUnits, now } from 'moment';
+import Multiselect from 'vue-multiselect'
+
 
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -20,7 +22,7 @@ Vue.use(VueSweetalert2);
 Vue.use(Notifications);
 Vue.use(Vuex);
 Vue.use(BootstrapVueIcons)
-
+Vue.component('multiselect', Multiselect)
 Vue.component('app', App);
 
 const router = Vue.use(VueRouter);

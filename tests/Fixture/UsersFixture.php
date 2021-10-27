@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\Fixture;
@@ -28,13 +27,13 @@ class UsersFixture extends TestFixture
         'telefono' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
-        'stage_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'sector_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         '_indexes' => [
-            'stage_id' => ['type' => 'index', 'columns' => ['stage_id'], 'length' => []],
+            'sector_id' => ['type' => 'index', 'columns' => ['sector_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['user_id'], 'length' => []],
-            'users_ibfk_1' => ['type' => 'foreign', 'columns' => ['stage_id'], 'references' => ['stages', 'stage_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'users_ibfk_1' => ['type' => 'foreign', 'columns' => ['sector_id'], 'references' => ['sectors', 'sector_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -59,8 +58,9 @@ class UsersFixture extends TestFixture
                 'password' => 'Lorem ipsum dolor sit amet',
                 'usuario' => 'Lorem ipsum dolor sit amet',
                 'telefono' => 1,
-                'created' => '2021-10-22 00:31:59',
-                'modified' => '2021-10-22 00:31:59',
+                'created' => '2021-10-27 19:21:42',
+                'modified' => '2021-10-27 19:21:42',
+                'sector_id' => 1,
             ],
         ];
         parent::init();

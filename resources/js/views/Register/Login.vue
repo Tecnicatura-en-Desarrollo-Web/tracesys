@@ -91,10 +91,10 @@ export default {
             //***Se inicia session******//
             this.$session.start();
             //***Seteo el nombre del usuario logueado en la variable sesion para mostrar su nombre en su home******
-            this.$session.set(this.$session.id(), response.data.user);
+            this.$session.set("nombreDeUsuario", response.data.user);
             this.$session.set("user_id", response.data.user_id);
-            this.$session.set("nombre_etapa", response.data.nombre_etapa);
-            this.$session.set("etapa_id", response.data.etapa_id);
+            this.$session.set("nombre_sector", response.data.nombre_sector);
+            this.$session.set("sector_id", response.data.sector_id);
             //***Redirigimos al usuario a su lista de informes******//
             window.location.href = "http://localhost:8765/home";
           }
