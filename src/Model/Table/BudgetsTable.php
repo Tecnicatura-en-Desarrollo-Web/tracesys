@@ -75,6 +75,10 @@ class BudgetsTable extends Table
             ->requirePresence('fecha', 'create')
             ->notEmptyDateTime('fecha');
 
+        $validator
+            ->boolean('acepto')
+            ->notEmptyString('acepto');
+
         return $validator;
     }
 

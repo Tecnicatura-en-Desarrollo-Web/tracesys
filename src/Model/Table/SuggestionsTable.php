@@ -51,7 +51,6 @@ class SuggestionsTable extends Table
             'foreignKey' => 'sector_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsToMany('Issues');
     }
 
     /**
@@ -83,6 +82,11 @@ class SuggestionsTable extends Table
             ->maxLength('importancia', 20)
             ->requirePresence('importancia', 'create')
             ->notEmptyString('importancia');
+
+        $validator
+            ->integer('valor')
+            ->requirePresence('valor', 'create')
+            ->notEmptyString('valor');
 
         return $validator;
     }

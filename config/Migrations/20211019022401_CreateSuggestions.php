@@ -37,6 +37,11 @@ class CreateSuggestions extends AbstractMigration
             'limit' => 20,
             'null' => false,
         ]);
+        $table->addColumn('valor', 'integer', [
+            'default' => null,
+            'limit' => 100,
+            'null' => false,
+        ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,

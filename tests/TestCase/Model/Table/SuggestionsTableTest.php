@@ -26,6 +26,7 @@ class SuggestionsTableTest extends TestCase
     protected $fixtures = [
         'app.Suggestions',
         'app.Sectors',
+        'app.Issues',
     ];
 
     /**

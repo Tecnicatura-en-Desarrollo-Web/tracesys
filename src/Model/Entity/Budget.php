@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property int $budget_id
  * @property int $monto
  * @property \Cake\I18n\FrozenTime $fecha
+ * @property bool $acepto
  * @property int $report_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
@@ -31,6 +32,7 @@ class Budget extends Entity
     protected $_accessible = [
         'monto' => true,
         'fecha' => true,
+        'acepto' => true,
         'report_id' => true,
         'created' => true,
         'modified' => true,

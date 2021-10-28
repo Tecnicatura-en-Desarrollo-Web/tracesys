@@ -33,6 +33,10 @@ class CreateBudgets extends AbstractMigration
             'default' => null,
             'null' => false,
         ]);
+        $table->addColumn('acepto', 'boolean', [
+            'default' => false,
+            'null' => false,
+        ]);
         $table->addColumn('report_id', 'integer', [
             'default' => null,
             'limit' => 11,
@@ -51,7 +55,5 @@ class CreateBudgets extends AbstractMigration
         ]);
         $table->addForeignKey('report_id', 'reports', 'report_id');
         $table->create();
-
-
     }
 }

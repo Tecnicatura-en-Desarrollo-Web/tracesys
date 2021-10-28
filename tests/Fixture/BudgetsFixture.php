@@ -20,6 +20,7 @@ class BudgetsFixture extends TestFixture
         'budget_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
         'monto' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'fecha' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
+        'acepto' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '0', 'comment' => '', 'precision' => null],
         'report_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
@@ -47,10 +48,11 @@ class BudgetsFixture extends TestFixture
             [
                 'budget_id' => 1,
                 'monto' => 1,
-                'fecha' => '2021-10-22 00:31:26',
+                'fecha' => '2021-10-28 21:36:40',
+                'acepto' => 1,
                 'report_id' => 1,
-                'created' => '2021-10-22 00:31:26',
-                'modified' => '2021-10-22 00:31:26',
+                'created' => '2021-10-28 21:36:40',
+                'modified' => '2021-10-28 21:36:40',
             ],
         ];
         parent::init();
