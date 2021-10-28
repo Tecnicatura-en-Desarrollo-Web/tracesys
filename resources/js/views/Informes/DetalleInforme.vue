@@ -64,34 +64,31 @@
           <h5>Sugerencias:</h5>
         </div>
         <div class="col col-lg-10">
+          <!-- **********PROBANDO NUEVOS SELECTS **S*************** -->
 
+          <!-- <input v-for="sugerencia in sugerencias" v-bind:value="sugerencia.suggestion.nombre_sugerencia" /> -->
 
-            <!-- **********PROBANDO NUEVOS SELECTS **S*************** -->
-
-            <!-- <input v-for="sugerencia in sugerencias" v-bind:value="sugerencia.suggestion.nombre_sugerencia" /> -->
-
-
-            <!-- <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="true" :show-labels="true" placeholder="Seleccione una sugerencia">
+          <!-- <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="true" :show-labels="true" placeholder="Seleccione una sugerencia">
                 <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.name }}</strong> is written in<strong>  {{ option.language }}</strong></template>
             </multiselect>
             {{value}} -->
-            <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
+          <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
 
-
-            <!-- **********PROBANDO NUEVOS SELECTS ***************** -->
-            <select
-                    class="custom-select"
-                    id="inputGroupSelect01"
-                    name="selectSugerencia">
-                    <option selected>Asigne sugerencia...</option>
-                    <option
-                    v-for="sugerencia in sugerencias"
-                    :key="sugerencia.suggestion.suggestion_id"
-                    v-bind:value="sugerencia.suggestion.suggestion_id"
-                    >
-                    {{ sugerencia.suggestion.nombre_sugerencia }}
-                    </option>
-            </select>
+          <!-- **********PROBANDO NUEVOS SELECTS ***************** -->
+          <select
+            class="custom-select"
+            id="inputGroupSelect01"
+            name="selectSugerencia"
+          >
+            <option selected>Asigne sugerencia...</option>
+            <option
+              v-for="sugerencia in sugerencias"
+              :key="sugerencia.suggestion.suggestion_id"
+              v-bind:value="sugerencia.suggestion.suggestion_id"
+            >
+              {{ sugerencia.suggestion.nombre_sugerencia }}
+            </option>
+          </select>
         </div>
       </div>
       <div class="row align-items-center mt-2">
@@ -136,8 +133,8 @@ export default {
       idIssuesSelect: null,
       comentarioEmpleado: "",
       reports: [],
-      value: '',
-      options:''
+      value: "",
+      options: "",
     };
   },
   created() {
@@ -161,7 +158,7 @@ export default {
         )
         .then((response) => {
           //ver mas adelante mejorar la estructura del arreglo devuelto
-          console.log("aca lee jonaaaaa",response.data);
+          console.log("aca lee jonaaaaa", response.data);
           this.reports = response.data;
           //console.log("aca lee jonaaaaa222",this.reports);
           this.idEmpleado =
@@ -182,15 +179,15 @@ export default {
           params: query,
         })
         .then((response) => {
-            if (response.data.suggestions[0]!=null) {
-                console.log("entro jonaaaaaaaa");
-                this.sugerencias = response.data.suggestions;
-                //console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
-                this.idIssuesSelect = response.data.suggestions[0].problemasugerencia_id;
+          if (response.data.suggestions[0] != null) {
+            console.log("entro jonaaaaaaaa");
+            this.sugerencias = response.data.suggestions;
+            //console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
+            this.idIssuesSelect =
+              response.data.suggestions[0].problemasugerencia_id;
             /* console.log(response.data.suggestions); */
             //this.sugerencias = response.data.suggestions;
           }
-
         })
         .catch((error) => {
           console.log("Error: " + error);
@@ -264,7 +261,7 @@ export default {
               text: response.data.message,
             });
 
-            this.$router.push('/reports');
+            this.$router.push("/reports");
           }
         })
         .catch((error) => {

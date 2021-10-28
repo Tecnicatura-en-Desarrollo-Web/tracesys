@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 
@@ -49,20 +51,26 @@ class SectorsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function save()
     {
         $sector = $this->Sectors->newEmptyEntity();
         if ($this->request->is('post')) {
             $sector = $this->Sectors->patchEntity($sector, $this->request->getData());
             if ($this->Sectors->save($sector)) {
+                return $this->setJsonResponse([
+                    'message' => true,
+                ]);
+            }
+            /*  $sector = $this->Sectors->patchEntity($sector, $this->request->getData());
+            if ($this->Sectors->save($sector)) {
                 $this->Flash->success(__('The sector has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The sector could not be saved. Please, try again.'));
+            $this->Flash->error(__('The sector could not be saved. Please, try again.')); */
         }
-        $stages = $this->Sectors->Stages->find('list', ['limit' => 200]);
-        $this->set(compact('sector', 'stages'));
+        /* $stages = $this->Sectors->Stages->find('list', ['limit' => 200]);
+        $this->set(compact('sector', 'stages')); */
     }
 
     /**
@@ -108,5 +116,14 @@ class SectorsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function obtenerEstadosDeEtapa($id = null)
+    {
+        $this->paginate = [
+            'conditions' => ['stage_id' => $id]
+        ];
+        $SectoresDeEtapa['sectores'] = $this->paginate($this->Sectors);
+        return $this->setJsonResponse($SectoresDeEtapa);
     }
 }

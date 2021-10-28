@@ -10,6 +10,7 @@ import Informes from './views/Informes/Informes.vue';
 import DetalleInforme from './views/Informes/DetalleInforme.vue';
 import crearInforme from './views/Informes/CrearInforme.vue';
 import register from './views/Register/Register.vue';
+import crearSector from './views/Sector/CrearSector.vue';
 import login from './views/Register/Login.vue';
 import app from './views/App.vue';
 
@@ -80,6 +81,11 @@ export const routes = new VueRouter({
             path: '/login',
             name: 'login',
             component: login
+        },
+        {
+            path: '/sector/crear',
+            name: 'crearSector',
+            component: crearSector,
         },
         // {
         //     path: '/app',
