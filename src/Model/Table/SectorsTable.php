@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -59,9 +60,9 @@ class SectorsTable extends Table
     {
         $validator
             ->integer('sector_id')
-            ->allowEmptyString('sector_id', null, 'create');
+            ->allowEmptyString('sector_id', 'create');
 
-        $validator
+        /*         $validator
             ->scalar('nombre_sector')
             ->maxLength('nombre_sector', 255)
             ->requirePresence('nombre_sector', 'create')
@@ -70,7 +71,7 @@ class SectorsTable extends Table
         $validator
             ->integer('orden')
             ->requirePresence('orden', 'create')
-            ->notEmptyString('orden');
+            ->notEmptyString('orden'); */
 
         return $validator;
     }

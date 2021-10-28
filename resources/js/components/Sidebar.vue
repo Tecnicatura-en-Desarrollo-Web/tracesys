@@ -14,11 +14,10 @@
             />
           </div>
           <div class="user-info">
-            <span class="user-name"
-              >
-              <strong>{{nombreUsuario}}</strong>
+            <span class="user-name">
+              <strong>{{ nombreUsuario }}</strong>
             </span>
-            <span class="user-role">{{sector}}</span>
+            <span class="user-role">{{ sector }}</span>
           </div>
         </div>
         <div class="sidebar-menu">
@@ -37,6 +36,11 @@
               <router-link to="/informes/crear"
                 >Cargar informe
                 <b-icon-journal-arrow-up></b-icon-journal-arrow-up
+              ></router-link>
+            </li>
+            <li class="header-menu">
+              <router-link to="/sector/crear"
+                >Registrar sector <b-icon-bookmark></b-icon-bookmark
               ></router-link>
             </li>
           </ul>
@@ -93,13 +97,13 @@ export default {
   data() {
     return {
       actions: [],
-      nombreUsuario:'',
-      sector:''
+      nombreUsuario: "",
+      sector: "",
     };
   },
-  created(){
-      this.nombreUsuario=this.$session.get("nombreDeUsuario");
-      this.sector=this.$session.get("nombre_sector");
+  created() {
+    this.nombreUsuario = this.$session.get("nombreDeUsuario");
+    this.sector = this.$session.get("nombre_sector");
   },
   mounted() {
     // axios
