@@ -26,7 +26,20 @@
         </div>
         <div class="col-md-3">
           <label for="validationDefault01" class="form-label">Cuit</label>
-          <input type="text" class="form-control" name="cuit" v-model="cuit" />
+          <input
+            type="text"
+            class="form-control"
+            name="cuit"
+            v-model="cuit"
+            @change="validacionCuit($event)"
+          />
+          <div
+            class="validation d-none"
+            style="color: red; margin-bottom: 20px"
+            id="mensajeError"
+          >
+            <small>Ingrese un cuit valido</small>
+          </div>
         </div>
         <div class="col-md-3">
           <label for="validationDefault04" class="form-label">Telefono</label>
@@ -98,7 +111,7 @@ export default {
       email: "",
       usuario: "",
       password: "",
-      sector_id:2,
+      sector_id: 2,
       errors: new Errors(),
     };
   },
@@ -136,6 +149,17 @@ export default {
 
           this.errors.add(error.response.data.errors);
         });
+    },
+    validacionCuit(event) {
+      let valor = event.target.value;
+      let cantidadCaracteres = valor.length;
+      let cantidad = valor.split("-").length;
+      let mensaje = document.getElementById("mensajeError");
+      if (cantidad != 3 || cantidadCaracteres != 13) {
+        mensaje.className = "validation d-block";
+      } else {
+        mensaje.className = "validation d-none";
+      }
     },
   },
   created() {
