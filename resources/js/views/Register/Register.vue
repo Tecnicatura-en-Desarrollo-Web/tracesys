@@ -68,7 +68,15 @@
             class="form-control"
             name="email"
             v-model="email"
+            @change="validacionEmail($event)"
           />
+          <div
+            class="validation d-none"
+            style="color: red; margin-bottom: 20px"
+            id="mensajeErrorEmail"
+          >
+            <small>Ingrese un email valido</small>
+          </div>
         </div>
         <div class="col-md-6">
           <label for="validationDefault06" class="form-label">Usuario</label>
@@ -159,6 +167,18 @@ export default {
         mensaje.className = "validation d-block";
       } else {
         mensaje.className = "validation d-none";
+      }
+    },
+    validacionEmail(event) {
+      let email = event.target.value;
+      let mensaje = document.getElementById("mensajeErrorEmail");
+      if (
+        (email.includes("@") && email.includes(".com")) ||
+        (email.includes("@") && email.includes(".ar"))
+      ) {
+        mensaje.className = "validation d-none";
+      } else {
+        mensaje.className = "validation d-block";
       }
     },
   },
