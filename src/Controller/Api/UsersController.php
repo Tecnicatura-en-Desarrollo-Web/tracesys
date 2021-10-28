@@ -144,7 +144,6 @@ class UsersController extends AppController
     public function login()
     {
         $dataVue =  $this->request->getData();
-
         if ($this->request->is('post')) {
             $this->paginate = [
                 'contain' => ['Sectors'],

@@ -49,6 +49,7 @@ class InformeempleadoestadosController extends AppController
             'contain' => ['Employees.Users', 'Reports.Products', 'States'],
             'conditions' => ['informeempleadoestado_id' => $id]
         ];
+        //JONAAAAAAAAAAAA NO FUNCIONA PORQUE NO SETEAS EL COMENTARIO DEFAULT DE Se envia a sector diagnostico""""""
         $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
         $objComentario = new InformeempleadocomentariosTable();
         $comentarios = $objComentario->find('all', ['contain' => ['Commentsemployees'], 'conditions' => ['report_id' => $id]]);
@@ -110,6 +111,9 @@ class InformeempleadoestadosController extends AppController
         $idReport=(int)$dataVue['idInforme'];
         $idEmpleado=(int)$dataVue['idEmpleado'];
         $idState=(int)$dataVue['selectSector'];
+        // return $this->setJsonResponse([
+        //     'datosEntidad' => $dataVue,
+        // ]);
         $dataNueva = [
             "informeempleadoestado_id" => $idReport,
             "employee_id" =>  $idEmpleado,
@@ -168,26 +172,22 @@ class InformeempleadoestadosController extends AppController
         $mailer->deliver();
 
     }
-    public function add()
-    {
+    public function add($idReport,$idEmpleado,$idState){
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $this->request->getData());
-            if ($this->Informeempleadoestados->save($informeempleadoestado)) {
-                $this->Flash->success(__('The informeempleadoestado has been saved.'));
+        $dataNueva = [
+            "informeempleadoestado_id" => $idReport,
+            "employee_id" =>  $idEmpleado,
+            "state_id" => $idState,
+        ];
+        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado);
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The informeempleadoestado could not be saved. Please, try again.'));
-        }
-        $informeempleadoestados = $this->Informeempleadoestados->Informeempleadoestados->find('list', ['limit' => 200]);
-        $employees = $this->Informeempleadoestados->Employees->find('list', ['limit' => 200]);
-        $states = $this->Informeempleadoestados->States->find('list', ['limit' => 200]);
-        $this->set(compact('informeempleadoestado', 'informeempleadoestados', 'employees', 'states'));
-
-        // $formu['formularioinfo'] = "llego jonaaaaaaaaaaa";
-        // return $this->setJsonResponse($formu);
+        $this->envioEmail($idState,$idReport,$idEmpleado);
+        return $this->setJsonResponse([
+            'datosReporte' => $result,
+        ]);
     }
+
 
     /**
      * Edit method
