@@ -196,20 +196,27 @@ export default {
       });
       data += "&user_id_loggin=" + this.user_id_loggin;
       axios
-        .post("/api/reports/save", data, {
+        .post("/api/reports/add", data, {
           headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-          // Redirect on success
-          console.log(response);
-          if (response.data.success) {
-            this.$notify({
-              group: "default",
-              type: "success",
-              text: response.data.message,
-            });
-            this.$router.push({ path: response.data.url });
-          }
+            console.log("aca lee jonaaa",response.data);
+            //******Guardamos en la data los datos necesarios para crear un nuevo estado */
+            data += "&idInforme=" + response.data.idReporte;
+            data += "&idEmpleado=" + response.data.idEmpleado;
+            data += "&cuitEmpleado=" + response.data.cuitEmpleado;
+            data += "&selectSector=" + 2;
+            //****************************************************************************/
+            console.log(response);
+            this.registrarCambioEstado(data);
+        //   if (response.data.success) {
+        //     this.$notify({
+        //       group: "default",
+        //       type: "success",
+        //       text: response.data.message,
+        //     });
+        //     this.$router.push({ path: response.data.url });
+        //   }
         })
         .catch((error) => {
           this.$notify({
@@ -219,10 +226,42 @@ export default {
           });
         });
     },
+    registrarCambioEstado(data) {
+
+      axios
+        .post(`/api/informeempleadoestados/save`, data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then((response) => {
+            // Seteo el comentario default "se envia al diagnostico" en la data
+            console.log(response);
+            data += "&idComentarioEmpleado=" + 1;
+            this.registrarComentarioDefault(data);
+        })
+        .catch((error) => {
+          this.$notify({
+            group: "default",
+            type: "error",
+            text: error.response.data.message,
+          });
+          this.errors.add(error.response.data.errors);
+        });
+    },
+    registrarComentarioDefault(data){
+        axios
+        .post("/api/informeempleadocomentarios/save", data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+    }
   },
+
+
   created() {
     if (this.$session.exists()) {
-      this.user_id_loggin = this.$session.get("user_id");
+        this.user_id_loggin = this.$session.get("user_id");
     }
   },
 };

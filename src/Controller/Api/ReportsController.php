@@ -14,6 +14,8 @@ use App\Model\Table\EmployeeTable;
 use App\Model\Table\ProductsTable;
 use App\Model\Table\StateTable;
 use App\Model\Table\ClientsTable;
+use App\Model\Table\EmployeesTable;
+use App\Model\Table\InformeempleadoestadosTable;
 use App\Model\Table\IssuesTable;
 use App\Model\Table\UsersTable;
 
@@ -99,7 +101,7 @@ class ReportsController extends AppController
         $dataClients = [
             "cuit" => $dataVue["cuit"],
             "denominacion" => $dataVue["denominacion"],
-            "direccion" => $dataVue["direccion"],
+            "domicilio" => $dataVue["direccion"],
             "email" => $dataVue["email"],
             "password" => "123",
             "usuario" => "prueba",
@@ -143,18 +145,20 @@ class ReportsController extends AppController
                 $bill = $classBill->patchEntity($bill, $dataBill);
                 $resultBill = $classBill->save($bill);
                 $idBill = $resultBill["bill_id"];
-
+                $idEmpleado=(int)$dataVue["user_id_loggin"];
                 if ($resultBill !== false) {
                     $report = $this->Reports->newEmptyEntity();
 
                     $dataInforme = [
-                        "employee_id" => (int)$dataVue["user_id_loggin"],
-                        "state_id" => 1,
+                        "employee_id" => $idEmpleado,
+                        "state_id" => 2,
                         "product_id" => $idProduct,
                         "bill_id" => $idBill,
                     ];
 
-                    $report = $this->Reports->patchEntity($report, $dataInforme);
+                    $report = $this->Reports->patchEntity($report, $dataInforme ,[
+                        'contain' => ["Employees"]
+                    ]);
                     $resultReport = $this->Reports->save($report);
                     $idReport = $resultReport["report_id"];
 
@@ -170,16 +174,23 @@ class ReportsController extends AppController
                         ];
 
                         $issue = $classIssue->patchEntity($issue, $dataIssue);
-                        $resultIssue = $classIssue->save($issue);
+                        $resultIssue= $classIssue->save($issue);
+
+                        $classEmployee=new EmployeesTable();
+                        //$empleado=$classEmployee->find('all' , ['conditions' => ["employee_id"=>$idEmpleado]]);
+                        $empleado=$classEmployee->get($idEmpleado,
+                        [
+                            'conditions' => ["employee_id"=>$idEmpleado],
+                        ]);
 
                         if ($resultIssue !== false) {
                             return $this->setJsonResponse(
                                 [
-                                    'success' => true,
-                                    'url' => '/reports',
-                                    'message' => __('The post has been saved.'),
+                                    'idReporte' => $idReport,
+                                    'idEmpleado' => $idEmpleado,
+                                    'idEstado' => 2,
+                                    'cuitEmpleado'=>$empleado->cuit,
                                 ],
-                                201
                             );
                         }
                     }
