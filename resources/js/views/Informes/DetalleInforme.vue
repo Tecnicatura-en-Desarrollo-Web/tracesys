@@ -18,6 +18,7 @@
           <th scope="col">Modelo</th>
           <th scope="col">Estado</th>
           <th scope="col">Motivo</th>
+
           <th scope="col">Comentarios</th>
         </tr>
       </thead>
@@ -43,18 +44,19 @@
         </div>
         <div class="col col-lg-10">
           <select
+            v-model="primerSelect"
             class="custom-select"
             id="inputGroupSelect01"
             name="selectSector"
+            placeholder="holkaaa"
           >
-            <option selected>Elija Sector...</option>
+            <option value="0">Selecciona un sector...</option>
             <option
               v-for="sectorADerivar in sectoresADerivar"
-              v-if="sectorADerivar.stage_id != 1"
-              :key="sectorADerivar.stage_id"
-              v-bind:value="sectorADerivar.stage_id"
+              :key="sectorADerivar.sector_id"
+              v-bind:value="sectorADerivar.sector_id"
             >
-              <text>{{ sectorADerivar.nombre_etapa }}</text>
+              <text>{{ sectorADerivar.nombre_sector }}</text>
             </option>
           </select>
         </div>
@@ -64,25 +66,17 @@
           <h5>Sugerencias:</h5>
         </div>
         <div class="col col-lg-10">
-          <!-- **********PROBANDO NUEVOS SELECTS **S*************** -->
-
-          <!-- <input v-for="sugerencia in sugerencias" v-bind:value="sugerencia.suggestion.nombre_sugerencia" /> -->
-
-          <!-- <multiselect v-model="value" :options="options" :searchable="false" :close-on-select="true" :show-labels="true" placeholder="Seleccione una sugerencia">
-                <template slot="singleLabel" slot-scope="{ option }"><strong>{{ option.name }}</strong> is written in<strong>  {{ option.language }}</strong></template>
-            </multiselect>
-            {{value}} -->
-          <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
-
-          <!-- **********PROBANDO NUEVOS SELECTS ***************** -->
           <select
+            v-model="segundoSelect"
+            v-if="primerSelect"
             class="custom-select"
             id="inputGroupSelect01"
             name="selectSugerencia"
           >
-            <option selected>Asigne sugerencia...</option>
+            <option value="0">Selecciona un sector...</option>
             <option
               v-for="sugerencia in sugerencias"
+              v-if="sugerencia.suggestion.sector_id == primerSelect"
               :key="sugerencia.suggestion.suggestion_id"
               v-bind:value="sugerencia.suggestion.suggestion_id"
             >
@@ -134,7 +128,8 @@ export default {
       comentarioEmpleado: "",
       reports: [],
       value: "",
-      options: "",
+      primerSelect: 0,
+      segundoSelect: 0,
     };
   },
   created() {
@@ -146,10 +141,10 @@ export default {
     this.idInforme = this.$route.params.id;
     this.verInforme(this.$route.query);
     this.obtenerSugerencias(this.$route.query);
-    this.obtenerEtapas(this.$route.query);
+
+    this.obtenerSectores();
   },
   methods: {
-    //...mapMutations(['actualizarIdComentario']),
     verInforme(query) {
       axios
         .get(
@@ -160,14 +155,8 @@ export default {
           //ver mas adelante mejorar la estructura del arreglo devuelto
           console.log("aca lee jonaaaaa", response.data);
           this.reports = response.data;
-          //console.log("aca lee jonaaaaa222",this.reports);
-          this.idEmpleado =
-            this.reports.cambiosEstadoInforme[0].employee.employee_id;
-          this.cuitEmpleado =
-            this.reports.cambiosEstadoInforme[0].employee.cuit;
-
-          //console.log("aca trae", response.data.cambiosEstadoInforme);
-          // console.log(this.report);
+          this.idEmpleado = this.$session.get("user_id");
+          this.cuitEmpleado = this.$session.get("cuit");
         })
         .catch((error) => {
           console.log("Error: " + error);
@@ -193,12 +182,17 @@ export default {
           console.log("Error: " + error);
         });
     },
-    obtenerEtapas(query) {
+    obtenerSectores() {
       axios
-        .get("/api/stages", { params: query })
+        .get(
+          `/api/sectors/obtenerSectoresPorEtapa/${this.$session.get(
+            "etapa_id"
+          )}`
+        )
         .then((response) => {
           /* console.log(response.data.sectors); */
-          this.sectoresADerivar = response.data.stages;
+          this.sectoresADerivar = response.data.sectors;
+          console.log("sectores", response.data.sectors);
           //this.usersDerivar = response.data.users;
         })
         .catch((error) => {
@@ -227,7 +221,7 @@ export default {
         })
         .then((response) => {
           // Redirect on success
-          //console.log(response);
+          console.log(response);
           if (response.data.success) {
             this.$notify({
               group: "default",

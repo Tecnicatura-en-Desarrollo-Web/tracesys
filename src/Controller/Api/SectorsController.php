@@ -24,7 +24,7 @@ class SectorsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => [],
+            'contain' => ['Stages'],
         ];
         $sectors = $this->paginate($this->Sectors);
         return $this->setJsonResponse(['sectors' => $sectors]);
@@ -37,6 +37,32 @@ class SectorsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    public function obtenerSectoresPorEtapa($idEtapa){
+
+        switch ($idEtapa) {
+            case 2:
+                $this->paginate = [
+                    'contain' => ['Stages'],
+                    'conditions' =>["Sectors.stage_id"=>3 ]
+                ];
+                break;
+                case 3:
+                    $this->paginate = [
+                        'contain' => ['Stages'],
+                        'conditions' =>[["Sectors.stage_id !="=>3] , ["Sectors.stage_id !="=>1]]
+                    ];
+                    break;
+                case 4:
+                    $this->paginate = [
+                        'contain' => ['Stages'],
+                        'conditions' =>[["Sectors.stage_id !="=>3] , ["Sectors.stage_id !="=>1]]
+                    ];
+                    break;
+
+        }
+        $sectors = $this->paginate($this->Sectors);
+        return $this->setJsonResponse(['sectors' => $sectors]);
+    }
     public function view($id = null)
     {
         $sector = $this->Sectors->get($id, [

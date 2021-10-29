@@ -16,8 +16,9 @@
             </tr>
           </thead>
           <tbody>
+              <!-- report.employee.user.sector.stage.stage_id -->
             <tr
-              v-for="report in reports" :v-bind="report.report.report_id" v-if="report.state_id == report.employee.user.sector.stage.stage_id"
+              v-for="report in reports" :v-bind="report.report.report_id" v-if="report.state_id == empleado_stage_id"
             >
               <td>{{ report.report.report_id }}</td>
               <td>{{ report.report.created }}</td>
@@ -51,7 +52,7 @@ export default {
         return {
         reports: [],
         nombre_sector: "",
-        sector_id: null
+        empleado_stage_id: null
         };
     },
     mounted() {
@@ -100,7 +101,7 @@ export default {
         }
         if (this.$session.exists()) {
             this.nombre_sector = this.$session.get("nombre_sector");
-            this.sector_id = this.$session.get("sector_id");
+            this.empleado_stage_id = this.$session.get("etapa_id");
         }
     },
 };

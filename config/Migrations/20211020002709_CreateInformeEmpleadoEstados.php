@@ -17,7 +17,13 @@ class CreateInformeEmpleadoEstados extends AbstractMigration
      */
     public function change()
     {
-        $table = $this->table('informeempleadoestados');
+        $table = $this->table('informeempleadoestados' , ['id' => false, 'primary_key' => ['informeempleadoestado_id_propio']]);
+        $table->addColumn('informeempleadoestado_id_propio', 'integer', [
+            'autoIncrement' => true,
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ]);
         $table->addColumn('informeempleadoestado_id', 'integer', [
             'default' => null,
             'limit' => 11,
@@ -46,6 +52,7 @@ class CreateInformeEmpleadoEstados extends AbstractMigration
             'null' => false,
         ]);
         $table->addPrimaryKey([
+            'informeempleadoestado_id_propio',
             'informeempleadoestado_id',
             'employee_id',
             'state_id',
