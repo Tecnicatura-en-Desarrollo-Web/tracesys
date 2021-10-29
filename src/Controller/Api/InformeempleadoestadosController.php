@@ -46,13 +46,22 @@ class InformeempleadoestadosController extends AppController
     {
 
         $this->paginate = [
-            'contain' => ['Employees.Users', 'Reports.Products', 'States'],
-            'conditions' => ['informeempleadoestado_id' => $id]
+            'contain' => ['Reports.Products', 'Employees.Users', 'States'],
+            'conditions' => ['informeempleadoestado_id' => $id],
+            'sortableFields' => [
+                'created'
+            ],
+            'order' => [
+                'created' => 'asc',
+            ],
+
         ];
         //JONAAAAAAAAAAAA NO FUNCIONA PORQUE NO SETEAS EL COMENTARIO DEFAULT DE Se envia a sector diagnostico""""""
         $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
         $objComentario = new InformeempleadocomentariosTable();
-        $comentarios = $objComentario->find('all', ['contain' => ['Commentsemployees'], 'conditions' => ['report_id' => $id]]);
+        $comentarios = $objComentario->find('all', ['contain' => ['Commentsemployees'], 'conditions' => ['report_id' => $id]])
+        ->order(['comment_employee_id' => 'ASC']);
+
         $comentarios = json_encode($comentarios);
         $i = 0;
         foreach ($cambiosEstadoInforme['cambiosEstadoInforme'] as $cambioEstadoInforme) {
@@ -88,17 +97,25 @@ class InformeempleadoestadosController extends AppController
         $idReport = $dataVue["idInforme"];
         $idEmpleado = $dataVue["idEmpleado"];
         $idState = $dataVue["idEstado"];
-        $informeempleadoestado = $this->Informeempleadoestados->get(
-            [$idReport, $idEmpleado, $idState],
-            [
-                'contain' => [],
-            ]
-        );
+        // $informeempleadoestado = $this->Informeempleadoestados->get(
+        //     [$idReport, $idEmpleado, $idState],
+        //     [
+        //         'contain' => [],
+        //     ]
+        // );
+        $informeempleadoestado = $this->Informeempleadoestados->find('all')
+            ->where(['Informeempleadoestados.informeempleadoestado_id' => $idReport,'Informeempleadoestados.state_id' => $idState])
+        ;
+        foreach ($informeempleadoestado as $unInforme) {
+            if($unInforme->ultimoEstado==true){
+                $informeBuscado=$unInforme;
+            }
+        }
 
         $dataNueva = [
             "ultimoEstado" => 0,
         ];
-        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
+        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeBuscado, $dataNueva);
         $result = $this->Informeempleadoestados->save($informeempleadoestado);
         return $this->setJsonResponse([
             'mensaje' => $result,
@@ -107,20 +124,31 @@ class InformeempleadoestadosController extends AppController
     public function save()
     {
         $dataVue =  $this->request->getData();
-        $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
         $idReport=(int)$dataVue['idInforme'];
         $idEmpleado=(int)$dataVue['idEmpleado'];
         $idState=(int)$dataVue['selectSector'];
+        $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
         // return $this->setJsonResponse([
-        //     'datosEntidad' => $dataVue,
+        //     'datavue' => $dataVue,
         // ]);
+        // $informeempleadoestado = $this->Informeempleadoestados->Informeempleadoestados->find()
+        // ->where(["informeempleadoestado_id" => $idReport, "employee_id" =>  $idEmpleado,"state_id" => $idState])
+        // ->first();
+        // // return $this->setJsonResponse([
+        // //     'jonaaa lee acaaa mañanaaaa' => $informeempleadoestados,
+        // // ]);
+        // if($informeempleadoestado==null){
+        //     $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
+        // }
+
         $dataNueva = [
             "informeempleadoestado_id" => $idReport,
             "employee_id" =>  $idEmpleado,
             "state_id" => $idState,
+            "ultimoEstado" => 1,
         ];
-        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
-        $result = $this->Informeempleadoestados->save($informeempleadoestado);
+        $informeempleadoestado = $this->Informeempleadoestados->newEntity($dataNueva);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado,['checkExisting' => false]);
 
         $this->envioEmail($idState,$idReport,$idEmpleado);
         return $this->setJsonResponse([

@@ -53,16 +53,16 @@ class InformeempleadoestadosTable extends Table
             'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Reports', [
-            'foreignKey' => 'informeempleadoestado_id',
-            'joinType' => 'INNER',
-        ]);
         $this->belongsTo('Employees', [
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER',
         ]);
         $this->belongsTo('States', [
             'foreignKey' => 'state_id',
+            'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -75,6 +75,10 @@ class InformeempleadoestadosTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
+        $validator
+            ->integer('informeempleadoestado_id_propio')
+            ->allowEmptyString('informeempleadoestado_id_propio', null, 'create');
+
         $validator
             ->boolean('ultimoEstado')
             ->notEmptyString('ultimoEstado');

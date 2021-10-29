@@ -146,7 +146,7 @@ class UsersController extends AppController
         $dataVue =  $this->request->getData();
         if ($this->request->is('post')) {
             $this->paginate = [
-                'contain' => ['Sectors'],
+                'contain' => ['Sectors.Stages'],
             ];
             $data['users'] = $this->paginate($this->Users);
             foreach ($data['users'] as $cadaUser) {
@@ -158,6 +158,9 @@ class UsersController extends AppController
                             'user_id' => $cadaUser["user_id"],
                             'nombre_sector' => $cadaUser["sector"]["nombre_sector"],
                             'sector_id' => $cadaUser["sector"]["sector_id"],
+                            'nombre_etapa' => $cadaUser["sector"]["stage"]["nombre_etapa"],
+                            'etapa_id' => $cadaUser["sector"]["stage"]["stage_id"],
+                            'cuit' => $cadaUser["cuit"],
                         ]
                     );
                 }

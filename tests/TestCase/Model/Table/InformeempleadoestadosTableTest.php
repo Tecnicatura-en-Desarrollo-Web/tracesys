@@ -25,9 +25,9 @@ class InformeempleadoestadosTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Informeempleadoestados',
+        'app.Reports',
         'app.Employees',
         'app.States',
-        'app.Reports',
     ];
 
     /**
@@ -52,5 +52,15 @@ class InformeempleadoestadosTableTest extends TestCase
         unset($this->Informeempleadoestados);
 
         parent::tearDown();
+    }
+
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
+    public function testValidationDefault(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
     }
 }

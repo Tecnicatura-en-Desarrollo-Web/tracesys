@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
 /**
  * Informeempleadoestado Entity
  *
+ * @property int $informeempleadoestado_id_propio
  * @property int $informeempleadoestado_id
  * @property int $employee_id
  * @property int $state_id
@@ -16,9 +17,9 @@ use Cake\ORM\Entity;
  * @property bool $ultimoEstado
  *
  * @property \App\Model\Entity\Informeempleadoestado $informeempleadoestado
+ * @property \App\Model\Entity\Report $report
  * @property \App\Model\Entity\Employee $employee
  * @property \App\Model\Entity\State $state
- * @property \App\Model\Entity\Report $report
  */
 class Informeempleadoestado extends Entity
 {
@@ -36,8 +37,8 @@ class Informeempleadoestado extends Entity
         'modified' => true,
         'ultimoEstado' => true,
         'informeempleadoestado_id' => true,
+        'report' => true,
         'employee_id' => true,
         'state_id' => true,
-        'report_id' => true,
     ];
 }
