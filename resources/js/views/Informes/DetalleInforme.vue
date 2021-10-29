@@ -1,14 +1,14 @@
 <template>
-  <div
-    class="
-      posts
-      view
-      large-10
-      medium-8
-      columns
-      contenido-central-detalleInforme
-    "
-  >
+    <div
+        class="
+        posts
+        view
+        large-10
+        medium-8
+        columns
+        contenido-central-detalleInforme
+        "
+    >
     <table class="table">
       <thead>
         <tr>
@@ -66,23 +66,21 @@
           <h5>Sugerencias:</h5>
         </div>
         <div class="col col-lg-10">
-          <select
-            v-model="segundoSelect"
-            v-if="primerSelect"
-            class="custom-select"
-            id="inputGroupSelect01"
-            name="selectSugerencia"
-          >
-            <option value="0">Selecciona un sector...</option>
-            <option
-              v-for="sugerencia in sugerencias"
-              v-if="sugerencia.suggestion.sector_id == primerSelect"
-              :key="sugerencia.suggestion.suggestion_id"
-              v-bind:value="sugerencia.suggestion.suggestion_id"
-            >
-              {{ sugerencia.suggestion.nombre_sugerencia }}
-            </option>
-          </select>
+            <select
+                v-model='segundoSelect'
+                v-if='primerSelect'
+                class="custom-select"
+                id="inputGroupSelect01"
+                name="selectSugerencia">
+                <option value="0">Selecciona un sector...</option>
+                <option
+                v-for="sugerencia in sugerencias" v-if='sugerencia.suggestion.sector_id==primerSelect'
+                :key="sugerencia.suggestion.suggestion_id"
+                v-bind:value="sugerencia.suggestion.suggestion_id"
+                >
+                {{ sugerencia.suggestion.nombre_sugerencia }}
+                </option>
+            </select>
         </div>
       </div>
       <div class="row align-items-center mt-2">
@@ -99,12 +97,12 @@
             ></textarea>
           </div>
         </div>
-      </div>
-      <div class="row mt-4 d-flex justify-content-center">
-        <div class="col col-lg-2">
-          <button class="boton-classic" type="submit">Derivar</button>
         </div>
-      </div>
+        <div class="row mt-4 d-flex justify-content-center">
+            <div class="col col-lg-2">
+            <button class="boton-classic" type="submit">Derivar</button>
+            </div>
+        </div>
     </form>
   </div>
 </template>
@@ -115,36 +113,36 @@ import formSerialize from "form-serialize";
 // import Errors from "../../helpers/FormErrors.js";
 // import {mapState,mapMutations} from "vuex";
 export default {
-  data() {
-    return {
-      i: 0,
-      idInforme: null,
-      idEmpleado: null,
-      cuitEmpleado: null,
-      usuarioADerivarSeleccionado: "",
-      sectoresADerivar: [],
-      sugerencias: [],
-      idIssuesSelect: null,
-      comentarioEmpleado: "",
-      reports: [],
-      value: "",
-      primerSelect: 0,
-      segundoSelect: 0,
-    };
-  },
-  created() {
-    if (!this.$session.exists()) {
-      this.$router.push("/login");
-    }
-  },
-  mounted() {
-    this.idInforme = this.$route.params.id;
-    this.verInforme(this.$route.query);
-    this.obtenerSugerencias(this.$route.query);
+    data() {
+        return {
+        i: 0,
+        idInforme: null,
+        idEmpleado: null,
+        cuitEmpleado: null,
+        usuarioADerivarSeleccionado: "",
+        sectoresADerivar: [],
+        sugerencias: [],
+        idIssuesSelect: null,
+        comentarioEmpleado: "",
+        reports: [],
+        value: '',
+        primerSelect:0,
+        segundoSelect:0,
+        };
+    },
+    created() {
+        if (!this.$session.exists()) {
+        this.$router.push("/login");
+        }
+    },
+    mounted() {
+        this.idInforme = this.$route.params.id;
+        this.verInforme(this.$route.query);
+        this.obtenerSugerencias(this.$route.query);
 
-    this.obtenerSectores();
-  },
-  methods: {
+        this.obtenerSectores();
+    },
+    methods: {
     verInforme(query) {
       axios
         .get(
@@ -156,7 +154,7 @@ export default {
           console.log("aca lee jonaaaaa", response.data);
           this.reports = response.data;
           this.idEmpleado = this.$session.get("user_id");
-          this.cuitEmpleado = this.$session.get("cuit");
+          this.cuitEmpleado =this.$session.get("cuit");
         })
         .catch((error) => {
           console.log("Error: " + error);
@@ -200,21 +198,22 @@ export default {
         });
     },
     onSubmit(event) {
-      let data = formSerialize(event.target, {
-        hash: false,
-        empty: true,
-      });
-      data += "&idIssueReport=" + this.idIssuesSelect;
-      data += "&idInforme=" + this.idInforme;
-      data += "&idEmpleado=" + this.idEmpleado;
-      data += "&cuitEmpleado=" + this.cuitEmpleado;
-      data += "&idEstado=" + this.$session.get("etapa_id");
-      this.actualizarCambioEstadoAnterior(data);
-      this.registrarCambioEstado(data);
-      this.registrarComentario(data);
-      this.registrarSugerencia(data);
+        let data = formSerialize(event.target, {
+            hash: false,
+            empty: true,
+        });
+        data += "&idIssueReport=" + this.idIssuesSelect;
+        data += "&idInforme=" + this.idInforme;
+        data += "&idEmpleado=" + this.idEmpleado;
+        data += "&cuitEmpleado=" + this.cuitEmpleado;
+        data += "&idEstado=" + this.$session.get("etapa_id");
+        this.actualizarCambioEstadoAnterior(data);
+        this.registrarCambioEstado(data);
+        this.registrarComentario(data);
+        this.registrarSugerencia(data);
     },
     actualizarCambioEstadoAnterior(data) {
+
       axios
         .post(`/api/informeempleadoestados/editInformeempleadoestados`, data, {
           headers: { "X-Requested-With": "XMLHttpRequest" },
