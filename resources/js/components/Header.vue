@@ -27,7 +27,13 @@ export default {
   methods: {
     logout() {
       this.$session.destroy();
-      window.location.href = "http://localhost:8765/home";
+      this.$swal({
+        title: "Sesion cerrada. Hasta pronto",
+        type: "success",
+        timer: 1500,
+      }).then((result) => {
+        window.location.href = "http://localhost:8765/login";
+      });
     },
   },
   created() {

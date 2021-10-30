@@ -60,7 +60,7 @@ class InformeempleadoestadosController extends AppController
         $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
         $objComentario = new InformeempleadocomentariosTable();
         $comentarios = $objComentario->find('all', ['contain' => ['Commentsemployees'], 'conditions' => ['report_id' => $id]])
-        ->order(['comment_employee_id' => 'ASC']);
+            ->order(['comment_employee_id' => 'ASC']);
 
         $comentarios = json_encode($comentarios);
         $i = 0;
@@ -104,11 +104,10 @@ class InformeempleadoestadosController extends AppController
         //     ]
         // );
         $informeempleadoestado = $this->Informeempleadoestados->find('all')
-            ->where(['Informeempleadoestados.informeempleadoestado_id' => $idReport,'Informeempleadoestados.state_id' => $idState])
-        ;
+            ->where(['Informeempleadoestados.informeempleadoestado_id' => $idReport, 'Informeempleadoestados.state_id' => $idState]);
         foreach ($informeempleadoestado as $unInforme) {
-            if($unInforme->ultimoEstado==true){
-                $informeBuscado=$unInforme;
+            if ($unInforme->ultimoEstado == true) {
+                $informeBuscado = $unInforme;
             }
         }
 
@@ -124,9 +123,9 @@ class InformeempleadoestadosController extends AppController
     public function save()
     {
         $dataVue =  $this->request->getData();
-        $idReport=(int)$dataVue['idInforme'];
-        $idEmpleado=(int)$dataVue['idEmpleado'];
-        $idState=(int)$dataVue['selectSector'];
+        $idReport = (int)$dataVue['idInforme'];
+        $idEmpleado = (int)$dataVue['idEmpleado'];
+        $idState = (int)$dataVue['selectSector'];
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
         // return $this->setJsonResponse([
         //     'datavue' => $dataVue,
@@ -148,27 +147,29 @@ class InformeempleadoestadosController extends AppController
             "ultimoEstado" => 1,
         ];
         $informeempleadoestado = $this->Informeempleadoestados->newEntity($dataNueva);
-        $result = $this->Informeempleadoestados->save($informeempleadoestado,['checkExisting' => false]);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado, ['checkExisting' => false]);
 
-        $this->envioEmail($idState,$idReport,$idEmpleado);
+        $this->envioEmail($idState, $idReport, $idEmpleado);
         return $this->setJsonResponse([
             'datosEntidad' => $result,
+            'message' => true,
         ]);
         // return $this->setJsonResponse([
-            //     'resultado' => $estadosActuales,
-            // ]);
-        }
-    public function envioEmail($idState,$idReport,$idEmpleado){
+        //     'resultado' => $estadosActuales,
+        // ]);
+    }
+    public function envioEmail($idState, $idReport, $idEmpleado)
+    {
 
         $estadosActuales = $this->Informeempleadoestados->Informeempleadoestados->find('all')
-        ->contain(['States','Reports.Products'])
-        ->where(['Informeempleadoestados.state_id' => $idState , "Informeempleadoestados.informeempleadoestado_id" => $idReport, "Informeempleadoestados.employee_id" =>  $idEmpleado])
-        ->all();
+            ->contain(['States', 'Reports.Products'])
+            ->where(['Informeempleadoestados.state_id' => $idState, "Informeempleadoestados.informeempleadoestado_id" => $idReport, "Informeempleadoestados.employee_id" =>  $idEmpleado])
+            ->all();
         foreach ($estadosActuales as $estado) {
-            $tipoProducto=$estado->report->product->tipo;
-            $marcaProducto=$estado->report->product->marca;
-            $modeloProducto=$estado->report->product->modelo;
-            $estadoActual=$estado->state->nombre_estado;
+            $tipoProducto = $estado->report->product->tipo;
+            $marcaProducto = $estado->report->product->marca;
+            $modeloProducto = $estado->report->product->modelo;
+            $estadoActual = $estado->state->nombre_estado;
         }
         // $mailer = new Mailer('default');
         // $mailer->setTransport('gmail');
@@ -180,27 +181,27 @@ class InformeempleadoestadosController extends AppController
         $mailer = new Mailer();
         $mailer->setTransport('gmail');
         $mailer
-                    ->setEmailFormat('html')
-                    ->setTo('yonamixlfr@gmail.com')
-                    ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
-                    ->setSubject('Su producto cambio de estado')
+            ->setEmailFormat('html')
+            ->setTo('yonamixlfr@gmail.com')
+            ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
+            ->setSubject('Su producto cambio de estado')
 
-                    ->deliver('
+            ->deliver('
                             <table>
                             <tr>
                             <img src="https://i.ibb.co/jZcV0Lb/logo-Tracesysy-Chiquito.png" alt="Logo del sistema" />
                                     <hr>
-                                    <p>Se le envia este email para notificarle que su "<b>'.$tipoProducto.' '.$marcaProducto.' '.$modeloProducto.' "</b>
-                                     paso a la etapa de "<b>'.$estadoActual.'"</b></p>
+                                    <p>Se le envia este email para notificarle que su "<b>' . $tipoProducto . ' ' . $marcaProducto . ' ' . $modeloProducto . ' "</b>
+                                     paso a la etapa de "<b>' . $estadoActual . '"</b></p>
                             </tr>
                             </table>
                     ');
 
 
         $mailer->deliver();
-
     }
-    public function add($idReport,$idEmpleado,$idState){
+    public function add($idReport, $idEmpleado, $idState)
+    {
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
         $dataNueva = [
             "informeempleadoestado_id" => $idReport,
@@ -210,7 +211,7 @@ class InformeempleadoestadosController extends AppController
         $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informeempleadoestado, $dataNueva);
         $result = $this->Informeempleadoestados->save($informeempleadoestado);
 
-        $this->envioEmail($idState,$idReport,$idEmpleado);
+        $this->envioEmail($idState, $idReport, $idEmpleado);
         return $this->setJsonResponse([
             'datosReporte' => $result,
         ]);
