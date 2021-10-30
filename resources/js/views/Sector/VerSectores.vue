@@ -91,7 +91,11 @@ export default {
         i++;
       }
       if (existeIgual) {
-        console.log("hay uno igual, debe cambiar el orden y no repetir");
+        this.$swal({
+          title: "Hay un orden repetido. Por favor acomodelos",
+          type: "error",
+          timer: 1500,
+        });
       } else {
         let data2 = formSerialize(event.target, {
           hash: false,
