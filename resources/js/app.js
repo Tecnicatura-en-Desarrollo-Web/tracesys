@@ -30,9 +30,9 @@ const store = new Vuex.Store({
     state: {
         idComentario: null
     },
-    mutations:{
-        actualizarIdComentario(state,n){
-            state.idComentario=n
+    mutations: {
+        actualizarIdComentario(state, n) {
+            state.idComentario = n
         },
 
     }

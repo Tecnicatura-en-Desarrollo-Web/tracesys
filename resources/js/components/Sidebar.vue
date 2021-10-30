@@ -43,6 +43,11 @@
                 >Registrar sector <b-icon-bookmark></b-icon-bookmark
               ></router-link>
             </li>
+            <li class="header-menu">
+              <router-link to="/sector/ver"
+                >Ver sectores<b-icon-bookmark></b-icon-bookmark
+              ></router-link>
+            </li>
           </ul>
         </div>
       </div>
