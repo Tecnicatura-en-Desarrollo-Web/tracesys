@@ -579,6 +579,13 @@ div.button-group.right a i {
     color: #fff !important;
 }
 
+.swal2-confirm {
+    /* background-color: #dc3545 !important; */
+    background-color: #6d9886 !important;
+    border: 2px solid !important;
+    border-radius: 25px !important;
+}
+
 /* ****************** ESTILOS PROPIOS ******************** */
 
 .nav-link:hover,

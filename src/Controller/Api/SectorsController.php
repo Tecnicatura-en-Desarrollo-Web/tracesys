@@ -164,10 +164,6 @@ class SectorsController extends AppController
         $dataVue = $this->request->getData()["seleccionado"];
 
         $i = 0;
-        /* return $this->setJsonResponse([
-            'sector' => $dataVue,
-            'Sectores' => $SectoresDeEtapa['sectores'],
-        ]); */
         foreach ($SectoresDeEtapa["sectores"] as $key => $value) {
             $sectorArray = [];
             $arrayCorroboracion = [];
@@ -180,22 +176,12 @@ class SectorsController extends AppController
             $sector = $this->Sectors->newEmptyEntity();
             $sector = $this->Sectors->patchEntity($sector, $sectorArray);
 
-            if ($this->Sectors->save($sector)) {
-                $arrayCorroboracion[$i] = true;
-            } else {
-                $arrayCorroboracion[$i] = false;
-            }
+            $this->Sectors->save($sector);
 
             $i++;
         }
         return $this->setJsonResponse([
-            'message' => $arrayCorroboracion,
-        ]);
-
-        /* $pos = strpos($dataVue, "="); */
-        return $this->setJsonResponse([
-            'sectores' => $SectoresDeEtapa["sectores"],
-            'ordenNuevo' => $dataVue,
+            'message' => true,
         ]);
     }
 }

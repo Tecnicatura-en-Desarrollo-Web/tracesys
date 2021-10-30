@@ -68,6 +68,11 @@ export default {
     };
   },
   methods: {
+    showAlert() {
+      // Use sweetalert2
+      /*  this.$swal("Inicio de sesion verificado!"); */
+      /* this.Swal.fire("Any fool can use a computer"); */
+    },
     iniciarSesion(event) {
       let data = formSerialize(event.target, {
         hash: false,
@@ -80,26 +85,27 @@ export default {
         .then((response) => {
           if (response.data.message) {
             //***Mensaje de notificacion si llego una respuesta******//
-            this.$notify({
-              group: "default",
+            this.$swal({
+              title: "Inicio de sesion verificado",
               type: "success",
-              text: response.data.message,
+              timer: 1500,
+            }).then((result) => {
+              //***Seteo true en la variable login******//
+              this.login = true;
+              console.log(response.data);
+              //***Se inicia session******//
+              this.$session.start();
+              //***Seteo el nombre del usuario logueado en la variable sesion para mostrar su nombre en su home******
+              this.$session.set("nombreDeUsuario", response.data.user);
+              this.$session.set("user_id", response.data.user_id);
+              this.$session.set("cuit", response.data.cuit);
+              this.$session.set("nombre_sector", response.data.nombre_sector);
+              this.$session.set("nombre_etapa", response.data.nombre_etapa);
+              this.$session.set("sector_id", response.data.sector_id);
+              this.$session.set("etapa_id", response.data.etapa_id);
+              //***Redirigimos al usuario a su lista de informes******//
+              window.location.href = "http://localhost:8765/home";
             });
-            //***Seteo true en la variable login******//
-            this.login = true;
-            console.log(response.data);
-            //***Se inicia session******//
-            this.$session.start();
-            //***Seteo el nombre del usuario logueado en la variable sesion para mostrar su nombre en su home******
-            this.$session.set("nombreDeUsuario", response.data.user);
-            this.$session.set("user_id", response.data.user_id);
-            this.$session.set("cuit", response.data.cuit);
-            this.$session.set("nombre_sector", response.data.nombre_sector);
-            this.$session.set("nombre_etapa", response.data.nombre_etapa);
-            this.$session.set("sector_id", response.data.sector_id);
-            this.$session.set("etapa_id", response.data.etapa_id);
-            //***Redirigimos al usuario a su lista de informes******//
-            window.location.href = "http://localhost:8765/home";
           }
         })
         .catch((error) => {

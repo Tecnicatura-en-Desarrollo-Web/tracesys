@@ -11,6 +11,7 @@ import VueSession from "vue-session";
 Vue.use(VueSession);
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'sweetalert2/dist/sweetalert2.min.css';
 import { normalizeUnits, now } from 'moment';
 import Multiselect from 'vue-multiselect'
 

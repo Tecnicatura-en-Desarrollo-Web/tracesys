@@ -74,6 +74,15 @@ export default {
             })
             .then((response) => {
               console.log(response);
+              if (response.data.message) {
+                this.$swal({
+                  title: "Sector creado",
+                  type: "success",
+                  timer: 1500,
+                }).then((result) => {
+                  window.location.href = "http://localhost:8765/sector/ver";
+                });
+              }
             });
         });
     },
