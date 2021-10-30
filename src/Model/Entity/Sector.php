@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -27,6 +28,7 @@ class Sector extends Entity
      * @var array
      */
     protected $_accessible = [
+        'sector_id' => true,
         'nombre_sector' => true,
         'orden' => true,
         'stage_id' => true,

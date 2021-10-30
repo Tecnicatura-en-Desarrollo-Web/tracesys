@@ -1,29 +1,49 @@
 <template>
   <div class="d-flex justify-content-center mt-5">
     <div
-      class="card p-3 shadow-lg p-3 mb-5 bg-white rounded"
+      class="ml-5 p-3 shadow-lg p-3 mb-5 bg-white rounded"
       style="width: 50rem"
     >
       <h2 class="text-center">Listado de sectores</h2>
       <form class="row g-3" @submit.prevent="onSubmit" novalidate="novalidate">
-        <div class="col-md-6">
-          <label for="validationDefault02" class="form-label"
-            >Nombre Sector</label
-          >
-          <input type="text" class="form-control" v-model="nombre_sector" />
-        </div>
-        <div class="col-md-6">
-          <label for="validationDefault06" class="form-label">Etapa</label>
-          <input
-            type="text"
-            class="form-control"
-            readonly
-            value="Reparacion"
-            placeholder="Reparacion"
-          />
-        </div>
+        <table class="table table-striped">
+          <thead class="table-dark">
+            <tr class="cabecera-table">
+              <th scope="col">Nombre sector</th>
+              <th scope="col">Orden</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- report.employee.user.sector.stage.stage_id -->
+            <tr
+              v-for="sector in sectores"
+              :key="sector.sector_id"
+              v-bind:value="sector.sector_id"
+            >
+              <td>{{ sector.nombre_sector }}</td>
+              <td>
+                <select
+                  class="form-select form-select-sm"
+                  aria-label=".form-select-sm example"
+                  name="seleccionado[]"
+                >
+                  <option
+                    v-for="i in cantSectores"
+                    :key="i"
+                    v-if="sector.orden == i"
+                    disabled
+                    selected
+                  >
+                    {{ sector.orden }}
+                  </option>
+                  <option v-else :key="i">{{ i }}</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <div class="col-12 d-flex justify-content-center">
-          <button class="boton-classic" type="submit">Registrarse</button>
+          <button class="boton-classic" type="submit">Ordenar</button>
         </div>
       </form>
     </div>
@@ -37,26 +57,54 @@ export default {
   data() {
     return {
       orden: [],
+      sectores: [],
+      cantSectores: 0,
+      contador: 1,
       etapa: 3,
-      cantidadSectores: 0,
     };
   },
   mounted() {
-    this.obtenerCantSectores(this.$route.query);
-    console.log(cantidadSectores);
+    this.obtenerCantSectores();
   },
   methods: {
-    obtenerCantSectores(query) {
-      var cantidadSectores = 0;
+    obtenerCantSectores() {
+      axios.get("/api/sectors/obtenerEstadosDeEtapa/3").then((response) => {
+        this.sectores = response.data.sectores;
+        this.cantSectores = response.data.sectores.length;
+      });
+    },
+    onSubmit(event) {
+      let data = formSerialize(event.target, {});
 
-      if (query.sort !== "undefined" && query.direction) {
-        this.defaultClass[query.sort] = query.direction;
+      let i = 0;
+      let existeIgual = false;
+      while (i < this.cantSectores && existeIgual == false) {
+        let j = 0;
+        while (j < this.cantSectores && existeIgual == false) {
+          if (i != j) {
+            if (data.seleccionado[i] == data.seleccionado[j]) {
+              existeIgual = true;
+            }
+          }
+          j++;
+        }
+        i++;
       }
-      axios
-        .get("/api/sectors/obtenerEstadosDeEtapa/3", { params: query })
-        .then((response) => {
-          this.cantidadSectores = response.data.sectores.length;
+      if (existeIgual) {
+        console.log("hay uno igual, debe cambiar el orden y no repetir");
+      } else {
+        let data2 = formSerialize(event.target, {
+          hash: false,
+          empty: true,
         });
+        axios
+          .post("/api/sectors/actualizarOrden", data2, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+          })
+          .then((response) => {
+            console.log(response);
+          });
+      }
     },
   },
 };

@@ -37,28 +37,28 @@ class SectorsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function obtenerSectoresPorEtapa($idEtapa){
+    public function obtenerSectoresPorEtapa($idEtapa)
+    {
 
         switch ($idEtapa) {
             case 2:
                 $this->paginate = [
                     'contain' => ['Stages'],
-                    'conditions' =>["Sectors.stage_id"=>3 ]
+                    'conditions' => ["Sectors.stage_id" => 3]
                 ];
                 break;
-                case 3:
-                    $this->paginate = [
-                        'contain' => ['Stages'],
-                        'conditions' =>[["Sectors.stage_id !="=>3] , ["Sectors.stage_id !="=>1]]
-                    ];
-                    break;
-                case 4:
-                    $this->paginate = [
-                        'contain' => ['Stages'],
-                        'conditions' =>[["Sectors.stage_id !="=>3] , ["Sectors.stage_id !="=>1]]
-                    ];
-                    break;
-
+            case 3:
+                $this->paginate = [
+                    'contain' => ['Stages'],
+                    'conditions' => [["Sectors.stage_id !=" => 3], ["Sectors.stage_id !=" => 1]]
+                ];
+                break;
+            case 4:
+                $this->paginate = [
+                    'contain' => ['Stages'],
+                    'conditions' => [["Sectors.stage_id !=" => 3], ["Sectors.stage_id !=" => 1]]
+                ];
+                break;
         }
         $sectors = $this->paginate($this->Sectors);
         return $this->setJsonResponse(['sectors' => $sectors]);
@@ -151,5 +151,51 @@ class SectorsController extends AppController
         ];
         $SectoresDeEtapa['sectores'] = $this->paginate($this->Sectors);
         return $this->setJsonResponse($SectoresDeEtapa);
+    }
+
+    public function actualizarOrden()
+    {
+        /* $sectores = $this->obtenerEstadosDeEtapa(3); */
+        $this->paginate = [
+            'conditions' => ['stage_id' => 3]
+        ];
+        $SectoresDeEtapa['sectores'] = $this->paginate($this->Sectors);
+
+        $dataVue = $this->request->getData()["seleccionado"];
+
+        $i = 0;
+        /* return $this->setJsonResponse([
+            'sector' => $dataVue,
+            'Sectores' => $SectoresDeEtapa['sectores'],
+        ]); */
+        foreach ($SectoresDeEtapa["sectores"] as $key => $value) {
+            $sectorArray = [];
+            $arrayCorroboracion = [];
+
+            $sectorArray["sector_id"] = $value["sector_id"];
+            $sectorArray["nombre_sector"] = $value["nombre_sector"];
+            $sectorArray["orden"] = $dataVue[$i];
+            $sectorArray["stage_id"] = $value["stage_id"];
+
+            $sector = $this->Sectors->newEmptyEntity();
+            $sector = $this->Sectors->patchEntity($sector, $sectorArray);
+
+            if ($this->Sectors->save($sector)) {
+                $arrayCorroboracion[$i] = true;
+            } else {
+                $arrayCorroboracion[$i] = false;
+            }
+
+            $i++;
+        }
+        return $this->setJsonResponse([
+            'message' => $arrayCorroboracion,
+        ]);
+
+        /* $pos = strpos($dataVue, "="); */
+        return $this->setJsonResponse([
+            'sectores' => $SectoresDeEtapa["sectores"],
+            'ordenNuevo' => $dataVue,
+        ]);
     }
 }
