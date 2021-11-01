@@ -39,6 +39,11 @@ class CreateInformeEmpleadoEstados extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
+        $table->addColumn('sector_id', 'integer', [
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,
@@ -56,10 +61,12 @@ class CreateInformeEmpleadoEstados extends AbstractMigration
             'informeempleadoestado_id',
             'employee_id',
             'state_id',
+            'sector_id'
         ]);
         $table->addForeignKey('informeempleadoestado_id', 'reports', 'report_id');
         $table->addForeignKey('employee_id', 'employees', 'employee_id');
         $table->addForeignKey('state_id', 'states', 'state_id');
+        $table->addForeignKey('sector_id', 'sectors', 'sector_id');
         $table->create();
     }
 }

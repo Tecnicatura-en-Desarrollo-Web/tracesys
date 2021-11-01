@@ -46,6 +46,7 @@ export default {
 </script>
 
 <style>
+
 /* @font-face {
   font-family: "futura";
   src: local("futura"),

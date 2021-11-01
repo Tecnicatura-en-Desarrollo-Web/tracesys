@@ -66,23 +66,23 @@ class SuggestionsTable extends Table
             ->integer('suggestion_id')
             ->allowEmptyString('suggestion_id', null, 'create');
 
-        $validator
-            ->scalar('nombre_sugerencia')
-            ->maxLength('nombre_sugerencia', 100)
-            ->requirePresence('nombre_sugerencia', 'create')
-            ->notEmptyString('nombre_sugerencia');
+        // $validator
+        //     ->scalar('nombre_sugerencia')
+        //     ->maxLength('nombre_sugerencia', 100)
+        //     ->requirePresence('nombre_sugerencia', 'create')
+        //     ->notEmptyString('nombre_sugerencia');
 
-        $validator
-            ->scalar('descripcion_sugerencia')
-            ->maxLength('descripcion_sugerencia', 255)
-            ->requirePresence('descripcion_sugerencia', 'create')
-            ->notEmptyString('descripcion_sugerencia');
+        // $validator
+        //     ->scalar('descripcion_sugerencia')
+        //     ->maxLength('descripcion_sugerencia', 255)
+        //     ->requirePresence('descripcion_sugerencia', 'create')
+        //     ->notEmptyString('descripcion_sugerencia');
 
-        $validator
-            ->scalar('importancia')
-            ->maxLength('importancia', 20)
-            ->requirePresence('importancia', 'create')
-            ->notEmptyString('importancia');
+        // $validator
+        //     ->scalar('importancia')
+        //     ->maxLength('importancia', 20)
+        //     ->requirePresence('importancia', 'create')
+        //     ->notEmptyString('importancia');
 
         return $validator;
     }
@@ -94,10 +94,10 @@ class SuggestionsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
 
-        return $rules;
-    }
+    //     return $rules;
+    // }
 }

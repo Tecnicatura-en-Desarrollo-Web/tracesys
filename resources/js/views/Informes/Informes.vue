@@ -18,7 +18,7 @@
           <tbody>
               <!-- report.employee.user.sector.stage.stage_id -->
             <tr
-              v-for="report in reports" :v-bind="report.report.report_id" v-if="report.state_id == empleado_stage_id"
+              v-for="report in reports" :v-bind="report.report.report_id" v-if="report.sector_id == empleado_sector_id"
             >
               <td>{{ report.report.report_id }}</td>
               <td>{{ report.report.created }}</td>
@@ -27,9 +27,10 @@
               <td>{{ report.report.product.motivo }}</td>
               <td>en {{ report.state.nombre_estado }}</td>
               <td>
+                  <!-- idInforme="idInforme" -->
                 <router-link
                   :to="{ path: `/detalleInforme/` + report.report.report_id }"
-                  idInforme="idInforme"
+                  :idInforme="2"
                   ><button class="btn btn-outline-info btn-sm">
                     +
                   </button></router-link
@@ -52,7 +53,7 @@ export default {
         return {
         reports: [],
         nombre_sector: "",
-        empleado_stage_id: null
+        empleado_sector_id: null,
         };
     },
     mounted() {
@@ -79,19 +80,26 @@ export default {
                 console.log("Error: " + error);
                 });
         },
-        // envioEmail(query){
-        //     axios
-        //         .get("api/informeempleadoestados/envioEmail", { params: query })
-        //         .then((response) => {
-        //             // this.reports = response.data.reports;
-        //             // //console.log("lee aca maxiiii",this.reports);
-        //             // this.queryParams = response.data.query;
-        //         })
-        //         .catch((error) => {
-        //         console.log("Error: " + error);
-        //         });
-        // }
-    //**Este metodo se ejecuta justo antes de cargar la vista , se cargan todos los datos pero todavia no se muestra la vista*/
+        obtenerSugerencias(query) {
+        axios
+            .get(`/api/problemasugerencias/issuesByReport/${this.idInforme}`, {
+            params: query,
+            })
+            .then((response) => {
+            if (response.data.suggestions[0] != null) {
+                console.log("entro jonaaaaaaaa");
+                this.sugerencias = response.data.suggestions;
+                //console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
+                this.idIssuesSelect =
+                response.data.suggestions[0].problemasugerencia_id;
+                /* console.log(response.data.suggestions); */
+                //this.sugerencias = response.data.suggestions;
+            }
+            })
+            .catch((error) => {
+            console.log("Error: " + error);
+            });
+        },
     },
     created() {
         if (!this.$session.exists()) {
@@ -102,6 +110,7 @@ export default {
         if (this.$session.exists()) {
             this.nombre_sector = this.$session.get("nombre_sector");
             this.empleado_stage_id = this.$session.get("etapa_id");
+            this.empleado_sector_id = this.$session.get("sector_id");
         }
     },
 };

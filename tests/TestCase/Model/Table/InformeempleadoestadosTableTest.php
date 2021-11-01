@@ -25,9 +25,9 @@ class InformeempleadoestadosTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Informeempleadoestados',
-        'app.Reports',
         'app.Employees',
         'app.States',
+        'app.Reports',
     ];
 
     /**

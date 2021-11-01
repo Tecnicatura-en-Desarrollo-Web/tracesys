@@ -12,14 +12,15 @@ use Cake\ORM\Entity;
  * @property int $informeempleadoestado_id
  * @property int $employee_id
  * @property int $state_id
+ * @property int $sector_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property bool $ultimoEstado
  *
  * @property \App\Model\Entity\Informeempleadoestado $informeempleadoestado
- * @property \App\Model\Entity\Report $report
  * @property \App\Model\Entity\Employee $employee
  * @property \App\Model\Entity\State $state
+ * @property \App\Model\Entity\Report $report
  */
 class Informeempleadoestado extends Entity
 {
@@ -37,8 +38,9 @@ class Informeempleadoestado extends Entity
         'modified' => true,
         'ultimoEstado' => true,
         'informeempleadoestado_id' => true,
-        'report' => true,
         'employee_id' => true,
         'state_id' => true,
+        'sector_id' => true,
+        'report' => true,
     ];
 }
