@@ -8,6 +8,7 @@ use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 use App\Model\Entity\Informeempleadocomentario;
 use App\Model\Table\InformeempleadocomentariosTable;
+use App\Model\Table\SectorsTable;
 use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
 use Cake\Mailer\Mailer;
 
@@ -35,7 +36,7 @@ class InformeempleadoestadosController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Employees.Users.Sectors.Stages', 'States', 'Reports', 'Reports.Products'],
+            'contain' => ['Employees.Users.Sectors.Stages', 'States', 'Reports', 'Reports.Products', 'Sectors'],
             'conditions' => ['ultimoEstado' => 1]
         ];
         $informeempleadoestados['reports'] = $this->paginate($this->Informeempleadoestados);
@@ -46,7 +47,7 @@ class InformeempleadoestadosController extends AppController
     {
 
         $this->paginate = [
-            'contain' => ['Reports.Products', 'Employees.Users', 'States'],
+            'contain' => ['Reports.Products', 'Employees.Users', 'States', 'Sectors'],
             'conditions' => ['informeempleadoestado_id' => $id],
             'sortableFields' => [
                 'created'
@@ -97,6 +98,7 @@ class InformeempleadoestadosController extends AppController
         $idReport = $dataVue["idInforme"];
         $idEmpleado = $dataVue["idEmpleado"];
         $idState = $dataVue["idEstado"];
+        $idSector = $dataVue["idSector"];
         // $informeempleadoestado = $this->Informeempleadoestados->get(
         //     [$idReport, $idEmpleado, $idState],
         //     [
@@ -104,7 +106,13 @@ class InformeempleadoestadosController extends AppController
         //     ]
         // );
         $informeempleadoestado = $this->Informeempleadoestados->find('all')
-            ->where(['Informeempleadoestados.informeempleadoestado_id' => $idReport, 'Informeempleadoestados.state_id' => $idState]);
+            ->where([
+                'Informeempleadoestados.informeempleadoestado_id' => $idReport,
+                'Informeempleadoestados.state_id' => $idState,
+                'Informeempleadoestados.employee_id' => $idEmpleado,
+                'Informeempleadoestados.sector_id' => $idSector,
+
+            ]);
         foreach ($informeempleadoestado as $unInforme) {
             if ($unInforme->ultimoEstado == true) {
                 $informeBuscado = $unInforme;
@@ -125,11 +133,13 @@ class InformeempleadoestadosController extends AppController
         $dataVue =  $this->request->getData();
         $idReport = (int)$dataVue['idInforme'];
         $idEmpleado = (int)$dataVue['idEmpleado'];
-        $idState = (int)$dataVue['selectSector'];
+        $idSector = (int)$dataVue['selectSector'];
+        $objSectors = new SectorsTable();
+        $sector = $objSectors->find()
+            ->where(['sector_id' => $idSector])
+            ->first();
+        $idState = $sector->stage_id;
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
-        // return $this->setJsonResponse([
-        //     'datavue' => $dataVue,
-        // ]);
         // $informeempleadoestado = $this->Informeempleadoestados->Informeempleadoestados->find()
         // ->where(["informeempleadoestado_id" => $idReport, "employee_id" =>  $idEmpleado,"state_id" => $idState])
         // ->first();
@@ -144,6 +154,7 @@ class InformeempleadoestadosController extends AppController
             "informeempleadoestado_id" => $idReport,
             "employee_id" =>  $idEmpleado,
             "state_id" => $idState,
+            "sector_id" => $idSector,
             "ultimoEstado" => 1,
         ];
         $informeempleadoestado = $this->Informeempleadoestados->newEntity($dataNueva);

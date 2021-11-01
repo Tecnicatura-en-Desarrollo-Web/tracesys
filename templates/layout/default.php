@@ -35,6 +35,7 @@ $cakeDescription = 'CakeVue Application';
     </span>
 </body>
 <style>
+
 body {
     background-color: #F6F6F6;
 }

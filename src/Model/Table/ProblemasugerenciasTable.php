@@ -65,6 +65,7 @@ class ProblemasugerenciasTable extends Table
             'foreignKey' => 'suggestion_id',
             'joinType' => 'INNER',
         ]);
+
     }
 
     /**

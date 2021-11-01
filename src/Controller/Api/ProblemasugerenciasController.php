@@ -46,6 +46,17 @@ class ProblemasugerenciasController extends AppController
         return $this->setJsonResponse($problemasugerencia);
 
     }
+    public function sugerenciasParaAplicar($id = null){
+        $this->paginate = [
+            'contain' => [
+                'Suggestions','Issues.Reports'],
+            'conditions'=>['Issues.report_id' => $id , 'activo'=>1]
+        ];
+        $problemasugerencia ['suggestions'] = $this->paginate($this->Problemasugerencias);
+        return $this->setJsonResponse($problemasugerencia);
+
+    }
+
     public function view($id = null)
     {
         $problemasugerencia = $this->Problemasugerencias->get($id, [
@@ -86,24 +97,74 @@ class ProblemasugerenciasController extends AppController
      */
     public function edit()
     {
-
+        // Probando nueva version del metodo
         $dataVue =  $this->request->getData();
-        $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'],$dataVue['selectSugerencia']]);
-        $dataNueva = [
-            "problemasugerencia_id" => (int)$dataVue['idIssueReport'],
-            "suggestion_id" => (int)$dataVue['selectSugerencia'],
-            "activo" => 1,
-        ];
-        $problemasugerencia = $this->Problemasugerencias->patchEntity($problemasugerencia, $dataNueva);
-        $result = $this->Problemasugerencias->save($problemasugerencia);
-        return $this->setJsonResponse([
-            'probandoinfo' => $dataVue
+        if($dataVue['sugerenciasSeleccionadas']==null){
+            return $this->setJsonResponse([
+                'probandoinfo' => "nohaysugerencias"
+            ]);
+        }else{
+            $sugerenciasIds=explode(",", $dataVue['sugerenciasSeleccionadas']);
+            foreach ($sugerenciasIds as $unIdSugerencia) {
+
+                $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'],$dataVue['selectSugerencia']]);
+                $dataNueva = [
+                    "problemasugerencia_id" => (int)$dataVue['idIssueReport'],
+                    "suggestion_id" => (int)$unIdSugerencia,
+                    "activo" => 1,
+                ];
+                $problemasugerencia = $this->Problemasugerencias->patchEntity($problemasugerencia, $dataNueva);
+                $result = $this->Problemasugerencias->save($problemasugerencia);
+            }
+            return $this->setJsonResponse([
+                'probandoinfo' => $result
+            ]);
+        }
+
+    }
+    public function editarSugerenciasAplicadas()
+    {
+        // Probando nueva version del metodo
+        $dataVue =  $this->request->getData();
+        if($dataVue['sugerenciasAplicadas']==null){
+            return $this->setJsonResponse([
+                'probandoinfo' => "nohaysugerencias"
         ]);
+    }else{
+        $sugerenciasIds=explode(",", $dataVue['sugerenciasAplicadas']);
+        $problemasugerencias = $this->Problemasugerencias->find('all')
+        ->contain(['Sectors','Issues'])
+        ->where(['Suggestions.Sectors.stage_id' => 3]);
+        // ['contain' => ['Suggestions.Sectors','Issues'],
+        // 'conditions' => ['Issues.Reports' => 4]
+        // // 'Issues.report_id' , 'Problemasugerencias.activo'=>1]]
+        // ]);
+        return $this->setJsonResponse([
+            'probandoinfo' => $problemasugerencias
+        ]);
+            foreach ($problemasugerencias as $problemasugerencia) {
+                $i=0;
+                $encontrado=false;
+                while($i<count($sugerenciasIds) && !$encontrado){
+                    if($problemasugerencia->suggestion_id==$sugerenciasIds[$i]){
+                        $encontrado=true;
+                    }
+                    $i++;
+                }
+                if($encontrado==false){
+                    $dataNueva = [
+                        "activo" => 0,
+                    ];
+                    $problemasugerencia = $this->Problemasugerencias->patchEntity($problemasugerencia, $dataNueva);
+                    $result = $this->Problemasugerencias->save($problemasugerencia);
+                }
 
+            }
+            return $this->setJsonResponse([
+                'probandoinfo' => "terminooo"
+            ]);
+        }
 
-
-        //***************************************************** */
-        //***************************************************** */
     }
 
     /**

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons, IconsPlugin } from 'bootstrap-vue'
 import Vuex from 'vuex'
 import VueRouter from 'vue-router';
 import axios from 'axios';
@@ -22,11 +22,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.use(VueSweetalert2);
 Vue.use(Notifications);
 Vue.use(Vuex);
+Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
+Vue.use(IconsPlugin)
 Vue.component('multiselect', Multiselect)
 Vue.component('app', App);
 
 const router = Vue.use(VueRouter);
+const boostrapvue = Vue.use(BootstrapVue);
 const store = new Vuex.Store({
     state: {
         idComentario: null
@@ -44,5 +47,5 @@ const app = new Vue({
         App
     },
     store: store,
-    router: routes
+    router: routes,
 });

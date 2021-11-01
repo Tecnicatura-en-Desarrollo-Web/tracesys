@@ -53,6 +53,10 @@ class InformeempleadoestadosTable extends Table
             'foreignKey' => 'informeempleadoestado_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Reports', [
+            'foreignKey' => 'informeempleadoestado_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Employees', [
             'foreignKey' => 'employee_id',
             'joinType' => 'INNER',
@@ -61,8 +65,8 @@ class InformeempleadoestadosTable extends Table
             'foreignKey' => 'state_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Reports', [
-            'foreignKey' => 'informeempleadoestado_id',
+        $this->belongsTo('Sectors', [
+            'foreignKey' => 'sector_id',
             'joinType' => 'INNER',
         ]);
     }
@@ -98,6 +102,7 @@ class InformeempleadoestadosTable extends Table
     //     $rules->add($rules->existsIn(['informeempleadoestado_id'], 'Informeempleadoestados'), ['errorField' => 'informeempleadoestado_id']);
     //     $rules->add($rules->existsIn(['employee_id'], 'Employees'), ['errorField' => 'employee_id']);
     //     $rules->add($rules->existsIn(['state_id'], 'States'), ['errorField' => 'state_id']);
+    //     $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
 
     //     return $rules;
     // }
