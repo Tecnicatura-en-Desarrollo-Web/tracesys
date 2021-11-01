@@ -139,13 +139,19 @@ export default {
           // Redirect on success
           console.log(response.data);
           if (response.data.success) {
-            this.$notify({
-              group: "default",
+            this.$swal({
+              title: "Usuario registrado con exito",
               type: "success",
-              text: response.data.message,
+              timer: 1500,
+            }).then((resp) => {
+              this.$router.push({ path: response.data.url });
             });
-
-            this.$router.push({ path: response.data.url });
+          } else {
+            this.$swal({
+              title: "Ya existe un usuario con el mismo username",
+              type: "error",
+              timer: 1500,
+            });
           }
         })
         .catch((error) => {

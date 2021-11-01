@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -113,11 +114,10 @@ class UsersTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    // public function buildRules(RulesChecker $rules): RulesChecker
-    // {
-    //     $rules->add($rules->isUnique(['email']), ['errorField' => 'email']);
-    //     $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
+    public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->isUnique(['usuario']), ['errorField' => 'usuario']);
 
-    //     return $rules;
-    // }
+        return $rules;
+    }
 }

@@ -53,9 +53,6 @@ class UsersController extends AppController
 
         $user = $this->Users->newEmptyEntity();
         $user = $this->Users->patchEntity($user, $this->request->getData());
-        // return $this->setJsonResponse([
-        //     'aca jonaaaaaaaaaa' => $user,
-        // ]);
         $result = $this->Users->save($user);
         if ($result !== false) {
             return $this->setJsonResponse(
@@ -71,10 +68,9 @@ class UsersController extends AppController
 
         return $this->setJsonResponse(
             [
-                'errors' => $user->getValidationErrors(),
-                'message' => __('The post could not be saved. Please, try again.'),
+                'success' => false,
             ],
-            422
+            201
         );
     }
     /**
@@ -154,7 +150,7 @@ class UsersController extends AppController
                     return $this->setJsonResponse(
                         [
                             'message' => true,
-                            'user' => $cadaUser["nombre"]." ".$cadaUser["apellido"],
+                            'user' => $cadaUser["nombre"] . " " . $cadaUser["apellido"],
                             'user_id' => $cadaUser["user_id"],
                             'nombre_sector' => $cadaUser["sector"]["nombre_sector"],
                             'sector_id' => $cadaUser["sector"]["sector_id"],
