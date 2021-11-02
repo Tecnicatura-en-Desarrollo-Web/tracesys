@@ -130,18 +130,26 @@ class ProblemasugerenciasController extends AppController
             return $this->setJsonResponse([
                 'probandoinfo' => "nohaysugerencias"
         ]);
-    }else{
-        $sugerenciasIds=explode(",", $dataVue['sugerenciasAplicadas']);
-        $problemasugerencias = $this->Problemasugerencias->find('all')
-        ->contain(['Sectors','Issues'])
-        ->where(['Suggestions.Sectors.stage_id' => 3]);
-        // ['contain' => ['Suggestions.Sectors','Issues'],
-        // 'conditions' => ['Issues.Reports' => 4]
-        // // 'Issues.report_id' , 'Problemasugerencias.activo'=>1]]
-        // ]);
-        return $this->setJsonResponse([
-            'probandoinfo' => $problemasugerencias
-        ]);
+        }else{
+            $sugerenciasIds=explode(",", $dataVue['sugerenciasAplicadas']);
+            //el contain hace un innerjoin , por lo tanto en condition ya tengo disponible todas las columnas
+            //de las tablas que hice innerjoin en contain
+            $this->paginate = [
+                'contain' => ['Suggestions.Sectors','Issues'],
+                'conditions' => ['stage_id' => 3]
+            ];
+            $problemasugerencias=$this->paginate($this->Problemasugerencias);
+
+            // $problemasugerencias = $this->Problemasugerencias->find('all')
+            // ->contain(['Sectors','Issues'])
+            // ->where(['Suggestions.Sectors.stage_id' => 3]);
+            // ['contain' => ['Suggestions.Sectors','Issues'],
+            // 'conditions' => ['Issues.Reports' => 4]
+            // // 'Issues.report_id' , 'Problemasugerencias.activo'=>1]]
+            // ]);
+            // return $this->setJsonResponse([
+            //     'probandoinfo' => $problemasugerencias
+            // ]);
             foreach ($problemasugerencias as $problemasugerencia) {
                 $i=0;
                 $encontrado=false;

@@ -55,7 +55,6 @@ class InformeempleadoestadosController extends AppController
             'order' => [
                 'created' => 'asc',
             ],
-
         ];
         //JONAAAAAAAAAAAA NO FUNCIONA PORQUE NO SETEAS EL COMENTARIO DEFAULT DE Se envia a sector diagnostico""""""
         $cambiosEstadoInforme['cambiosEstadoInforme'] = $this->paginate($this->Informeempleadoestados);
@@ -107,14 +106,20 @@ class InformeempleadoestadosController extends AppController
         // );
         $informeempleadoestado = $this->Informeempleadoestados->find('all')
             ->where([
-                'Informeempleadoestados.informeempleadoestado_id' => $idReport,
-                'Informeempleadoestados.state_id' => $idState,
-                'Informeempleadoestados.employee_id' => $idEmpleado,
-                'Informeempleadoestados.sector_id' => $idSector,
+                'informeempleadoestado_id' => $idReport,
+                'employee_id' => $idEmpleado,
+                'state_id' => $idState,
+                'sector_id' => $idSector,
 
             ]);
+        // return $this->setJsonResponse([
+        //     'idReport' => $idReport,
+        //     'idEMpleado' =>$idEmpleado,
+        //     'idState' =>$idState,
+        //     'idSector' =>$idSector
+        // ]);
         foreach ($informeempleadoestado as $unInforme) {
-            if ($unInforme->ultimoEstado == true) {
+            if ($unInforme->ultimoEstado == 1) {
                 $informeBuscado = $unInforme;
             }
         }
@@ -140,15 +145,6 @@ class InformeempleadoestadosController extends AppController
             ->first();
         $idState = $sector->stage_id;
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
-        // $informeempleadoestado = $this->Informeempleadoestados->Informeempleadoestados->find()
-        // ->where(["informeempleadoestado_id" => $idReport, "employee_id" =>  $idEmpleado,"state_id" => $idState])
-        // ->first();
-        // // return $this->setJsonResponse([
-        // //     'jonaaa lee acaaa mañanaaaa' => $informeempleadoestados,
-        // // ]);
-        // if($informeempleadoestado==null){
-        //     $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
-        // }
 
         $dataNueva = [
             "informeempleadoestado_id" => $idReport,

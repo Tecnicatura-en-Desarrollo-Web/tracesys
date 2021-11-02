@@ -87,7 +87,8 @@
         </div>
         <div class="row mt-4 d-flex justify-content-center">
             <div class="col col-lg-2">
-            <button class="boton-classic" type="submit">Derivar</button>
+            <button class="boton-classic" type="submit" >Derivar
+            </button>
             </div>
         </div>
     </form>
@@ -99,11 +100,9 @@
 import formSerialize from "form-serialize";
 import sugerenciasAplicadasReparacion from "../Informes/SugerenciasAplicadasReparacion.vue";
 import sugerencias from "../Informes/Sugerencias.vue";
-// import Errors from "../../helpers/FormErrors.js";
-// import {mapState,mapMutations} from "vuex";
+
 export default {
     components: {
-    // sugerenciasAplicadasReparacion: sugerenciasAplicadasReparacion,
     sugerencias: sugerencias
     },
     data() {
@@ -137,195 +136,178 @@ export default {
 
         this.obtenerSectores();
     },
-
     methods: {
-    verInforme(query) {
-      axios
-        .get(
-          `/api/informeempleadoestados/informesCambiosEstados/${this.idInforme}`,
-          { params: query }
-        )
-        .then((response) => {
-          //ver mas adelante mejorar la estructura del arreglo devuelto
-          this.reports = response.data;
-          console.log("aca lee jonaaaaa", this.reports);
-          this.idEmpleado = this.$session.get("user_id");
-          this.cuitEmpleado =this.$session.get("cuit");
-        })
-        .catch((error) => {
-          console.log("Error: " + error);
-        });
-    },
-    obtenerSugerencias(query) {
-      axios
-        .get(`/api/problemasugerencias/issuesByReport/${this.idInforme}`, {
-          params: query,
-        })
-        .then((response) => {
-          if (response.data.suggestions[0] != null) {
-            console.log("entro jonaaaaaaaa");
-            this.sugerencias = response.data.suggestions;
-            //console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
-            this.idIssuesSelect =
-              response.data.suggestions[0].problemasugerencia_id;
-            /* console.log(response.data.suggestions); */
-            //this.sugerencias = response.data.suggestions;
-          }
-        })
-        .catch((error) => {
-          console.log("Error: " + error);
-        });
-    },
-    obtenerSectores() {
-      axios
-        .get(
-          `/api/sectors/obtenerSectoresPorEtapa/${this.$session.get(
-            "etapa_id"
-          )}`
-        )
-        .then((response) => {
-          /* console.log(response.data.sectors); */
-          this.sectoresADerivar = response.data.sectors;
-          console.log("sectores", response.data.sectors);
-          //this.usersDerivar = response.data.users;
-        })
-        .catch((error) => {
-          console.log("Error: " + error);
-        });
-    },
-    onSubmit(event) {
-        let data = formSerialize(event.target, {
-            hash: false,
-            empty: true,
-        });
-        data += "&idIssueReport=" + this.idIssuesSelect;
-        data += "&idInforme=" + this.idInforme;
-        data += "&idEmpleado=" + this.idEmpleado;
-        data += "&cuitEmpleado=" + this.cuitEmpleado;
-        data += "&idEstado=" + this.$session.get("etapa_id");
-        data += "&idSector=" + this.$session.get("sector_id");
-        data += "&sugerenciasSeleccionadas=" + this.sugerenciasSeleccionadas;
-        data += "&sugerenciasAplicadas=" + this.sugerenciasAplicadas;
-        this.actualizarCambioEstadoAnterior(data);
-        this.registrarCambioEstado(data);
-        this.registrarComentario(data);
-        // this.registrarSugerencia(data);
-        if(this.$session.get("etapa_id")==3){
-            this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
-        }else{
-            this.$refs.sugerencias.registrarSugerencia(data);
-        }
-    },
-    actualizarCambioEstadoAnterior(data) {
-
-      axios
-        .post(`/api/informeempleadoestados/editInformeempleadoestados`, data, {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        })
-        .then((response) => {
-          // Redirect on success
-          console.log(response);
-          if (response.data.success) {
-            this.$notify({
-              group: "default",
-              type: "success",
-              text: response.data.message,
+        verInforme(query) {
+        axios
+            .get(
+            `/api/informeempleadoestados/informesCambiosEstados/${this.idInforme}`,
+            { params: query }
+            )
+            .then((response) => {
+                //ver mas adelante mejorar la estructura del arreglo devuelto
+                this.reports = response.data;
+                console.log("aca lee jonaaaaa", this.reports);
+                //obtengo el ultimo informeEmpleadoEstado , para saber el ultimo empleado que derivo
+                let ultimoInformeEmpleadoEstado = this.reports.cambiosEstadoInforme[this.reports.cambiosEstadoInforme.length - 1];
+                this.idEmpleado = ultimoInformeEmpleadoEstado.employee_id;
+                //this.idEmpleado = this.$session.get("user_id");
+                this.cuitEmpleado =this.$session.get("cuit");
+            })
+            .catch((error) => {
+            console.log("Error: " + error);
             });
-            //this.$router.push("/reports");
-          }
-        })
-        .catch((error) => {
-          this.$notify({
-            group: "default",
-            type: "error",
-            text: error.response.data.message,
-          });
-          this.errors.add(error.response.data.errors);
-        });
-    },
-    registrarCambioEstado(data) {
-      axios
-        .post(`/api/informeempleadoestados/save`, data, {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        })
-        .then((response) => {
-          // Redirect on success
-          console.log(response);
-          if (response.data.success) {
-            this.$notify({
-              group: "default",
-              type: "success",
-              text: response.data.message,
+        },
+        obtenerSugerencias(query) {
+        axios
+            .get(`/api/problemasugerencias/issuesByReport/${this.idInforme}`, {
+            params: query,
+            })
+            .then((response) => {
+            if (response.data.suggestions[0] != null) {
+                console.log("entro jonaaaaaaaa");
+                this.sugerencias = response.data.suggestions;
+                this.idIssuesSelect =
+                response.data.suggestions[0].problemasugerencia_id;
+            }
+            })
+            .catch((error) => {
+            console.log("Error: " + error);
             });
+        },
+        obtenerSectores() {
+        axios
+            .get(
+            `/api/sectors/obtenerSectoresPorEtapa/${this.$session.get(
+                "etapa_id"
+            )}`
+            )
+            .then((response) => {
+            this.sectoresADerivar = response.data.sectors;
+            console.log("sectores", response.data.sectors);
+            })
+            .catch((error) => {
+            console.log("Error: " + error);
+            });
+        },
+        onSubmit(event) {
+            let data = formSerialize(event.target, {
+                hash: false,
+                empty: true,
+            });
+            data += "&idIssueReport=" + this.idIssuesSelect;
+            data += "&idInforme=" + this.idInforme;
+            data += "&idEmpleado=" + this.idEmpleado;
+            data += "&cuitEmpleado=" + this.cuitEmpleado;
+            data += "&idEstado=" + this.$session.get("etapa_id");
+            data += "&idSector=" + this.$session.get("sector_id");
+            data += "&sugerenciasSeleccionadas=" + this.sugerenciasSeleccionadas;
+            data += "&sugerenciasAplicadas=" + this.sugerenciasAplicadas;
+            this.actualizarCambioEstadoAnterior(data);
+            data += "&idEmpleado="+this.$session.get("user_id");
+            // data["idEmpleado"]=this.$session.get("user_id");
+            this.registrarCambioEstado(data);
+            this.registrarComentario(data);
+            if(this.$session.get("etapa_id")==3){
+                this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
+            }else{
+                this.$refs.sugerencias.registrarSugerencia(data);
+            }
+        },
+        actualizarCambioEstadoAnterior(data) {
 
-            this.$router.push("/reports");
-          }
-        })
-        .catch((error) => {
-          this.$notify({
-            group: "default",
-            type: "error",
-            text: error.response.data.message,
-          });
-          this.errors.add(error.response.data.errors);
-        });
-    },
-    registrarComentario(data) {
-      //****Guardo el comentario en la tabla empleadoscomentarios */
-      axios
-        .post(`/api/commentsemployees/save`, data, {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        })
-        .then((response) => {
-          //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
-          //console.log(response);
-          this.comentarioEmpleado = response.data.comentario;
-          //console.log(this.comentarioEmpleado);
-          if (response.data.success) {
-            data +=
-              "&idComentarioEmpleado=" + response.data.idComentarioEmpleado;
-            //this.actualizarIdComentario(response.data.idComentarioEmpleado);
-            //this.registrarComentario2(data);
             axios
-              .post(`/api/informeempleadocomentarios/save`, data, {
-                headers: { "X-Requested-With": "XMLHttpRequest" },
-              })
-              .then((response) => {
-                //console.log(response);
-              })
-              .catch((error) => {
+            .post(`/api/informeempleadoestados/editInformeempleadoestados`, data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+            // Redirect on success
+            console.log(response);
+            if (response.data.success) {
                 this.$notify({
-                  group: "default",
-                  type: "error",
-                  text: error.response.data.message,
+                group: "default",
+                type: "success",
+                text: response.data.message,
+                });
+                //this.$router.push("/reports");
+            }
+            })
+            .catch((error) => {
+            this.$notify({
+                group: "default",
+                type: "error",
+                text: error.response.data.message,
+            });
+            this.errors.add(error.response.data.errors);
+            });
+        },
+        registrarCambioEstado(data) {
+        axios
+            .post(`/api/informeempleadoestados/save`, data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+            // Redirect on success
+            console.log(response);
+            if (response.data.success) {
+                this.$notify({
+                group: "default",
+                type: "success",
+                text: response.data.message,
                 });
 
-                this.errors.add(error.response.data.errors);
-              });
-          }
-        })
-        .catch((error) => {
-          this.$notify({
-            group: "default",
-            type: "error",
-            text: error.response.data.message,
-          });
+                this.$router.push("/reports");
+            }
+            })
+            .catch((error) => {
+            this.$notify({
+                group: "default",
+                type: "error",
+                text: error.response.data.message,
+            });
+            this.errors.add(error.response.data.errors);
+            });
+        },
+        registrarComentario(data) {
+        //****Guardo el comentario en la tabla empleadoscomentarios */
+        axios
+            .post(`/api/commentsemployees/save`, data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+            //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
+            //console.log(response);
+            this.comentarioEmpleado = response.data.comentario;
+            if (response.data.success) {
+                data +=
+                "&idComentarioEmpleado=" + response.data.idComentarioEmpleado;
 
-          this.errors.add(error.response.data.errors);
-        });
-    },
-    // registrarSugerencia(data) {
-    //   axios
-    //     .post(`/api/problemasugerencias/edit`, data, {
-    //       headers: { "X-Requested-With": "XMLHttpRequest" },
-    //     })
-    //     .then((response) => {
-    //         this.$router.push("/reports");
-    //         console.log("respuestade sugerencia",response.data);
-    //         if (response.data.success) {
-    //         }
-    //     });
-    // },
+                axios
+                .post(`/api/informeempleadocomentarios/save`, data, {
+                    headers: { "X-Requested-With": "XMLHttpRequest" },
+                })
+                .then((response) => {
+                })
+                .catch((error) => {
+                    this.$notify({
+                    group: "default",
+                    type: "error",
+                    text: error.response.data.message,
+                    });
+
+                    this.errors.add(error.response.data.errors);
+                });
+            }
+            })
+            .catch((error) => {
+            this.$notify({
+                group: "default",
+                type: "error",
+                text: error.response.data.message,
+            });
+
+            this.errors.add(error.response.data.errors);
+            });
+        },
   },
 };
 </script>

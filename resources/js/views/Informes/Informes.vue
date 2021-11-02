@@ -16,7 +16,6 @@
             </tr>
           </thead>
           <tbody>
-              <!-- report.employee.user.sector.stage.stage_id -->
             <tr
               v-for="report in reports" :v-bind="report.report.report_id" v-if="report.sector_id == empleado_sector_id"
             >
@@ -27,7 +26,6 @@
               <td>{{ report.report.product.motivo }}</td>
               <td>en {{ report.state.nombre_estado }}</td>
               <td>
-                  <!-- idInforme="idInforme" -->
                 <router-link
                   :to="{ path: `/detalleInforme/` + report.report.report_id }"
                   :idInforme="2"
@@ -80,26 +78,24 @@ export default {
                 console.log("Error: " + error);
                 });
         },
-        obtenerSugerencias(query) {
-        axios
-            .get(`/api/problemasugerencias/issuesByReport/${this.idInforme}`, {
-            params: query,
-            })
-            .then((response) => {
-            if (response.data.suggestions[0] != null) {
-                console.log("entro jonaaaaaaaa");
-                this.sugerencias = response.data.suggestions;
-                //console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
-                this.idIssuesSelect =
-                response.data.suggestions[0].problemasugerencia_id;
-                /* console.log(response.data.suggestions); */
-                //this.sugerencias = response.data.suggestions;
-            }
-            })
-            .catch((error) => {
-            console.log("Error: " + error);
-            });
-        },
+        // obtenerSugerencias(query) {
+        // axios
+        //     .get(`/api/problemasugerencias/issuesByReport/${this.idInforme}`, {
+        //     params: query,
+        //     })
+        //     .then((response) => {
+        //     if (response.data.suggestions[0] != null) {
+        //         console.log("entro jonaaaaaaaa");
+        //         this.sugerencias = response.data.suggestions;
+        //         this.idIssuesSelect =
+        //         response.data.suggestions[0].problemasugerencia_id;
+
+        //     }
+        //     })
+        //     .catch((error) => {
+        //     console.log("Error: " + error);
+        //     });
+        // },
     },
     created() {
         if (!this.$session.exists()) {
