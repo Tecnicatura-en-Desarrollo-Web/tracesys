@@ -13,6 +13,7 @@ import register from './views/Register/Register.vue';
 import crearSector from './views/Sector/CrearSector.vue';
 import verSectores from './views/Sector/VerSectores.vue';
 import login from './views/Register/Login.vue';
+import activacion from './views/Register/Activacion.vue';
 import app from './views/App.vue';
 
 export const routes = new VueRouter({
@@ -99,6 +100,12 @@ export const routes = new VueRouter({
         //     name: 'app',
         //     component: app
         // },
+        ,
+        {
+            path: '/activacion/:user_id',
+            name: 'activacion',
+            component: activacion
+        },
         {
             path: "*",
             component: PageNotFound

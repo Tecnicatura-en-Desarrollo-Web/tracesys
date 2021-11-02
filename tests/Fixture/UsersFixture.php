@@ -28,6 +28,7 @@ class UsersFixture extends TestFixture
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'sector_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'activo' => ['type' => 'boolean', 'length' => null, 'null' => false, 'default' => '1', 'comment' => '', 'precision' => null],
         '_indexes' => [
             'sector_id' => ['type' => 'index', 'columns' => ['sector_id'], 'length' => []],
         ],
@@ -58,9 +59,10 @@ class UsersFixture extends TestFixture
                 'password' => 'Lorem ipsum dolor sit amet',
                 'usuario' => 'Lorem ipsum dolor sit amet',
                 'telefono' => 1,
-                'created' => '2021-10-27 19:21:42',
-                'modified' => '2021-10-27 19:21:42',
+                'created' => '2021-11-02 01:30:29',
+                'modified' => '2021-11-02 01:30:29',
                 'sector_id' => 1,
+                'activo' => 1,
             ],
         ];
         parent::init();
