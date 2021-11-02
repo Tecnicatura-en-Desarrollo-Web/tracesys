@@ -40,7 +40,7 @@ class ProductsController extends AppController
             'contain' => [],
         ]);
 
-        $this->set(compact('product'));
+        return $this->setJsonResponse(['product' => $product]);
     }
 
     /**
