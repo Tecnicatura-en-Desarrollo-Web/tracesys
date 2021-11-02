@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -19,8 +20,9 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  * @property int $sector_id
+ * @property bool $activo
  *
- * @property \App\Model\Entity\Stage $stage
+ * @property \App\Model\Entity\Sector $sector
  */
 class User extends Entity
 {
@@ -44,7 +46,8 @@ class User extends Entity
         'created' => true,
         'modified' => true,
         'sector_id' => true,
-        // 'stage' => true,
+        'activo' => true,
+        'sector' => true,
     ];
 
     /**

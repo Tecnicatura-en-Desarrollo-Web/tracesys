@@ -12,6 +12,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
+ * @property \App\Model\Table\SectorsTable&\Cake\ORM\Association\BelongsTo $Sectors
+ *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -60,49 +62,53 @@ class UsersTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
+        /* $validator
             ->integer('user_id')
-            ->allowEmptyString('user_id', null, 'create');
+            ->allowEmptyString('user_id', null, 'create'); */
 
-        // $validator
-        //     ->scalar('cuit')
-        //     ->maxLength('cuit', 11)
-        //     ->requirePresence('cuit', 'create')
-        //     ->notEmptyString('cuit');
+        /*         $validator
+            ->scalar('cuit')
+            ->maxLength('cuit', 11)
+            ->requirePresence('cuit', 'create')
+            ->notEmptyString('cuit');
 
-        // $validator
-        //     ->scalar('nombre')
-        //     ->maxLength('nombre', 200)
-        //     ->requirePresence('nombre', 'create')
-        //     ->notEmptyString('nombre');
+        $validator
+            ->scalar('nombre')
+            ->maxLength('nombre', 200)
+            ->requirePresence('nombre', 'create')
+            ->notEmptyString('nombre');
 
-        // $validator
-        //     ->scalar('apellido')
-        //     ->maxLength('apellido', 200)
-        //     ->requirePresence('apellido', 'create')
-        //     ->notEmptyString('apellido');
+        $validator
+            ->scalar('apellido')
+            ->maxLength('apellido', 200)
+            ->requirePresence('apellido', 'create')
+            ->notEmptyString('apellido');
 
-        // $validator
-        //     ->email('email')
-        //     ->requirePresence('email', 'create')
-        //     ->notEmptyString('email');
+        $validator
+            ->email('email')
+            ->requirePresence('email', 'create')
+            ->notEmptyString('email');
 
-        // $validator
-        //     ->scalar('password')
-        //     ->maxLength('password', 150)
-        //     ->requirePresence('password', 'create')
-        //     ->notEmptyString('password');
+        $validator
+            ->scalar('password')
+            ->maxLength('password', 150)
+            ->requirePresence('password', 'create')
+            ->notEmptyString('password');
 
-        // $validator
-        //     ->scalar('usuario')
-        //     ->maxLength('usuario', 150)
-        //     ->requirePresence('usuario', 'create')
-        //     ->notEmptyString('usuario');
+        $validator
+            ->scalar('usuario')
+            ->maxLength('usuario', 150)
+            ->requirePresence('usuario', 'create')
+            ->notEmptyString('usuario');
 
-        // $validator
-        //     ->integer('telefono')
-        //     ->requirePresence('telefono', 'create')
-        //     ->notEmptyString('telefono');
+        $validator
+            ->integer('telefono')
+            ->requirePresence('telefono', 'create')
+            ->notEmptyString('telefono'); */
+
+        $validator
+            ->boolean('activo')
+            ->notEmptyString('activo');
 
         return $validator;
     }

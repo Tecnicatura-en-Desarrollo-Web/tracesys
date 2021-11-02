@@ -6,6 +6,7 @@ namespace App\Controller\api;
 
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
+use Cake\Mailer\Mailer;
 
 /**
  * Users Controller
@@ -51,15 +52,31 @@ class UsersController extends AppController
             ]);
         }
 
+        $dataVue = $this->request->getData();
         $user = $this->Users->newEmptyEntity();
         $user = $this->Users->patchEntity($user, $this->request->getData());
         $result = $this->Users->save($user);
         if ($result !== false) {
+
+            /* Este id es el ID del usuario que recien se acaba de registrar y se utilizara para activar su cuenta */
+            $user_id_cargado = $result["user_id"];
+
+            $mailer = new Mailer();
+            $mailer->setTransport('gmail');
+            $mailer
+                ->setEmailFormat('html')
+                ->setTo($dataVue["email"])
+                ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
+                ->setSubject('Su cuenta ha sido activada')
+
+                ->deliver('cuenta activada. Por favor ingrese a la siguiente url http://localhost:8765/activacion?user_id=2');
+            $mailer->deliver();
+
             return $this->setJsonResponse(
                 [
                     'data' => $result,
                     'success' => true,
-                    'url' => '/login',
+                    'url' => '/login',/*  */
                     'message' => __('The post has been saved.'),
                 ],
                 201
@@ -165,6 +182,29 @@ class UsersController extends AppController
                 [
                     'message' => false,
                 ]
+            );
+        }
+    }
+
+    public function activacionEmail()
+    {
+        $dataVue =  $this->request->getData();
+        $user_id =  $dataVue["user_id"];
+
+        $user = $this->Users->get($user_id);
+
+        $newData = [
+            "activo" => 1,
+        ];
+
+        $userActualizado = $this->Users->patchEntity($user, $newData);
+
+        if ($this->Users->save($user)) {
+            return $this->setJsonResponse(
+                [
+                    'success' => "true",
+                ],
+                201
             );
         }
     }

@@ -70,6 +70,10 @@ class CreateUsers extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
+        $table->addColumn('activo', 'boolean', [
+            'default' => true,
+            'null' => false,
+        ]);
         $table->addForeignKey('sector_id', 'sectors', 'sector_id');
         $table->create();
     }
