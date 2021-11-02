@@ -69,7 +69,7 @@ class UsersController extends AppController
                 ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
                 ->setSubject('Su cuenta ha sido activada')
 
-                ->deliver('cuenta activada. Por favor ingrese a la siguiente url http://localhost:8765/activacion?user_id=2');
+                ->deliver('cuenta activada. Por favor ingrese a la siguiente url http://localhost:8765/activacion/'.$user_id_cargado);
             $mailer->deliver();
 
             return $this->setJsonResponse(
