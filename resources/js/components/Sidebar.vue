@@ -24,29 +24,23 @@
           <ul>
             <li class="header-menu">
               <router-link to="/home" class="nav-link"
-                >Home <b-icon-shop></b-icon-shop
-              ></router-link>
+                ><b-icon-shop class="icono" style="width: 25px; height: 25px;"></b-icon-shop>Home</router-link>
             </li>
             <li class="header-menu">
               <router-link to="/reports"
-                >Informes <b-icon-file-text></b-icon-file-text
-              ></router-link>
+                ><b-icon-file-text class="icono" style="width: 25px; height: 25px;"></b-icon-file-text>Informes</router-link>
             </li>
             <li class="header-menu">
               <router-link to="/informes/crear"
-                >Cargar informe
-                <b-icon-journal-arrow-up></b-icon-journal-arrow-up
-              ></router-link>
+                ><b-icon-journal-arrow-up class="icono" style="width: 25px; height: 25px;"></b-icon-journal-arrow-up>Cargar informe</router-link>
             </li>
             <li class="header-menu">
               <router-link to="/sector/crear"
-                >Registrar sector <b-icon-bookmark></b-icon-bookmark
-              ></router-link>
+                ><b-icon-bookmark class="icono" style="width: 25px; height: 25px;"></b-icon-bookmark>Registrar sector</router-link>
             </li>
             <li class="header-menu">
               <router-link to="/sector/ver"
-                >Ver sectores<b-icon-bookmark></b-icon-bookmark
-              ></router-link>
+                ><b-icon-bookmark class="icono" style="width: 25px; height: 25px;"></b-icon-bookmark>Ver sectores</router-link>
             </li>
             <li class="header-menu">
               <router-link to="/suggestion/crear"
@@ -128,3 +122,22 @@ export default {
   },
 };
 </script>
+<style>
+    .chiller-theme .sidebar-wrapper .sidebar-menu ul li a{
+        margin:5px;
+        border-radius: 5px;
+        width: 250px;
+    }
+    .chiller-theme .sidebar-wrapper .sidebar-menu ul li a:hover{
+        background-color: rgb(88, 88, 88);
+    }
+    .chiller-theme .sidebar-wrapper .sidebar-menu ul li a:focus{
+                background-color: rgb(233, 233, 233);
+
+    }
+    .icono{
+        margin-right:15px;
+        margin-bottom: 10px;
+        font-weight: normal;
+    }
+</style>

@@ -83,10 +83,15 @@ class SuggestionsTable extends Table
             ->requirePresence('puntaje', 'create')
             ->notEmptyString('puntaje');
 
-        $validator
-            ->integer('valorPrecio')
-            ->requirePresence('valorPrecio', 'create')
-            ->notEmptyString('valorPrecio'); */
+        // $validator
+        //     ->integer('puntaje')
+        //     ->requirePresence('puntaje', 'create')
+        //     ->notEmptyString('puntaje');
+
+        // $validator
+        //     ->integer('valorPrecio')
+        //     ->requirePresence('valorPrecio', 'create')
+        //     ->notEmptyString('valorPrecio');
 
         return $validator;
     }

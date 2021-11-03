@@ -56,10 +56,11 @@ export default {
 @font-face {
   font-family: "proxima";
   src: local("proxima"),
-    url("../../fonts/proxima-nova/ProximaNova-Bold.ttf") format("truetype");
+    url("../../fonts/proxima-nova/ProximaNova-Regular.ttf") format("truetype");
 }
 
 * {
   font-family: "proxima";
 }
+
 </style>

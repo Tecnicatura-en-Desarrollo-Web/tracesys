@@ -1,5 +1,7 @@
 <template>
-  <nav class="top-bar expanded" data-topbar role="navigation">
+<div>
+
+  <nav class="shadow top-bar expanded border border-1 border-muted border-end-0 border-top-0" data-topbar role="navigation">
     <div class="top-bar-section">
       <ul class="right">
         <li class="header-menu">
@@ -12,6 +14,7 @@
       </ul>
     </div>
   </nav>
+  </div>
 </template>
 
 <script>
@@ -45,3 +48,6 @@ export default {
   },
 };
 </script>
+<style>
+
+</style>

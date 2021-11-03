@@ -9,6 +9,9 @@ $cakeDescription = 'CakeVue Application';
 <html>
 
 <head>
+    <!-- <script>
+        $("[data-toggle=tooltip").tooltip();
+    </script> -->
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -38,7 +41,7 @@ $cakeDescription = 'CakeVue Application';
 
 body {
     background-color: #F6F6F6;
+    overflow-x: hidden;
 }
 </style>
-
 </html>
