@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 
@@ -12,7 +14,8 @@ use App\Controller\Traits\ResponseTrait;
  * @method \App\Model\Entity\Issue[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class IssuesController extends AppController
-{use ResponseTrait;
+{
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -107,5 +110,14 @@ class IssuesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function obtenerProblemas()
+    {
+        $this->paginate = [
+            'contain' => '',
+        ];
+        $issues['issues'] = $this->paginate($this->Issues);
+        return $this->setJsonResponse($issues);
     }
 }

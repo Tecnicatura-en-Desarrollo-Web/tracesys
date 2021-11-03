@@ -32,7 +32,12 @@ class CreateSuggestions extends AbstractMigration
             'limit' => 255,
             'null' => false,
         ]);
-        $table->addColumn('importancia', 'string', [
+        $table->addColumn('puntaje', 'integer', [
+            'default' => null,
+            'limit' => 20,
+            'null' => false,
+        ]);
+        $table->addColumn('valorPrecio', 'integer', [
             'default' => null,
             'limit' => 20,
             'null' => false,

@@ -48,6 +48,11 @@
                 >Ver sectores<b-icon-bookmark></b-icon-bookmark
               ></router-link>
             </li>
+            <li class="header-menu">
+              <router-link to="/suggestion/crear"
+                >Crear sugerencia<b-icon-bookmark></b-icon-bookmark
+              ></router-link>
+            </li>
           </ul>
         </div>
       </div>
