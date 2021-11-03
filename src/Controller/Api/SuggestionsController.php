@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Suggestions Controller
@@ -11,6 +15,7 @@ namespace App\Controller;
  */
 class SuggestionsController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -53,14 +58,11 @@ class SuggestionsController extends AppController
         if ($this->request->is('post')) {
             $suggestion = $this->Suggestions->patchEntity($suggestion, $this->request->getData());
             if ($this->Suggestions->save($suggestion)) {
-                $this->Flash->success(__('The suggestion has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->setJsonResponse([
+                    'message' => true,
+                ]);
             }
-            $this->Flash->error(__('The suggestion could not be saved. Please, try again.'));
         }
-        $sectors = $this->Suggestions->Sectors->find('list', ['limit' => 200]);
-        $this->set(compact('suggestion', 'sectors'));
     }
 
     /**

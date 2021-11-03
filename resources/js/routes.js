@@ -14,6 +14,7 @@ import crearSector from './views/Sector/CrearSector.vue';
 import verSectores from './views/Sector/VerSectores.vue';
 import login from './views/Register/Login.vue';
 import activacion from './views/Register/Activacion.vue';
+import Suggestion from './views/Suggestion/CrearSuggestion.vue';
 import app from './views/App.vue';
 
 export const routes = new VueRouter({
@@ -89,7 +90,6 @@ export const routes = new VueRouter({
             name: 'crearSector',
             component: crearSector,
         },
-        ,
         {
             path: '/sector/ver',
             name: 'verSectores',
@@ -105,6 +105,11 @@ export const routes = new VueRouter({
             path: '/activacion/:user_id',
             name: 'activacion',
             component: activacion
+        },
+        {
+            path: '/suggestion/crear',
+            name: 'Suggestion',
+            component: Suggestion,
         },
         {
             path: "*",
