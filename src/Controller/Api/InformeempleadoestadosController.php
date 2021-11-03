@@ -178,13 +178,6 @@ class InformeempleadoestadosController extends AppController
             $modeloProducto = $estado->report->product->modelo;
             $estadoActual = $estado->state->nombre_estado;
         }
-        // $mailer = new Mailer('default');
-        // $mailer->setTransport('gmail');
-        // $mailer->setFrom(['me@example.com' => 'My Site'])
-        //     ->setTo('maximiliano.villalba@est.fi.uncoma.edu.ar')
-        //     ->setSubject('About')
-        //     ->deliver('maxi jefe negrero deja descansar a los pibes');
-        //$dato="Reparacioooon naziiiiiii";
         $mailer = new Mailer();
         $mailer->setTransport('gmail');
         $mailer

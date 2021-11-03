@@ -337,7 +337,7 @@ pre {
 .top-bar,
 .top-bar-section ul li,
 .top-bar-section li:not(.has-form) a:not(.button) {
-    background: #286b74;
+    background: #3B6978;
     /* background: #79a3b1; */
 }
 
@@ -562,6 +562,7 @@ div.button-group.right a i {
 }
 .contenido-central-detalleInforme {
     margin-left: 15.5em;
+
 }
 
 .cabecera-table th {

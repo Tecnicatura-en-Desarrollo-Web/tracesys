@@ -9,90 +9,110 @@
         contenido-central-detalleInforme
         "
     >
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Fecha y hora</th>
-          <th scope="col">Derivado Por</th>
-          <th scope="col">Tipo</th>
-          <th scope="col">Modelo</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Motivo</th>
+        <div class="card2 p-0 shadow-sm p-3 mb-1 bg-body rounded" style="width: 73.7rem;">
 
-          <th scope="col">Comentarios</th>
-        </tr>
-      </thead>
-      <tbody>
+            <h3 class="card-title">Historial de estados</h3>
+            <p class="colorp" style="font-size:15px;">Se muestra el historial de estados por los que paso el informe</p>
 
-        <tr v-for="report in reports.cambiosEstadoInforme">
-          <td>{{ report.created }}</td>
-          <td>
-            {{ report.employee.user.nombre }}
-            {{ report.employee.user.apellido }}
-          </td>
-          <td>{{ report.report.product.tipo }}</td>
-          <td>{{ report.report.product.modelo }}</td>
-          <td>{{ report.state.nombre_estado }}</td>
-          <td>{{ report.report.product.motivo }}</td>
-          <td>{{ report.comentarioEmpleado.commentsemployee.descripcion }}</td>
-        </tr>
-      </tbody>
+            <div class="card-body table-full-width">
+                <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Fecha y hora</th>
+                    <th scope="col">Derivado Por</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Motivo</th>
 
-    </table>
+                    <th scope="col">Comentarios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="report in reports.cambiosEstadoInforme">
+                    <td>{{ report.created }}</td>
+                    <td>
+                        {{ report.employee.user.nombre }}
+                        {{ report.employee.user.apellido }}
+                    </td>
+                    <td>{{ report.report.product.tipo }}</td>
+                    <td>{{ report.report.product.modelo }}</td>
+                    <td>{{ report.state.nombre_estado }}</td>
+                    <td>{{ report.report.product.motivo }}</td>
+                    <td>{{ report.comentarioEmpleado.commentsemployee.descripcion }}</td>
+                    </tr>
+                </tbody>
 
-    <form @submit.prevent="onSubmit" novalidate="novalidate">
-        <div class="row">
-            <div class="col col-lg-6">
-                    <h5 class="text-center">Derivar a:</h5>
-                    <div class="row"><div class="col"></div></div>
-                <select
-                    v-model="primerSelect"
-                    class="custom-select text-center"
-                    id="inputGroupSelect01"
-                    name="selectSector"
-                    placeholder="holkaaa"
-                >
-                    <option value="0">Selecciona un sector...</option>
-                    <option
-                    v-for="sectorADerivar in sectoresADerivar"
-                    :key="sectorADerivar.sector_id"
-                    v-bind:value="sectorADerivar.sector_id"
-                    >
-                    <text>{{ sectorADerivar.nombre_sector }}</text>
-                    </option>
-                </select>
-            </div>
-            <div class="col col-lg-6">
-                <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
-                <sugerencias :arraysugerencias="sugerencias"
-                :primerSelect="primerSelect" :idInforme="idInforme"
-                ref="sugerencias"></sugerencias>
-                <!--************************************************************-->
+                </table>
             </div>
         </div>
-      <div class="row align-items-center mt-2">
-        <div class="col col-lg-2">
-          <h5>Comentarios:</h5>
-        </div>
-        <div class="col col-lg-10">
-          <div class="form-group">
-            <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
-              name="comentarios"
-              rows="3"
-            ></textarea>
-          </div>
-        </div>
-        </div>
-        <div class="row mt-4 d-flex justify-content-center">
-            <div class="col col-lg-2">
-            <button class="boton-classic" type="submit" >Derivar
-            </button>
+        <div class="card2 px-3 mt-2 rounded">
+            <div class="card-body table-full-width">
+                <form @submit.prevent="onSubmit" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col col-lg-6">
+                            <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
+                            <sugerencias :arraysugerencias="sugerencias"
+                            :primerSelect="primerSelect" :idInforme="idInforme"
+                            ref="sugerencias"></sugerencias>
+                            <!--************************************************************-->
+                        </div>
+                        <div class="col col-lg-6">
+                            <div class="card">
+                                <div class="card-body border-1">
+                                    <div>
+                                        <h5 class="text-center">Derivar a:</h5>
+                                        <p class="colorp" style="font-size:15px;">Seleccione el sector a derivar el informe</p>
+                                        <select
+                                            v-model="primerSelect"
+                                            class="form-select text-center "
+                                            id="inputGroupSelect01"
+                                            name="selectSector"
+                                            placeholder="holkaaa"
+                                        >
+                                            <option value="0">Selecciona un sector...</option>
+                                            <option
+                                            v-for="sectorADerivar in sectoresADerivar"
+                                            :key="sectorADerivar.sector_id"
+                                            v-bind:value="sectorADerivar.sector_id"
+                                            >
+                                            <text>{{ sectorADerivar.nombre_sector }}</text>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-12">
+                            <div class="card3 p-3 mb-1 rounded ">
+
+                                <h5 class="text-start">Comentarios:</h5>
+
+                                <div class="card-body table-full-width ">
+                                    <div class="form-group">
+                                        <textarea
+                                        class="form-control"
+                                        id="exampleFormControlTextarea1"
+                                        name="comentarios"
+                                        rows="3"
+                                        ></textarea>
+                                    </div>
+                                    <div class="mt-2 text-center">
+                                        <button class="boton-classic" type="submit" >Derivar</button>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </form>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -102,6 +122,7 @@ import sugerenciasAplicadasReparacion from "../Informes/SugerenciasAplicadasRepa
 import sugerencias from "../Informes/Sugerencias.vue";
 
 export default {
+
     components: {
     sugerencias: sugerencias
     },
@@ -164,8 +185,8 @@ export default {
             })
             .then((response) => {
             if (response.data.suggestions[0] != null) {
-                console.log("entro jonaaaaaaaa");
                 this.sugerencias = response.data.suggestions;
+                console.log("lasugerencias pa",this.sugerencias);
                 this.idIssuesSelect =
                 response.data.suggestions[0].problemasugerencia_id;
             }
@@ -210,7 +231,12 @@ export default {
             if(this.$session.get("etapa_id")==3){
                 this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
             }else{
-                this.$refs.sugerencias.registrarSugerencia(data);
+                if(this.$session.get("etapa_id")==2){
+                    this.$refs.sugerencias.registrarSugerencia(data);
+                    this.$refs.sugerencias.enviarPresupuesto(data);
+                }else{
+                    this.$refs.sugerencias.subirValoracionSugerencias(data);
+                }
             }
         },
         actualizarCambioEstadoAnterior(data) {
@@ -308,7 +334,44 @@ export default {
             this.errors.add(error.response.data.errors);
             });
         },
+
   },
 };
 </script>
+<style>
+
+    .card2{
+        margin-top:40px;
+        margin-left: 40px;
+        margin-right: 20px;
+
+    }
+    .card3{
+        margin-top:2px;
+
+    }
+    .table-full-width{
+        margin-left: -32px;
+        margin-right: -32px;
+    }
+    .card-header{
+        background-color: white;
+    }
+    .colorp{
+        color:rgb(90, 90, 90)
+    }
+    .iconoVerMas{
+        opacity: .60;
+        color:#303030;
+        margin-top: 6px;
+    }
+    .iconoVerMas :hover{
+        opacity: 1;
+        color:#198754
+    }
+    .selectSector :hover{
+        background-color: chocolate;
+    }
+
+</style>
 

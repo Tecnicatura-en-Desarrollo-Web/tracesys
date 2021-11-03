@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Test\Fixture;
@@ -52,8 +53,8 @@ class SuggestionsFixture extends TestFixture
                 'descripcion_sugerencia' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
                 'puntaje' => 1,
                 'valorPrecio' => 1,
-                'created' => '2021-11-03 01:54:46',
-                'modified' => '2021-11-03 01:54:46',
+                'created' => '2021-11-03 01:08:20',
+                'modified' => '2021-11-03 01:08:20',
                 'sector_id' => 1,
             ],
         ];

@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
+use App\Model\Table\BudgetsTable;
+use App\Model\Table\SuggestionsTable;
+use Cake\Mailer\Mailer;
 
 /**
  * Problemasugerencias Controller
@@ -40,7 +43,13 @@ class ProblemasugerenciasController extends AppController
         $this->paginate = [
             'contain' => [
                 'Suggestions','Issues'],
-            'conditions'=>['Issues.report_id' => $id , 'activo'=>0]
+            'conditions'=>['Issues.report_id' => $id , 'activo'=>0],
+            'sortableFields' => [
+                'Suggestions.puntaje'
+            ],
+            'order' => [
+                'Suggestions.puntaje' => 'desc',
+            ],
         ];
         $problemasugerencia ['suggestions'] = $this->paginate($this->Problemasugerencias);
         return $this->setJsonResponse($problemasugerencia);
@@ -193,5 +202,114 @@ class ProblemasugerenciasController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    public function subirValoracion($id){
+            $problemaSuggestions = $this->Problemasugerencias->find('all')
+            ->contain(['Suggestions','Issues.Reports'])
+            ->where(['Issues.report_id' => $id , 'activo'=>1]);
+            $objSuggestion=new SuggestionsTable();
+            foreach ($problemaSuggestions as $problemaSuggestion) {
+                $suggestion=$problemaSuggestion->suggestion;
+                $dataNueva=[
+                    "puntaje"=>($suggestion->puntaje)+1
+                ];
+
+                $suggestion = $objSuggestion->patchEntity($suggestion, $dataNueva);
+                $result = $objSuggestion->save($suggestion);
+            }
+            return $this->setJsonResponse([
+                'subirValoracion' => "funcionoooo"
+            ]);
+        }
+
+    public function enviarPresupuesto(){
+        $dataVue =  $this->request->getData();
+        if($dataVue['sugerenciasSeleccionadas']==null){
+            return $this->setJsonResponse([
+                'probandoinfo' => "nohaysugerencias"
+            ]);
+        }else{
+
+            $sugerenciasIds=explode(",", $dataVue['sugerenciasSeleccionadas']);
+            $montoTotal=0;
+            $datosProductos=array();
+
+            foreach ($sugerenciasIds as $idSugerencia) {
+                $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'],(int)$idSugerencia],
+                [
+                    'contain' => ['Suggestions']
+                ]);
+                $montoTotal+=$problemasugerencia->suggestion->valorPrecio;
+                array_push($datosProductos , [
+                    "nombreSugerencia"=>$problemasugerencia->suggestion->nombre_sugerencia,
+                    "precio"=>$problemasugerencia->suggestion->valorPrecio,
+                    "montoTotal"=>$montoTotal
+                ]);
+            }
+            // ***Se crea el presupuesto**************
+            $objBudget=new BudgetsTable();
+            $dataNueva=[
+                "monto"=>$montoTotal,
+                "report_id"=>$dataVue['idIssueReport'],
+                "fecha"=>"created"
+
+            ];
+            $budget = $objBudget->newEmptyEntity();
+            $budget = $objBudget->patchEntity($budget, $dataNueva);
+            $result = $objBudget->save($budget);
+            $stringProductos="";
+            //****Se envia el presupuesto al cliente */
+            foreach ($datosProductos as $datoProducto) {
+                $stringProductos.='
+                <tr style="border:1px solid black;text-align: center;">
+                    <td style="border:1px solid black;">'.$datoProducto['nombreSugerencia'].'</td>
+                    <td style="border:1px solid black;">'.$datoProducto['precio'].'</td>
+                </tr>
+                ';
+                $stringMontoTotal=$datoProducto["montoTotal"];
+            }
+
+            $mailer = new Mailer();
+            $mailer->setTransport('gmail');
+            $mailer
+                ->setEmailFormat('html')
+                ->setTo('yonamixlfr@gmail.com')
+                ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
+                ->setSubject('Factura disponible de su producto en reparacion')
+
+                ->deliver('
+                                <table>
+                                <tr>
+                                <img src="https://i.ibb.co/jZcV0Lb/logo-Tracesysy-Chiquito.png" alt="Logo del sistema" />
+                                        <hr>
+                                            <h2>Presupuesto Estimativo</h2>
+                                            <table style="width:100%;border:1px solid black;text-align: center;"">
+                                                <tr style="border:1px solid black;">
+                                                    <th>Reparacion</th>
+                                                    <th>Precio</th>
+                                                </tr>
+
+                                                <tr style="border:1px solid black;text-align: center;">
+                                                    '.$stringProductos.'
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" style="text-align: center;">Monto Total: $'.$stringMontoTotal.'</td>
+                                                </tr>
+                                            </table>
+
+                                    </tr>
+                                </table>
+                        ');
+
+
+            $mailer->deliver();
+
+            return $this->setJsonResponse([
+                'envioPresupuestoooo' => "se envio el correo nazi"
+            ]);
+
+        }
+
     }
 }

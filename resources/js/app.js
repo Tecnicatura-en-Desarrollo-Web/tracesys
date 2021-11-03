@@ -1,6 +1,7 @@
 import Vue from 'vue';
-import { BootstrapVue, BootstrapVueIcons, IconsPlugin } from 'bootstrap-vue'
-import Vuex from 'vuex'
+import { BootstrapVue, BootstrapVueIcons, IconsPlugin } from 'bootstrap-vue';
+import VueTippy, { TippyComponent } from "vue-tippy";
+import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueSweetalert2 from 'vue-sweetalert2';
@@ -15,17 +16,16 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import { normalizeUnits, now } from 'moment';
 import Multiselect from 'vue-multiselect'
 
-
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
 Vue.use(VueSweetalert2);
 Vue.use(Notifications);
 Vue.use(Vuex);
 Vue.use(BootstrapVue)
 Vue.use(BootstrapVueIcons)
 Vue.use(IconsPlugin)
-Vue.component('multiselect', Multiselect)
+Vue.use(VueTippy);
+Vue.component('multiselect', Multiselect);
 Vue.component('app', App);
 
 const router = Vue.use(VueRouter);

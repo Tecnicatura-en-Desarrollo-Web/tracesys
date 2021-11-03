@@ -65,15 +65,15 @@ class BudgetsTable extends Table
             ->integer('budget_id')
             ->allowEmptyString('budget_id', null, 'create');
 
-        $validator
-            ->integer('monto')
-            ->requirePresence('monto', 'create')
-            ->notEmptyString('monto');
+        // $validator
+        //     ->integer('monto')
+        //     ->requirePresence('monto', 'create')
+        //     ->notEmptyString('monto');
 
-        $validator
-            ->dateTime('fecha')
-            ->requirePresence('fecha', 'create')
-            ->notEmptyDateTime('fecha');
+        // $validator
+        //     ->dateTime('fecha')
+        //     ->requirePresence('fecha', 'create')
+        //     ->notEmptyDateTime('fecha');
 
         return $validator;
     }
@@ -85,10 +85,10 @@ class BudgetsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['report_id'], 'Reports'), ['errorField' => 'report_id']);
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->existsIn(['report_id'], 'Reports'), ['errorField' => 'report_id']);
 
-        return $rules;
-    }
+    //     return $rules;
+    // }
 }
