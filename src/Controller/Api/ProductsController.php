@@ -106,4 +106,12 @@ class ProductsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function productsClient(){
+        $data = $this->request->getData();
+        $products = $this->Products->find()
+        ->contain([])
+        ->where(['client_id'=>$data['idCliente']]);
+        return $this->setJsonResponse($products);
+    }
 }
