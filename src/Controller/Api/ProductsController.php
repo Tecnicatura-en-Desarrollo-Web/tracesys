@@ -39,8 +39,23 @@ class ProductsController extends AppController
         $product = $this->Products->get($id, [
             'contain' => [],
         ]);
-
-        return $this->setJsonResponse(['product' => $product]);
+        $fechaHora = date("Y-m-d H:i:s",strtotime(str_replace('/','-',$product['created'])));
+        $informe = new ReportsController;
+        $report = $informe->Reports->find()
+        ->contain(['States'])
+        ->where(['product_id'=>$id])
+        ->first();
+        $producto = [
+            'codigo'=>$product['product_id'],
+            'nombre'=>$product['tipo'],
+            'motivo'=>$product['motivo'],
+            'fecha'=>explode(' ',$fechaHora)[0],
+            'hora'=>explode(' ',$fechaHora)[1],
+            'estado'=>$report->state['nombre_estado']
+        ];
+        return $this->setJsonResponse([
+            'product' => $producto
+        ]);
     }
 
     /**
