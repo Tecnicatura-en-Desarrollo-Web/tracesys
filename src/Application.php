@@ -37,6 +37,7 @@ class Application extends BaseApplication
     public function bootstrap(): void
     {
         $this->addPlugin('AssetMix');
+        $this->addPlugin('Cors');
 
         // Call parent to load bootstrap from files.
         parent::bootstrap();

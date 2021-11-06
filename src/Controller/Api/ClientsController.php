@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 
@@ -26,7 +28,7 @@ class ClientsController extends AppController
         // $this->set(compact('clients'));
         $query = $this->Clients->find('all')->contain(['Products'])->all();
         // $data['users'] = $this->paginate($this->Users);
-        $data['reports']="hola maxi";
+        $data['reports'] = "hola maxi";
         return $this->setJsonResponse($data['reports']);
     }
 
@@ -44,7 +46,6 @@ class ClientsController extends AppController
         ]);
 
         $this->set(compact('client'));
-
     }
 
     /**
@@ -109,5 +110,44 @@ class ClientsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $id Client id.
+     * @return \Cake\Http\Response|null|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function login()
+    {
+        $data = $this->request->getData();
+        $noExiste = false;
+        if ($this->request->is('post')) {
+            $client = $this->Clients->find()
+                ->contain([])
+                ->where(['password' => $data['contrasena'], 'email' => $data['email']])
+                ->first();
+            if ($client) {
+                $datos = [
+                    'id' => $client['client_id'],
+                    'nombre' => $client['usuario'],
+                    'email' => $client['email'],
+                    'telefono' => $client['telefono'],
+                    'domicilio' => $client['domicilio']
+                ];
+                return $this->setJsonResponse(
+                    [
+                        'message' => true,
+                        'access_token' => \Firebase\JWT\JWT::encode($datos, '', 'HS256')
+                    ]
+                );
+            }
+        }
+        return $this->setJsonResponse(
+            [
+                'message' => $noExiste,
+            ]
+        );
     }
 }
