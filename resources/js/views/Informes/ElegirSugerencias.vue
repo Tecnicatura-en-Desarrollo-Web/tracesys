@@ -1,9 +1,10 @@
 <template>
 <div>
             <h5 class="text-start">Elegir sugerencias:</h5>
-            <p class="colorp" style="font-size:15px;">Estas sugerencias estan ordenadas por la mas aplicada , selecionar una o varias</p>
+            <p class="colorp" style="font-size:15px;">Sugerencias ordenadas
+                por la mas aplicada , selecionar una o varias</p>
             <select v-model='sugerenciasSeleccionadas'
-                    class="form-select border-1"  multiple
+                    class="form-select"  multiple
                     name="selectSugerencia">
                 <option
                 v-for="(sugerencia, itemObjKey) in arraysugerencias"
@@ -11,21 +12,23 @@
                 v-bind:value="sugerencia.suggestion.suggestion_id"
                 v-if='sugerencia.suggestion.sector_id==primerSelect'
                 :content="'Esta sugerencia fue aplicada '+sugerencia.suggestion.puntaje+' veces con exito'"
-                v-tippy="{ animation : 'shift-away' , placement : 'right-start' , flip:false , arrow : true}"
+                v-tippy="{ animation : 'shift-away' , placement : 'top-start' , flip:true , arrow : true}"
                 >
                 <p>▸ </p> {{sugerencia.suggestion.nombre_sugerencia}}
                 </option>
             </select>
+
+
 </div>
 </template>
 
 <script>
-
 export default {
     props:['arraysugerencias','primerSelect'],
     data(){
         return{
             sugerenciasSeleccionadas:[],
+
         };
     },
 
@@ -41,7 +44,7 @@ export default {
                 headers: { "X-Requested-With": "XMLHttpRequest" },
                 })
                 .then((response) => {
-                    this.$router.push("/reports");
+                    // this.$router.push("/reports");
                     console.log("respuestade sugerencia",response.data);
                     if (response.data.success) {
                     }
@@ -55,11 +58,14 @@ export default {
                 })
                 .then((response) => {
                     console.log("PRESUPUESTOOOO:",response.data);
-                    // this.$router.push("/reports");
+                    this.$router.push("/reports");
 
                 });
         }
     }
 }
 </script>
+
+<style src="../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 

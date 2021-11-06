@@ -66,22 +66,17 @@ class SuggestionsTable extends Table
             ->integer('suggestion_id')
             ->allowEmptyString('suggestion_id', null, 'create');
 
-        /*         $validator
-            ->scalar('nombre_sugerencia')
-            ->maxLength('nombre_sugerencia', 100)
-            ->requirePresence('nombre_sugerencia', 'create')
-            ->notEmptyString('nombre_sugerencia');
+        //          $validator
+        //     ->scalar('nombre_sugerencia')
+        //     ->maxLength('nombre_sugerencia', 100)
+        //     ->requirePresence('nombre_sugerencia', 'create')
+        //     ->notEmptyString('nombre_sugerencia');
 
-        $validator
-            ->scalar('descripcion_sugerencia')
-            ->maxLength('descripcion_sugerencia', 255)
-            ->requirePresence('descripcion_sugerencia', 'create')
-            ->notEmptyString('descripcion_sugerencia');
-
-        $validator
-            ->integer('puntaje')
-            ->requirePresence('puntaje', 'create')
-            ->notEmptyString('puntaje');
+        // $validator
+        //     ->scalar('descripcion_sugerencia')
+        //     ->maxLength('descripcion_sugerencia', 255)
+        //     ->requirePresence('descripcion_sugerencia', 'create')
+        //     ->notEmptyString('descripcion_sugerencia');
 
         // $validator
         //     ->integer('puntaje')
@@ -89,24 +84,29 @@ class SuggestionsTable extends Table
         //     ->notEmptyString('puntaje');
 
         // $validator
+        //     ->integer('puntaje')
+        //     ->requirePresence('puntaje', 'create')
+        //    ->notEmptyString('puntaje');
+
+        // $validator
         //     ->integer('valorPrecio')
-        //     ->requirePresence('valorPrecio', 'create')
+        //    ->requirePresence('valorPrecio', 'create')
         //     ->notEmptyString('valorPrecio');
 
         return $validator;
-    }
+        }
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    /*     public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
 
-        return $rules;
-    } */
+    //  Returns a rules checker object that will be used for validating
+    //  application integrity.
+
+    //  @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+    //  @return \Cake\ORM\RulesChecker
+
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->existsIn(['sector_id'], 'Sectors'), ['errorField' => 'sector_id']);
+
+    //     return $rules;
+    // }
 }

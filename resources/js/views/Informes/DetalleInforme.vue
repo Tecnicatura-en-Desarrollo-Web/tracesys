@@ -1,4 +1,6 @@
 <template>
+
+<ul>
     <div
         class="
         posts
@@ -6,19 +8,23 @@
         large-10
         medium-8
         columns
-        contenido-central-detalleInforme
+        contenido-central
         "
     >
-        <div class="card2 p-0 shadow-sm p-3 mb-1 bg-body rounded" style="width: 73.7rem;">
+    <loader v-if="mostrarSpinner==true" object="#6D9886" size="6" speed="2" bg="#343a40" objectbg="#999793" opacity="36" disableScrolling="false" name="spinning"></loader>
+
+    <!-- style="width: 73.7rem;" -->
+        <div class="card2 p-0 shadow-sm p-3 mb-1 bg-body rounded" >
 
             <h3 class="card-title">Historial de estados</h3>
             <p class="colorp" style="font-size:15px;">Se muestra el historial de estados por los que paso el informe</p>
 
-            <div class="card-body table-full-width">
-                <table class="table">
+            <div class="card-body table-full-width ">
+                <table class="table-striped p-4">
                 <thead>
                     <tr>
-                    <th scope="col">Fecha y hora</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Hora</th>
                     <th scope="col">Derivado Por</th>
                     <th scope="col">Tipo</th>
                     <th scope="col">Modelo</th>
@@ -30,7 +36,8 @@
                 </thead>
                 <tbody>
                     <tr v-for="report in reports.cambiosEstadoInforme">
-                    <td>{{ report.created }}</td>
+                    <td>{{ report.fecha}}</td>
+                    <td>{{ report.hora}}</td>
                     <td>
                         {{ report.employee.user.nombre }}
                         {{ report.employee.user.apellido }}
@@ -49,26 +56,27 @@
         <div class="card2 px-3 mt-2 rounded">
             <div class="card-body table-full-width">
                 <form @submit.prevent="onSubmit" novalidate="novalidate">
-                    <div class="row">
-                        <div class="col col-lg-6">
+                    <div class="row ">
+                        <div class="col">
                             <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
                             <sugerencias :arraysugerencias="sugerencias"
-                            :primerSelect="primerSelect" :idInforme="idInforme"
+                            :primerSelect="primerSelect.sector_id" :idInforme="idInforme"
                             ref="sugerencias"></sugerencias>
                             <!--************************************************************-->
                         </div>
-                        <div class="col col-lg-6">
-                            <div class="card">
-                                <div class="card-body border-1">
-                                    <div>
+                        <div class="col">
+                            <!-- <div class="card table-full-width">
+                                <div class="card-body border-1"> -->
+                                    <div class="bg-body p-3 rounded border border-1 sugerencias-full-width">
                                         <h5 class="text-center">Derivar a:</h5>
                                         <p class="colorp" style="font-size:15px;">Seleccione el sector a derivar el informe</p>
-                                        <select
+                                        <!-- <select
                                             v-model="primerSelect"
                                             class="form-select text-center "
                                             id="inputGroupSelect01"
                                             name="selectSector"
                                             placeholder="holkaaa"
+
                                         >
                                             <option value="0">Selecciona un sector...</option>
                                             <option
@@ -76,22 +84,29 @@
                                             :key="sectorADerivar.sector_id"
                                             v-bind:value="sectorADerivar.sector_id"
                                             >
-                                            <text>{{ sectorADerivar.nombre_sector }}</text>
+                                            {{ sectorADerivar.nombre_sector }}
                                             </option>
-                                        </select>
+                                        </select> -->
+                                        <div>
+                                            <multiselect name="selectSector" :options="sectoresADerivar" label="nombre_sector"  v-model="primerSelect"
+                                            :searchable="false" placeholder="Seleccione un sector" open-direction="bottom"
+                                            :close-on-select="true" :show-labels="true" :block-keys="['Tab', 'Enter']" :hide-selected="true" deselect-label="Can't remove this value">
+                                            </multiselect>
+
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                <!-- </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="row">
                         <div class="col col-lg-12">
-                            <div class="card3 p-3 mb-1 rounded ">
+                            <div class="card3 py-3 mb-1 rounded ">
 
                                 <h5 class="text-start">Comentarios:</h5>
 
-                                <div class="card-body table-full-width ">
-                                    <div class="form-group">
+                                <div class="card-body">
+                                    <div class="form-group comentarios-full-width">
                                         <textarea
                                         class="form-control"
                                         id="exampleFormControlTextarea1"
@@ -112,7 +127,8 @@
                 </form>
             </div>
         </div>
-    </div>
+</div>
+</ul>
 </template>
 
 <script>
@@ -120,11 +136,13 @@
 import formSerialize from "form-serialize";
 import sugerenciasAplicadasReparacion from "../Informes/SugerenciasAplicadasReparacion.vue";
 import sugerencias from "../Informes/Sugerencias.vue";
+import Multiselect from 'vue-multiselect'
 
 export default {
 
     components: {
-    sugerencias: sugerencias
+    sugerencias: sugerencias,
+    Multiselect
     },
     data() {
         return {
@@ -143,6 +161,9 @@ export default {
         segundoSelect:0,
         sugerenciasSeleccionadas:[],
         sugerenciasAplicadas:[],
+        // para el spinner de loading
+        mostrarSpinner:false
+
         };
     },
     created() {
@@ -158,6 +179,9 @@ export default {
         this.obtenerSectores();
     },
     methods: {
+        activarSpinner(){
+            this.mostrarSpinner=true;
+        },
         verInforme(query) {
         axios
             .get(
@@ -204,7 +228,7 @@ export default {
             )
             .then((response) => {
             this.sectoresADerivar = response.data.sectors;
-            console.log("sectores", response.data.sectors);
+            console.log("sectores", this.sectoresADerivar);
             })
             .catch((error) => {
             console.log("Error: " + error);
@@ -215,6 +239,7 @@ export default {
                 hash: false,
                 empty: true,
             });
+            data += "&selectSector=" + this.primerSelect.sector_id;
             data += "&idIssueReport=" + this.idIssuesSelect;
             data += "&idInforme=" + this.idInforme;
             data += "&idEmpleado=" + this.idEmpleado;
@@ -223,6 +248,7 @@ export default {
             data += "&idSector=" + this.$session.get("sector_id");
             data += "&sugerenciasSeleccionadas=" + this.sugerenciasSeleccionadas;
             data += "&sugerenciasAplicadas=" + this.sugerenciasAplicadas;
+            this.activarSpinner();
             this.actualizarCambioEstadoAnterior(data);
             data += "&idEmpleado="+this.$session.get("user_id");
             // data["idEmpleado"]=this.$session.get("user_id");
@@ -238,6 +264,7 @@ export default {
                     this.$refs.sugerencias.subirValoracionSugerencias(data);
                 }
             }
+
         },
         actualizarCambioEstadoAnterior(data) {
 
@@ -341,18 +368,25 @@ export default {
 <style>
 
     .card2{
-        margin-top:40px;
+        /* margin-top:40px;
         margin-left: 40px;
-        margin-right: 20px;
+        margin-right: 20px; */
 
     }
     .card3{
-        margin-top:2px;
+        margin-right: -24px;
 
     }
     .table-full-width{
         margin-left: -32px;
         margin-right: -32px;
+    }
+    .sugerencias-full-width{
+        margin-right: -24px;
+    }
+    .comentarios-full-width{
+        margin-left: -16px;
+        margin-right: -16px;
     }
     .card-header{
         background-color: white;
@@ -372,6 +406,8 @@ export default {
     .selectSector :hover{
         background-color: chocolate;
     }
+
+
 
 </style>
 

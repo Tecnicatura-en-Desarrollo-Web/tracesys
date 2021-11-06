@@ -11,7 +11,7 @@
 
             <div class="card-body table-full-width">
 
-                <table class="table table table-striped p-4 ">
+                <table class="table-striped p-4 ">
                 <thead>
                     <tr class="">
                     <th scope="col">#</th>
@@ -28,6 +28,8 @@
                     v-for="report in reports" :v-bind="report.report.report_id" v-if="report.sector_id == empleado_sector_id"
                     >
                     <td>{{ report.report.report_id }}</td>
+                    <td>{{ report.fecha }}</td>
+                    <td>{{ report.hora }}</td>
                     <td>{{ report.report.created }}</td>
                     <td>{{ report.report.created }}</td>
                     <td>{{ report.report.product.tipo }}</td>
@@ -70,6 +72,7 @@ export default {
         };
     },
     mounted() {
+        // this.probandoApi();
         this.$emit("nombreHijo", this.nombre);
         this.currentRoute = this.$router.currentRoute.name;
         // this.envioEmail(this.$route.query);
@@ -77,6 +80,19 @@ export default {
     this.getPosts(this.$route.query);
   },
   methods: {
+        // probandoApi(){
+        //     axios
+        //         .get(`http://sesat.fdi.ucm.es:8080/servicios/rest/sinonimos/json/mainboard`, {
+        //         headers: { "X-Requested-With": "XMLHttpRequest" },
+        //         })
+        //         .then((response) => {
+        //             console.log("respuestaApi",response);
+        //         })
+        //         // .catch((error) => {
+        //         // console.log("Error: " + error);
+        //         // });
+        // },
+
         getPosts(query) {
             if (query.sort !== "undefined" && query.direction) {
                 this.defaultClass[query.sort] = query.direction;
@@ -85,6 +101,7 @@ export default {
             axios
                 .get("api/informeempleadoestados", { params: query })
                 .then((response) => {
+                    console.log("aca lee jonita",response.data)
                     this.reports = response.data.reports;
                     console.log("lee aca maxiiii",this.reports);
                     this.queryParams = response.data.query;
@@ -145,7 +162,7 @@ export default {
     .iconoVerMas{
         opacity: .60;
         color:#303030;
-        margin-top: 6px;
+        margin-top: 2px;
     }
     .iconoVerMas :hover{
         opacity: 1;

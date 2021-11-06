@@ -2,7 +2,6 @@
 
     <div class="card">
         <div class="card-body border-1">
-
             <elegirSugerencias :arraysugerencias="arraysugerencias" :primerSelect="primerSelect"
             @sugerenciasSeleccionadas="sugerenciasSeleccionadas = $event" ref="elegirSugerencias"
             v-if='EmpleadoEtapa==2'>
@@ -23,7 +22,6 @@
         </div>
     </div>
 
-
 </template>
 
 <script>
@@ -35,14 +33,13 @@ export default {
 
     props:{
         arraysugerencias:{type:Array,required: true},
-        primerSelect: Number,
+        primerSelect:Number,
         idInforme:String
     },
     components: {
         sugerenciasAplicadasReparacion: sugerenciasAplicadasReparacion,
         sugerenciasAplicadasTesteo: sugerenciasAplicadasTesteo,
         elegirSugerencias: elegirSugerencias,
-
         },
     data(){
         return{
@@ -74,3 +71,7 @@ export default {
 
 }
 </script>
+
+<style>
+
+</style>

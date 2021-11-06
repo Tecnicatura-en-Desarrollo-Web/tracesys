@@ -40,6 +40,17 @@ class InformeempleadoestadosController extends AppController
             'conditions' => ['ultimoEstado' => 1]
         ];
         $informeempleadoestados['reports'] = $this->paginate($this->Informeempleadoestados);
+        foreach ($informeempleadoestados['reports'] as $cambioEstadoInforme) {
+            $datetime=$cambioEstadoInforme->created;
+            $phpdate = strtotime((String)$datetime);
+            if($phpdate==false){
+                $phpdate=12;
+            }
+            $cambioEstadoInforme->{"fecha"} = date( 'Y-m-d', $phpdate);
+            $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
+
+        }
+
 
         return $this->setJsonResponse($informeempleadoestados);
     }
@@ -66,7 +77,15 @@ class InformeempleadoestadosController extends AppController
         $i = 0;
         foreach ($cambiosEstadoInforme['cambiosEstadoInforme'] as $cambioEstadoInforme) {
             $cambioEstadoInforme->{"comentarioEmpleado"} = json_decode($comentarios)[$i];
+            $datetime=$cambioEstadoInforme->created;
+            $phpdate = strtotime((string)$datetime);
+            if($phpdate==false){
+                $phpdate=12;
+            }
+            $cambioEstadoInforme->{"fecha"} = date( 'Y-m-d', $phpdate);
+            $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
             $i++;
+
         }
         return $this->setJsonResponse($cambiosEstadoInforme);
     }

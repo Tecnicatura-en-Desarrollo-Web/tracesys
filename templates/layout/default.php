@@ -12,6 +12,8 @@ $cakeDescription = 'CakeVue Application';
     <!-- <script>
         $("[data-toggle=tooltip").tooltip();
     </script> -->
+    <!-- <style src="../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"></style> -->
+
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
@@ -26,6 +28,7 @@ $cakeDescription = 'CakeVue Application';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
 </head>
 
 <body>
