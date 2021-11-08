@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-center mt-5">
+  <div class="d-flex justify-content-center mt-5 contenido-central">
     <div
       class="ml-5 p-3 shadow-lg p-3 mb-5 bg-white rounded"
       style="width: 50rem"
