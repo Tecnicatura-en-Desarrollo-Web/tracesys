@@ -145,7 +145,7 @@ class ProblemasugerenciasController extends AppController
             //de las tablas que hice innerjoin en contain
             $this->paginate = [
                 'contain' => ['Suggestions.Sectors','Issues'],
-                'conditions' => ['stage_id' => 3]
+                'conditions' => ['Suggestions.sector_id' => $dataVue['idSector'] , 'Issues.report_id' => $dataVue['idInforme']]
             ];
             $problemasugerencias=$this->paginate($this->Problemasugerencias);
 
