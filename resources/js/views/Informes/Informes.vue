@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                     <tr
-                    v-for="report in reports" :v-bind="report.report.report_id" v-if="report.sector_id == empleado_sector_id"
+                    v-for="report in reports" :v-bind="report.report.report_id" v-if="report.sector_id == empleado_sector_id || empleado_sector_id==1"
                     >
                     <td>{{ report.report.report_id }}</td>
                     <td>{{ report.fecha }}</td>
@@ -147,7 +147,7 @@ export default {
     .card2{
         margin-top:40px;
         margin-left: 40px;
-        margin-right: 0px;
+        margin-right: 60px;
     }
     .table-full-width{
         margin-left: -32px;

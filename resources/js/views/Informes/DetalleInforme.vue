@@ -1,134 +1,141 @@
+
 <template>
+    <ul>
+        <div
+            class="
+            posts
+            view
+            large-10
+            medium-8
+            columns
+            contenido-central
+            "
+            v-if="ultimoInformeEmpleadoEstado.sector_id==empleadoSector || empleadoSector==1"
+            >
 
-<ul>
-    <div
-        class="
-        posts
-        view
-        large-10
-        medium-8
-        columns
-        contenido-central
-        "
-    >
-    <loader v-if="mostrarSpinner==true" object="#6D9886" size="6" speed="2" bg="#343a40" objectbg="#999793" opacity="36" disableScrolling="false" name="spinning"></loader>
+            <!-- *********************Spinner de loading****************************** -->
+            <loader v-if="mostrarSpinner==true" object="#6D9886" size="6" speed="2" bg="#343a40" objectbg="#999793" opacity="36" disableScrolling="false" name="spinning"></loader>
+            <!-- ********************************************************************* -->
 
-    <!-- style="width: 73.7rem;" -->
-        <div class="card2 p-0 shadow-sm p-3 mb-1 bg-body rounded" >
+            <!-- style="width: 73.7rem;" -->
+                <div class="card2 p-0 shadow-sm p-3 mb-1 bg-body rounded" >
 
-            <h3 class="card-title">Historial de estados</h3>
-            <p class="colorp" style="font-size:15px;">Se muestra el historial de estados por los que paso el informe</p>
+                    <h3 class="card-title">Historial de estados</h3>
+                    <p class="colorp" style="font-size:15px;">Se muestra el historial de estados por los que paso el informe</p>
 
-            <div class="card-body table-full-width ">
-                <table class="table-striped p-4">
-                <thead>
-                    <tr>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Hora</th>
-                    <th scope="col">Derivado Por</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Modelo</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Motivo</th>
+                    <div class="card-body table-full-width ">
+                        <table class="table-striped p-4">
+                        <thead>
+                            <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora</th>
+                            <th scope="col">Derivado Por</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Modelo</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Motivo</th>
 
-                    <th scope="col">Comentarios</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="report in reports.cambiosEstadoInforme">
-                    <td>{{ report.fecha}}</td>
-                    <td>{{ report.hora}}</td>
-                    <td>
-                        {{ report.employee.user.nombre }}
-                        {{ report.employee.user.apellido }}
-                    </td>
-                    <td>{{ report.report.product.tipo }}</td>
-                    <td>{{ report.report.product.modelo }}</td>
-                    <td>{{ report.state.nombre_estado }}</td>
-                    <td>{{ report.report.product.motivo }}</td>
-                    <td>{{ report.comentarioEmpleado.commentsemployee.descripcion }}</td>
-                    </tr>
-                </tbody>
+                            <th scope="col">Comentarios</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="report in reports.cambiosEstadoInforme">
+                            <td>{{ report.fecha}}</td>
+                            <td>{{ report.hora}}</td>
+                            <td>
+                                {{ report.employee.user.nombre }}
+                                {{ report.employee.user.apellido }}
+                            </td>
+                            <td>{{ report.report.product.tipo }}</td>
+                            <td>{{ report.report.product.modelo }}</td>
+                            <td>{{ report.state.nombre_estado }}</td>
+                            <td>{{ report.report.product.motivo }}</td>
+                            <td>{{ report.comentarioEmpleado.commentsemployee.descripcion }}</td>
+                            </tr>
+                        </tbody>
 
-                </table>
-            </div>
-        </div>
-        <div class="card2 px-3 mt-2 rounded">
-            <div class="card-body table-full-width">
-                <form @submit.prevent="onSubmit" novalidate="novalidate">
-                    <div class="row ">
-                        <div class="col">
-                            <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
-                            <sugerencias :arraysugerencias="sugerencias"
-                            :primerSelect="primerSelect.sector_id" :idInforme="idInforme"
-                            ref="sugerencias"></sugerencias>
-                            <!--************************************************************-->
-                        </div>
-                        <div class="col">
-                            <!-- <div class="card table-full-width">
-                                <div class="card-body border-1"> -->
-                                    <div class="bg-body p-3 rounded border border-1 sugerencias-full-width">
-                                        <h5 class="text-center">Derivar a:</h5>
-                                        <p class="colorp" style="font-size:15px;">Seleccione el sector a derivar el informe</p>
-                                        <!-- <select
-                                            v-model="primerSelect"
-                                            class="form-select text-center "
-                                            id="inputGroupSelect01"
-                                            name="selectSector"
-                                            placeholder="holkaaa"
+                        </table>
+                    </div>
+                </div>
+                <div class="card2 px-3 mt-2 rounded">
+                    <div class="card-body table-full-width">
+                        <form @submit.prevent="onSubmit" novalidate="novalidate">
+                            <div class="row ">
+                                <div class="col">
+                                    <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
+                                    <sugerencias :arraysugerencias="sugerencias"
+                                    :primerSelect="primerSelect.sector_id" :idInforme="idInforme"
+                                    ref="sugerencias"></sugerencias>
+                                    <!--************************************************************-->
+                                </div>
+                                <div class="col">
+                                    <!-- <div class="card table-full-width">
+                                        <div class="card-body border-1"> -->
+                                            <div class="bg-body p-3 rounded border border-1 sugerencias-full-width">
+                                                <h5 class="text-center">Derivar a:</h5>
+                                                <p class="colorp" style="font-size:15px;">Seleccione el sector a derivar el informe</p>
+                                                <!-- <select
+                                                    v-model="primerSelect"
+                                                    class="form-select text-center "
+                                                    id="inputGroupSelect01"
+                                                    name="selectSector"
+                                                    placeholder="holkaaa"
 
-                                        >
-                                            <option value="0">Selecciona un sector...</option>
-                                            <option
-                                            v-for="sectorADerivar in sectoresADerivar"
-                                            :key="sectorADerivar.sector_id"
-                                            v-bind:value="sectorADerivar.sector_id"
-                                            >
-                                            {{ sectorADerivar.nombre_sector }}
-                                            </option>
-                                        </select> -->
-                                        <div>
-                                            <multiselect name="selectSector" :options="sectoresADerivar" label="nombre_sector"  v-model="primerSelect"
-                                            :searchable="false" placeholder="Seleccione un sector" open-direction="bottom"
-                                            :close-on-select="true" :show-labels="true" :block-keys="['Tab', 'Enter']" :hide-selected="true" deselect-label="Can't remove this value">
-                                            </multiselect>
+                                                >
+                                                    <option value="0">Selecciona un sector...</option>
+                                                    <option
+                                                    v-for="sectorADerivar in sectoresADerivar"
+                                                    :key="sectorADerivar.sector_id"
+                                                    v-bind:value="sectorADerivar.sector_id"
+                                                    >
+                                                    {{ sectorADerivar.nombre_sector }}
+                                                    </option>
+                                                </select> -->
+                                                <div>
+                                                    <multiselect name="selectSector" :options="sectoresADerivar" label="nombre_sector"  v-model="primerSelect"
+                                                    :searchable="false" placeholder="Seleccione un sector" open-direction="bottom"
+                                                    :close-on-select="true" :show-labels="true" :block-keys="['Tab', 'Enter']" :hide-selected="true" deselect-label="Can't remove this value">
+                                                    </multiselect>
+
+                                                </div>
+                                            </div>
+                                        <!-- </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-lg-12">
+                                    <div class="card3 py-3 mb-1 rounded ">
+
+                                        <h5 class="text-start">Comentarios:</h5>
+
+                                        <div class="card-body">
+                                            <div class="form-group comentarios-full-width">
+                                                <textarea
+                                                class="form-control"
+                                                id="exampleFormControlTextarea1"
+                                                name="comentarios"
+                                                rows="3"
+                                                ></textarea>
+                                            </div>
+                                            <div class="mt-2 text-center">
+                                                <button class="boton-classic" type="submit" >Derivar</button>
+                                            </div>
 
                                         </div>
-                                    </div>
-                                <!-- </div>
-                            </div> -->
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-lg-12">
-                            <div class="card3 py-3 mb-1 rounded ">
 
-                                <h5 class="text-start">Comentarios:</h5>
 
-                                <div class="card-body">
-                                    <div class="form-group comentarios-full-width">
-                                        <textarea
-                                        class="form-control"
-                                        id="exampleFormControlTextarea1"
-                                        name="comentarios"
-                                        rows="3"
-                                        ></textarea>
                                     </div>
-                                    <div class="mt-2 text-center">
-                                        <button class="boton-classic" type="submit" >Derivar</button>
-                                    </div>
-
                                 </div>
-
-
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </form>
-            </div>
+                </div>
+
         </div>
-</div>
-</ul>
+
+    </ul>
+
 </template>
 
 <script>
@@ -161,6 +168,10 @@ export default {
         segundoSelect:0,
         sugerenciasSeleccionadas:[],
         sugerenciasAplicadas:[],
+        ultimoInformeEmpleadoEstado:{
+            sector_id:null
+        },
+        empleadoSector:null,
         // para el spinner de loading
         mostrarSpinner:false
 
@@ -169,8 +180,9 @@ export default {
     created() {
         this.idInforme = this.$route.params.id;
         if (!this.$session.exists()) {
-        this.$router.push("/login");
+            this.$router.push("/login");
         }
+        this.empleadoSector=this.$session.get("sector_id");
     },
     mounted() {
         this.verInforme(this.$route.query);
@@ -179,6 +191,7 @@ export default {
         this.obtenerSectores();
     },
     methods: {
+
         activarSpinner(){
             this.mostrarSpinner=true;
         },
@@ -193,8 +206,18 @@ export default {
                 this.reports = response.data;
                 console.log("aca lee jonaaaaa", this.reports);
                 //obtengo el ultimo informeEmpleadoEstado , para saber el ultimo empleado que derivo
-                let ultimoInformeEmpleadoEstado = this.reports.cambiosEstadoInforme[this.reports.cambiosEstadoInforme.length - 1];
-                this.idEmpleado = ultimoInformeEmpleadoEstado.employee_id;
+                this.ultimoInformeEmpleadoEstado = this.reports.cambiosEstadoInforme[this.reports.cambiosEstadoInforme.length - 1];
+                //*********Muestro cartel de "no tienes permisos para este informe*********"
+                if(this.ultimoInformeEmpleadoEstado.sector_id!=this.empleadoSector && this.empleadoSector!=1){
+                    this.$swal({
+                            title: "No tienes acceso a este informe",
+                            type: "error",
+                        }).then(function() {
+                            window.location = "http://localhost:8765/reports";
+                    });
+                }
+                //***************************************************** */
+                this.idEmpleado = this.ultimoInformeEmpleadoEstado.employee_id;
                 //this.idEmpleado = this.$session.get("user_id");
                 this.cuitEmpleado =this.$session.get("cuit");
             })
@@ -369,8 +392,8 @@ export default {
 
     .card2{
         /* margin-top:40px;
-        margin-left: 40px;
-        margin-right: 20px; */
+        margin-left: 40px;*/
+        /* margin-right: 20px; */
 
     }
     .card3{
