@@ -246,4 +246,24 @@ class ReportsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function verInforme(){
+        //ingresa los datos del cliente que solicita del el seguimiento del producto
+        $datos = $this->request->getData();
+        $informe = $this->Reports->find()
+        ->contain(['Products','States'])
+        ->where(['Reports.product_id'=>$datos['id_product'],
+        'client_id'=>$datos['id_client']])
+        ->first();
+        $fechaHora = date("y-m-d H:i:s",strtotime(str_replace('/','-',$informe['modified'])));
+        $product = [
+            'nombre'=>$informe->product['tipo'].' ' .$informe->product['marca'].' ' .$informe->product['marca'],
+            'codigo'=>$informe['product_id'],
+            'motivo'=>$informe->product['motivo'],
+            'fecha'=>explode(' ',$fechaHora)[0],
+            'hora'=>explode(' ',$fechaHora)[1],
+            'estado'=>$informe->state['nombre_estado']
+        ];
+        return $this->setJsonResponse(['product' => $product]);
+    }
 }
