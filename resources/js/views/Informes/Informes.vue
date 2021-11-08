@@ -30,8 +30,6 @@
                     <td>{{ report.report.report_id }}</td>
                     <td>{{ report.fecha }}</td>
                     <td>{{ report.hora }}</td>
-                    <td>{{ report.report.created }}</td>
-                    <td>{{ report.report.created }}</td>
                     <td>{{ report.report.product.tipo }}</td>
                     <td>{{ report.report.product.motivo }}</td>
                     <td>en {{ report.state.nombre_estado }}</td>
