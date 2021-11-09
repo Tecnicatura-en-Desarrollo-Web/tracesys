@@ -59,7 +59,7 @@
                 </div>
                 <div class="card2 px-3 mt-2 rounded">
                     <div class="card-body table-full-width">
-                        <form @submit.prevent="onSubmit" novalidate="novalidate">
+                        <form id="formDerivar" @submit.prevent="beforeOnSubmit" novalidate="novalidate">
                             <div class="row ">
                                 <div class="col">
                                     <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
@@ -92,7 +92,7 @@
                                                     </option>
                                                 </select> -->
                                                 <div>
-                                                    <multiselect name="selectSector" :options="sectoresADerivar" label="nombre_sector"  v-model="primerSelect"
+                                                    <multiselect name="selectSector" :options="sectoresADerivar" label="nombre_sector" :custom-label="opcionDefaultSelect" v-model="primerSelect"
                                                     :searchable="false" placeholder="Seleccione un sector" open-direction="bottom"
                                                     :close-on-select="true" :show-labels="true" :block-keys="['Tab', 'Enter']" :hide-selected="true" deselect-label="Can't remove this value">
                                                     </multiselect>
@@ -164,7 +164,7 @@ export default {
         comentarioEmpleado: "",
         reports: [],
         value: '',
-        primerSelect:0,
+        primerSelect:{ nombre_sector: 'Seleccione una opcion' , sector_id:0},
         segundoSelect:0,
         sugerenciasSeleccionadas:[],
         sugerenciasAplicadas:[],
@@ -187,11 +187,36 @@ export default {
     mounted() {
         this.verInforme(this.$route.query);
         this.obtenerSugerencias(this.$route.query);
-
         this.obtenerSectores();
     },
     methods: {
+        beforeOnSubmit(event){
+            if(this.primerSelect.orden!=1){
+                this.$swal({
+                    title: "Esta seguro?",
+                    text: "Estas por derivar el informe a un sector sin seguir el orden recomendado",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Si, estoy seguro!',
+                    cancelButtonText: "No, cancelar!",
+                }).then(function (result) {
+                        if (result.value) {
+                            let data = formSerialize(event.target, {
+                                hash: false,
+                                empty: true,
+                            });
+                            console.log("jona aca esta la data pa:",data);
+                            this.activarSpinner();
 
+                        } else {
+                        }
+                });
+            }
+        },
+        opcionDefaultSelect ({ nombre_sector}) {
+                return `${nombre_sector}`
+        },
         activarSpinner(){
             this.mostrarSpinner=true;
         },
@@ -257,11 +282,11 @@ export default {
             console.log("Error: " + error);
             });
         },
-        onSubmit(event) {
-            let data = formSerialize(event.target, {
-                hash: false,
-                empty: true,
-            });
+        enviar(data) {
+            // let data = formSerialize(event.target, {
+            //     hash: false,
+            //     empty: true,
+            // });
             data += "&selectSector=" + this.primerSelect.sector_id;
             data += "&idIssueReport=" + this.idIssuesSelect;
             data += "&idInforme=" + this.idInforme;

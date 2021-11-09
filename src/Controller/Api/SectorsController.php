@@ -39,12 +39,20 @@ class SectorsController extends AppController
      */
     public function obtenerSectoresPorEtapa($idEtapa)
     {
-
+        //$idEtapa es la etapa del empleado que esta logueado y va a derivar el informe , por eso si es 2 entonces es de diagnostico
+        //por lo tanto puede derivar a reparacion que es la etapa 3
         switch ($idEtapa) {
             case 2:
                 $this->paginate = [
                     'contain' => ['Stages'],
-                    'conditions' => ["Sectors.stage_id" => 3]
+                    'conditions' => ["Sectors.stage_id" => 3],
+                    'sortableFields' => [
+                        'orden'
+                    ],
+                    'order' => [
+                        'orden' => 'asc',
+                    ],
+
                 ];
                 break;
             case 3:
