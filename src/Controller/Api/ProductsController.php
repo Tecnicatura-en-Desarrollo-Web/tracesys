@@ -124,9 +124,18 @@ class ProductsController extends AppController
 
     public function productsClient(){
         $data = $this->request->getData();
+        $productos = [];
         $products = $this->Products->find()
         ->contain([])
         ->where(['client_id'=>$data['idCliente']]);
-        return $this->setJsonResponse($products);
+        foreach($products as $producto){
+            $fechaHora = date("y-m-d H:i:s",strtotime(str_replace('/','-',$producto['created'])));
+            $productos[] = [
+                'codigo'=>$producto['product_id'],
+                'nombre'=>$producto['tipo'].' '.$producto['marca'].' '.$producto['modelo'],
+                'fecha'=>explode(' ',$fechaHora)[0]
+            ];
+        }
+        return $this->setJsonResponse($productos);
     }
 }
