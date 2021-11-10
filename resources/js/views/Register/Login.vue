@@ -37,7 +37,7 @@
                   class="boton-classic"
                   @click="mostrarMensaje()"
                 >
-                  Inicar Sesion
+                  Iniciar Sesion
                 </button>
               </div>
             </form>
@@ -105,6 +105,12 @@ export default {
               this.$session.set("etapa_id", response.data.etapa_id);
               //***Redirigimos al usuario a su lista de informes******//
               window.location.href = "http://localhost:8765/home";
+            });
+          } else {
+            this.$swal({
+              title: "Datos incorrectos. Recuerde activar la cuenta",
+              type: "error",
+              timer: 1500,
             });
           }
         })
