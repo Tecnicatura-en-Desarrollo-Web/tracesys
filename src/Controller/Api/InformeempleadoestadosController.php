@@ -46,7 +46,7 @@ class InformeempleadoestadosController extends AppController
             if($phpdate==false){
                 $phpdate=12;
             }
-            $cambioEstadoInforme->{"fecha"} = date( 'Y-m-d', $phpdate);
+            $cambioEstadoInforme->{"fecha"} = date( 'd-m-y', $phpdate);
             $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
 
         }
@@ -82,7 +82,7 @@ class InformeempleadoestadosController extends AppController
             if($phpdate==false){
                 $phpdate=12;
             }
-            $cambioEstadoInforme->{"fecha"} = date( 'Y-m-d', $phpdate);
+            $cambioEstadoInforme->{"fecha"} = date( 'd-m-y', $phpdate);
             $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
             $i++;
 
