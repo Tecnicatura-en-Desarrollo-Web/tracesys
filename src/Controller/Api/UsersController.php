@@ -69,7 +69,7 @@ class UsersController extends AppController
                 ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
                 ->setSubject('Su cuenta ha sido activada')
 
-                ->deliver('cuenta activada. Por favor ingrese a la siguiente url http://localhost:8765/activacion/'.$user_id_cargado);
+                ->deliver('cuenta activada. Por favor ingrese a la siguiente url http://localhost:8765/activacion/' . $user_id_cargado);
             $mailer->deliver();
 
             return $this->setJsonResponse(
@@ -163,7 +163,7 @@ class UsersController extends AppController
             ];
             $data['users'] = $this->paginate($this->Users);
             foreach ($data['users'] as $cadaUser) {
-                if ($cadaUser["email"] == $dataVue["email"] && $cadaUser["password"] == $dataVue["contrasena"]) {
+                if ($cadaUser["email"] == $dataVue["email"] && $cadaUser["password"] == $dataVue["contrasena"] && $cadaUser["activo"] == 1) {
                     return $this->setJsonResponse(
                         [
                             'message' => true,
