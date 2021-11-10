@@ -241,21 +241,19 @@ export default {
           data += "&selectSector=" + 2;
           //****************************************************************************/
           console.log(response);
-          this.registrarCambioEstado(data);
-          //   if (response.data.success) {
-          //     this.$notify({
-          //       group: "default",
-          //       type: "success",
-          //       text: response.data.message,
-          //     });
-          //     this.$router.push({ path: response.data.url });
-          //   }
+          this.$swal({
+            title: "Informe cargado correctamente",
+            type: "success",
+            timer: 1500,
+          }).then((result) => {
+            this.registrarCambioEstado(data);
+          });
         })
         .catch((error) => {
-          this.$notify({
-            group: "default",
-            type: "error",
-            text: error.response.data.message,
+          this.$swal({
+            title: "Ha ocurrido un error al cargar el informe",
+            type: "success",
+            timer: 1500,
           });
         });
     },
