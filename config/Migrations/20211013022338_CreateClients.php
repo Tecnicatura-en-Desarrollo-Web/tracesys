@@ -52,7 +52,7 @@ class CreateClients extends AbstractMigration
             'limit' => 150,
             'null' => false,
         ]);
-        $table->addColumn('telefono', 'integer', [
+        $table->addColumn('telefono', 'biginteger', [
             'default' => null,
             'limit' => 30,
             'null' => false,
