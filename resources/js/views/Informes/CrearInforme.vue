@@ -8,7 +8,7 @@
         <form @submit.prevent="onSubmit">
           <div class="row callout callout-danger">
             <h5>Datos del cliente</h5>
-            <div class="col-lg-6 col-12">
+            <div class="col-lg-4 col-12">
               <div class="form-group">
                 <label for="product_name"
                   >Nombre y apellido o razon social<small
@@ -20,7 +20,7 @@
                 <input type="text" class="form-control" name="denominacion" />
               </div>
             </div>
-            <div class="col-lg-6 col-12">
+            <div class="col-lg-2 col-12">
               <div class="form-group">
                 <label for="product_name"
                   >CUIT<small
@@ -45,7 +45,43 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-4 col-12">
+            <div class="col-lg-1 col-12">
+              <div class="form-group">
+                <label for="product_name"
+                  >C. Pais<small
+                    class="font-weight-bold text-primary"
+                    id="obligatory_field"
+                    >*</small
+                  ></label
+                >
+                <input type="number" class="form-control" name="codigo_pais" />
+              </div>
+            </div>
+            <div class="col-lg-2 col-12">
+              <div class="form-group">
+                <label for="product_name"
+                  >Codigo Area<small
+                    class="font-weight-bold text-primary"
+                    id="obligatory_field"
+                    >*</small
+                  ></label
+                >
+                <input type="number" class="form-control" name="codigo_area" />
+              </div>
+            </div>
+            <div class="col-lg-3 col-12">
+              <div class="form-group">
+                <label for="product_name"
+                  >Telefono<small
+                    class="font-weight-bold text-primary"
+                    id="obligatory_field"
+                    >*</small
+                  ></label
+                >
+                <input type="number" class="form-control" name="telefono" />
+              </div>
+            </div>
+            <div class="col-lg-6 col-12">
               <div class="form-group">
                 <label for="product_name"
                   >Email<small
@@ -68,18 +104,6 @@
                 >
                   <small>Ingrese un email valido</small>
                 </div>
-              </div>
-            </div>
-            <div class="col-lg-2 col-12">
-              <div class="form-group">
-                <label for="product_name"
-                  >Telefono<small
-                    class="font-weight-bold text-primary"
-                    id="obligatory_field"
-                    >*</small
-                  ></label
-                >
-                <input type="number" class="form-control" name="telefono" />
               </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -246,7 +270,7 @@ export default {
             type: "success",
             timer: 1500,
           }).then((result) => {
-            this.registrarCambioEstado(data);
+            /* this.registrarCambioEstado(data); */
           });
         })
         .catch((error) => {
@@ -317,7 +341,10 @@ export default {
       }
     },
   },
-
+  /*   validacionCodigoPais(event) {
+    let codigoPais = event.target.value;
+  },
+  validacionCodigoArea(event) {}, */
   created() {
     if (this.$session.exists()) {
       this.user_id_loggin = this.$session.get("user_id");

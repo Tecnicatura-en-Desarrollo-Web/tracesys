@@ -105,7 +105,7 @@ class ReportsController extends AppController
             "email" => $dataVue["email"],
             "password" => "123",
             "usuario" => "prueba",
-            "telefono" => $dataVue["telefono"],
+            "telefono" =>  $dataVue["codigo_pais"] . $dataVue["codigo_area"] . $dataVue["telefono"],
         ];
 
         $client = $classClients->patchEntity($client, $dataClients);
@@ -145,7 +145,7 @@ class ReportsController extends AppController
                 $bill = $classBill->patchEntity($bill, $dataBill);
                 $resultBill = $classBill->save($bill);
                 $idBill = $resultBill["bill_id"];
-                $idEmpleado=(int)$dataVue["user_id_loggin"];
+                $idEmpleado = (int)$dataVue["user_id_loggin"];
                 if ($resultBill !== false) {
                     $report = $this->Reports->newEmptyEntity();
 
@@ -156,7 +156,7 @@ class ReportsController extends AppController
                         "bill_id" => $idBill,
                     ];
 
-                    $report = $this->Reports->patchEntity($report, $dataInforme ,[
+                    $report = $this->Reports->patchEntity($report, $dataInforme, [
                         'contain' => ["Employees"]
                     ]);
                     $resultReport = $this->Reports->save($report);
@@ -174,14 +174,16 @@ class ReportsController extends AppController
                         ];
 
                         $issue = $classIssue->patchEntity($issue, $dataIssue);
-                        $resultIssue= $classIssue->save($issue);
+                        $resultIssue = $classIssue->save($issue);
 
-                        $classEmployee=new EmployeesTable();
+                        $classEmployee = new EmployeesTable();
                         //$empleado=$classEmployee->find('all' , ['conditions' => ["employee_id"=>$idEmpleado]]);
-                        $empleado=$classEmployee->get($idEmpleado,
-                        [
-                            'conditions' => ["employee_id"=>$idEmpleado],
-                        ]);
+                        $empleado = $classEmployee->get(
+                            $idEmpleado,
+                            [
+                                'conditions' => ["employee_id" => $idEmpleado],
+                            ]
+                        );
 
                         if ($resultIssue !== false) {
                             return $this->setJsonResponse(
@@ -189,7 +191,7 @@ class ReportsController extends AppController
                                     'idReporte' => $idReport,
                                     'idEmpleado' => $idEmpleado,
                                     'idEstado' => 2,
-                                    'cuitEmpleado'=>$empleado->cuit,
+                                    'cuitEmpleado' => $empleado->cuit,
                                 ],
                             );
                         }
@@ -245,5 +247,18 @@ class ReportsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function obtenerCliente($id)
+    {
+        $report = $this->Reports->get($id, [
+            'contain' => ['Products.Clients'],
+        ]);
+
+        return $this->setJsonResponse(
+            [
+                'client' => $report["product"]["client"],
+            ],
+        );
     }
 }
