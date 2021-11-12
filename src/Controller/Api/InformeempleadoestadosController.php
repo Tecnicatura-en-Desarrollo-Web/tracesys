@@ -372,4 +372,51 @@ class InformeempleadoestadosController extends AppController
         ];
         return $this->setJsonResponse(['product' => $product]);
     }
+
+    /**
+     * Al decidir el cliente llegara el dato de si acepta o rechaza el presupuesto de dicho informe
+     * buscamos el obj en la tabla y cambiamos el ultimo estado y luego agregamos un nuevo estado
+     * dependiendo la decision del cliente y retornamos si se logro con exito el cambio o no
+     */
+    public function decisionPresupuesto()
+    {
+        $datos = $this->request->getData();
+        $informe = $this->Informeempleadoestados->find()
+            ->contain([])
+            ->where(['informeempleadoestado_id' => $datos['idInforme'], 'ultimoEstado' => 1])
+            ->first();
+        $dataNueva = [
+            "ultimoEstado" => 0,
+        ];
+        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informe, $dataNueva);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado);
+        if ($datos['decision'] == 'aprobado') {
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadoestado_id" => $datos['idInforme'],
+                "employee_id" =>  $informeempleadoestado->employee_id,
+                "state_id" => 3,
+                "sector_id" => 3,
+                "ultimoEstado" => 1,
+            ];
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEntity($dataNueva);
+            $result2 = $this->Informeempleadoestados->save($informeempleadoestado2, ['checkExisting' => false]);
+        } else {
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadoestado_id" => $datos['idInforme'],
+                "employee_id" =>  $informeempleadoestado->employee_id,
+                "state_id" => 5,
+                "sector_id" => 1,
+                "ultimoEstado" => 1,
+            ];
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEntity($dataNueva);
+            $result2 = $this->Informeempleadoestados->save($informeempleadoestado2, ['checkExisting' => false]);
+        }
+        return $this->setJsonResponse([
+            'resultado1'=>$result,
+            'resultado2' => $result2,
+            'message' => true,
+        ]);
+    }
 }
