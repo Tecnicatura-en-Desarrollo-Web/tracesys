@@ -228,11 +228,15 @@ class InformeempleadoestadosController extends AppController
         $idReport = (int)$dataVue['idInforme'];
         $idEmpleado = (int)$dataVue['idEmpleado'];
         $idSector = (int)$dataVue['selectSector'];
-        $objSectors = new SectorsTable();
-        $sector = $objSectors->find()
-            ->where(['sector_id' => $idSector])
-            ->first();
-        $idState = $sector->stage_id;
+        if(((int)$dataVue['idEstado'])==2){
+            $idState=6;
+        }else{
+            $objSectors = new SectorsTable();
+            $sector = $objSectors->find()
+                ->where(['sector_id' => $idSector])
+                ->first();
+            $idState = $sector->stage_id;
+        }
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
 
         $dataNueva = [
@@ -362,13 +366,13 @@ class InformeempleadoestadosController extends AppController
         ->where(['Reports.product_id'=>$datos['id_product'],
         'client_id'=>$datos['id_client'], 'ultimoEstado'=>1])
         ->first();
-        $fechaHora = date("y-m-d H:i:s",strtotime(str_replace('/','-',$informe['created'])));
+        $fechaHora = strtotime((string)$informe['created']);
         $product = [
             'nombre'=>$informe->report->product['tipo'].' ' .$informe->report->product['marca'].' ' .$informe->report->product['marca'],
             'codigo'=>$informe->report['product_id'],
             'motivo'=>$informe->report->product['motivo'],
-            'fecha'=>explode(' ',$fechaHora)[0],
-            'hora'=>explode(' ',$fechaHora)[1],
+            'fecha'=>date('d-m-y',$fechaHora),
+            'hora'=>date('H:i:s',$fechaHora),
             'estado'=>$informe->state['nombre_estado']
         ];
         return $this->setJsonResponse(['product' => $product]);

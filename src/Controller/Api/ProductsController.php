@@ -129,11 +129,11 @@ class ProductsController extends AppController
         ->contain([])
         ->where(['client_id'=>$data['idCliente']]);
         foreach($products as $producto){
-            $fechaHora = date("y-m-d H:i:s",strtotime(str_replace('/','-',$producto['created'])));
+            $fechaHora = $fechaHora = strtotime((string)$producto['created']);;
             $productos[] = [
                 'codigo'=>$producto['product_id'],
                 'nombre'=>$producto['tipo'].' '.$producto['marca'].' '.$producto['modelo'],
-                'fecha'=>explode(' ',$fechaHora)[0]
+                'fecha'=>date('d-m-y',$fechaHora)
             ];
         }
         return $this->setJsonResponse($productos);
