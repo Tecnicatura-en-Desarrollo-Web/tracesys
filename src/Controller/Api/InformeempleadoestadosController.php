@@ -9,6 +9,7 @@ use App\Controller\Traits\ResponseTrait;
 use App\Model\Entity\Informeempleadocomentario;
 use App\Model\Table\InformeempleadocomentariosTable;
 use App\Model\Table\SectorsTable;
+use App\Test\TestCase\Controller\InformeEmpleadoComentarioControllerTest;
 use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
 use Cake\Mailer\Mailer;
 
@@ -382,7 +383,7 @@ class InformeempleadoestadosController extends AppController
     {
         $datos = $this->request->getData();
         $informe = $this->Informeempleadoestados->find()
-            ->contain([])
+            ->contain(['Employees'])
             ->where(['informeempleadoestado_id' => $datos['idInforme'], 'ultimoEstado' => 1])
             ->first();
         $dataNueva = [
@@ -401,6 +402,32 @@ class InformeempleadoestadosController extends AppController
             ];
             $informeempleadoestado2 = $this->Informeempleadoestados->newEntity($dataNueva);
             $result2 = $this->Informeempleadoestados->save($informeempleadoestado2, ['checkExisting' => false]);
+            $comentar = new CommentsemployeesController;
+            $commentsemployees = $comentar->Commentsemployees->newEmptyEntity();
+            $dataNueva2 = [
+                "descripcion" =>'El cliente acepto el presupuesto estimado',
+            ];
+            $commentsemployees = $comentar->Commentsemployees->patchEntity($commentsemployees, $dataNueva2);
+            $resultx = $comentar->Commentsemployees->save($commentsemployees);
+            $idComentarioEmpleado = $comentar->Commentsemployees->find()->select(['commentsemployee_id'])->last()['commentsemployee_id'];
+            $comentario = $comentar->Commentsemployees->find()->select(['descripcion'])->last()['descripcion'];
+            if ($resultx !== false) {
+                $result3 = ([
+                    'idComentarioEmpleado' => $idComentarioEmpleado,
+                    'comentario' => $comentario,
+                    'success' => true
+                ]);
+            }
+            $comentarioInforme = new InformeempleadocomentariosController;
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadocomentario_id" =>$informe->employee->employee_id,
+                "comment_employee_id" => $idComentarioEmpleado,
+                "report_id" => $datos['idInforme'],
+                "cuit" =>$informe->employee->cuit
+            ];
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
+            $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
         } else {
             $informeempleadoestado2 = $this->Informeempleadoestados->newEmptyEntity();
             $dataNueva = [
@@ -412,10 +439,38 @@ class InformeempleadoestadosController extends AppController
             ];
             $informeempleadoestado2 = $this->Informeempleadoestados->newEntity($dataNueva);
             $result2 = $this->Informeempleadoestados->save($informeempleadoestado2, ['checkExisting' => false]);
+            $comentar = new CommentsemployeesController;
+            $commentsemployees = $comentar->Commentsemployees->newEmptyEntity();
+            $dataNueva2 = [
+                "descripcion" =>'No acepto el presupuesto estimado',
+            ];
+            $commentsemployees = $comentar->Commentsemployees->patchEntity($commentsemployees, $dataNueva2);
+            $result = $comentar->Commentsemployees->save($commentsemployees);
+            $idComentarioEmpleado = $comentar->Commentsemployees->find()->select(['commentsemployee_id'])->last()['commentsemployee_id'];
+            $comentario = $comentar->Commentsemployees->find()->select(['descripcion'])->last()['descripcion'];
+            if ($result !== false) {
+                $result3 = ([
+                    'idComentarioEmpleado' => $idComentarioEmpleado,
+                    'comentario' => $comentario,
+                    'success' => true
+                ]);
+            }
+            $comentarioInforme = new InformeempleadocomentariosController;
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadocomentario_id" =>$informe->employee->employee_id,
+                "comment_employee_id" => $idComentarioEmpleado,
+                "report_id" => $datos['idInforme'],
+                "cuit" =>$informe->employee->cuit
+            ];
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
+            $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
         }
         return $this->setJsonResponse([
-            'resultado1'=>$result,
+            'resultado1' => $result,
             'resultado2' => $result2,
+            'resultado3' => $result3,
+            'resultado4' => $result4,
             'message' => true,
         ]);
     }
