@@ -120,4 +120,60 @@ class IssuesController extends AppController
         $issues['issues'] = $this->paginate($this->Issues);
         return $this->setJsonResponse($issues);
     }
+    public function verificarExistencia($stringMotivo = ""){
+        //convertimos el string del motivo ingresado en un arreglo , donde cada palabra es una posicion del array
+        $motivosArray=explode(" ", strtolower($stringMotivo));
+
+        $issuesOcurrenciasSinonimos=[];
+        foreach ($motivosArray as $palabraMotivo) {
+            //obtenemos un json de sinonimos de una de las palabras del motivo ingresado
+            $sinonimos = json_decode(file_get_contents("http://sesat.fdi.ucm.es:8080/servicios/rest/sinonimos/json/".$palabraMotivo));
+
+            if(is_array($sinonimos->sinonimos)==true){
+                array_unshift($sinonimos->sinonimos,(object)['sinonimo' => $palabraMotivo]);
+
+            }else{
+                $sinonimos->sinonimos=[(object)['sinonimo' => $palabraMotivo]];
+
+            }
+            //creamos una condicion sql dinamica basada en los sinonimos obtenidos , para realizar la consulta a la BD utilizando LIKE
+            $conditionOr=[];
+
+            foreach ($sinonimos->sinonimos as $sinonimo) {
+
+                $sinonimoObtenido=$sinonimo->sinonimo;
+                $terminacion=substr($sinonimo->sinonimo, -2);
+                //si se trata de un verbo le quitamos la ultima letra (r)
+                if($terminacion=="er" || $terminacion=="ir" || $terminacion=="ar"){
+                    $sinonimoObtenido=$terminacion=substr($sinonimo->sinonimo,0,-1);
+                }
+                array_push($conditionOr,['titulo LIKE'=>'%'.$sinonimoObtenido.'%']);
+            }
+
+            //realizamos la busqueda de problemas en BD basados en los sinonimos de la palabra
+            $issuesBD = $this->Issues->find('all')
+            ->where(['OR'=>$conditionOr
+            ])
+            ;
+            //determinamos la cantidad de ocurrencias de sinonimos del motivo en cada problema de BD
+            if($issuesBD!=null){
+                foreach ($issuesBD as $issueBD) {
+                    $claveIssue=array_search($issueBD,array_column($issuesOcurrenciasSinonimos, 'issue'));
+                    if($claveIssue===false){
+                        array_push($issuesOcurrenciasSinonimos,['issue'=>$issueBD , 'cantOcurrencias'=>1]);
+                    }else{
+                        $issuesOcurrenciasSinonimos[$claveIssue]['cantOcurrencias']++;
+                    }
+                }
+            }
+
+        }
+        // Si los sinonimos del motivo ingresado coinciden con las palabras de alguno de los problemas de la BD , entonces
+        //asignamos dicho arreglo de sinonimos al array resultante
+        $arrayResultante=$issuesOcurrenciasSinonimos;
+        return $this->setJsonResponse([
+            'sinonimos' => $arrayResultante
+        ]);
+    }
+
 }
