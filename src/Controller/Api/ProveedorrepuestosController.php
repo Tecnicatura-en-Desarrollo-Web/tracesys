@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Proveedorrepuestos Controller
@@ -11,6 +15,7 @@ namespace App\Controller;
  */
 class ProveedorrepuestosController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -49,7 +54,32 @@ class ProveedorrepuestosController extends AppController
      */
     public function add()
     {
-        $proveedorrepuesto = $this->Proveedorrepuestos->newEmptyEntity();
+        $dataVue = $this->request->getData();
+        $idProveedor = $dataVue['idProveedor'];
+        $repuestosSeleccionados = $dataVue["repuestosSeleccionados"];
+        /* return $this->setJsonResponse(
+            [
+                $repuestosSeleccionados,
+                (int) $idProveedor,
+            ],
+        ); */
+
+        $i = 0;
+        while ($i < count($repuestosSeleccionados)) {
+            $proveedorrepuesto = $this->Proveedorrepuestos->newEmptyEntity();
+            $nuevaData = [];
+            $nuevaData['proveedorrepuesto_id'] = $repuestosSeleccionados[$i];
+            $nuevaData['provider_id'] = $idProveedor;
+            $proveedorrepuesto = $this->Proveedorrepuestos->patchEntity($proveedorrepuesto, $nuevaData);
+            $this->Proveedorrepuestos->save($proveedorrepuesto);
+            $i++;
+        }
+        return $this->setJsonResponse(
+            [
+                "message" => true,
+            ],
+        );
+        /* $proveedorrepuesto = $this->Proveedorrepuestos->newEmptyEntity();
         if ($this->request->is('post')) {
             $proveedorrepuesto = $this->Proveedorrepuestos->patchEntity($proveedorrepuesto, $this->request->getData());
             if ($this->Proveedorrepuestos->save($proveedorrepuesto)) {
@@ -61,7 +91,7 @@ class ProveedorrepuestosController extends AppController
         }
         $proveedorrepuestos = $this->Proveedorrepuestos->Proveedorrepuestos->find('list', ['limit' => 200]);
         $providers = $this->Proveedorrepuestos->Providers->find('list', ['limit' => 200]);
-        $this->set(compact('proveedorrepuesto', 'proveedorrepuestos', 'providers'));
+        $this->set(compact('proveedorrepuesto', 'proveedorrepuestos', 'providers')); */
     }
 
     /**

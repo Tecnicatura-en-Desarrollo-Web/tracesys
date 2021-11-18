@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Replacements Controller
@@ -11,6 +15,7 @@ namespace App\Controller;
  */
 class ReplacementsController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -20,7 +25,7 @@ class ReplacementsController extends AppController
     {
         $replacements = $this->paginate($this->Replacements);
 
-        $this->set(compact('replacements'));
+        return $this->setJsonResponse($replacements);
     }
 
     /**
@@ -50,9 +55,11 @@ class ReplacementsController extends AppController
         if ($this->request->is('post')) {
             $replacement = $this->Replacements->patchEntity($replacement, $this->request->getData());
             if ($this->Replacements->save($replacement)) {
-                $this->Flash->success(__('The replacement has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->setJsonResponse(
+                    [
+                        'message' => true,
+                    ],
+                );
             }
             $this->Flash->error(__('The replacement could not be saved. Please, try again.'));
         }

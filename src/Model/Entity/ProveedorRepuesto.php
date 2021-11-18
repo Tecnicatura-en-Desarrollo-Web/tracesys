@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -30,7 +31,8 @@ class Proveedorrepuesto extends Entity
     protected $_accessible = [
         'created' => true,
         'modified' => true,
-        'proveedorrepuesto' => true,
-        'provider' => true,
+        'proveedorrepuesto_id' => true,
+        'provider_id' => true,
+
     ];
 }

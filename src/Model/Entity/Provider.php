@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -32,5 +33,6 @@ class Provider extends Entity
         'cuit' => true,
         'created' => true,
         'modified' => true,
+        'provider_id' => true
     ];
 }

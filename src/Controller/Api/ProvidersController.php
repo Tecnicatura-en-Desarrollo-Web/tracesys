@@ -1,7 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
 
 /**
  * Providers Controller
@@ -11,6 +15,7 @@ namespace App\Controller;
  */
 class ProvidersController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -49,10 +54,14 @@ class ProvidersController extends AppController
         $provider = $this->Providers->newEmptyEntity();
         if ($this->request->is('post')) {
             $provider = $this->Providers->patchEntity($provider, $this->request->getData());
-            if ($this->Providers->save($provider)) {
-                $this->Flash->success(__('The provider has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            $proveedor = $this->Providers->save($provider);
+            if ($proveedor) {
+                return $this->setJsonResponse(
+                    [
+                        'message' => true,
+                        'idProveedor' => $proveedor["provider_id"],
+                    ],
+                );
             }
             $this->Flash->error(__('The provider could not be saved. Please, try again.'));
         }
