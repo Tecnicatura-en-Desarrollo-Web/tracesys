@@ -141,11 +141,38 @@
                     >*</small
                   ></label
                 >
-                <input type="text" class="form-control" name="motivo" />
-                <div id="emailHelp" class="form-text">
+                <input type="text" class="form-control" name="motivo" id="motivo" @input="debounceSearch" placeholder="Ingrese problema , por ejemplo Pantalla rota" autocomplete="off"/>
+                <!-- <div id="emailHelp" class="form-text">
                   Debe agregar el problema en palabras claves, por ejemplo:
-                  "Pantalla negra"
-                </div>
+                  "Pantalla en negro"
+                </div> -->
+                    <!-- <div v-if="realizoBusqueda && detenerSpiner==false">
+                        <span class="visually-show">buscando sugerencias...</span>
+                        <div  class="colorSpinner spinner-border spinner-border-sm" role="status">
+                        </div>
+                    </div> -->
+                <transition name="slide-fade">
+                    <div v-if="existenProblemas" @keyup.13="ocultarCuadrito">
+                        <select name="" class="selectSinonimos form-select" size="5" >
+                            <option
+                            v-for="sinonimo in sinonimos"
+                            :key="sinonimo.issue.issue_id"
+                            v-bind:value="sinonimo.issue.issue_id"
+                            >
+                                {{sinonimo.issue.titulo}}
+                            </option>
+                        </select>
+
+                        <div id="emailHelp" class="form-text">
+                            Sugerencias existentes ordenadas por la mas acertada
+                        </div>
+                    </div>
+                </transition>
+                    <div v-if="escribiendo && realizoBusqueda==false">
+                            <span class="visually-show">buscando sugerencias...</span>
+                            <div  class="colorSpinner spinner-border spinner-border-sm" role="status">
+                            </div>
+                    </div>
               </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -215,13 +242,61 @@
 import formSerialize from "form-serialize";
 import Errors from "../../helpers/FormErrors.js";
 export default {
+
   data() {
     return {
-      denominacion: "",
-      user_id_loggin: "",
+        denominacion: "",
+        user_id_loggin: "",
+        motivo:'',
+        cuit:'',
+        email:'',
+        sinonimos:[],
+        existenProblemas:false,
+        realizoBusqueda:false,
+        detenerSpiner:false,
+        escribiendo:false,
+        message: null,
+        typing: null,
+        debounce: null
     };
   },
+
   methods: {
+    debounceSearch(event) {
+
+      clearTimeout(this.debounce)
+      this.debounce = setTimeout(() => {
+        this.escribiendo=true;
+        this.buscarProblemasSimilares(event.target.value);
+      }, 700)
+
+    },
+    ocultarCuadrito(){
+        this.existenProblemas=false;
+    },
+    buscarProblemasSimilares(stringMotivo){
+        axios
+        .post(`/api/issues/verificarExistencia/${stringMotivo}`, {
+                headers: { "X-Requested-With": "XMLHttpRequest" },
+
+        })
+        .then((response) => {
+            this.realizoBusqueda=true;
+            this.sinonimos=response.data.sinonimos;
+
+
+                if(typeof this.sinonimos==='undefined' || this.sinonimos.length==0){
+                    this.existenProblemas=false;
+                    this.escribiendo=false;
+                }else{
+                    this.existenProblemas=true;
+                }
+
+        });
+
+
+
+    },
     onSubmit(event) {
       let data = formSerialize(event.target, {
         hash: false,
@@ -334,5 +409,25 @@ export default {
 .table-full-width2 {
   margin-left: -32px;
   margin-right: -32px;
+}
+.selectSinonimos{
+    height: 80px;
+}
+
+/* *****animaciones para sugerencias de problemas****** */
+
+.slide-fade-enter-active {
+  transition: all .5s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+.colorSpinner{
+    color:#6d9886
 }
 </style>
