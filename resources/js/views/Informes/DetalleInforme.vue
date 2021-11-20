@@ -1,6 +1,7 @@
 
 <template>
   <ul>
+
     <div
       class="posts view large-10 medium-8 columns contenido-central"
       v-if="
@@ -8,6 +9,7 @@
         empleadoSector == 1
       "
     >
+
       <!-- *********************Spinner de loading****************************** -->
       <loader
         v-if="mostrarSpinner == true"
@@ -28,11 +30,7 @@
         <p class="colorp" style="font-size: 15px">
           Se muestra el historial de estados por los que paso el informe
         </p>
-        <a
-          v-bind:href="`https://api.whatsapp.com/send?phone=${telefonoCliente}&text=%C2%A1Hola%20${nombreCliente}!%20Somos%20de%20TraceSYS,%20quienes%20tenemos%20a%20cargo%20la%20reparacion%20de%20tu%20producto,%20queremos%20comunicarnos%20contigo.`"
-          target="_blank"
-          ><button class="boton-classic">WPP</button></a
-        >
+
 
         <div class="card-body table-full-width">
           <table class="table-striped p-4">
@@ -156,6 +154,11 @@
                       <button class="boton-classic" type="submit">
                         Derivar
                       </button>
+                      <a
+          v-bind:href="`https://api.whatsapp.com/send?phone=${telefonoCliente}&text=%C2%A1Hola%20${nombreCliente}!%20Somos%20de%20TraceSYS,%20quienes%20tenemos%20a%20cargo%20la%20reparacion%20de%20tu%20producto,%20queremos%20comunicarnos%20contigo.`"
+          target="_blank"
+          ><button class="boton-classic">WPP</button></a
+        >
                     </div>
                   </div>
                 </div>
@@ -294,7 +297,7 @@ export default {
         )
         .then((response) => {
           this.sectoresADerivar = response.data.sectors;
-          console.log("sectores", this.sectoresADerivar);
+          console.log("sectoressssasdasd", this.sectoresADerivar);
         })
         .catch((error) => {
           console.log("Error: " + error);
