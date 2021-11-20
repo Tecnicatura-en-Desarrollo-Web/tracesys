@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                     <tr
-                    v-for="report in reports" :v-bind="report.report.report_id" v-if="report.sector_id == empleado_sector_id || empleado_sector_id==1"
+                    v-for="report in reports" :v-bind="report.report.report_id" v-if="(report.sector_id == empleado_sector_id || empleado_sector_id==1) && report.ultimoEstado==1"
                     >
                     <td>{{ report.report.report_id }}</td>
                     <td>{{ report.fecha }}</td>
@@ -51,22 +51,28 @@
             </table>
             </div>
             </div>
-
+        <historialInformesDerivados :reports="reportsDerivadosEmpleado" ref="historialInformesDerivados">
+        </historialInformesDerivados>
         </div>
+
     </ul>
   </div>
 </template>
 <script>
 import DetalleInforme from "../Informes/DetalleInforme.vue";
+import historialInformesDerivados from "../Informes/HistorialInformesDerivados.vue";
 export default {
     components: {
         DetalleInforme,
+        historialInformesDerivados:historialInformesDerivados
     },
     data() {
         return {
         reports: [],
         nombre_sector: "",
         empleado_sector_id: null,
+        empleado_id:null,
+        reportsDerivadosEmpleado:[]
         };
     },
     mounted() {
@@ -76,6 +82,7 @@ export default {
         // this.envioEmail(this.$route.query);
 
     this.getPosts(this.$route.query);
+    this.obtenerInformesDerivados();
   },
   methods: {
         // probandoApi(){
@@ -108,24 +115,15 @@ export default {
                 console.log("Error: " + error);
                 });
         },
-        // obtenerSugerencias(query) {
-        // axios
-        //     .get(`/api/problemasugerencias/issuesByReport/${this.idInforme}`, {
-        //     params: query,
-        //     })
-        //     .then((response) => {
-        //     if (response.data.suggestions[0] != null) {
-        //         console.log("entro jonaaaaaaaa");
-        //         this.sugerencias = response.data.suggestions;
-        //         this.idIssuesSelect =
-        //         response.data.suggestions[0].problemasugerencia_id;
+        obtenerInformesDerivados(){
+            axios
+                .get(`api/informeempleadoestados/obtenerInformesDerivados/${this.empleado_id}`)
+                    .then((response) => {
+                        console.log("informes derivados",response);
+                        this.reportsDerivadosEmpleado=response.data;
+                })
+        },
 
-        //     }
-        //     })
-        //     .catch((error) => {
-        //     console.log("Error: " + error);
-        //     });
-        // },
     },
     created() {
         if (!this.$session.exists()) {
@@ -137,6 +135,7 @@ export default {
             this.nombre_sector = this.$session.get("nombre_sector");
             this.empleado_stage_id = this.$session.get("etapa_id");
             this.empleado_sector_id = this.$session.get("sector_id");
+            this.empleado_id = this.$session.get("user_id");
         }
     },
 };

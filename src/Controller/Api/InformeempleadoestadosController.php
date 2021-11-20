@@ -54,6 +54,31 @@ class InformeempleadoestadosController extends AppController
 
         return $this->setJsonResponse($informeempleadoestados);
     }
+    public function obtenerInformesDerivados($idEmpleado){
+        $this->paginate = [
+            'contain' => ['Employees.Users.Sectors.Stages', 'States', 'Reports', 'Reports.Products', 'Sectors'],
+            'conditions' => ['Employees.employee_id' => $idEmpleado]
+        ];
+        $objInformeEmpleadoComentarios=new InformeempleadocomentariosTable();
+        $informeempleadoestados = $this->paginate($this->Informeempleadoestados);
+        foreach ($informeempleadoestados as $cambioEstadoInforme) {
+            $comentario=$objInformeEmpleadoComentarios->find()
+            ->contain(['Commentsemployees'])
+            //->where(['report_id' => $cambioEstadoInforme->report->report_id])
+            ->where(['informeempleadocomentario_id' => $idEmpleado , 'report_id' => $cambioEstadoInforme->report->report_id])
+            ->first();
+            $cambioEstadoInforme->{"comentario"} = $comentario;
+            $datetime=$cambioEstadoInforme->created;
+            $phpdate = strtotime((String)$datetime);
+            if($phpdate==false){
+                $phpdate=12;
+            }
+            $cambioEstadoInforme->{"fecha"} = date( 'd-m-y', $phpdate);
+            $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
+        }
+        return $this->setJsonResponse($informeempleadoestados);
+
+    }
     public function informesCambiosEstados($id = null)
     {
 
