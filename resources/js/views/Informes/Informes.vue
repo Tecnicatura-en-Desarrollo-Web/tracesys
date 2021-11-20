@@ -10,6 +10,20 @@
                 <p class="colorp" style="font-size:15px;">Se muestra el listado de informes correspondientes a su sector</p>
 
             <div class="card-body table-full-width">
+            <div class="row px-4">
+                <div class="col col-lg-3">
+                        <input type="text" class="botonFiltro" name="filtroFecha"  v-model="filtroPorFecha" placeholder="Filtrar por fecha"/>
+                </div>
+                <div class="col col-lg-3">
+                    <input type="text" class="botonFiltro" name="filtroProducto"  v-model="filtroPorProducto" placeholder="Filtrar por producto"/>
+                </div>
+                <div class="col col-lg-3">
+                    <input type="text" class="botonFiltro" name="filtroMotivo" v-model="filtroPorMotivo" placeholder="Filtrar por motivo de reparacion"/>
+                </div>
+                <!-- <div class="col col-lg-3">
+                    <input type="text" class="form-control" v-model="filtroPorMotivo" placeholder="Filtrar por motivo de reparacion"/>
+                </div> -->
+            </div>
 
                 <table class="table-striped p-4 ">
                 <thead>
@@ -23,11 +37,20 @@
                     <th scope="col">Ver</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     <tr
-                    v-for="report in reports" :v-bind="report.report.report_id" v-if="(report.sector_id == empleado_sector_id || empleado_sector_id==1) && report.ultimoEstado==1"
+                    v-for="report in reports" :v-bind="report.report.report_id"
+                    v-if="(report.sector_id == empleado_sector_id || empleado_sector_id==1)
+                    && report.ultimoEstado==1
+                    && report.report.product.motivo.toLowerCase().includes(filtroPorMotivo.toLowerCase())
+                    && report.fecha.toLowerCase().includes(filtroPorFecha.toLowerCase())
+                    && report.report.product.tipo.toLowerCase().includes(filtroPorProducto.toLowerCase())
+                    "
                     >
+
                     <td>{{ report.report.report_id }}</td>
+
                     <td>{{ report.fecha }}</td>
                     <td>{{ report.hora }}</td>
                     <td>{{ report.report.product.tipo }}</td>
@@ -46,8 +69,10 @@
                         </router-link
                         >
                     </td>
+
                     </tr>
                 </tbody>
+
             </table>
             </div>
             </div>
@@ -72,7 +97,10 @@ export default {
         nombre_sector: "",
         empleado_sector_id: null,
         empleado_id:null,
-        reportsDerivadosEmpleado:[]
+        reportsDerivadosEmpleado:[],
+        filtroPorProducto:'',
+        filtroPorFecha:'',
+        filtroPorMotivo:'',
         };
     },
     mounted() {
@@ -165,6 +193,30 @@ export default {
         opacity: 1;
         color:#198754
     }
+
+    .slide-fade-enter-active {
+        transition: all .5s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to
+        /* .slide-fade-leave-active below version 2.1.8 */ {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+    .botonFiltro:hover{
+        border-color: #bdbdbd;
+        box-shadow: none;
+
+    }
+    .botonFiltro:focus{
+        outline:none !important;
+        box-shadow: 0 0 2px #3b697885;
+    }
+
+
+
 </style>
 
 
