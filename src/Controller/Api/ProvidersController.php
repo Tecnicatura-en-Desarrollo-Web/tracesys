@@ -124,6 +124,7 @@ class ProvidersController extends AppController
         $mailer
             ->setEmailFormat('html')
             ->setTo($proveedor['email'])
+
             ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
             ->setSubject('Solicitud de presupuesto de producto')
 
@@ -141,5 +142,11 @@ class ProvidersController extends AppController
                         </table>
                 ');
         $mailer->deliver();
+
+        return $this->setJsonResponse(
+            [
+                'message' => true,
+            ],
+        );
     }
 }

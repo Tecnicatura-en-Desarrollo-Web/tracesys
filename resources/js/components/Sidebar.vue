@@ -3,75 +3,119 @@
     <!-- <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
         <i class="fas fa-bars">GHFGHFGHFGH</i>
         </a> -->
-        <nav id="sidebar" class="sidebar-wrapper shadow-sm">
-
-        <div class="sidebar-content "  >
-            <div class="sidebar-header">
-                <div class="user-pic">
-                    <icon class="iconoUser" name="user-circle" width="40px" height="40px" />
-                    <!-- <img
+    <nav id="sidebar" class="sidebar-wrapper shadow-sm">
+      <div class="sidebar-content">
+        <div class="sidebar-header">
+          <div class="user-pic">
+            <icon
+              class="iconoUser"
+              name="user-circle"
+              width="40px"
+              height="40px"
+            />
+            <!-- <img
                     class="img-responsive img-rounded"
                     src="../../img/NicePng_usuario-png_2022264.png"
                     alt="User picture"
                     /> -->
-                </div>
-                <div class="user-info">
-                    <span class="user-name">
-                    <strong>{{ nombreUsuario }}</strong>
-                    </span>
-                    <span class="user-role">{{ sector }}</span>
-                </div>
-            </div>
-            <div class="noScroll sidebar-menu">
-            <ul>
-                <li id="1" class='header-menu' v-on:click="focus(1)">
-                    <router-link to="/home" class-active="nav-link"
-                    >
-                    <!-- <b-icon-shop class="icono" style="width: 25px; height: 25px;"></b-icon-shop> -->
-                    <icon class="icono" name="home-fill" width="25px" height="25px" />
-                    Home</router-link>
-                </li>
-                <li id="2" class="header-menu" v-on:click="focus(2)">
-                    <router-link to="/reports" class="jona"
-                    >
-                    <!-- <b-icon-file-text class="icono" style="width: 25px; height: 25px;"></b-icon-file-text> -->
-                    <icon class="icono" name="clipboard-list" width="25px" height="25px" />
-                    Informes</router-link>
-                </li>
-                <li id="3" class="header-menu" v-on:click="focus(3)" v-if='empleadoEtapa==1'>
-                    <router-link to="/informes/crear" class="jona"
-                        >
-                        <!-- <b-icon-journal-arrow-up class="icono" style="width: 25px; height: 25px;"></b-icon-journal-arrow-up> -->
-                        <icon class="icono" name="file-signature" width="25px" height="25px" />
-                        Cargar informe</router-link>
-                </li>
-                <li id="4" class="header-menu" v-on:click="focus(4)" v-if='empleadoEtapa==1'>
-                <router-link to="/sector/crear" class="jona"
-                    >
-                    <!-- <b-icon-bookmark class="icono" style="width: 25px; height: 25px;"></b-icon-bookmark> -->
-                    <icon class="icono" name="file-signature" width="25px" height="25px" />
-                    Registrar sector</router-link>
-                </li>
-                <li id="5" class="header-menu" v-on:click="focus(5)" v-if='empleadoEtapa==1'>
-                    <router-link to="/sector/ver" class="jona"
-                    >
-                    <!-- <b-icon-bookmark class="icono" style="width: 25px; height: 25px;"></b-icon-bookmark> -->
-                    <icon class="icono" name="list-ol" width="25px" height="25px" />
-                    Ver sectores</router-link>
-                </li>
-                <li id="6" class="header-menu" v-on:click="focus(6)" v-if='empleadoEtapa==2'>
-                    <router-link to="/suggestion/crear" class="jona">
-                    <!-- <b-icon-bookmark class="icono" style="width: 25px; height: 25px;"></b-icon-bookmark> -->
-                    <icon class="icono" name="file-signature" width="25px" height="25px" />
-                    Crear sugerencia</router-link>
-                </li>
-                <li
-                  id="7"
-                  class="header-menu"
-                  v-on:click="focus(7)"
-                  v-if="empleadoEtapa == 1"
-                >
-              <router-link to="/provider/crear"
+          </div>
+          <div class="user-info">
+            <span class="user-name">
+              <strong>{{ nombreUsuario }}</strong>
+            </span>
+            <span class="user-role">{{ sector }}</span>
+          </div>
+        </div>
+        <div class="noScroll sidebar-menu">
+          <ul>
+            <li id="1" class="header-menu" v-on:click="focus(1)">
+              <router-link to="/home" class-active="nav-link">
+                <icon
+                  class="icono"
+                  name="home-fill"
+                  width="25px"
+                  height="25px"
+                />
+                Home</router-link
+              >
+            </li>
+            <li id="2" class="header-menu" v-on:click="focus(2)">
+              <router-link to="/reports" class="jona">
+                <icon
+                  class="icono"
+                  name="clipboard-list"
+                  width="25px"
+                  height="25px"
+                />
+                Informes</router-link
+              >
+            </li>
+            <li
+              id="3"
+              class="header-menu"
+              v-on:click="focus(3)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/informes/crear" class="jona">
+                <icon
+                  class="icono"
+                  name="file-signature"
+                  width="25px"
+                  height="25px"
+                />
+                Cargar informe</router-link
+              >
+            </li>
+            <li
+              id="4"
+              class="header-menu"
+              v-on:click="focus(4)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/sector/crear" class="jona">
+                <icon
+                  class="icono"
+                  name="file-signature"
+                  width="25px"
+                  height="25px"
+                />
+                Registrar sector</router-link
+              >
+            </li>
+            <li
+              id="5"
+              class="header-menu"
+              v-on:click="focus(5)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/sector/ver" class="jona">
+                <icon class="icono" name="list-ol" width="25px" height="25px" />
+                Ver sectores</router-link
+              >
+            </li>
+            <li
+              id="6"
+              class="header-menu"
+              v-on:click="focus(6)"
+              v-if="empleadoEtapa == 2"
+            >
+              <router-link to="/suggestion/crear" class="jona">
+                <icon
+                  class="icono"
+                  name="file-signature"
+                  width="25px"
+                  height="25px"
+                />
+                Crear sugerencia</router-link
+              >
+            </li>
+            <li
+              id="7"
+              class="header-menu"
+              v-on:click="focus(7)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/proveedor/crear"
                 ><b-icon-bookmark
                   class="icono"
                   style="width: 25px; height: 25px"
@@ -79,8 +123,21 @@
                 >Cargar Proveedor</router-link
               >
             </li>
-            </ul>
-            </div>
+            <li
+              id="8"
+              class="header-menu"
+              v-on:click="focus(8)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/proveedor/solicitud"
+                ><b-icon-bookmark
+                  class="icono"
+                  style="width: 25px; height: 25px"
+                ></b-icon-bookmark
+                >Solicitar Repuesto</router-link
+              >
+            </li>
+          </ul>
         </div>
       </div>
     </nav>

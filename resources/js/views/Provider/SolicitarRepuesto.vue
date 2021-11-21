@@ -145,7 +145,13 @@ export default {
           headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-          console.log(response);
+          if (response.data.message) {
+            this.$swal({
+              title: "Presupuesto enviado",
+              type: "success",
+              timer: 1500,
+            });
+          }
         });
     },
   },
