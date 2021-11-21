@@ -47,6 +47,7 @@ class InformeempleadoestadosController extends AppController
                 $phpdate=12;
             }
             $cambioEstadoInforme->{"fecha"} = date( 'd-m-y', $phpdate);
+            $cambioEstadoInforme->{"fechaConDia"} = date( 'D-m-y', $phpdate);
             $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
 
         }
@@ -77,6 +78,49 @@ class InformeempleadoestadosController extends AppController
             $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
         }
         return $this->setJsonResponse($informeempleadoestados);
+
+    }
+    public function cantInformesPorEmpleado($idEmpleado){
+
+        $conditions=[
+            ['estaSemana','created > DATE_SUB(NOW(), INTERVAL 1 WEEK)'],
+            ['semanaPasada','created < DATE_SUB(NOW(), INTERVAL 1 WEEK)'],
+            ['esteMes','created > DATE_SUB(NOW(), INTERVAL 1 MONTH)'],
+            ['mesPasado','created < DATE_SUB(NOW(), INTERVAL 1 MONTH)']
+        ];
+        foreach ($conditions as $condition) {
+            $cantInformes = $this->Informeempleadoestados->find()
+            ->where([$condition[1] , ['employee_id'=>$idEmpleado]])
+            ->count();
+            $infoCantInformes[$condition[0]]=$cantInformes;
+        }
+        setlocale(LC_TIME, "spanish");
+        $mesPasado=ucfirst(strftime('%B', strtotime("last month")));
+        $mesActual=ucfirst(strftime('%B'));
+        return $this->setJsonResponse([
+            'data' => $infoCantInformes,
+            'options' => [$mesPasado , $mesActual]
+        ]);
+
+    }
+    public function cantInformesPorSector(){
+        $objSector=new SectorsTable();
+        $sectores=$objSector->find('all')
+        ->where(["stage_id"=>3]);
+        $nombresSectores=[];
+        $cantPorSector=[];
+        foreach ($sectores as $sector) {
+            $cantInformes = $this->Informeempleadoestados->find()
+                ->where(['sector_id'=>$sector->sector_id , 'ultimoEstado'=>1])
+                ->count();
+            array_push($nombresSectores,$sector->nombre_sector);
+            array_push($cantPorSector,$cantInformes);
+
+        }
+        return $this->setJsonResponse([
+            'data' => $cantPorSector,
+            'labels' => $nombresSectores
+        ]);
 
     }
     public function informesCambiosEstados($id = null)
