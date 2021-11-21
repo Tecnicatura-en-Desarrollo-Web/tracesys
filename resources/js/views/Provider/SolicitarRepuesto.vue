@@ -13,9 +13,62 @@
           <input
             type="text"
             class="form-control"
-            name="nombre_sector"
-            v-model="nombre_sector"
+            id="motivo"
+            @input="debounceSearch"
+            placeholder="Ingrese nombre del repuesto"
+            autocomplete="off"
           />
+          <transition name="slide-fade">
+            <div v-if="existenProveedores" @keyup.13="ocultarCuadrito">
+              <select
+                name="proveedor"
+                class="selectProveedor form-select"
+                size="5"
+              >
+                <option
+                  v-for="repuesto in repuestos"
+                  v-bind:value="repuesto[0].provider.provider_id"
+                >
+                  {{ repuesto[0].provider.nombre }}
+                </option>
+              </select>
+            </div>
+          </transition>
+          <div v-if="escribiendo && realizoBusqueda == false">
+            <span class="visually-show">buscando proveedores...</span>
+            <div
+              class="colorSpinner spinner-border spinner-border-sm"
+              role="status"
+            ></div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-12">
+          <div class="form-group">
+            <label for="product_name"
+              >Cantidad<small
+                class="font-weight-bold text-primary"
+                id="obligatory_field"
+                >*</small
+              ></label
+            >
+            <input type="text" class="form-control" name="cantidad" />
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-group">
+            <label for="product_name"
+              >Comentarios<small
+                class="font-weight-bold text-primary"
+                id="obligatory_field"
+                >*</small
+              ></label
+            >
+            <textarea
+              class="form-control"
+              style="height: 100px"
+              name="mensaje"
+            />
+          </div>
         </div>
         <div class="col-12 d-flex justify-content-center">
           <button class="boton-classic" type="submit">Enviar solicitud</button>
@@ -36,11 +89,47 @@ export default {
       orden: 4,
       apellido: "",
       domicilio: "",
+      repuestos: [],
+      existenProveedores: false,
+      escribiendo: false,
+      realizoBusqueda: false,
     };
   },
   methods: {
+    debounceSearch(event) {
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(() => {
+        this.escribiendo = true;
+        this.buscarProveedorDeRepuesto(event.target.value);
+      }, 700);
+    },
+    ocultarCuadrito() {
+      this.existenProveedores = false;
+    },
+    buscarProveedorDeRepuesto(repuesto) {
+      //console.log(repuesto);
+
+      axios
+        .post(`/api/proveedorrepuestos/buscarSimilitud/${repuesto}`, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then((response) => {
+          this.realizoBusqueda = true;
+          console.log(response.data[0]);
+          this.repuestos = response.data[0];
+
+          if (
+            typeof this.repuestos === "undefined" ||
+            this.repuestos.length == 0
+          ) {
+            this.existenProveedores = false;
+            this.escribiendo = false;
+          } else {
+            this.existenProveedores = true;
+          }
+        });
+    },
     onSubmit(event) {
-      var cantidadSectores = 0;
       let query = this.$route.query;
 
       if (query.sort !== "undefined" && query.direction) {
@@ -52,29 +141,34 @@ export default {
         empty: true,
       });
       axios
-        .get("/api/sectors/obtenerEstadosDeEtapa/3", { params: query })
+        .post("/api/providers/solicitarPresupuesto", data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
         .then((response) => {
-          cantidadSectores = response.data.sectores.length;
-          data += "&orden=" + (cantidadSectores + 1) + "&stage_id=3";
-          console.log("aca sale data", data);
-          axios
-            .post("/api/sectors/save", data, {
-              headers: { "X-Requested-With": "XMLHttpRequest" },
-            })
-            .then((response) => {
-              console.log(response);
-              if (response.data.message) {
-                this.$swal({
-                  title: "Sector creado",
-                  type: "success",
-                  timer: 1500,
-                }).then((result) => {
-                  window.location.href = "http://localhost:8765/sector/ver";
-                });
-              }
-            });
+          console.log(response);
         });
     },
   },
 };
 </script>
+
+<style scoped>
+.selectProveedor {
+  height: 80px;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+.colorSpinner {
+  color: #6d9886;
+}
+</style>

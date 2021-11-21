@@ -57,6 +57,10 @@ class ProveedorrepuestosTable extends Table
             'foreignKey' => 'provider_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Replacements', [
+            'foreignKey' => 'proveedorrepuesto_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**

@@ -139,4 +139,18 @@ class ProveedorrepuestosController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function buscarSimilitud($repuesto = "")
+    {
+        $repuestosBD = $this->Proveedorrepuestos->find()
+            ->contain(['Replacements', 'Providers'])
+            ->where(['Replacements.descripcion LIKE' => '%' . $repuesto . '%'])
+            ->groupBy('provider_id');
+
+        return $this->setJsonResponse(
+            [
+                $repuestosBD,
+            ],
+        );
+    }
 }
