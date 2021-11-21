@@ -15,6 +15,8 @@ import verSectores from './views/Sector/VerSectores.vue';
 import login from './views/Register/Login.vue';
 import activacion from './views/Register/Activacion.vue';
 import Suggestion from './views/Suggestion/CrearSuggestion.vue';
+import CrearProveedor from './views/Provider/CrearProveedor.vue';
+import SolicitarRepuesto from './views/Provider/SolicitarRepuesto.vue';
 import app from './views/App.vue';
 
 export const routes = new VueRouter({
@@ -110,6 +112,16 @@ export const routes = new VueRouter({
             path: '/suggestion/crear',
             name: 'Suggestion',
             component: Suggestion,
+        },
+        {
+            path: '/proveedor/crear',
+            name: 'CrearProveedor',
+            component: CrearProveedor,
+        },
+        {
+            path: '/proveedor/solicitud',
+            name: 'SolicitarRepuesto',
+            component: SolicitarRepuesto,
         },
         {
             path: "*",

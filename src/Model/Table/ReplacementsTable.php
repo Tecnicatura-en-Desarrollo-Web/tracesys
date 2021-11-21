@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -58,7 +59,7 @@ class ReplacementsTable extends Table
             ->integer('replacement_id')
             ->allowEmptyString('replacement_id', null, 'create');
 
-        $validator
+        /* $validator
             ->scalar('marca')
             ->maxLength('marca', 255)
             ->requirePresence('marca', 'create')
@@ -84,7 +85,7 @@ class ReplacementsTable extends Table
         $validator
             ->integer('cantidad')
             ->requirePresence('cantidad', 'create')
-            ->notEmptyString('cantidad');
+            ->notEmptyString('cantidad'); */
 
         return $validator;
     }

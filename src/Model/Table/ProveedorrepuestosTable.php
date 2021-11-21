@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -56,6 +57,10 @@ class ProveedorrepuestosTable extends Table
             'foreignKey' => 'provider_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Replacements', [
+            'foreignKey' => 'proveedorrepuesto_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     /**
@@ -65,11 +70,11 @@ class ProveedorrepuestosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
+    /*     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['proveedorrepuesto_id'], 'Proveedorrepuestos'), ['errorField' => 'proveedorrepuesto_id']);
         $rules->add($rules->existsIn(['provider_id'], 'Providers'), ['errorField' => 'provider_id']);
 
         return $rules;
-    }
+    } */
 }
