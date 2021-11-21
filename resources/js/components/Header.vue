@@ -6,11 +6,16 @@
       <ul class="right">
         <li class="header-menu">
           <router-link :to="{ name: 'profile' }" class="nav-link"
-            >Profile <b-icon-file-person-fill></b-icon-file-person-fill>
+            >Profile
+            <!-- <b-icon-file-person-fill></b-icon-file-person-fill> -->
+            <icon class="iconosHeader" name="user-cog" width="13px" height="13px" />
               </router-link
           >
         </li class="header-menu">
-        <li><a class="nav-link" @click="logout()">Logout <b-icon-box-arrow-right></b-icon-box-arrow-right></a></li>
+        <li><a class="nav-link" @click="logout()">Logout
+            <!-- <b-icon-box-arrow-right></b-icon-box-arrow-right> -->
+            <icon class="iconosHeader" name="door-open" width="15px" height="15px" />
+            </a></li>
       </ul>
     </div>
   </nav>
@@ -49,5 +54,7 @@ export default {
 };
 </script>
 <style>
-
+.iconosHeader{
+    margin-bottom: 3px;
+}
 </style>

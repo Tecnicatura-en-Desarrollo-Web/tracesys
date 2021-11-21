@@ -16,9 +16,14 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import { normalizeUnits, now } from 'moment';
 import Multiselect from 'vue-multiselect';
 import loader from "vue-ui-preloader";
+import VueApexCharts from 'vue-apexcharts'
+import icons from "v-svg-icons";
+
 
 window.axios = axios;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+Vue.use(VueApexCharts);
+Vue.component("icon", icons);
 Vue.use(VueSweetalert2);
 Vue.use(Notifications);
 Vue.use(Vuex);

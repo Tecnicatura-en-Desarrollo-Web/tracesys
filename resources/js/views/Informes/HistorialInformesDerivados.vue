@@ -5,7 +5,17 @@
                 <p class="colorp" style="font-size:15px;">Se muestra el historial de informes derivados</p>
 
             <div class="card-body table-full-width">
-
+                <div class="row px-4">
+                    <div class="col col-lg-3">
+                            <input type="text" class="botonFiltro" name="filtroFecha"  v-model="filtroPorFecha" placeholder="Filtrar por fecha"/>
+                    </div>
+                    <div class="col col-lg-3">
+                        <input type="text" class="botonFiltro" name="filtroProducto"  v-model="filtroPorProducto" placeholder="Filtrar por producto"/>
+                    </div>
+                    <div class="col col-lg-3">
+                        <input type="text" class="botonFiltro" name="filtroMotivo" v-model="filtroPorMotivo" placeholder="Filtrar por motivo de reparacion"/>
+                    </div>
+                </div>
                 <table class="table-striped p-4 ">
                 <thead>
                     <tr class="">
@@ -20,7 +30,11 @@
                 </thead>
                 <tbody>
                     <tr
-                    v-for="(report , index) in reports" :v-bind="report.report.report_id" v-if="report.employee_id == empleado_id"
+                    v-for="(report , index) in reports" :v-bind="report.report.report_id" v-if="report.employee_id == empleado_id
+                    && report.report.product.motivo.toLowerCase().includes(filtroPorMotivo.toLowerCase())
+                        && report.fecha.toLowerCase().includes(filtroPorFecha.toLowerCase())
+                        && report.report.product.tipo.toLowerCase().includes(filtroPorProducto.toLowerCase())
+                    "
                     >
                     <td>{{ report.report.report_id }}</td>
                     <td>{{ report.fecha }}</td>
@@ -79,7 +93,11 @@ export default {
     },
     data(){
         return{
-            empleado_id:null
+            empleado_id:null,
+            //para filtrar busquedas
+            filtroPorProducto:'',
+            filtroPorFecha:'',
+            filtroPorMotivo:'',
         };
     },
     created() {

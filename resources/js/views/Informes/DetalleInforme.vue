@@ -157,7 +157,11 @@
                       <a
           v-bind:href="`https://api.whatsapp.com/send?phone=${telefonoCliente}&text=%C2%A1Hola%20${nombreCliente}!%20Somos%20de%20TraceSYS,%20quienes%20tenemos%20a%20cargo%20la%20reparacion%20de%20tu%20producto,%20queremos%20comunicarnos%20contigo.`"
           target="_blank"
-          ><button class="boton-classic">WPP</button></a
+          >
+
+
+          <button class="boton-redondo"><icon name="whatsapp" width="40px" height="40px" /></button>
+          </a
         >
                     </div>
                   </div>
@@ -468,5 +472,6 @@ export default {
 .selectSector :hover {
   background-color: chocolate;
 }
+
 </style>
 
