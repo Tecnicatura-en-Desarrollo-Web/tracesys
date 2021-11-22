@@ -166,22 +166,16 @@
                   ></label
                 >
                 <input type="text" class="form-control" name="motivo" id="motivo" @input="debounceSearch" placeholder="Ingrese problema , por ejemplo Pantalla rota" autocomplete="off"/>
-                <!-- <div id="emailHelp" class="form-text">
-                  Debe agregar el problema en palabras claves, por ejemplo:
-                  "Pantalla en negro"
-                </div> -->
-                    <!-- <div v-if="realizoBusqueda && detenerSpiner==false">
-                        <span class="visually-show">buscando sugerencias...</span>
-                        <div  class="colorSpinner spinner-border spinner-border-sm" role="status">
-                        </div>
-                    </div> -->
+
                 <transition name="slide-fade">
                     <div v-if="existenProblemas" @keyup.13="ocultarCuadrito">
-                        <select name="" class="selectSinonimos form-select" size="5" >
+                        <select name="" class="selectSinonimos form-select" size="5" v-model="motivo">
                             <option
                             v-for="sinonimo in sinonimos"
                             :key="sinonimo.issue.issue_id"
-                            v-bind:value="sinonimo.issue.issue_id"
+
+                            v-bind:value="sinonimo.issue.titulo"
+
                             >
                                 {{sinonimo.issue.titulo}}
                             </option>
@@ -271,7 +265,7 @@ export default {
     return {
         denominacion: "",
         user_id_loggin: "",
-        motivo:'',
+        motivo:null,
         cuit:'',
         email:'',
         sinonimos:[],
@@ -291,6 +285,7 @@ export default {
       clearTimeout(this.debounce)
       this.debounce = setTimeout(() => {
         this.escribiendo=true;
+        this.motivo=null;
         this.buscarProblemasSimilares(event.target.value);
       }, 700)
 
@@ -326,6 +321,9 @@ export default {
         hash: false,
         empty: true,
       });
+      if(this.motivo!=null){
+        data += "&motivo=" + this.motivo;
+        }
       data += "&user_id_loggin=" + this.user_id_loggin;
       axios
         .post("/api/reports/add", data, {
@@ -338,6 +336,7 @@ export default {
           data += "&idEmpleado=" + response.data.idEmpleado;
           data += "&cuitEmpleado=" + response.data.cuitEmpleado;
           data += "&selectSector=" + 2;
+
           //****************************************************************************/
           console.log(response);
           this.$swal({
@@ -345,6 +344,7 @@ export default {
             type: "success",
             timer: 1500,
           }).then((result) => {
+              window.location = "http://localhost:8765/reports";
             /* this.registrarCambioEstado(data); */
           });
         })
@@ -355,65 +355,65 @@ export default {
             timer: 1500,
           });
         });
-    },
-    registrarCambioEstado(data) {
-      axios
-        .post(`/api/informeempleadoestados/save`, data, {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        })
-        .then((response) => {
-          // Seteo el comentario default "se envia al diagnostico" en la data
-          console.log(response);
-          data += "&idComentarioEmpleado=" + 1;
-          this.registrarComentarioDefault(data);
-        })
-        .catch((error) => {
-          this.$notify({
-            group: "default",
-            type: "error",
-            text: error.response.data.message,
-          });
-          this.errors.add(error.response.data.errors);
-        });
-    },
-    registrarComentarioDefault(data) {
-      axios
-        .post("/api/informeempleadocomentarios/save", data, {
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-        })
-        .then((response) => {
-          console.log(response.data);
-          if (response.data.message) {
-            this.$swal({
-              title: "Informe creado",
-              type: "success",
-              timer: 1500,
+        },
+        registrarCambioEstado(data) {
+        axios
+            .post(`/api/informeempleadoestados/save`, data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+            // Seteo el comentario default "se envia al diagnostico" en la data
+            console.log(response);
+            data += "&idComentarioEmpleado=" + 1;
+            this.registrarComentarioDefault(data);
+            })
+            .catch((error) => {
+            this.$notify({
+                group: "default",
+                type: "error",
+                text: error.response.data.message,
             });
-          }
-        });
-    },
-    validacionCuit(event) {
-      let valor = event.target.value;
-      let cantidadCaracteres = valor.length;
-      let cantidad = valor.split("-").length;
-      let mensaje = document.getElementById("mensajeError");
-      if (cantidad != 3 || cantidadCaracteres != 13) {
-        mensaje.className = "validation d-block";
-      } else {
-        mensaje.className = "validation d-none";
-      }
-    },
-    validacionEmail(event) {
-      let email = event.target.value;
-      let mensaje = document.getElementById("mensajeErrorEmail");
-      if (
-        (email.includes("@") && email.includes(".com")) ||
-        (email.includes("@") && email.includes(".ar"))
-      ) {
-        mensaje.className = "validation d-none";
-      } else {
-        mensaje.className = "validation d-block";
-      }
+            this.errors.add(error.response.data.errors);
+            });
+        },
+        registrarComentarioDefault(data) {
+        axios
+            .post("/api/informeempleadocomentarios/save", data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+            console.log(response.data);
+            if (response.data.message) {
+                this.$swal({
+                title: "Informe creado",
+                type: "success",
+                timer: 1500,
+                });
+            }
+            });
+        },
+        validacionCuit(event) {
+        let valor = event.target.value;
+        let cantidadCaracteres = valor.length;
+        let cantidad = valor.split("-").length;
+        let mensaje = document.getElementById("mensajeError");
+        if (cantidad != 3 || cantidadCaracteres != 13) {
+            mensaje.className = "validation d-block";
+        } else {
+            mensaje.className = "validation d-none";
+        }
+        },
+        validacionEmail(event) {
+        let email = event.target.value;
+        let mensaje = document.getElementById("mensajeErrorEmail");
+        if (
+            (email.includes("@") && email.includes(".com")) ||
+            (email.includes("@") && email.includes(".ar"))
+        ) {
+            mensaje.className = "validation d-none";
+        } else {
+            mensaje.className = "validation d-block";
+        }
     },
   },
   /*   validacionCodigoPais(event) {

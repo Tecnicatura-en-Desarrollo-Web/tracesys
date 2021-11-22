@@ -18,6 +18,7 @@ use App\Model\Table\EmployeesTable;
 use App\Model\Table\InformeempleadoestadosTable;
 use App\Model\Table\IssuesTable;
 use App\Model\Table\UsersTable;
+use Cake\Mailer\Mailer;
 
 /**
  * Reports Controller
@@ -98,20 +99,23 @@ class ReportsController extends AppController
 
         $classClients = new ClientsTable();
         $client = $classClients->newEmptyEntity();
+        $cuentaCliente=$this->crearCuentaCliente($dataVue["denominacion"],$dataVue["cuit"]);
         $dataClients = [
             "cuit" => $dataVue["cuit"],
             "denominacion" => $dataVue["denominacion"],
             "domicilio" => $dataVue["direccion"],
             "email" => $dataVue["email"],
-            "password" => "123",
-            "usuario" => "prueba",
+            "password" => $cuentaCliente["password"],
+            "usuario" => $cuentaCliente["usuario"],
             "telefono" =>  $dataVue["codigo_pais"] . $dataVue["codigo_area"] . $dataVue["telefono"],
         ];
-
         $client = $classClients->patchEntity($client, $dataClients);
 
         $resultUser = $classClients->save($client);
+
+        $this->envioEmail($resultUser["usuario"],$resultUser["password"]);
         $idCliente = $resultUser["client_id"];
+
 
         if ($resultUser !== false) {
 
@@ -130,6 +134,7 @@ class ReportsController extends AppController
             $product = $classProduct->patchEntity($product, $dataProduct);
 
             $resultProduct = $classProduct->save($product);
+
             $idProduct = $resultProduct["product_id"];
 
             if ($resultProduct !== false) {
@@ -198,9 +203,60 @@ class ReportsController extends AppController
                     }
                 }
             }
+
         }
     }
+    public function crearCuentaCliente($nombreCliente,$cuitCliente){
+        $arrayNombre=explode(" ", strtolower($nombreCliente));
+        $nombreUsuario="";
+        if($arrayNombre!=null){
+            $mitadPalabra = strlen($arrayNombre[0]) / 2;
+            $parte1Palabra = substr($arrayNombre[0], 0, intval($mitadPalabra));
+            $nombreUsuario.=$parte1Palabra;
+        }
+        if(count($arrayNombre)>1){
+            $mitadPalabra = strlen($arrayNombre[1]) / 2;
+            $parte1Palabra = substr($arrayNombre[1], 0, intval($mitadPalabra));
+            $nombreUsuario.=$parte1Palabra;
+        }
+        $arrayPassword=explode("-", $cuitCliente);
+        $nombreUsuario.=substr($arrayPassword[1], 0, 2);;
+        $cuentaUsuario["usuario"]=$nombreUsuario;
+        $cuentaUsuario["password"]=$arrayPassword[1];
 
+        return $cuentaUsuario;
+
+
+
+    }
+    public function envioEmail($user,$pass)
+    {
+
+        $mailer = new Mailer();
+        $mailer->setTransport('gmail');
+        $mailer
+            ->setEmailFormat('html')
+            ->setTo('yonamixlfr@gmail.com')
+            ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
+            ->setSubject('Usuario para utilizar la app Tracesys')
+
+            ->deliver('
+                            <table>
+                            <tr>
+                            <img src="https://i.ibb.co/jZcV0Lb/logo-Tracesysy-Chiquito.png" alt="Logo del sistema" />
+                                    <hr>
+                                    <p>Se le envia este email para notificarle que ya tiene disponible su cuenta para utilizar nuestra app de Tracesys
+                                    <hr>
+                                    <b>Usuario:</b> "'.$user.'"
+                                    <b>Contraseña:</b> "'.$pass.'"
+                                     </p>
+                            </tr>
+                            </table>
+                    ');
+
+
+        $mailer->deliver();
+    }
     /**
      * Edit method
      *
