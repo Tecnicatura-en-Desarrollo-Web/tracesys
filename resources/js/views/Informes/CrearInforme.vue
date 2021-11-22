@@ -17,7 +17,12 @@
                     >*</small
                   ></label
                 >
-                <input type="text" class="form-control" name="denominacion" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="denominacion"
+                  required
+                />
               </div>
             </div>
             <div class="col-lg-2 col-12">
@@ -35,6 +40,7 @@
                   name="cuit"
                   v-model="cuit"
                   @change="validacionCuit($event)"
+                  required
                 />
                 <div
                   class="validation d-none"
@@ -66,7 +72,12 @@
                     >*</small
                   ></label
                 >
-                <input type="number" class="form-control" name="codigo_area" />
+                <input
+                  type="number"
+                  class="form-control"
+                  name="codigo_area"
+                  required
+                />
               </div>
             </div>
             <div class="col-lg-3 col-12">
@@ -96,6 +107,7 @@
                   name="email"
                   v-model="email"
                   @change="validacionEmail($event)"
+                  required
                 />
                 <div
                   class="validation d-none"
@@ -115,7 +127,12 @@
                     >*</small
                   ></label
                 >
-                <input type="text" class="form-control" name="direccion" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="direccion"
+                  required
+                />
               </div>
             </div>
             <hr />
@@ -129,7 +146,7 @@
                     >*</small
                   ></label
                 >
-                <input type="text" class="form-control" name="tipo" />
+                <input type="text" class="form-control" name="tipo" required />
               </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -141,7 +158,7 @@
                     >*</small
                   ></label
                 >
-                <input type="text" class="form-control" name="marca" />
+                <input type="text" class="form-control" name="marca" required />
               </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -153,7 +170,12 @@
                     >*</small
                   ></label
                 >
-                <input type="text" class="form-control" name="modelo" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="modelo"
+                  required
+                />
               </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -165,32 +187,45 @@
                     >*</small
                   ></label
                 >
-                <input type="text" class="form-control" name="motivo" id="motivo" @input="debounceSearch" placeholder="Ingrese problema , por ejemplo Pantalla rota" autocomplete="off"/>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="motivo"
+                  id="motivo"
+                  @input="debounceSearch"
+                  placeholder="Ingrese problema , por ejemplo Pantalla rota"
+                  autocomplete="off"
+                />
 
                 <transition name="slide-fade">
-                    <div v-if="existenProblemas" @keyup.13="ocultarCuadrito">
-                        <select name="" class="selectSinonimos form-select" size="5" v-model="motivo">
-                            <option
-                            v-for="sinonimo in sinonimos"
-                            :key="sinonimo.issue.issue_id"
+                  <div v-if="existenProblemas" @keyup.13="ocultarCuadrito">
+                    <select
+                      name=""
+                      class="selectSinonimos form-select"
+                      size="5"
+                      v-model="motivo"
+                    >
+                      <option
+                        v-for="sinonimo in sinonimos"
+                        :key="sinonimo.issue.issue_id"
+                        v-bind:value="sinonimo.issue.titulo"
+                      >
+                        {{ sinonimo.issue.titulo }}
+                      </option>
+                    </select>
 
-                            v-bind:value="sinonimo.issue.titulo"
-
-                            >
-                                {{sinonimo.issue.titulo}}
-                            </option>
-                        </select>
-
-                        <div id="emailHelp" class="form-text">
-                            Sugerencias existentes ordenadas por la mas acertada
-                        </div>
+                    <div id="emailHelp" class="form-text">
+                      Sugerencias existentes ordenadas por la mas acertada
                     </div>
+                  </div>
                 </transition>
-                    <div v-if="escribiendo && realizoBusqueda==false">
-                            <span class="visually-show">buscando sugerencias...</span>
-                            <div  class="colorSpinner spinner-border spinner-border-sm" role="status">
-                            </div>
-                    </div>
+                <div v-if="escribiendo && realizoBusqueda == false">
+                  <span class="visually-show">buscando sugerencias...</span>
+                  <div
+                    class="colorSpinner spinner-border spinner-border-sm"
+                    role="status"
+                  ></div>
+                </div>
               </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -209,6 +244,7 @@
                     name="prioridad"
                     id="obligatory_field"
                     value="alta"
+                    required
                   />
                   <label class="form-check-label" for="obligatory_field">
                     Alta
@@ -221,6 +257,7 @@
                     name="prioridad"
                     id="obligatory_field"
                     value="normal"
+                    required
                   />
                   <label class="form-check-label" for="obligatory_field">
                     Normal
@@ -241,6 +278,7 @@
                   class="form-control"
                   style="height: 100px"
                   name="descripcion"
+                  required
                 />
               </div>
             </div>
@@ -260,70 +298,64 @@
 import formSerialize from "form-serialize";
 import Errors from "../../helpers/FormErrors.js";
 export default {
-
   data() {
     return {
-        denominacion: "",
-        user_id_loggin: "",
-        motivo:null,
-        cuit:'',
-        email:'',
-        sinonimos:[],
-        existenProblemas:false,
-        realizoBusqueda:false,
-        detenerSpiner:false,
-        escribiendo:false,
-        message: null,
-        typing: null,
-        debounce: null
+      denominacion: "",
+      user_id_loggin: "",
+      motivo: null,
+      cuit: "",
+      email: "",
+      sinonimos: [],
+      existenProblemas: false,
+      realizoBusqueda: false,
+      detenerSpiner: false,
+      escribiendo: false,
+      message: null,
+      typing: null,
+      debounce: null,
     };
   },
 
   methods: {
     debounceSearch(event) {
-
-      clearTimeout(this.debounce)
+      clearTimeout(this.debounce);
       this.debounce = setTimeout(() => {
-        this.escribiendo=true;
-        this.motivo=null;
+        this.escribiendo = true;
+        this.motivo = null;
         this.buscarProblemasSimilares(event.target.value);
-      }, 700)
-
+      }, 700);
     },
-    ocultarCuadrito(){
-        this.existenProblemas=false;
+    ocultarCuadrito() {
+      this.existenProblemas = false;
     },
-    buscarProblemasSimilares(stringMotivo){
-        axios
+    buscarProblemasSimilares(stringMotivo) {
+      axios
         .post(`/api/issues/verificarExistencia/${stringMotivo}`, {
-                headers: { "X-Requested-With": "XMLHttpRequest" },
-
+          headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-            this.realizoBusqueda=true;
-            this.sinonimos=response.data.sinonimos;
+          this.realizoBusqueda = true;
+          this.sinonimos = response.data.sinonimos;
 
-
-                if(typeof this.sinonimos==='undefined' || this.sinonimos.length==0){
-                    this.existenProblemas=false;
-                    this.escribiendo=false;
-                }else{
-                    this.existenProblemas=true;
-                }
-
+          if (
+            typeof this.sinonimos === "undefined" ||
+            this.sinonimos.length == 0
+          ) {
+            this.existenProblemas = false;
+            this.escribiendo = false;
+          } else {
+            this.existenProblemas = true;
+          }
         });
-
-
-
     },
     onSubmit(event) {
       let data = formSerialize(event.target, {
         hash: false,
         empty: true,
       });
-      if(this.motivo!=null){
+      if (this.motivo != null) {
         data += "&motivo=" + this.motivo;
-        }
+      }
       data += "&user_id_loggin=" + this.user_id_loggin;
       axios
         .post("/api/reports/add", data, {
@@ -344,7 +376,7 @@ export default {
             type: "success",
             timer: 1500,
           }).then((result) => {
-              window.location = "http://localhost:8765/reports";
+            window.location = "http://localhost:8765/reports";
             /* this.registrarCambioEstado(data); */
           });
         })
@@ -355,65 +387,71 @@ export default {
             timer: 1500,
           });
         });
-        },
-        registrarCambioEstado(data) {
-        axios
-            .post(`/api/informeempleadoestados/save`, data, {
-            headers: { "X-Requested-With": "XMLHttpRequest" },
-            })
-            .then((response) => {
-            // Seteo el comentario default "se envia al diagnostico" en la data
-            console.log(response);
-            data += "&idComentarioEmpleado=" + 1;
-            this.registrarComentarioDefault(data);
-            })
-            .catch((error) => {
-            this.$notify({
-                group: "default",
-                type: "error",
-                text: error.response.data.message,
+    },
+    registrarCambioEstado(data) {
+      axios
+        .post(`/api/informeempleadoestados/save`, data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then((response) => {
+          // Seteo el comentario default "se envia al diagnostico" en la data
+          console.log(response);
+          data += "&idComentarioEmpleado=" + 1;
+          this.registrarComentarioDefault(data);
+        })
+        .catch((error) => {
+          this.$notify({
+            group: "default",
+            type: "error",
+            text: error.response.data.message,
+          });
+          this.errors.add(error.response.data.errors);
+        });
+    },
+    registrarComentarioDefault(data) {
+      axios
+        .post("/api/informeempleadocomentarios/save", data, {
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
+        .then((response) => {
+          console.log(response.data);
+          if (response.data.message) {
+            this.$swal({
+              title: "Informe creado",
+              type: "success",
+              timer: 1500,
             });
-            this.errors.add(error.response.data.errors);
-            });
-        },
-        registrarComentarioDefault(data) {
-        axios
-            .post("/api/informeempleadocomentarios/save", data, {
-            headers: { "X-Requested-With": "XMLHttpRequest" },
-            })
-            .then((response) => {
-            console.log(response.data);
-            if (response.data.message) {
-                this.$swal({
-                title: "Informe creado",
-                type: "success",
-                timer: 1500,
-                });
-            }
-            });
-        },
-        validacionCuit(event) {
-        let valor = event.target.value;
-        let cantidadCaracteres = valor.length;
-        let cantidad = valor.split("-").length;
-        let mensaje = document.getElementById("mensajeError");
-        if (cantidad != 3 || cantidadCaracteres != 13) {
-            mensaje.className = "validation d-block";
-        } else {
-            mensaje.className = "validation d-none";
-        }
-        },
-        validacionEmail(event) {
-        let email = event.target.value;
-        let mensaje = document.getElementById("mensajeErrorEmail");
-        if (
-            (email.includes("@") && email.includes(".com")) ||
-            (email.includes("@") && email.includes(".ar"))
-        ) {
-            mensaje.className = "validation d-none";
-        } else {
-            mensaje.className = "validation d-block";
-        }
+          }
+        });
+    },
+    validacionCuit(event) {
+      let valor = event.target.value;
+      let cantidadCaracteres = valor.length;
+      let cantidad = valor.split("-").length;
+      let mensaje = document.getElementById("mensajeError");
+      let botonSubmit = document.getElementById("button_submit");
+      if (cantidad != 3 || cantidadCaracteres != 13) {
+        botonSubmit.disabled = true;
+        mensaje.className = "validation d-block";
+      } else {
+        botonSubmit.disabled = false;
+        mensaje.className = "validation d-none";
+      }
+    },
+    validacionEmail(event) {
+      let email = event.target.value;
+      let mensaje = document.getElementById("mensajeErrorEmail");
+      let botonSubmit = document.getElementById("button_submit");
+      if (
+        (email.includes("@") && email.includes(".com")) ||
+        (email.includes("@") && email.includes(".ar"))
+      ) {
+        botonSubmit.disabled = false;
+        mensaje.className = "validation d-none";
+      } else {
+        botonSubmit.disabled = true;
+        mensaje.className = "validation d-block";
+      }
     },
   },
   /*   validacionCodigoPais(event) {
@@ -437,24 +475,24 @@ export default {
   margin-left: -32px;
   margin-right: -32px;
 }
-.selectSinonimos{
-    height: 80px;
+.selectSinonimos {
+  height: 80px;
 }
 
 /* *****animaciones para sugerencias de problemas****** */
 
 .slide-fade-enter-active {
-  transition: all .5s ease;
+  transition: all 0.5s ease;
 }
 .slide-fade-leave-active {
-  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateX(10px);
   opacity: 0;
 }
-.colorSpinner{
-    color:#6d9886
+.colorSpinner {
+  color: #6d9886;
 }
 </style>

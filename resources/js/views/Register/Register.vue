@@ -13,6 +13,7 @@
             class="form-control"
             name="nombre"
             v-model="nombre"
+            required
           />
         </div>
         <div class="col-md-6">
@@ -21,6 +22,7 @@
             type="text"
             class="form-control"
             name="apellido"
+            required
             v-model="apellido"
           />
         </div>
@@ -32,6 +34,7 @@
             name="cuit"
             v-model="cuit"
             @change="validacionCuit($event)"
+            required
           />
           <div
             class="validation d-none"
@@ -48,6 +51,7 @@
             class="form-control"
             name="telefono"
             v-model="telefono"
+            required
           />
         </div>
         <div class="col-md-6">
@@ -69,6 +73,7 @@
             name="email"
             v-model="email"
             @change="validacionEmail($event)"
+            required
           />
           <div
             class="validation d-none"
@@ -85,6 +90,7 @@
             class="form-control"
             name="usuario"
             v-model="usuario"
+            required
           />
         </div>
         <div class="col-md-6">
@@ -94,10 +100,13 @@
             class="form-control"
             name="password"
             v-model="password"
+            required
           />
         </div>
         <div class="col-12 d-flex justify-content-center">
-          <button class="boton-classic" type="submit">Registrarse</button>
+          <button class="boton-classic" type="submit" id="button_submit">
+            Registrarse
+          </button>
         </div>
       </form>
     </div>
@@ -169,21 +178,27 @@ export default {
       let cantidadCaracteres = valor.length;
       let cantidad = valor.split("-").length;
       let mensaje = document.getElementById("mensajeError");
+      let botonSubmit = document.getElementById("button_submit");
       if (cantidad != 3 || cantidadCaracteres != 13) {
+        botonSubmit.disabled = true;
         mensaje.className = "validation d-block";
       } else {
+        botonSubmit.disabled = false;
         mensaje.className = "validation d-none";
       }
     },
     validacionEmail(event) {
       let email = event.target.value;
       let mensaje = document.getElementById("mensajeErrorEmail");
+      let botonSubmit = document.getElementById("button_submit");
       if (
         (email.includes("@") && email.includes(".com")) ||
         (email.includes("@") && email.includes(".ar"))
       ) {
+        botonSubmit.disabled = false;
         mensaje.className = "validation d-none";
       } else {
+        botonSubmit.disabled = true;
         mensaje.className = "validation d-block";
       }
     },
