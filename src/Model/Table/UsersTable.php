@@ -66,11 +66,11 @@ class UsersTable extends Table
             ->integer('user_id')
             ->allowEmptyString('user_id', null, 'create'); */
 
-        /*         $validator
+        /* $validator
             ->scalar('cuit')
             ->maxLength('cuit', 11)
             ->requirePresence('cuit', 'create')
-            ->notEmptyString('cuit');
+            ->notEmptyString('cuit'); */
 
         $validator
             ->scalar('nombre')
@@ -104,7 +104,7 @@ class UsersTable extends Table
         $validator
             ->integer('telefono')
             ->requirePresence('telefono', 'create')
-            ->notEmptyString('telefono'); */
+            ->notEmptyString('telefono');
 
         $validator
             ->boolean('activo')

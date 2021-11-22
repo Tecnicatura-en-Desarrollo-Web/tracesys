@@ -157,7 +157,8 @@ export default {
             });
           } else {
             this.$swal({
-              title: "Ya existe un usuario con el mismo username",
+              title:
+                "Por favor verifica los datos y que haya cargado todos correctamente",
               type: "error",
               timer: 1500,
             });

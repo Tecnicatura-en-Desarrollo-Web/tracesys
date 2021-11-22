@@ -52,7 +52,7 @@ class CreateUsers extends AbstractMigration
             'limit' => 150,
             'null' => false,
         ]);
-        $table->addColumn('telefono', 'integer', [
+        $table->addColumn('telefono', 'biginteger', [
             'default' => null,
             'limit' => 30,
             'null' => false,
@@ -71,7 +71,7 @@ class CreateUsers extends AbstractMigration
             'null' => false,
         ]);
         $table->addColumn('activo', 'boolean', [
-            'default' => true,
+            'default' => false,
             'null' => false,
         ]);
         $table->addForeignKey('sector_id', 'sectors', 'sector_id');
