@@ -5,7 +5,7 @@
       style="width: 50rem"
     >
       <h2 class="text-center">Registro de usuario</h2>
-      <form class="row g-3" @submit.prevent="onSubmit" novalidate="novalidate">
+      <form class="row g-3" @submit.prevent="onSubmit">
         <div class="col-md-6">
           <label for="validationDefault02" class="form-label">Nombre</label>
           <input

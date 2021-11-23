@@ -11,23 +11,14 @@
                     <p class="colorp" style="font-size:15px;">Se muestran los informes que derivó este mes y el mes anterior</p>
                     <div class="card-body table-full-width">
                         <div class="chart">
-                            <apexcharts ref="metrica" width="400" type="bar" :options="chartOptions1" :series="series1"></apexcharts>
+                            <apexcharts ref="metrica" width="400" type="bar" :options="chartOptions" :series="series"></apexcharts>
                         </div>
                     </div>
 
                 </div>
             </div>
-            <div class="col col-lg-6">
-                <div class="card2 p-0 shadow-sm p-3 mb-5 bg-body rounded">
-                    <h3 class="card-title text-center">Cantidad de informes por sector</h3>
-                    <p class="colorp" style="font-size:15px;">Se muestran la cantidad de informes presentes en cada sector</p>
-                    <div class="card-body table-full-width">
-                        <div class="chart">
-                            <apexcharts  ref="metrica2" width="410" type="donut" :options="chartOptions2" :series="series"></apexcharts>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <informesPorSector ref="informesPorSector">
+            </informesPorSector>
         </div>
 
     </div>
@@ -38,18 +29,21 @@
 </template>
 
 <script>
-import VueApexCharts from 'vue-apexcharts'
+import VueApexCharts from 'vue-apexcharts';
+import informesPorSector from '../views/Metricas/informesPorSector.vue';
+
 
 export default {
     components: {
-        apexcharts: VueApexCharts
+        apexcharts: VueApexCharts,
+        informesPorSector:informesPorSector
     },
     data() {
         return {
             usuario: "",
             cantInformesDerivado:[],
             empleado_id:null,
-            chartOptions1: {
+            chartOptions: {
                 chart: {
                 id: 'vuechart-example',
                 },
@@ -57,30 +51,10 @@ export default {
                     categories: [],
                 },
             },
-            series1: [{
+            series: [{
                 data: []
             }],
 
-            chartOptions2 : {
-                series: [],
-                chart: {
-                    type: "donut"
-                },
-                labels: [],
-                responsive: [
-                    {
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                        width: 200
-                        },
-                        legend: {
-                        position: "bottom"
-                        }
-                    }
-                    }
-                ]
-            }
         };
     },
     created() {
@@ -93,7 +67,7 @@ export default {
         this.$router.push("/login");
         }
 
-        this.obtenerCantInformesPorSector();
+        // this.obtenerCantInformesPorSector();
         this.obtenerCantInformesPorEmpleado(this.empleado_id);
     },
     mounted(){
@@ -106,42 +80,21 @@ export default {
                     })
                     .then((response) => {
                         console.log(response);
-                        this.series1 = [
+                        this.series = [
                         {
                             data: [response.data.data.mesPasado,response.data.data.esteMes]
                         },
                         ];
-                        this.chartOptions1 = {
+                        this.chartOptions = {
                             xaxis: {
                                 categories: response.data.options
                             }
                         };
-                        this.$refs.metrica.updateSeries(this.series1, true);
-                        this.$refs.metrica.updateOptions(this.chartOptions1, false ,true);
+                        this.$refs.metrica.updateSeries(this.series, true);
+                        this.$refs.metrica.updateOptions(this.chartOptions, false ,true);
 
             })
         },
-        obtenerCantInformesPorSector(){
-            axios
-                .get(`/api/informeempleadoestados/cantInformesPorSector`,{
-                    headers: { "X-Requested-With": "XMLHttpRequest" },
-                    })
-                    .then((response) => {
-                        console.log(response);
-
-                        // this.series2 = {
-                        //     series:response.data.data
-                        // };
-                        this.chartOptions2 = {
-                            labels:response.data.labels,
-                            series:response.data.data
-                        };
-                        // this.$refs.metrica.updateSeries(this.series2, true);
-                        this.$refs.metrica2.updateOptions(this.chartOptions2, false ,true);
-
-                        })
-
-        }
 
     }
 };
