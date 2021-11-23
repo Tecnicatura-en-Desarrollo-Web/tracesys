@@ -275,7 +275,7 @@ class InformeempleadoestadosController extends AppController
         $mailer->setTransport('gmail');
         $mailer
             ->setEmailFormat('html')
-            ->setTo('yonamixlfr@gmail.com')
+            ->setTo('wtfranco22@gmail.com')
             ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
             ->setSubject('Su producto cambio de estado')
 
@@ -432,6 +432,7 @@ class InformeempleadoestadosController extends AppController
             ];
             $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
             $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
+            $this->envioEmail(3, $datos['idInforme'], $informe->employee->employee_id);
         } else {
             $informeempleadoestado2 = $this->Informeempleadoestados->newEmptyEntity();
             $dataNueva = [
@@ -469,6 +470,7 @@ class InformeempleadoestadosController extends AppController
             ];
             $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
             $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
+            $this->envioEmail(5, $datos['idInforme'], $informe->employee->employee_id);
         }
         return $this->setJsonResponse([
             'resultado1' => $result,
