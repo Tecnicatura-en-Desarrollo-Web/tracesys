@@ -69,7 +69,7 @@
       </div>
       <div class="card2 px-3 mt-2 rounded">
         <div class="card-body table-full-width">
-          <form @submit.prevent="onSubmit" novalidate="novalidate">
+          <form @submit.prevent="onSubmit" >
             <div class="row">
               <div class="col">
                 <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
@@ -121,10 +121,9 @@
                       label="nombre_sector"
                       v-model="primerSelect"
                       :searchable="false"
-                      placeholder="Seleccione un sector"
                       open-direction="bottom"
                       :close-on-select="true"
-                      :show-labels="true"
+                      :show-labels="false"
                       :block-keys="['Tab', 'Enter']"
                       :hide-selected="true"
                       deselect-label="Can't remove this value"
@@ -148,6 +147,7 @@
                         id="exampleFormControlTextarea1"
                         name="comentarios"
                         rows="3"
+                        required
                       ></textarea>
                     </div>
                     <div class="mt-2 text-center">
