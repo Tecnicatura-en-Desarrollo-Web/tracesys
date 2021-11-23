@@ -5,7 +5,7 @@
       style="width: 50rem"
     >
       <h2 class="text-center">Solicitar repuesto a proveedor</h2>
-      <form class="row g-3" @submit.prevent="onSubmit" novalidate="novalidate">
+      <form class="row g-3" @submit.prevent="onSubmit">
         <div class="col-md-12">
           <label for="validationDefault02" class="form-label"
             >Nombre Proveedor o repuesto</label
@@ -24,6 +24,7 @@
                 name="proveedor"
                 class="selectProveedor form-select"
                 size="5"
+                required
               >
                 <option
                   v-for="repuesto in repuestos"
@@ -51,7 +52,7 @@
                 >*</small
               ></label
             >
-            <input type="text" class="form-control" name="cantidad" />
+            <input type="text" class="form-control" name="cantidad" required />
           </div>
         </div>
         <div class="col-12">
@@ -67,6 +68,7 @@
               class="form-control"
               style="height: 100px"
               name="mensaje"
+              required
             />
           </div>
         </div>
@@ -84,15 +86,11 @@ import Errors from "../../helpers/FormErrors.js";
 export default {
   data() {
     return {
-      nombre_sector: "",
-      etapa: 3,
-      orden: 4,
-      apellido: "",
-      domicilio: "",
       repuestos: [],
       existenProveedores: false,
       escribiendo: false,
       realizoBusqueda: false,
+      proveedor: "",
     };
   },
   methods: {
@@ -149,6 +147,12 @@ export default {
             this.$swal({
               title: "Presupuesto enviado",
               type: "success",
+              timer: 1500,
+            });
+          } else {
+            this.$swal({
+              title: "Ha ocurrido un error. Recuerde no dejar nada vacio",
+              type: "error",
               timer: 1500,
             });
           }

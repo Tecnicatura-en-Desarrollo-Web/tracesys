@@ -7,6 +7,7 @@ namespace App\Controller\Api;
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 use Cake\Mailer\Mailer;
+use Seld\JsonLint\Undefined;
 
 /**
  * Providers Controller
@@ -63,8 +64,13 @@ class ProvidersController extends AppController
                         'idProveedor' => $proveedor["provider_id"],
                     ],
                 );
+            } else {
+                return $this->setJsonResponse(
+                    [
+                        'message' => false,
+                    ],
+                );
             }
-            $this->Flash->error(__('The provider could not be saved. Please, try again.'));
         }
         $this->set(compact('provider'));
     }
@@ -116,6 +122,14 @@ class ProvidersController extends AppController
     public function solicitarPresupuesto()
     {
         $dataVue = $this->request->getData();
+
+        if (!isset($dataVue['proveedor'])) {
+            return $this->setJsonResponse(
+                [
+                    'message' => false,
+                ],
+            );
+        }
 
         $proveedor = $this->Providers->get($dataVue['proveedor']);
 

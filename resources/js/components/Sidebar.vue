@@ -129,11 +129,11 @@
               v-on:click="focus(8)"
               v-if="empleadoEtapa == 1"
             >
-              <router-link to="/proveedor/solicitud"
-                ><b-icon-bookmark
+              <router-link to="/proveedor/solicitud">
+                <b-icon-tools
                   class="icono"
                   style="width: 25px; height: 25px"
-                ></b-icon-bookmark
+                ></b-icon-tools
                 >Solicitar Repuesto</router-link
               >
             </li>
