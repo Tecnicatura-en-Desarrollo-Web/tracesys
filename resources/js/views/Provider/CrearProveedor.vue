@@ -5,7 +5,7 @@
       style="width: 50rem"
     >
       <h2 class="text-center">Cargar proveedor</h2>
-      <form class="row g-3" @submit.prevent="onSubmit" novalidate="novalidate">
+      <form class="row g-3" @submit.prevent="onSubmit">
         <div class="col-md-6">
           <label for="validationDefault02" class="form-label"
             >Nombre Proveedor</label
@@ -50,6 +50,7 @@
             name="cuit"
             v-model="cuit"
             @change="validacionCuit($event)"
+            required
           />
           <div
             class="validation d-none"
@@ -128,14 +129,12 @@ export default {
                   });
                 }
               });
-            /* this.relacionarRepuestosProveedor(this.$route.query, data); */
-            /* this.$swal({
-              title: "Proveedor cargado correctamente",
-              type: "success",
+          } else {
+            this.$swal({
+              title: "Ha ocurrido un error al cargar",
+              type: "error",
               timer: 1500,
-            }).then((result) => {
-              window.location.href = "http://localhost:8765/home";
-            }); */
+            });
           }
         });
     },
