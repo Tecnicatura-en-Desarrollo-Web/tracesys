@@ -124,10 +124,17 @@ class ClientsController extends AppController
         $data = $this->request->getData();
         $noExiste = false;
         if ($this->request->is('post')) {
-            $client = $this->Clients->find()
-                ->contain([])
-                ->where(['password' => $data['contrasena'], 'email' => $data['email']])
-                ->first();
+            if ($data['usuario'] == null) {
+                $client = $this->Clients->find()
+                    ->contain([])
+                    ->where(['password' => $data['contrasena'], 'email' => $data['email']])
+                    ->first();
+            } else {
+                $client = $this->Clients->find()
+                    ->contain([])
+                    ->where(['password' => $data['contrasena'], 'usuario' => $data['usuario']])
+                    ->first();
+            }
             if ($client) {
                 $datos = [
                     'id' => $client['client_id'],
