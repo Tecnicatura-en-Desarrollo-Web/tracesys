@@ -9,6 +9,7 @@ use App\Controller\Traits\ResponseTrait;
 use App\Model\Entity\Informeempleadocomentario;
 use App\Model\Table\InformeempleadocomentariosTable;
 use App\Model\Table\SectorsTable;
+use App\Test\TestCase\Controller\InformeEmpleadoComentarioControllerTest;
 use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
 use Cake\Mailer\Mailer;
 
@@ -227,11 +228,15 @@ class InformeempleadoestadosController extends AppController
         $idReport = (int)$dataVue['idInforme'];
         $idEmpleado = (int)$dataVue['idEmpleado'];
         $idSector = (int)$dataVue['selectSector'];
-        $objSectors = new SectorsTable();
-        $sector = $objSectors->find()
-            ->where(['sector_id' => $idSector])
-            ->first();
-        $idState = $sector->stage_id;
+        if(((int)$dataVue['idEstado'])==2){
+            $idState=6;
+        }else{
+            $objSectors = new SectorsTable();
+            $sector = $objSectors->find()
+                ->where(['sector_id' => $idSector])
+                ->first();
+            $idState = $sector->stage_id;
+        }
         $informeempleadoestado = $this->Informeempleadoestados->newEmptyEntity();
 
         $dataNueva = [
@@ -270,7 +275,7 @@ class InformeempleadoestadosController extends AppController
         $mailer->setTransport('gmail');
         $mailer
             ->setEmailFormat('html')
-            ->setTo('yonamixlfr@gmail.com')
+            ->setTo('wtfranco22@gmail.com')
             ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
             ->setSubject('Su producto cambio de estado')
 
@@ -361,15 +366,118 @@ class InformeempleadoestadosController extends AppController
         ->where(['Reports.product_id'=>$datos['id_product'],
         'client_id'=>$datos['id_client'], 'ultimoEstado'=>1])
         ->first();
-        $fechaHora = date("y-m-d H:i:s",strtotime(str_replace('/','-',$informe['created'])));
+        $fechaHora = strtotime((string)$informe['created']);
         $product = [
             'nombre'=>$informe->report->product['tipo'].' ' .$informe->report->product['marca'].' ' .$informe->report->product['marca'],
             'codigo'=>$informe->report['product_id'],
             'motivo'=>$informe->report->product['motivo'],
-            'fecha'=>explode(' ',$fechaHora)[0],
-            'hora'=>explode(' ',$fechaHora)[1],
+            'fecha'=>date('d-m-y',$fechaHora),
+            'hora'=>date('H:i:s',$fechaHora),
             'estado'=>$informe->state['nombre_estado']
         ];
         return $this->setJsonResponse(['product' => $product]);
+    }
+
+    /**
+     * Al decidir el cliente llegara el dato de si acepta o rechaza el presupuesto de dicho informe
+     * buscamos el obj en la tabla y cambiamos el ultimo estado y luego agregamos un nuevo estado
+     * dependiendo la decision del cliente y retornamos si se logro con exito el cambio o no
+     */
+    public function decisionPresupuesto()
+    {
+        $datos = $this->request->getData();
+        $informe = $this->Informeempleadoestados->find()
+            ->contain(['Employees'])
+            ->where(['informeempleadoestado_id' => $datos['idInforme'], 'ultimoEstado' => 1])
+            ->first();
+        $dataNueva = [
+            "ultimoEstado" => 0,
+        ];
+        $informeempleadoestado = $this->Informeempleadoestados->patchEntity($informe, $dataNueva);
+        $result = $this->Informeempleadoestados->save($informeempleadoestado);
+        if ($datos['decision'] == 'aprobado') {
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadoestado_id" => $datos['idInforme'],
+                "employee_id" =>  $informeempleadoestado->employee_id,
+                "state_id" => 3,
+                "sector_id" => 3,
+                "ultimoEstado" => 1,
+            ];
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEntity($dataNueva);
+            $result2 = $this->Informeempleadoestados->save($informeempleadoestado2, ['checkExisting' => false]);
+            $comentar = new CommentsemployeesController;
+            $commentsemployees = $comentar->Commentsemployees->newEmptyEntity();
+            $dataNueva2 = [
+                "descripcion" =>'El cliente acepto el presupuesto estimado',
+            ];
+            $commentsemployees = $comentar->Commentsemployees->patchEntity($commentsemployees, $dataNueva2);
+            $resultx = $comentar->Commentsemployees->save($commentsemployees);
+            $idComentarioEmpleado = $comentar->Commentsemployees->find()->select(['commentsemployee_id'])->last()['commentsemployee_id'];
+            $comentario = $comentar->Commentsemployees->find()->select(['descripcion'])->last()['descripcion'];
+            if ($resultx !== false) {
+                $result3 = ([
+                    'idComentarioEmpleado' => $idComentarioEmpleado,
+                    'comentario' => $comentario,
+                    'success' => true
+                ]);
+            }
+            $comentarioInforme = new InformeempleadocomentariosController;
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadocomentario_id" =>$informe->employee->employee_id,
+                "comment_employee_id" => $idComentarioEmpleado,
+                "report_id" => $datos['idInforme'],
+                "cuit" =>$informe->employee->cuit
+            ];
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
+            $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
+            $this->envioEmail(3, $datos['idInforme'], $informe->employee->employee_id);
+        } else {
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadoestado_id" => $datos['idInforme'],
+                "employee_id" =>  $informeempleadoestado->employee_id,
+                "state_id" => 5,
+                "sector_id" => 1,
+                "ultimoEstado" => 1,
+            ];
+            $informeempleadoestado2 = $this->Informeempleadoestados->newEntity($dataNueva);
+            $result2 = $this->Informeempleadoestados->save($informeempleadoestado2, ['checkExisting' => false]);
+            $comentar = new CommentsemployeesController;
+            $commentsemployees = $comentar->Commentsemployees->newEmptyEntity();
+            $dataNueva2 = [
+                "descripcion" =>'No acepto el presupuesto estimado',
+            ];
+            $commentsemployees = $comentar->Commentsemployees->patchEntity($commentsemployees, $dataNueva2);
+            $result = $comentar->Commentsemployees->save($commentsemployees);
+            $idComentarioEmpleado = $comentar->Commentsemployees->find()->select(['commentsemployee_id'])->last()['commentsemployee_id'];
+            $comentario = $comentar->Commentsemployees->find()->select(['descripcion'])->last()['descripcion'];
+            if ($result !== false) {
+                $result3 = ([
+                    'idComentarioEmpleado' => $idComentarioEmpleado,
+                    'comentario' => $comentario,
+                    'success' => true
+                ]);
+            }
+            $comentarioInforme = new InformeempleadocomentariosController;
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->newEmptyEntity();
+            $dataNueva = [
+                "informeempleadocomentario_id" =>$informe->employee->employee_id,
+                "comment_employee_id" => $idComentarioEmpleado,
+                "report_id" => $datos['idInforme'],
+                "cuit" =>$informe->employee->cuit
+            ];
+            $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
+            $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
+            $this->envioEmail(5, $datos['idInforme'], $informe->employee->employee_id);
+        }
+        return $this->setJsonResponse([
+            'resultado1' => $result,
+            'resultado2' => $result2,
+            'resultado3' => $result3,
+            'resultado4' => $result4,
+            'message' => true,
+        ]);
     }
 }
