@@ -1,11 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 use App\Model\Table\BudgetsTable;
 use App\Model\Table\SuggestionsTable;
+use App\Model\Table\ReportsTable;
 use Cake\Mailer\Mailer;
 
 /**
@@ -26,7 +29,7 @@ class ProblemasugerenciasController extends AppController
     {
 
         $this->paginate = [
-            'contain' => ['Suggestions','Issues'],
+            'contain' => ['Suggestions', 'Issues'],
         ];
         $Problemasugerencias['suggestions'] = $this->paginate($this->Problemasugerencias);
         return $this->setJsonResponse($Problemasugerencias);
@@ -39,11 +42,13 @@ class ProblemasugerenciasController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function issuesByReport($id = null){
+    public function issuesByReport($id = null)
+    {
         $this->paginate = [
             'contain' => [
-                'Suggestions','Issues'],
-            'conditions'=>['Issues.report_id' => $id , 'activo'=>0],
+                'Suggestions', 'Issues'
+            ],
+            'conditions' => ['Issues.report_id' => $id, 'activo' => 0],
             'sortableFields' => [
                 'Suggestions.puntaje'
             ],
@@ -51,19 +56,19 @@ class ProblemasugerenciasController extends AppController
                 'Suggestions.puntaje' => 'desc',
             ],
         ];
-        $problemasugerencia ['suggestions'] = $this->paginate($this->Problemasugerencias);
+        $problemasugerencia['suggestions'] = $this->paginate($this->Problemasugerencias);
         return $this->setJsonResponse($problemasugerencia);
-
     }
-    public function sugerenciasParaAplicar($id = null){
+    public function sugerenciasParaAplicar($id = null)
+    {
         $this->paginate = [
             'contain' => [
-                'Suggestions','Issues.Reports'],
-            'conditions'=>['Issues.report_id' => $id , 'activo'=>1]
+                'Suggestions', 'Issues.Reports'
+            ],
+            'conditions' => ['Issues.report_id' => $id, 'activo' => 1]
         ];
-        $problemasugerencia ['suggestions'] = $this->paginate($this->Problemasugerencias);
+        $problemasugerencia['suggestions'] = $this->paginate($this->Problemasugerencias);
         return $this->setJsonResponse($problemasugerencia);
-
     }
 
     public function view($id = null)
@@ -108,15 +113,15 @@ class ProblemasugerenciasController extends AppController
     {
         // Probando nueva version del metodo
         $dataVue =  $this->request->getData();
-        if($dataVue['sugerenciasSeleccionadas']==null){
+        if ($dataVue['sugerenciasSeleccionadas'] == null) {
             return $this->setJsonResponse([
                 'probandoinfo' => "nohaysugerencias"
             ]);
-        }else{
-            $sugerenciasIds=explode(",", $dataVue['sugerenciasSeleccionadas']);
+        } else {
+            $sugerenciasIds = explode(",", $dataVue['sugerenciasSeleccionadas']);
             foreach ($sugerenciasIds as $unIdSugerencia) {
 
-                $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'],$dataVue['selectSugerencia']]);
+                $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'], $dataVue['selectSugerencia']]);
                 $dataNueva = [
                     "problemasugerencia_id" => (int)$dataVue['idIssueReport'],
                     "suggestion_id" => (int)$unIdSugerencia,
@@ -129,25 +134,24 @@ class ProblemasugerenciasController extends AppController
                 'probandoinfo' => $result
             ]);
         }
-
     }
     public function editarSugerenciasAplicadas()
     {
         // Probando nueva version del metodo
         $dataVue =  $this->request->getData();
-        if($dataVue['sugerenciasAplicadas']==null){
+        if ($dataVue['sugerenciasAplicadas'] == null) {
             return $this->setJsonResponse([
                 'probandoinfo' => "nohaysugerencias"
-        ]);
-        }else{
-            $sugerenciasIds=explode(",", $dataVue['sugerenciasAplicadas']);
+            ]);
+        } else {
+            $sugerenciasIds = explode(",", $dataVue['sugerenciasAplicadas']);
             //el contain hace un innerjoin , por lo tanto en condition ya tengo disponible todas las columnas
             //de las tablas que hice innerjoin en contain
             $this->paginate = [
-                'contain' => ['Suggestions.Sectors','Issues'],
-                'conditions' => ['Suggestions.sector_id' => $dataVue['idSector'] , 'Issues.report_id' => $dataVue['idInforme']]
+                'contain' => ['Suggestions.Sectors', 'Issues'],
+                'conditions' => ['Suggestions.sector_id' => $dataVue['idSector'], 'Issues.report_id' => $dataVue['idInforme']]
             ];
-            $problemasugerencias=$this->paginate($this->Problemasugerencias);
+            $problemasugerencias = $this->paginate($this->Problemasugerencias);
 
             // $problemasugerencias = $this->Problemasugerencias->find('all')
             // ->contain(['Sectors','Issues'])
@@ -160,28 +164,26 @@ class ProblemasugerenciasController extends AppController
             //     'probandoinfo' => $problemasugerencias
             // ]);
             foreach ($problemasugerencias as $problemasugerencia) {
-                $i=0;
-                $encontrado=false;
-                while($i<count($sugerenciasIds) && !$encontrado){
-                    if($problemasugerencia->suggestion_id==$sugerenciasIds[$i]){
-                        $encontrado=true;
+                $i = 0;
+                $encontrado = false;
+                while ($i < count($sugerenciasIds) && !$encontrado) {
+                    if ($problemasugerencia->suggestion_id == $sugerenciasIds[$i]) {
+                        $encontrado = true;
                     }
                     $i++;
                 }
-                if($encontrado==false){
+                if ($encontrado == false) {
                     $dataNueva = [
                         "activo" => 0,
                     ];
                     $problemasugerencia = $this->Problemasugerencias->patchEntity($problemasugerencia, $dataNueva);
                     $result = $this->Problemasugerencias->save($problemasugerencia);
                 }
-
             }
             return $this->setJsonResponse([
                 'probandoinfo' => "terminooo"
             ]);
         }
-
     }
 
     /**
@@ -203,77 +205,89 @@ class ProblemasugerenciasController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-    public function subirValoracion($id){
-            $problemaSuggestions = $this->Problemasugerencias->find('all')
-            ->contain(['Suggestions','Issues.Reports'])
-            ->where(['Issues.report_id' => $id , 'activo'=>1]);
-            $objSuggestion=new SuggestionsTable();
-            foreach ($problemaSuggestions as $problemaSuggestion) {
-                $suggestion=$problemaSuggestion->suggestion;
-                $dataNueva=[
-                    "puntaje"=>($suggestion->puntaje)+1
-                ];
+    public function subirValoracion($id)
+    {
+        $problemaSuggestions = $this->Problemasugerencias->find('all')
+            ->contain(['Suggestions', 'Issues.Reports'])
+            ->where(['Issues.report_id' => $id, 'activo' => 1]);
+        $objSuggestion = new SuggestionsTable();
+        foreach ($problemaSuggestions as $problemaSuggestion) {
+            $suggestion = $problemaSuggestion->suggestion;
+            $dataNueva = [
+                "puntaje" => ($suggestion->puntaje) + 1
+            ];
 
-                $suggestion = $objSuggestion->patchEntity($suggestion, $dataNueva);
-                $result = $objSuggestion->save($suggestion);
-            }
-            return $this->setJsonResponse([
-                'subirValoracion' => "funcionoooo"
-            ]);
+            $suggestion = $objSuggestion->patchEntity($suggestion, $dataNueva);
+            $result = $objSuggestion->save($suggestion);
         }
+        return $this->setJsonResponse([
+            'subirValoracion' => "funcionoooo"
+        ]);
+    }
 
-    public function enviarPresupuesto(){
+    public function enviarPresupuesto()
+    {
         $dataVue =  $this->request->getData();
-        if($dataVue['sugerenciasSeleccionadas']==null){
+        if ($dataVue['sugerenciasSeleccionadas'] == null) {
             return $this->setJsonResponse([
                 'probandoinfo' => "nohaysugerencias"
             ]);
-        }else{
+        } else {
 
-            $sugerenciasIds=explode(",", $dataVue['sugerenciasSeleccionadas']);
-            $montoTotal=0;
-            $datosProductos=array();
+            $sugerenciasIds = explode(",", $dataVue['sugerenciasSeleccionadas']);
+            $montoTotal = 0;
+            $datosProductos = array();
 
             foreach ($sugerenciasIds as $idSugerencia) {
-                $problemasugerencia = $this->Problemasugerencias->get([$dataVue['idIssueReport'],(int)$idSugerencia],
-                [
-                    'contain' => ['Suggestions']
-                ]);
-                $montoTotal+=$problemasugerencia->suggestion->valorPrecio;
-                array_push($datosProductos , [
-                    "nombreSugerencia"=>$problemasugerencia->suggestion->nombre_sugerencia,
-                    "precio"=>$problemasugerencia->suggestion->valorPrecio,
-                    "montoTotal"=>$montoTotal
+                $problemasugerencia = $this->Problemasugerencias->get(
+                    [$dataVue['idIssueReport'], (int)$idSugerencia],
+                    [
+                        'contain' => ['Suggestions']
+                    ]
+                );
+                $montoTotal += $problemasugerencia->suggestion->valorPrecio;
+                array_push($datosProductos, [
+                    "nombreSugerencia" => $problemasugerencia->suggestion->nombre_sugerencia,
+                    "precio" => $problemasugerencia->suggestion->valorPrecio,
+                    "montoTotal" => $montoTotal
                 ]);
             }
             // ***Se crea el presupuesto**************
-            $objBudget=new BudgetsTable();
-            $dataNueva=[
-                "monto"=>$montoTotal,
-                "report_id"=>$dataVue['idIssueReport'],
-                "fecha"=>"created"
+            $objBudget = new BudgetsTable();
+            $dataNueva = [
+                "monto" => $montoTotal,
+                "report_id" => $dataVue['idIssueReport'],
+                "fecha" => "created"
 
             ];
             $budget = $objBudget->newEmptyEntity();
             $budget = $objBudget->patchEntity($budget, $dataNueva);
             $result = $objBudget->save($budget);
-            $stringProductos="";
+            $stringProductos = "";
             //****Se envia el presupuesto al cliente */
             foreach ($datosProductos as $datoProducto) {
-                $stringProductos.='
+                $stringProductos .= '
                 <tr style="border:1px solid black;text-align: center;">
-                    <td style="border:1px solid black;">'.$datoProducto['nombreSugerencia'].'</td>
-                    <td style="border:1px solid black;">'.$datoProducto['precio'].'</td>
+                    <td style="border:1px solid black;">' . $datoProducto['nombreSugerencia'] . '</td>
+                    <td style="border:1px solid black;">' . $datoProducto['precio'] . '</td>
                 </tr>
                 ';
-                $stringMontoTotal=$datoProducto["montoTotal"];
+                $stringMontoTotal = $datoProducto["montoTotal"];
             }
+
+            $reports = new ReportsTable();
+            $report = $reports->get($dataVue['idInforme'], [
+                'contain' => ['Products.Clients'],
+            ]);
+
+            $product = $report['product'];
+            $client = $product['client'];
 
             $mailer = new Mailer();
             $mailer->setTransport('gmail');
             $mailer
                 ->setEmailFormat('html')
-                ->setTo('yonamixlfr@gmail.com')
+                ->setTo($client['email'])
                 ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
                 ->setSubject('Factura disponible de su producto en reparacion')
 
@@ -290,11 +304,11 @@ class ProblemasugerenciasController extends AppController
                                                 </tr>
 
                                                 <tr style="border:1px solid black;text-align: center;">
-                                                    '.$stringProductos.'
+                                                    ' . $stringProductos . '
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="2" style="text-align: center;">Monto Total: $'.$stringMontoTotal.'</td>
+                                                    <td colspan="2" style="text-align: center;">Monto Total: $' . $stringMontoTotal . '</td>
                                                 </tr>
                                             </table>
 
@@ -308,8 +322,6 @@ class ProblemasugerenciasController extends AppController
             return $this->setJsonResponse([
                 'envioPresupuestoooo' => "se envio el correo nazi"
             ]);
-
         }
-
     }
 }

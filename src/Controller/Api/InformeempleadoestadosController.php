@@ -11,6 +11,7 @@ use App\Model\Table\InformeempleadocomentariosTable;
 use App\Model\Table\SectorsTable;
 use App\Test\TestCase\Controller\InformeEmpleadoComentarioControllerTest;
 use App\Test\TestCase\Model\Table\InformeEmpleadoComentarioTableTest;
+use App\Model\Table\ReportsTable;
 use Cake\Mailer\Mailer;
 
 /**
@@ -42,87 +43,85 @@ class InformeempleadoestadosController extends AppController
         ];
         $informeempleadoestados['reports'] = $this->paginate($this->Informeempleadoestados);
         foreach ($informeempleadoestados['reports'] as $cambioEstadoInforme) {
-            $datetime=$cambioEstadoInforme->created;
-            $phpdate = strtotime((String)$datetime);
-            if($phpdate==false){
-                $phpdate=12;
+            $datetime = $cambioEstadoInforme->created;
+            $phpdate = strtotime((string)$datetime);
+            if ($phpdate == false) {
+                $phpdate = 12;
             }
-            $cambioEstadoInforme->{"fecha"} = date( 'd-m-y', $phpdate);
-            $cambioEstadoInforme->{"fechaConDia"} = date( 'D-m-y', $phpdate);
-            $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
-
+            $cambioEstadoInforme->{"fecha"} = date('d-m-y', $phpdate);
+            $cambioEstadoInforme->{"fechaConDia"} = date('D-m-y', $phpdate);
+            $cambioEstadoInforme->{"hora"} = date('H:i:s', $phpdate);
         }
 
 
         return $this->setJsonResponse($informeempleadoestados);
     }
-    public function obtenerInformesDerivados($idEmpleado){
+    public function obtenerInformesDerivados($idEmpleado)
+    {
         $this->paginate = [
             'contain' => ['Employees.Users.Sectors.Stages', 'States', 'Reports', 'Reports.Products', 'Sectors'],
             'conditions' => ['Employees.employee_id' => $idEmpleado]
         ];
-        $objInformeEmpleadoComentarios=new InformeempleadocomentariosTable();
+        $objInformeEmpleadoComentarios = new InformeempleadocomentariosTable();
         $informeempleadoestados = $this->paginate($this->Informeempleadoestados);
         foreach ($informeempleadoestados as $cambioEstadoInforme) {
-            $comentario=$objInformeEmpleadoComentarios->find()
-            ->contain(['Commentsemployees'])
-            //->where(['report_id' => $cambioEstadoInforme->report->report_id])
-            ->where(['informeempleadocomentario_id' => $idEmpleado , 'report_id' => $cambioEstadoInforme->report->report_id])
-            ->first();
+            $comentario = $objInformeEmpleadoComentarios->find()
+                ->contain(['Commentsemployees'])
+                //->where(['report_id' => $cambioEstadoInforme->report->report_id])
+                ->where(['informeempleadocomentario_id' => $idEmpleado, 'report_id' => $cambioEstadoInforme->report->report_id])
+                ->first();
             $cambioEstadoInforme->{"comentario"} = $comentario;
-            $datetime=$cambioEstadoInforme->created;
-            $phpdate = strtotime((String)$datetime);
-            if($phpdate==false){
-                $phpdate=12;
+            $datetime = $cambioEstadoInforme->created;
+            $phpdate = strtotime((string)$datetime);
+            if ($phpdate == false) {
+                $phpdate = 12;
             }
-            $cambioEstadoInforme->{"fecha"} = date( 'd-m-y', $phpdate);
-            $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
+            $cambioEstadoInforme->{"fecha"} = date('d-m-y', $phpdate);
+            $cambioEstadoInforme->{"hora"} = date('H:i:s', $phpdate);
         }
         return $this->setJsonResponse($informeempleadoestados);
-
     }
-    public function cantInformesPorEmpleado($idEmpleado){
+    public function cantInformesPorEmpleado($idEmpleado)
+    {
 
-        $conditions=[
-            ['estaSemana','created > DATE_SUB(NOW(), INTERVAL 1 WEEK)'],
-            ['semanaPasada','created < DATE_SUB(NOW(), INTERVAL 1 WEEK)'],
-            ['esteMes','created > DATE_SUB(NOW(), INTERVAL 1 MONTH)'],
-            ['mesPasado','created < DATE_SUB(NOW(), INTERVAL 1 MONTH)']
+        $conditions = [
+            ['estaSemana', 'created > DATE_SUB(NOW(), INTERVAL 1 WEEK)'],
+            ['semanaPasada', 'created < DATE_SUB(NOW(), INTERVAL 1 WEEK)'],
+            ['esteMes', 'created > DATE_SUB(NOW(), INTERVAL 1 MONTH)'],
+            ['mesPasado', 'created < DATE_SUB(NOW(), INTERVAL 1 MONTH)']
         ];
         foreach ($conditions as $condition) {
             $cantInformes = $this->Informeempleadoestados->find()
-            ->where([$condition[1] , ['employee_id'=>$idEmpleado]])
-            ->count();
-            $infoCantInformes[$condition[0]]=$cantInformes;
+                ->where([$condition[1], ['employee_id' => $idEmpleado]])
+                ->count();
+            $infoCantInformes[$condition[0]] = $cantInformes;
         }
         setlocale(LC_TIME, "spanish");
-        $mesPasado=ucfirst(strftime('%B', strtotime("last month")));
-        $mesActual=ucfirst(strftime('%B'));
+        $mesPasado = ucfirst(strftime('%B', strtotime("last month")));
+        $mesActual = ucfirst(strftime('%B'));
         return $this->setJsonResponse([
             'data' => $infoCantInformes,
-            'options' => [$mesPasado , $mesActual]
+            'options' => [$mesPasado, $mesActual]
         ]);
-
     }
-    public function cantInformesPorSector(){
-        $objSector=new SectorsTable();
-        $sectores=$objSector->find('all')
-        ->where(["stage_id"=>3]);
-        $nombresSectores=[];
-        $cantPorSector=[];
+    public function cantInformesPorSector()
+    {
+        $objSector = new SectorsTable();
+        $sectores = $objSector->find('all')
+            ->where(["stage_id" => 3]);
+        $nombresSectores = [];
+        $cantPorSector = [];
         foreach ($sectores as $sector) {
             $cantInformes = $this->Informeempleadoestados->find()
-                ->where(['sector_id'=>$sector->sector_id , 'ultimoEstado'=>1])
+                ->where(['sector_id' => $sector->sector_id, 'ultimoEstado' => 1])
                 ->count();
-            array_push($nombresSectores,$sector->nombre_sector);
-            array_push($cantPorSector,$cantInformes);
-
+            array_push($nombresSectores, $sector->nombre_sector);
+            array_push($cantPorSector, $cantInformes);
         }
         return $this->setJsonResponse([
             'data' => $cantPorSector,
             'labels' => $nombresSectores
         ]);
-
     }
     public function informesCambiosEstados($id = null)
     {
@@ -147,15 +146,14 @@ class InformeempleadoestadosController extends AppController
         $i = 0;
         foreach ($cambiosEstadoInforme['cambiosEstadoInforme'] as $cambioEstadoInforme) {
             $cambioEstadoInforme->{"comentarioEmpleado"} = json_decode($comentarios)[$i];
-            $datetime=$cambioEstadoInforme->created;
+            $datetime = $cambioEstadoInforme->created;
             $phpdate = strtotime((string)$datetime);
-            if($phpdate==false){
-                $phpdate=12;
+            if ($phpdate == false) {
+                $phpdate = 12;
             }
-            $cambioEstadoInforme->{"fecha"} = date( 'd-m-y', $phpdate);
-            $cambioEstadoInforme->{"hora"} = date( 'H:i:s', $phpdate);
+            $cambioEstadoInforme->{"fecha"} = date('d-m-y', $phpdate);
+            $cambioEstadoInforme->{"hora"} = date('H:i:s', $phpdate);
             $i++;
-
         }
         return $this->setJsonResponse($cambiosEstadoInforme);
     }
@@ -228,9 +226,9 @@ class InformeempleadoestadosController extends AppController
         $idReport = (int)$dataVue['idInforme'];
         $idEmpleado = (int)$dataVue['idEmpleado'];
         $idSector = (int)$dataVue['selectSector'];
-        if(((int)$dataVue['idEstado'])==2){
-            $idState=6;
-        }else{
+        if (((int)$dataVue['idEstado']) == 2) {
+            $idState = 6;
+        } else {
             $objSectors = new SectorsTable();
             $sector = $objSectors->find()
                 ->where(['sector_id' => $idSector])
@@ -271,11 +269,20 @@ class InformeempleadoestadosController extends AppController
             $modeloProducto = $estado->report->product->modelo;
             $estadoActual = $estado->state->nombre_estado;
         }
+
+        $reports = new ReportsTable();
+        $report = $reports->get($idReport, [
+            'contain' => ['Products.Clients'],
+        ]);
+
+        $product = $report['product'];
+        $client = $product['client'];
+
         $mailer = new Mailer();
         $mailer->setTransport('gmail');
         $mailer
             ->setEmailFormat('html')
-            ->setTo('wtfranco22@gmail.com')
+            ->setTo($client['email'])
             ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
             ->setSubject('Su producto cambio de estado')
 
@@ -358,22 +365,25 @@ class InformeempleadoestadosController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function verInforme(){
+    public function verInforme()
+    {
         //ingresa los datos del cliente que solicita del el seguimiento del producto
         $datos = $this->request->getData();
         $informe = $this->Informeempleadoestados->find()
-        ->contain(['Reports.Products','States'])
-        ->where(['Reports.product_id'=>$datos['id_product'],
-        'client_id'=>$datos['id_client'], 'ultimoEstado'=>1])
-        ->first();
+            ->contain(['Reports.Products', 'States'])
+            ->where([
+                'Reports.product_id' => $datos['id_product'],
+                'client_id' => $datos['id_client'], 'ultimoEstado' => 1
+            ])
+            ->first();
         $fechaHora = strtotime((string)$informe['created']);
         $product = [
-            'nombre'=>$informe->report->product['tipo'].' ' .$informe->report->product['marca'].' ' .$informe->report->product['marca'],
-            'codigo'=>$informe->report['product_id'],
-            'motivo'=>$informe->report->product['motivo'],
-            'fecha'=>date('d-m-y',$fechaHora),
-            'hora'=>date('H:i:s',$fechaHora),
-            'estado'=>$informe->state['nombre_estado']
+            'nombre' => $informe->report->product['tipo'] . ' ' . $informe->report->product['marca'] . ' ' . $informe->report->product['marca'],
+            'codigo' => $informe->report['product_id'],
+            'motivo' => $informe->report->product['motivo'],
+            'fecha' => date('d-m-y', $fechaHora),
+            'hora' => date('H:i:s', $fechaHora),
+            'estado' => $informe->state['nombre_estado']
         ];
         return $this->setJsonResponse(['product' => $product]);
     }
@@ -409,7 +419,7 @@ class InformeempleadoestadosController extends AppController
             $comentar = new CommentsemployeesController;
             $commentsemployees = $comentar->Commentsemployees->newEmptyEntity();
             $dataNueva2 = [
-                "descripcion" =>'El cliente acepto el presupuesto estimado',
+                "descripcion" => 'El cliente acepto el presupuesto estimado',
             ];
             $commentsemployees = $comentar->Commentsemployees->patchEntity($commentsemployees, $dataNueva2);
             $resultx = $comentar->Commentsemployees->save($commentsemployees);
@@ -425,10 +435,10 @@ class InformeempleadoestadosController extends AppController
             $comentarioInforme = new InformeempleadocomentariosController;
             $informeComentado = $comentarioInforme->Informeempleadocomentarios->newEmptyEntity();
             $dataNueva = [
-                "informeempleadocomentario_id" =>$informe->employee->employee_id,
+                "informeempleadocomentario_id" => $informe->employee->employee_id,
                 "comment_employee_id" => $idComentarioEmpleado,
                 "report_id" => $datos['idInforme'],
-                "cuit" =>$informe->employee->cuit
+                "cuit" => $informe->employee->cuit
             ];
             $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
             $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
@@ -447,7 +457,7 @@ class InformeempleadoestadosController extends AppController
             $comentar = new CommentsemployeesController;
             $commentsemployees = $comentar->Commentsemployees->newEmptyEntity();
             $dataNueva2 = [
-                "descripcion" =>'No acepto el presupuesto estimado',
+                "descripcion" => 'No acepto el presupuesto estimado',
             ];
             $commentsemployees = $comentar->Commentsemployees->patchEntity($commentsemployees, $dataNueva2);
             $result = $comentar->Commentsemployees->save($commentsemployees);
@@ -463,10 +473,10 @@ class InformeempleadoestadosController extends AppController
             $comentarioInforme = new InformeempleadocomentariosController;
             $informeComentado = $comentarioInforme->Informeempleadocomentarios->newEmptyEntity();
             $dataNueva = [
-                "informeempleadocomentario_id" =>$informe->employee->employee_id,
+                "informeempleadocomentario_id" => $informe->employee->employee_id,
                 "comment_employee_id" => $idComentarioEmpleado,
                 "report_id" => $datos['idInforme'],
-                "cuit" =>$informe->employee->cuit
+                "cuit" => $informe->employee->cuit
             ];
             $informeComentado = $comentarioInforme->Informeempleadocomentarios->patchEntity($informeComentado, $dataNueva);
             $result4 = $comentarioInforme->Informeempleadocomentarios->save($informeComentado);
