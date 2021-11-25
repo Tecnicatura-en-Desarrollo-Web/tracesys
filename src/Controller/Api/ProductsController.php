@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
 
@@ -23,7 +25,7 @@ class ProductsController extends AppController
     {
         $query = $this->Products->find('all')->contain(['Clients'])->all();
         // $data['users'] = $this->paginate($this->Users);
-        $data['reports']=$query;
+        $data['reports'] = $query;
         return $this->setJsonResponse($data['reports']);
     }
 
@@ -39,19 +41,19 @@ class ProductsController extends AppController
         $product = $this->Products->get($id, [
             'contain' => [],
         ]);
-        $fechaHora = date("Y-m-d H:i:s",strtotime(str_replace('/','-',$product['created'])));
+        $fechaHora = date("Y-m-d H:i:s", strtotime(str_replace('/', '-', $product['created'])));
         $informe = new ReportsController;
         $report = $informe->Reports->find()
-        ->contain(['States'])
-        ->where(['product_id'=>$id])
-        ->first();
+            ->contain(['States'])
+            ->where(['product_id' => $id])
+            ->first();
         $producto = [
-            'codigo'=>$product['product_id'],
-            'nombre'=>$product['tipo'],
-            'motivo'=>$product['motivo'],
-            'fecha'=>explode(' ',$fechaHora)[0],
-            'hora'=>explode(' ',$fechaHora)[1],
-            'estado'=>$report->state['nombre_estado']
+            'codigo' => $product['product_id'],
+            'nombre' => $product['tipo'],
+            'motivo' => $product['motivo'],
+            'fecha' => explode(' ', $fechaHora)[0],
+            'hora' => explode(' ', $fechaHora)[1],
+            'estado' => $report->state['nombre_estado']
         ];
         return $this->setJsonResponse([
             'product' => $producto
@@ -122,18 +124,19 @@ class ProductsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function productsClient(){
+    public function productsClient()
+    {
         $data = $this->request->getData();
         $productos = [];
         $products = $this->Products->find()
-        ->contain([])
-        ->where(['client_id'=>$data['idCliente']]);
-        foreach($products as $producto){
-            $fechaHora = $fechaHora = strtotime((string)$producto['created']);;
+            ->contain([])
+            ->where(['client_id' => $data['idCliente']]);
+        foreach ($products as $producto) {
+            $fechaHora = strtotime((string)$producto['created']);
             $productos[] = [
-                'codigo'=>$producto['product_id'],
-                'nombre'=>$producto['tipo'].' '.$producto['marca'].' '.$producto['modelo'],
-                'fecha'=>date('d-m-y',$fechaHora)
+                'codigo' => $producto['product_id'],
+                'nombre' => $producto['tipo'] . ' ' . $producto['marca'] . ' ' . $producto['modelo'],
+                'fecha' => date('d-m-y', $fechaHora)
             ];
         }
         return $this->setJsonResponse($productos);

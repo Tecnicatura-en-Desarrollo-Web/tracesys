@@ -1,7 +1,6 @@
 
 <template>
   <ul>
-
     <div
       class="posts view large-10 medium-8 columns contenido-central"
       v-if="
@@ -9,7 +8,6 @@
         empleadoSector == 1
       "
     >
-
       <!-- *********************Spinner de loading****************************** -->
       <loader
         v-if="mostrarSpinner == true"
@@ -30,7 +28,6 @@
         <p class="colorp" style="font-size: 15px">
           Se muestra el historial de estados por los que paso el informe
         </p>
-
 
         <div class="card-body table-full-width">
           <table class="table-striped p-4">
@@ -69,7 +66,7 @@
       </div>
       <div class="card2 px-3 mt-2 rounded">
         <div class="card-body table-full-width">
-          <form @submit.prevent="onSubmit" >
+          <form @submit.prevent="onSubmit">
             <div class="row">
               <div class="col">
                 <!--****************Aca hago los llamados a los componentes hijos para mostrar la informacion correspondiente****************-->
@@ -155,14 +152,13 @@
                         Derivar
                       </button>
                       <a
-          v-bind:href="`https://api.whatsapp.com/send?phone=${telefonoCliente}&text=%C2%A1Hola%20${nombreCliente}!%20Somos%20de%20TraceSYS,%20quienes%20tenemos%20a%20cargo%20la%20reparacion%20de%20tu%20producto,%20queremos%20comunicarnos%20contigo.`"
-          target="_blank"
-          >
-
-
-          <button class="boton-redondo"><icon name="whatsapp" width="40px" height="40px" /></button>
-          </a
-        >
+                        v-bind:href="`https://api.whatsapp.com/send?phone=${telefonoCliente}&text=%C2%A1Hola%20${nombreCliente}!%20Somos%20de%20TraceSYS,%20quienes%20tenemos%20a%20cargo%20la%20reparacion%20de%20tu%20producto,%20queremos%20comunicarnos%20contigo.`"
+                        target="_blank"
+                      >
+                        <button class="boton-redondo">
+                          <icon name="whatsapp" width="40px" height="40px" />
+                        </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -331,8 +327,8 @@ export default {
         this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
       } else {
         if (this.$session.get("etapa_id") == 2) {
-          this.$refs.sugerencias.registrarSugerencia(data);
           this.$refs.sugerencias.enviarPresupuesto(data);
+          /* this.$refs.sugerencias.registrarSugerencia(data); */
         } else {
           this.$refs.sugerencias.subirValoracionSugerencias(data);
         }
@@ -472,6 +468,5 @@ export default {
 .selectSector :hover {
   background-color: chocolate;
 }
-
 </style>
 
