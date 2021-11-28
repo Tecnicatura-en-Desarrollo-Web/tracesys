@@ -8,7 +8,7 @@
       <form class="row g-3" @submit.prevent="onSubmit">
         <div class="col-md-12">
           <label for="validationDefault02" class="form-label"
-            >Nombre Proveedor o repuesto</label
+            >Nombre Repuesto</label
           >
           <input
             type="text"
@@ -52,7 +52,13 @@
                 >*</small
               ></label
             >
-            <input type="text" class="form-control" name="cantidad" required />
+            <input
+              type="text"
+              class="form-control"
+              name="cantidad"
+              placeholder="Ingrese la cantidad de repuesto"
+              required
+            />
           </div>
         </div>
         <div class="col-12">
@@ -68,6 +74,7 @@
               class="form-control"
               style="height: 100px"
               name="mensaje"
+              placeholder="Ingrese cuerpo del mensaje"
               required
             />
           </div>

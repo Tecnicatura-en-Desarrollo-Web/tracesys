@@ -5,6 +5,10 @@
       style="width: 50rem"
     >
       <h2 class="text-center">Listado de sectores</h2>
+      <small>
+        Puede ordenar los sectores a gusto, siempre respetando que no se repita
+        un orden
+      </small>
       <form class="row g-3" @submit.prevent="onSubmit" novalidate="novalidate">
         <table class="table table-striped">
           <thead class="table-dark">

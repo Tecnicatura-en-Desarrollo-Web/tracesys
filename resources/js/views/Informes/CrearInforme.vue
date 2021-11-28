@@ -376,8 +376,8 @@ export default {
             type: "success",
             timer: 1500,
           }).then((result) => {
+            this.registrarCambioEstado(data);
             window.location = "http://localhost:8765/reports";
-            /* this.registrarCambioEstado(data); */
           });
         })
         .catch((error) => {
