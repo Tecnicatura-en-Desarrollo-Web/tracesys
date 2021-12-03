@@ -8,23 +8,6 @@
         <form @submit.prevent="onSubmit">
           <div class="row callout callout-danger">
             <h5>Datos del cliente</h5>
-            <div class="col-lg-4 col-12">
-              <div class="form-group">
-                <label for="product_name"
-                  >Nombre y apellido o razon social<small
-                    class="font-weight-bold text-primary"
-                    id="obligatory_field"
-                    >*</small
-                  ></label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  name="denominacion"
-                  required
-                />
-              </div>
-            </div>
             <div class="col-lg-2 col-12">
               <div class="form-group">
                 <label for="product_name"
@@ -51,6 +34,24 @@
                 </div>
               </div>
             </div>
+            <div class="col-lg-4 col-12">
+              <div class="form-group">
+                <label for="product_name"
+                  >Nombre y apellido o razon social<small
+                    class="font-weight-bold text-primary"
+                    id="obligatory_field"
+                    >*</small
+                  ></label
+                >
+                <input
+                  id="denominacion"
+                  type="text"
+                  class="form-control"
+                  name="denominacion"
+                  required
+                />
+              </div>
+            </div>
             <div class="col-lg-1 col-12">
               <div class="form-group">
                 <label for="product_name"
@@ -60,7 +61,12 @@
                     >*</small
                   ></label
                 >
-                <input type="number" class="form-control" name="codigo_pais" />
+                <input
+                  id="codigo_pais"
+                  type="number"
+                  class="form-control"
+                  name="codigo_pais"
+                />
               </div>
             </div>
             <div class="col-lg-2 col-12">
@@ -73,6 +79,7 @@
                   ></label
                 >
                 <input
+                  id="codigo_area"
                   type="number"
                   class="form-control"
                   name="codigo_area"
@@ -89,7 +96,12 @@
                     >*</small
                   ></label
                 >
-                <input type="number" class="form-control" name="telefono" />
+                <input
+                  id="telefono"
+                  type="number"
+                  class="form-control"
+                  name="telefono"
+                />
               </div>
             </div>
             <div class="col-lg-6 col-12">
@@ -102,6 +114,7 @@
                   ></label
                 >
                 <input
+                  id="email"
                   type="email"
                   class="form-control"
                   name="email"
@@ -128,6 +141,7 @@
                   ></label
                 >
                 <input
+                  id="direccion"
                   type="text"
                   class="form-control"
                   name="direccion"
@@ -313,6 +327,7 @@ export default {
       message: null,
       typing: null,
       debounce: null,
+      cliente: "",
     };
   },
 
@@ -434,6 +449,30 @@ export default {
         botonSubmit.disabled = true;
         mensaje.className = "validation d-block";
       } else {
+        /* Una vez ingresado correctamente el cuit busco la info si existe el cliente o no */
+        axios
+          .get("/api/clients/view/" + valor)
+          .then((response) => {
+            return response.data[0];
+          })
+          .then((cliente) => {
+            if (cliente != null) {
+              let telefono_completo = String(cliente.telefono);
+              let longitud = telefono_completo.length;
+
+              let codigo_pais = telefono_completo.substr(0, 2);
+              let codigo_area = telefono_completo.substr(2, 3);
+              let telefono = telefono_completo.substr(5, longitud);
+
+              document.getElementById("denominacion").value =
+                cliente.denominacion;
+              document.getElementById("codigo_pais").value = codigo_pais;
+              document.getElementById("codigo_area").value = codigo_area;
+              document.getElementById("telefono").value = cliente.telefono;
+              document.getElementById("email").value = cliente.email;
+              document.getElementById("direccion").value = cliente.domicilio;
+            }
+          });
         botonSubmit.disabled = false;
         mensaje.className = "validation d-none";
       }

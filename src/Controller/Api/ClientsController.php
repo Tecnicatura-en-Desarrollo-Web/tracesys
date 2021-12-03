@@ -39,13 +39,20 @@ class ClientsController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id)
     {
-        $client = $this->Clients->get($id, [
-            'contain' => [],
-        ]);
+        /* return $this->setJsonResponse(
+            [
+                'message' => 'hola',
+            ]
+        ); */
+        $idConvertido = (int) $id;
+        $this->paginate = [
+            'conditions' => ['cuit' => $id],
+        ];
+        $data = $this->paginate($this->Clients);
 
-        $this->set(compact('client'));
+        return $this->setJsonResponse($data);
     }
 
     /**
