@@ -34,7 +34,7 @@ class Sugerenciarepuesto extends Entity
         'hora' => true,
         'created' => true,
         'modified' => true,
-        'sugerenciarepuesto' => true,
-        'replacement' => true,
+        'sugerenciarepuestos_id' => true,
+        'replacement_id' => true,
     ];
 }
