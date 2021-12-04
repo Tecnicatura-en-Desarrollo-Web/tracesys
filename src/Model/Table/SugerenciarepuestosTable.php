@@ -52,6 +52,10 @@ class SugerenciarepuestosTable extends Table
             'foreignKey' => 'sugerenciarepuestos_id',
             'joinType' => 'INNER',
         ]);
+        $this->belongsTo('Suggestions', [
+            'foreignKey' => 'sugerenciarepuestos_id',
+            'joinType' => 'INNER',
+        ]);
         $this->belongsTo('Replacements', [
             'foreignKey' => 'replacement_id',
             'joinType' => 'INNER',
@@ -86,11 +90,11 @@ class SugerenciarepuestosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules): RulesChecker
-    {
-        $rules->add($rules->existsIn(['sugerenciarepuestos_id'], 'Sugerenciarepuestos'), ['errorField' => 'sugerenciarepuestos_id']);
-        $rules->add($rules->existsIn(['replacement_id'], 'Replacements'), ['errorField' => 'replacement_id']);
+    // public function buildRules(RulesChecker $rules): RulesChecker
+    // {
+    //     $rules->add($rules->existsIn(['sugerenciarepuestos_id'], 'Sugerenciarepuestos'), ['errorField' => 'sugerenciarepuestos_id']);
+    //     $rules->add($rules->existsIn(['replacement_id'], 'Replacements'), ['errorField' => 'replacement_id']);
 
-        return $rules;
-    }
+    //     return $rules;
+    // }
 }

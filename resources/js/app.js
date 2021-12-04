@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import { BootstrapVue, BootstrapVueIcons, IconsPlugin } from 'bootstrap-vue';
 import VueTippy, { TippyComponent } from "vue-tippy";
+import { BootstrapVue, BootstrapVueIcons, IconsPlugin } from 'bootstrap-vue';
 import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import axios from 'axios';
@@ -34,6 +34,7 @@ Vue.use(VueTippy);
 Vue.use(loader);
 Vue.component('multiselect', Multiselect);
 Vue.component('app', App);
+Vue.component("tippy", TippyComponent);
 
 const router = Vue.use(VueRouter);
 const boostrapvue = Vue.use(BootstrapVue);

@@ -13,9 +13,13 @@
                 v-if='sugerencia.suggestion.sector_id==primerSelect'
                 :content="'Esta sugerencia fue aplicada '+sugerencia.suggestion.puntaje+' veces con exito'"
                 v-tippy="{ animation : 'shift-away' , placement : 'top-start' , flip:true , arrow : true}"
+                :disabled='sugerencia.cantStock==0 ? true : false'
                 >
-                <p>▸ </p> {{sugerencia.suggestion.nombre_sugerencia}}
+                    <p>▸ </p> {{sugerencia.suggestion.nombre_sugerencia}}
+                    <p v-if="sugerencia.cantStock==0">【sin stock】</p>
+
                 </option>
+
             </select>
 
 
@@ -66,6 +70,9 @@ export default {
 }
 </script>
 
-<style src="../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style src="../../../../node_modules/vue-multiselect/dist/vue-multiselect.min.css">
+
+</style>
+
 
 

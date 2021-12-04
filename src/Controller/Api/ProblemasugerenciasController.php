@@ -9,6 +9,7 @@ use App\Controller\Traits\ResponseTrait;
 use App\Model\Table\BudgetsTable;
 use App\Model\Table\SuggestionsTable;
 use App\Model\Table\ReportsTable;
+use App\Model\Table\SugerenciarepuestosTable;
 use Cake\Mailer\Mailer;
 
 /**
@@ -44,6 +45,8 @@ class ProblemasugerenciasController extends AppController
      */
     public function issuesByReport($id = null)
     {
+        $objSugerenciaRepuesto=new SugerenciarepuestosTable();
+
         $this->paginate = [
             'contain' => [
                 'Suggestions', 'Issues'
@@ -56,8 +59,22 @@ class ProblemasugerenciasController extends AppController
                 'Suggestions.puntaje' => 'desc',
             ],
         ];
-        $problemasugerencia['suggestions'] = $this->paginate($this->Problemasugerencias);
-        return $this->setJsonResponse($problemasugerencia);
+        $problemasugerencias['suggestions'] = $this->paginate($this->Problemasugerencias);
+        foreach ($problemasugerencias['suggestions'] as $problemasugerencia) {
+            $idSugesstion=$problemasugerencia->suggestion->suggestion_id;
+            $sugerenciaRepuesto=$objSugerenciaRepuesto->find()
+                ->contain(['Replacements'])
+                ->where(['sugerenciarepuestos_id' => $idSugesstion])
+                ->first();
+            if($sugerenciaRepuesto==null){
+                $cantStock=-1;
+            }
+            else{
+                $cantStock=$sugerenciaRepuesto->replacement->cantidad;
+            }
+            $problemasugerencia->{"cantStock"}=$cantStock;
+        }
+        return $this->setJsonResponse($problemasugerencias);
     }
     public function sugerenciasParaAplicar($id = null)
     {
