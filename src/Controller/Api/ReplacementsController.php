@@ -109,4 +109,14 @@ class ReplacementsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function obtenerRepuestosStockBajo()
+    {
+        $this->paginate = [
+            'conditions' => ['cantidad <=' => 5],
+        ];
+        $data = $this->paginate($this->Replacements);
+
+        return $this->setJsonResponse($data);
+    }
 }
