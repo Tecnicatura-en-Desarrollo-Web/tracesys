@@ -68,13 +68,24 @@ export default {
                 headers: { "X-Requested-With": "XMLHttpRequest" },
                 })
                 .then((response) => {
+                    this.registrarBajaStock(data);
                     console.log("respuestaAplicarSugerencias",response.data);
-                    this.$router.push("/reports");
+                    window.location = "http://localhost:8765/reports";
                     // console.log("respuestade sugerencia",response.data);
                     // if (response.data.success) {
                     // }
                 });
-            }
+            },
+        registrarBajaStock(data){
+            axios
+            .post(`/api/sugerenciarepuestos/registrarBajaStock`, data, {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+            })
+            .then((response) => {
+                console.log("se registro baja stock" , response);
+                // window.location = "http://localhost:8765/reports";
+            })
+        }
 
     }
 }

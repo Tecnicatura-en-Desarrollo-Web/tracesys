@@ -226,6 +226,7 @@ class InformeempleadoestadosController extends AppController
         $idReport = (int)$dataVue['idInforme'];
         $idEmpleado = (int)$dataVue['idEmpleado'];
         $idSector = (int)$dataVue['selectSector'];
+        //descomentar esto , ya que es de franco para que funcione al app mobile
         if (((int)$dataVue['idEstado']) == 2) {
             $idState = 6;
         } else {

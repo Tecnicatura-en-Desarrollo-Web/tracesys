@@ -64,7 +64,25 @@
           </table>
         </div>
       </div>
-      <div class="card2 px-3 mt-2 rounded">
+      <div class="card2 px-3 mt-2 rounded" v-if="
+        ultimoInformeEmpleadoEstado.sector.stage_id == 3 && ultimoInformeEmpleadoEstado.state_id==6">
+        <div class="card-body table-full-width">
+            <div
+                  class="
+                    bg-body
+                    p-3
+                    rounded
+                    border border-1
+                    text-center
+                  "
+                >
+            <p>Este informe está a la espera de aprobación del presupuesto por parte del cliente!!</p>
+            <hr>
+            <p>Una vez aprobado el presupuesto podrá continuar con el trámite</p>
+            </div>
+        </div>
+      </div>
+      <div v-else class="card2 px-3 mt-2 rounded">
         <div class="card-body table-full-width">
           <form @submit.prevent="onSubmit">
             <div class="row">
@@ -203,6 +221,7 @@ export default {
         sector_id: null,
       },
       empleadoSector: null,
+      empleadoEtapa:null,
       // para el spinner de loading
       mostrarSpinner: false,
       telefonoCliente: 0,
@@ -215,6 +234,7 @@ export default {
       this.$router.push("/login");
     }
     this.empleadoSector = this.$session.get("sector_id");
+    this.empleadoEtapa = this.$session.get("etapa_id");
   },
   mounted() {
     this.verInforme(this.$route.query);
@@ -327,13 +347,14 @@ export default {
         this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
       } else {
         if (this.$session.get("etapa_id") == 2) {
-          this.$refs.sugerencias.enviarPresupuesto(data);
-          /* this.$refs.sugerencias.registrarSugerencia(data); */
+            this.$refs.sugerencias.enviarPresupuesto(data);
+            this.$refs.sugerencias.registrarSugerencia(data);
         } else {
           this.$refs.sugerencias.subirValoracionSugerencias(data);
         }
       }
     },
+
     actualizarCambioEstadoAnterior(data) {
       axios
         .post(`/api/informeempleadoestados/editInformeempleadoestados`, data, {
@@ -375,7 +396,7 @@ export default {
               text: response.data.message,
             });
 
-            this.$router.push("/reports");
+                window.location = "http://localhost:8765/reports";
           }
         })
         .catch((error) => {
@@ -427,6 +448,7 @@ export default {
           this.errors.add(error.response.data.errors);
         });
     },
+
   },
 };
 </script>
