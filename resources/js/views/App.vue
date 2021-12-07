@@ -63,4 +63,5 @@ export default {
   font-family: "proxima";
 }
 
+
 </style>

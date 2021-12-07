@@ -55,6 +55,7 @@ class ReplacementsTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
+     * @uses \App\Model\Table\ReplacementsTable::validationDefault()
      */
     public function testValidationDefault(): void
     {

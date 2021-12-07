@@ -254,18 +254,27 @@ class ProblemasugerenciasController extends AppController
             $sugerenciasIds = explode(",", $dataVue['sugerenciasSeleccionadas']);
             $montoTotal = 0;
             $datosProductos = array();
-
+            $objSugerenciaRepuesto=new SugerenciarepuestosTable();
+            $costoRepuesto=0;
             foreach ($sugerenciasIds as $idSugerencia) {
+                $sugerenciaRepuesto=$objSugerenciaRepuesto->find()
+                ->contain(['Replacements'])
+                ->where(['sugerenciarepuestos_id' => $idSugerencia])
+                ->first();
+                if($sugerenciaRepuesto!=null){
+                    $costoRepuesto=$sugerenciaRepuesto->replacement->valor;
+                }
                 $problemasugerencia = $this->Problemasugerencias->get(
                     [$dataVue['idIssueReport'], (int)$idSugerencia],
                     [
                         'contain' => ['Suggestions']
                     ]
                 );
-                $montoTotal += $problemasugerencia->suggestion->valorPrecio;
+                $montoTotal += $problemasugerencia->suggestion->valorPrecio+$costoRepuesto;
                 array_push($datosProductos, [
                     "nombreSugerencia" => $problemasugerencia->suggestion->nombre_sugerencia,
                     "precio" => $problemasugerencia->suggestion->valorPrecio,
+                    "costoRepuesto"=>$costoRepuesto,
                     "montoTotal" => $montoTotal
                 ]);
             }
@@ -287,6 +296,8 @@ class ProblemasugerenciasController extends AppController
                 <tr style="border:1px solid black;text-align: center;">
                     <td style="border:1px solid black;">' . $datoProducto['nombreSugerencia'] . '</td>
                     <td style="border:1px solid black;">' . $datoProducto['precio'] . '</td>
+                    <td style="border:1px solid black;">' . $datoProducto['costoRepuesto'] . '</td>
+
                 </tr>
                 ';
                 $stringMontoTotal = $datoProducto["montoTotal"];
@@ -317,7 +328,8 @@ class ProblemasugerenciasController extends AppController
                                             <table style="width:100%;border:1px solid black;text-align: center;"">
                                                 <tr style="border:1px solid black;">
                                                     <th>Reparacion</th>
-                                                    <th>Precio</th>
+                                                    <th>Costo Mano de obra</th>
+                                                    <th>Costo Repuesto</th>
                                                 </tr>
 
                                                 <tr style="border:1px solid black;text-align: center;">
@@ -325,7 +337,7 @@ class ProblemasugerenciasController extends AppController
                                                 </tr>
 
                                                 <tr>
-                                                    <td colspan="2" style="text-align: center;">Monto Total: $' . $stringMontoTotal . '</td>
+                                                    <td colspan="3" style="text-align: center;">Monto Total: $' . $stringMontoTotal . '</td>
                                                 </tr>
                                             </table>
 
