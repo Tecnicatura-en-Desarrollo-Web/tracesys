@@ -48,6 +48,11 @@ class CreateReplacements extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
+        $table->addColumn('valor', 'integer', [
+            'default' => null,
+            'limit' => 11,
+            'null' => false,
+        ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,

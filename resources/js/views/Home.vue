@@ -1,37 +1,62 @@
 <template>
   <!-- <h1>Bienvenido {{usuario}}</h1> -->
 
-  <div>
-    <div
-      class="posts view large-10 medium-8 columns contenido-central"
-      v-if="repuestos.length != 0"
-    >
-      <div class="card2 p-0 shadow-sm p-3 mb-5 bg-body rounded">
-        <h3 class="card-title">Repuestos con bajo stock</h3>
-        <div class="card-body table-full-width">
-          <table class="table table-striped p-4">
-            <thead>
-              <tr class="">
-                <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Cantidad</th>
-              </tr>
-            </thead>
+        <!-- <div
+        class="posts view large-10 medium-8 columns contenido-central"
+        v-if="repuestos.length != 0"
+        >
+        <div class="card2 p-0 shadow-sm p-3 mb-5 bg-body rounded">
+            <h3 class="card-title">Repuestos con bajo stock</h3>
+            <div class="card-body table-full-width">
+            <table class="table table-striped p-4">
+                <thead>
+                <tr class="">
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cantidad</th>
+                </tr>
+                </thead>
 
-            <tbody>
-              <tr class="table-danger" v-for="repuesto in repuestos">
-                <td>{{ repuesto.replacement_id }}</td>
-                <td>{{ repuesto.descripcion }}</td>
-                <td>{{ repuesto.cantidad }}</td>
-              </tr>
-            </tbody>
-          </table>
+                <tbody>
+                <tr class="table-danger" v-for="repuesto in repuestos">
+                    <td>{{ repuesto.replacement_id }}</td>
+                    <td>{{ repuesto.descripcion }}</td>
+                    <td>{{ repuesto.cantidad }}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
         </div>
-      </div>
-    </div>
-    <div>
+        </div>
+    <div> -->
       <ul>
         <div class="posts view large-10 medium-8 columns contenido-central">
+            <div class="row">
+                <div class="col">
+                    <div class="card2 p-0 shadow-sm p-3 mb-1 bg-body rounded">
+            <h3 class="card-title">Repuestos con bajo stock</h3>
+            <div class="card-body table-full-width">
+            <table class="table table-striped p-4">
+                <thead>
+                <tr class="">
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cantidad</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr class="table-danger" v-for="repuesto in repuestos">
+                    <td>{{ repuesto.replacement_id }}</td>
+                    <td>{{ repuesto.descripcion }}</td>
+                    <td>{{ repuesto.cantidad }}</td>
+                </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+                </div>
+            </div>
           <div class="row">
             <div class="col col-lg-6">
               <div class="card2 p-0 shadow-sm p-3 mb-5 bg-body rounded">
@@ -58,8 +83,7 @@
           </div>
         </div>
       </ul>
-    </div>
-  </div>
+
 </template>
 
 <script>

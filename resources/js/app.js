@@ -6,7 +6,6 @@ import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueSweetalert2 from 'vue-sweetalert2';
 import Notifications from 'vue-notification';
-import Notis from 'vue-notification-ui';
 import { routes } from './routes';
 import App from './views/App.vue';
 import VueSession from "vue-session";
@@ -59,3 +58,4 @@ const app = new Vue({
     router: routes,
     loader: loader
 });
+
