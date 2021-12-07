@@ -50,8 +50,8 @@ export default {
                 .then((response) => {
                     // this.$router.push("/reports");
                     console.log("respuestade sugerencia",response.data);
-                    if (response.data.success) {
-                    }
+                    // if (response.data.success) {
+                    // }
                 });
         },
         enviarPresupuesto: function(data) {
@@ -62,7 +62,7 @@ export default {
                 })
                 .then((response) => {
                     console.log("PRESUPUESTOOOO:",response.data);
-                    this.$router.push("/reports");
+                    window.location = "http://localhost:8765/reports";
 
                 });
         }

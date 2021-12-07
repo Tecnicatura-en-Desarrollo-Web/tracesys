@@ -44,7 +44,10 @@ export default {
                     }
                     }
                 ]
-            }
+            },
+            series: [{
+                data: []
+            }],
         };
     },
     created(){
@@ -68,7 +71,6 @@ export default {
                             labels:response.data.labels,
                             series:response.data.data
                         };
-                        //this.$refs.metrica.updateSeries(this.series, true);
                         this.$refs.metrica.updateOptions(this.chartOptions, false ,true);
 
                         })

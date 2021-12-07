@@ -1,7 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+use App\Controller\AppController;
+
+use App\Controller\Traits\ResponseTrait;
+use App\Model\Table\ReplacementsTable;
 
 /**
  * Sugerenciarepuestos Controller
@@ -11,6 +15,7 @@ namespace App\Controller;
  */
 class SugerenciarepuestosController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -33,6 +38,31 @@ class SugerenciarepuestosController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
+    public function registrarBajaStock(){
+
+        $dataVue=$this->request->getData();
+        $sugerenciasAplicadasIds = explode(",", $dataVue['sugerenciasAplicadas']);
+        $objReplacement=new ReplacementsTable();
+        foreach ($sugerenciasAplicadasIds as $sugerenciaAplicadaId) {
+            $sugerenciaRepuesto=$this->Sugerenciarepuestos->find()
+            ->contain(['Replacements'])
+            ->where(['sugerenciarepuestos_id'=>$sugerenciaAplicadaId])
+            ->first();
+            if($sugerenciaRepuesto!=null){
+                $replacement=$sugerenciaRepuesto->replacement;
+                $dataNueva = [
+                    "cantidad" => ($replacement->cantidad)-1,
+                ];
+                $replacement = $objReplacement->patchEntity($replacement,$dataNueva);
+                $result = $objReplacement->save($replacement);
+            }
+        }
+        return $this->setJsonResponse([
+            'retorno registro baja stock' => $sugerenciasAplicadasIds,
+            'sugerenciaRepuesto'=>$sugerenciaRepuesto,
+            'baja'=>$result
+        ]);
+    }
     public function view($id = null)
     {
         $sugerenciarepuesto = $this->Sugerenciarepuestos->get($id, [
