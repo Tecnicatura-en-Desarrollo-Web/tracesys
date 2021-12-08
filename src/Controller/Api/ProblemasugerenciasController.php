@@ -282,7 +282,7 @@ class ProblemasugerenciasController extends AppController
             $objBudget = new BudgetsTable();
             $dataNueva = [
                 "monto" => $montoTotal,
-                "report_id" => $dataVue['idIssueReport'],
+                "report_id" => $dataVue['idInforme'],
                 "fecha" => "created"
 
             ];
