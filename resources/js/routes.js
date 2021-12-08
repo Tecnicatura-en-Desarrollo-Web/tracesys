@@ -18,6 +18,7 @@ import Suggestion from './views/Suggestion/CrearSuggestion.vue';
 import CrearProveedor from './views/Provider/CrearProveedor.vue';
 import SolicitarRepuesto from './views/Provider/SolicitarRepuesto.vue';
 import Replacement from './views/Replacement/Replacements.vue';
+import Suggestions from './views/Suggestion/Suggestions.vue';
 import app from './views/App.vue';
 
 export const routes = new VueRouter({
@@ -128,6 +129,11 @@ export const routes = new VueRouter({
             path: '/replacement/replacements',
             name: 'Replacement',
             component: Replacement,
+        },
+        {
+            path: '/suggestion/suggestions',
+            name: 'Suggestions',
+            component: Suggestions,
         },
         {
             path: "*",
