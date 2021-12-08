@@ -23,6 +23,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -45,6 +46,9 @@ export default {
     },
   },
   created() {
+
+
+
     if (this.$session.exists()) {
       this.usuario = this.$session.get(this.$session.id());
       this.nombre_etapa = this.$session.get("nombre_etapa");
