@@ -5,6 +5,11 @@ import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import axios from 'axios';
 import VueSweetalert2 from 'vue-sweetalert2';
+import swal from 'sweetalert2';
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+
+window.swal = swal;
 import Notifications from 'vue-notification';
 import { routes } from './routes';
 import App from './views/App.vue';
@@ -32,6 +37,12 @@ Vue.use(BootstrapVueIcons);
 Vue.use(IconsPlugin);
 Vue.use(VueTippy);
 Vue.use(loader);
+Vue.use(Toast, {
+    transition: "Vue-Toastification__bounce",
+    maxToasts: 1,
+    newestOnTop: true
+  });
+
 Vue.component('multiselect', Multiselect);
 Vue.component('app', App);
 Vue.component("tippy", TippyComponent);

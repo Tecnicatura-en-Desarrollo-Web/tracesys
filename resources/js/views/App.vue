@@ -24,6 +24,7 @@
 <script>
 import Sidebar from "../components/Sidebar.vue";
 import Header2 from "../components/Header.vue";
+import Notificacion from "../components/Notificacion.vue";
 
 export default {
   components: {
@@ -42,7 +43,25 @@ export default {
       //console.log("info sesion:",this.login);
     }
   },
+  updated(){
+    // this.$toast.error(Notificacion, {
+    //     position: "top-right",
+    //     timeout: 5000,
+    //     closeOnClick: true,
+    //     pauseOnFocusLoss: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //     draggablePercent: 1.13,
+    //     showCloseButtonOnHover: false,
+    //     hideProgressBar: false,
+    //     closeButton: "button",
+    //     icon: true,
+    //     rtl: false
+    //     });
+  }
+
 };
+
 </script>
 
 <style>

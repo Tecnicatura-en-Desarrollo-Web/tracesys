@@ -90,6 +90,7 @@
 import VueApexCharts from "vue-apexcharts";
 import informesPorSector from "../views/Metricas/informesPorSector.vue";
 
+
 export default {
   components: {
     apexcharts: VueApexCharts,
@@ -117,6 +118,7 @@ export default {
     };
   },
   created() {
+
     if (this.$session.exists()) {
       this.usuario = this.nombreUsuario = this.$session.get("nombreDeUsuario");
       this.empleado_id = this.$session.get("user_id");

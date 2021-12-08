@@ -108,7 +108,8 @@ class InformeempleadoestadosController extends AppController
     {
         $objSector = new SectorsTable();
         $sectores = $objSector->find('all')
-            ->where(["stage_id" => 3]);
+            ->where(["stage_id !=" => 1]);
+            // ->where(["stage_id" => 3]);
         $nombresSectores = [];
         $cantPorSector = [];
         foreach ($sectores as $sector) {
