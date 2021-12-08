@@ -25,6 +25,7 @@ class SugerenciarepuestosTableTest extends TestCase
      */
     protected $fixtures = [
         'app.Sugerenciarepuestos',
+        'app.Suggestions',
         'app.Replacements',
     ];
 
@@ -56,18 +57,9 @@ class SugerenciarepuestosTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
+     * @uses \App\Model\Table\SugerenciarepuestosTable::validationDefault()
      */
     public function testValidationDefault(): void
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test buildRules method
-     *
-     * @return void
-     */
-    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -63,38 +64,17 @@ class SugerenciarepuestosTable extends Table
     }
 
     /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator): Validator
-    {
-        $validator
-            ->dateTime('fecha')
-            ->requirePresence('fecha', 'create')
-            ->notEmptyDateTime('fecha');
-
-        $validator
-            ->dateTime('hora')
-            ->requirePresence('hora', 'create')
-            ->notEmptyDateTime('hora');
-
-        return $validator;
-    }
-
-    /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    // public function buildRules(RulesChecker $rules): RulesChecker
-    // {
-    //     $rules->add($rules->existsIn(['sugerenciarepuestos_id'], 'Sugerenciarepuestos'), ['errorField' => 'sugerenciarepuestos_id']);
-    //     $rules->add($rules->existsIn(['replacement_id'], 'Replacements'), ['errorField' => 'replacement_id']);
+    /* public function buildRules(RulesChecker $rules): RulesChecker
+    {
+        $rules->add($rules->existsIn(['sugerenciarepuestos_id'], 'Sugerenciarepuestos'), ['errorField' => 'sugerenciarepuestos_id']);
+        $rules->add($rules->existsIn(['replacement_id'], 'Replacements'), ['errorField' => 'replacement_id']);
 
-    //     return $rules;
-    // }
+        return $rules;
+    } */
 }

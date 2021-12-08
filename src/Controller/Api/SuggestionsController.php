@@ -109,4 +109,11 @@ class SuggestionsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    public function obtenerSugerencias()
+    {
+        $suggestions = $this->paginate($this->Suggestions);
+
+        return $this->setJsonResponse($suggestions);
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -10,12 +11,11 @@ use Cake\ORM\Entity;
  *
  * @property int $sugerenciarepuestos_id
  * @property int $replacement_id
- * @property \Cake\I18n\FrozenTime $fecha
- * @property \Cake\I18n\FrozenTime $hora
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Sugerenciarepuesto $sugerenciarepuesto
+ * @property \App\Model\Entity\Suggestion $suggestion
  * @property \App\Model\Entity\Replacement $replacement
  */
 class Sugerenciarepuesto extends Entity
@@ -30,11 +30,9 @@ class Sugerenciarepuesto extends Entity
      * @var array
      */
     protected $_accessible = [
-        'fecha' => true,
-        'hora' => true,
-        'created' => true,
-        'modified' => true,
         'sugerenciarepuestos_id' => true,
         'replacement_id' => true,
+        'created' => true,
+        'modified' => true,
     ];
 }

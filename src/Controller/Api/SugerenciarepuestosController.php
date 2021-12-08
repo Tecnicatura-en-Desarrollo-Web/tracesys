@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller\Api;
+
 use App\Controller\AppController;
 
 use App\Controller\Traits\ResponseTrait;
@@ -38,29 +40,30 @@ class SugerenciarepuestosController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function registrarBajaStock(){
+    public function registrarBajaStock()
+    {
 
-        $dataVue=$this->request->getData();
+        $dataVue = $this->request->getData();
         $sugerenciasAplicadasIds = explode(",", $dataVue['sugerenciasAplicadas']);
-        $objReplacement=new ReplacementsTable();
+        $objReplacement = new ReplacementsTable();
         foreach ($sugerenciasAplicadasIds as $sugerenciaAplicadaId) {
-            $sugerenciaRepuesto=$this->Sugerenciarepuestos->find()
-            ->contain(['Replacements'])
-            ->where(['sugerenciarepuestos_id'=>$sugerenciaAplicadaId])
-            ->first();
-            if($sugerenciaRepuesto!=null){
-                $replacement=$sugerenciaRepuesto->replacement;
+            $sugerenciaRepuesto = $this->Sugerenciarepuestos->find()
+                ->contain(['Replacements'])
+                ->where(['sugerenciarepuestos_id' => $sugerenciaAplicadaId])
+                ->first();
+            if ($sugerenciaRepuesto != null) {
+                $replacement = $sugerenciaRepuesto->replacement;
                 $dataNueva = [
-                    "cantidad" => ($replacement->cantidad)-1,
+                    "cantidad" => ($replacement->cantidad) - 1,
                 ];
-                $replacement = $objReplacement->patchEntity($replacement,$dataNueva);
+                $replacement = $objReplacement->patchEntity($replacement, $dataNueva);
                 $result = $objReplacement->save($replacement);
             }
         }
         return $this->setJsonResponse([
             'retorno registro baja stock' => $sugerenciasAplicadasIds,
-            'sugerenciaRepuesto'=>$sugerenciaRepuesto,
-            'baja'=>$result
+            'sugerenciaRepuesto' => $sugerenciaRepuesto,
+            'baja' => $result
         ]);
     }
     public function view($id = null)
@@ -79,13 +82,15 @@ class SugerenciarepuestosController extends AppController
      */
     public function add()
     {
+        $dataVue = $this->request->getData();
+
         $sugerenciarepuesto = $this->Sugerenciarepuestos->newEmptyEntity();
         if ($this->request->is('post')) {
             $sugerenciarepuesto = $this->Sugerenciarepuestos->patchEntity($sugerenciarepuesto, $this->request->getData());
             if ($this->Sugerenciarepuestos->save($sugerenciarepuesto)) {
-                $this->Flash->success(__('The sugerenciarepuesto has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+                return $this->setJsonResponse([
+                    'message' => true,
+                ]);
             }
             $this->Flash->error(__('The sugerenciarepuesto could not be saved. Please, try again.'));
         }

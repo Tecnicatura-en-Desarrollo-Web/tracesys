@@ -151,6 +151,20 @@
                 >Repuestos</router-link
               >
             </li>
+            <li
+              id="10"
+              class="header-menu"
+              v-on:click="focus(10)"
+              v-if="empleadoEtapa == 2"
+            >
+              <router-link to="/suggestion/suggestions">
+                <b-icon-tools
+                  class="icono"
+                  style="width: 25px; height: 25px"
+                ></b-icon-tools
+                >Sugerencias</router-link
+              >
+            </li>
           </ul>
         </div>
       </div>

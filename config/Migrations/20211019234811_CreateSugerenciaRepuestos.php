@@ -28,14 +28,6 @@ class CreateSugerenciaRepuestos extends AbstractMigration
             'limit' => 11,
             'null' => false,
         ]);
-        $table->addColumn('fecha', 'datetime', [
-            'default' => null,
-            'null' => false,
-        ]);
-        $table->addColumn('hora', 'datetime', [
-            'default' => null,
-            'null' => false,
-        ]);
         $table->addColumn('created', 'datetime', [
             'default' => null,
             'null' => false,

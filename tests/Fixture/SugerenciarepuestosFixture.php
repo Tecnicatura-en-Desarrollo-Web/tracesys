@@ -19,8 +19,6 @@ class SugerenciarepuestosFixture extends TestFixture
     public $fields = [
         'sugerenciarepuestos_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'replacement_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'fecha' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
-        'hora' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         '_indexes' => [
@@ -28,8 +26,8 @@ class SugerenciarepuestosFixture extends TestFixture
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['sugerenciarepuestos_id', 'replacement_id'], 'length' => []],
-            'sugerenciarepuestos_ibfk_2' => ['type' => 'foreign', 'columns' => ['replacement_id'], 'references' => ['replacements', 'replacement_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
             'sugerenciarepuestos_ibfk_1' => ['type' => 'foreign', 'columns' => ['sugerenciarepuestos_id'], 'references' => ['suggestions', 'suggestion_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'sugerenciarepuestos_ibfk_2' => ['type' => 'foreign', 'columns' => ['replacement_id'], 'references' => ['replacements', 'replacement_id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',
@@ -48,10 +46,8 @@ class SugerenciarepuestosFixture extends TestFixture
             [
                 'sugerenciarepuestos_id' => 1,
                 'replacement_id' => 1,
-                'fecha' => '2021-10-22 00:31:57',
-                'hora' => '2021-10-22 00:31:57',
-                'created' => '2021-10-22 00:31:57',
-                'modified' => '2021-10-22 00:31:57',
+                'created' => '2021-12-08 17:12:58',
+                'modified' => '2021-12-08 17:12:58',
             ],
         ];
         parent::init();
