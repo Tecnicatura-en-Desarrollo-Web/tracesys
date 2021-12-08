@@ -73,17 +73,21 @@ class ReplacementsController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit()
     {
-        $replacement = $this->Replacements->get($id, [
+        $dataVue = $this->request->getData();
+        $replacement = $this->Replacements->get($dataVue['replacement_id'], [
             'contain' => [],
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $replacement = $this->Replacements->patchEntity($replacement, $this->request->getData());
-            if ($this->Replacements->save($replacement)) {
-                $this->Flash->success(__('The replacement has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $replacement = $this->Replacements->patchEntity($replacement, $dataVue);
+            if ($this->Replacements->save($replacement)) {
+                return $this->setJsonResponse(
+                    [
+                        'message' => true,
+                    ],
+                );
             }
             $this->Flash->error(__('The replacement could not be saved. Please, try again.'));
         }

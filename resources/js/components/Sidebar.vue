@@ -137,6 +137,20 @@
                 >Solicitar Repuesto</router-link
               >
             </li>
+            <li
+              id="9"
+              class="header-menu"
+              v-on:click="focus(9)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/replacement/replacements">
+                <b-icon-tools
+                  class="icono"
+                  style="width: 25px; height: 25px"
+                ></b-icon-tools
+                >Repuestos</router-link
+              >
+            </li>
           </ul>
         </div>
       </div>
