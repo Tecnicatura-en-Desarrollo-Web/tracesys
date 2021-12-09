@@ -56,7 +56,7 @@ class SectorsController extends AppController
             case 3:
                 $this->paginate = [
                     'contain' => ['Stages'],
-                    'conditions' => [["Sectors.stage_id !=" => 3], ["Sectors.stage_id !=" => 1]],
+                    'conditions' => [["Sectors.stage_id !=" => 3], ["Sectors.stage_id !=" => 1],["Sectors.stage_id !=" => 5]],
                     'sortableFields' => [
                         'orden'
                     ],
@@ -68,7 +68,7 @@ class SectorsController extends AppController
             case 4:
                 $this->paginate = [
                     'contain' => ['Stages'],
-                    'conditions' => [["Sectors.stage_id !=" => 3], ["Sectors.stage_id !=" => 1]],
+                    'conditions' => [["Sectors.stage_id !=" => 3], ["Sectors.stage_id !=" => 1],["Sectors.stage_id !=" => 4]],
                     'sortableFields' => [
                         'orden'
                     ],
