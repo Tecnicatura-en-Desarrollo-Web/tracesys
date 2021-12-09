@@ -168,7 +168,7 @@ class BudgetsController extends AppController
         $sugerencia =new ProblemasugerenciasController;
         $res = $sugerencia->Problemasugerencias->find()
         ->contain(['Issues','Suggestions'])
-        ->where(['Issues.report_id'=>$id_informe])
+        ->where(['Issues.report_id'=>$id_informe, 'activo'=>1])
         ->first();
         return $this->setJsonResponse(['budget'=>$budget,'suggestion'=>$res]);
     }
