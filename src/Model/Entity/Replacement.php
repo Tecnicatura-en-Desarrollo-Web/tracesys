@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -34,6 +35,7 @@ class Replacement extends Entity
         'descripcion' => true,
         'fecha_ingreso' => true,
         'cantidad' => true,
+        'valor' => true,
         'created' => true,
         'modified' => true,
     ];

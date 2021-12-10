@@ -6,52 +6,41 @@
         <div class="card2 p-0 shadow-sm p-3 mb-5 bg-body rounded">
           <h3 class="card-title">Listado de respuestos</h3>
           <div class="card-body table-full-width">
-            <!--             <div class="row px-4">
+            <div class="row px-4">
               <div class="col col-lg-3">
                 <input
                   type="text"
                   class="botonFiltro"
-                  name="filtroFecha"
-                  v-model="filtroPorFecha"
-                  placeholder="Filtrar por fecha"
+                  name="filtroNombre"
+                  v-model="filtroPorNombre"
+                  placeholder="Filtrar por nombre"
                 />
               </div>
-              <div class="col col-lg-3">
-                <input
-                  type="text"
-                  class="botonFiltro"
-                  name="filtroProducto"
-                  v-model="filtroPorProducto"
-                  placeholder="Filtrar por producto"
-                />
-              </div>
-              <div class="col col-lg-3">
-                <input
-                  type="text"
-                  class="botonFiltro"
-                  name="filtroMotivo"
-                  v-model="filtroPorMotivo"
-                  placeholder="Filtrar por motivo de reparacion"
-                />
-              </div>
-            </div> -->
+            </div>
 
             <table class="table-striped p-4">
               <thead>
                 <tr class="">
                   <th scope="col">#</th>
                   <th scope="col">Nombre</th>
+                  <th scope="col">Precio</th>
                   <th scope="col">Stock</th>
-                  <th scope="col">Accion</th>
+                  <th scope="col">Editar</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
                   v-for="(repuesto, index) in repuestos"
                   :key="repuesto.replacement_id"
+                  v-if="
+                    repuesto.descripcion
+                      .toLowerCase()
+                      .includes(filtroPorNombre.toLowerCase())
+                  "
                 >
                   <td>{{ repuesto.replacement_id }}</td>
                   <td>{{ repuesto.descripcion }}</td>
+                  <td>$ {{ repuesto.valor }}</td>
                   <td>{{ repuesto.cantidad }}</td>
                   <td>
                     <b-icon-plus-circle-fill
@@ -90,11 +79,22 @@
                                     class="form-control"
                                     name="cantidad"
                                     placeholder="Ingrese el nuevo stock"
+                                    v-bind:value="repuesto.cantidad"
                                   />
                                   <input
                                     type="hidden"
                                     v-bind:value="repuesto.replacement_id"
                                     name="replacement_id"
+                                  />
+                                </div>
+                                <div class="form-group">
+                                  <label for="product_name">Precio</label>
+                                  <input
+                                    type="number"
+                                    class="form-control"
+                                    name="valor"
+                                    placeholder="Ingrese el nuevo precio"
+                                    v-bind:value="repuesto.valor"
                                   />
                                 </div>
                               </div>
@@ -124,6 +124,7 @@ export default {
   data() {
     return {
       repuestos: [],
+      filtroPorNombre: "",
     };
   },
   mounted() {
