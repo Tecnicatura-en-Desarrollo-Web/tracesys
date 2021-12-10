@@ -90,7 +90,6 @@ export default {
       });
     },
     relacionarRepuestosProveedor(query, data) {
-      console.log(data);
       /* axios
         .post("/api/replacements/add", data, {
           headers: { "X-Requested-With": "XMLHttpRequest" },
@@ -113,7 +112,6 @@ export default {
           this.idProveedor = response.data.idProveedor;
           if (response.data.message) {
             data += "&idProveedor=" + this.idProveedor;
-            console.log(data);
             axios
               .post("/api/proveedorrepuestos/add", data, {
                 headers: { "X-Requested-With": "XMLHttpRequest" },

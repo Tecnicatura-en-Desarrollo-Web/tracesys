@@ -6,6 +6,7 @@ namespace App\Controller\Api;
 
 use App\Controller\AppController;
 use App\Controller\Traits\ResponseTrait;
+use App\Model\Table\BillsTable;
 use App\Model\Table\BudgetsTable;
 use App\Model\Table\SuggestionsTable;
 use App\Model\Table\ReportsTable;
@@ -241,7 +242,106 @@ class ProblemasugerenciasController extends AppController
             'subirValoracion' => "funcionoooo"
         ]);
     }
+    public function enviarFacturaFinal($idInforme){
+        $problemaSugerencias = $this->Problemasugerencias->find('all')
+            ->contain(['Suggestions', 'Issues.Reports'])
+            ->where(['Issues.report_id' => $idInforme, 'activo' => 1]);
+        $objSugerenciaRepuestos=new SugerenciarepuestosTable();
+        $objBill=new BillsTable();
+        $montoTotal=0;
+        $costoRepuesto=0;
+        $datosProductos = array();
+        $descripcion="";
+        foreach ($problemaSugerencias as $problemaSugerencia) {
+            $sugerenciaRepuesto=$objSugerenciaRepuestos->find()
+                ->contain(['Replacements'])
+                ->where(['sugerenciarepuestos_id' => $problemaSugerencia->suggestion_id])
+                ->first();
+                if($sugerenciaRepuesto!=null){
+                    $costoRepuesto=$sugerenciaRepuesto->replacement->valor;
+                }
+                $montoTotal += $problemaSugerencia->suggestion->valorPrecio+$costoRepuesto;
+                $descripcion.=$problemaSugerencia->suggestion->nombre_sugerencia." : ".$problemaSugerencia->suggestion->valorPrecio.",costo del repuesto: ".$costoRepuesto.",";
+                array_push($datosProductos, [
+                    "nombreSugerencia" => $problemaSugerencia->suggestion->nombre_sugerencia,
+                    "precio" => $problemaSugerencia->suggestion->valorPrecio,
+                    "costoRepuesto"=>$costoRepuesto,
+                    "montoTotal" => $montoTotal
+                ]);
+        }
+        $descripcion.="monto total: ".$montoTotal;
+        $dataNueva = [
+            "descripcion" => $descripcion,
+            "monto" => $montoTotal,
+            "url_factura" => "url factura"
 
+        ];
+        $bill = $objBill->newEmptyEntity();
+        $bill = $objBill->patchEntity($bill, $dataNueva);
+        $result = $objBill->save($bill);
+        $stringProductos = "";
+            //****Se envia el presupuesto al cliente */
+            foreach ($datosProductos as $datoProducto) {
+                $stringProductos .= '
+                <tr style="border:1px solid black;text-align: center;">
+                    <td style="border:1px solid black;">' . $datoProducto['nombreSugerencia'] . '</td>
+                    <td style="border:1px solid black;">' . $datoProducto['precio'] . '</td>
+                    <td style="border:1px solid black;">' . $datoProducto['costoRepuesto'] . '</td>
+
+                </tr>
+                ';
+                $stringMontoTotal = $datoProducto["montoTotal"];
+            }
+            $reports = new ReportsTable();
+            $report = $reports->get($idInforme, [
+                'contain' => ['Products.Clients'],
+            ]);
+
+            $product = $report['product'];
+            $client = $product['client'];
+            $mailer = new Mailer();
+            $mailer->setTransport('gmail');
+            $mailer
+                ->setEmailFormat('html')
+                ->setTo($client['email'])
+                ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
+                ->setSubject('Factura final de su producto')
+
+                ->deliver('
+                                <table>
+                                <tr>
+                                <img src="https://i.ibb.co/jZcV0Lb/logo-Tracesysy-Chiquito.png" alt="Logo del sistema" />
+                                        <hr>
+                                            <h2>Factura final</h2>
+                                            <table style="width:100%;border:1px solid black;text-align: center;"">
+                                                <tr style="border:1px solid black;">
+                                                    <th>Reparacion</th>
+                                                    <th>Costo Mano de obra</th>
+                                                    <th>Costo Repuesto</th>
+                                                </tr>
+
+                                                <tr style="border:1px solid black;text-align: center;">
+                                                    ' . $stringProductos . '
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="3" style="text-align: center;">Monto Total: $' . $stringMontoTotal . '</td>
+                                                </tr>
+                                            </table>
+
+                                    </tr>
+                                </table>
+                        ');
+
+
+            $mailer->deliver();
+
+        return $this->setJsonResponse([
+            'facturaaaa' => $descripcion
+        ]);
+
+
+    }
     public function enviarPresupuesto()
     {
         $dataVue =  $this->request->getData();

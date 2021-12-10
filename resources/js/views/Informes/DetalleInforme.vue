@@ -250,7 +250,6 @@ export default {
       axios
         .get(`/api/reports/obtenerCliente/${this.idInforme}`, { params: query })
         .then((response) => {
-          console.log("asdasd", response.data);
           this.telefonoCliente = response.data.client.telefono;
           this.nombreCliente = response.data.client.denominacion;
         });
@@ -264,7 +263,6 @@ export default {
         .then((response) => {
           //ver mas adelante mejorar la estructura del arreglo devuelto
           this.reports = response.data;
-          console.log("aca lee jonaaaaa", this.reports);
           //obtengo el ultimo informeEmpleadoEstado , para saber el ultimo empleado que derivo
           this.ultimoInformeEmpleadoEstado =
             this.reports.cambiosEstadoInforme[
@@ -284,7 +282,6 @@ export default {
           }
           //***************************************************** */
           this.idEmpleado = this.ultimoInformeEmpleadoEstado.employee_id;
-          //this.idEmpleado = this.$session.get("user_id");
           this.cuitEmpleado = this.$session.get("cuit");
         })
         .catch((error) => {
@@ -299,7 +296,6 @@ export default {
         .then((response) => {
           if (response.data.suggestions[0] != null) {
             this.sugerencias = response.data.suggestions;
-            console.log("lasugerencias pa", this.sugerencias);
             this.idIssuesSelect =
               response.data.suggestions[0].problemasugerencia_id;
           }
@@ -317,7 +313,6 @@ export default {
         )
         .then((response) => {
           this.sectoresADerivar = response.data.sectors;
-          console.log("sectoressssasdasd", this.sectoresADerivar);
         })
         .catch((error) => {
           console.log("Error: " + error);
@@ -343,16 +338,36 @@ export default {
       // data["idEmpleado"]=this.$session.get("user_id");
       this.registrarCambioEstado(data);
       this.registrarComentario(data);
-      if (this.$session.get("etapa_id") == 3) {
-        this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
-      } else {
-        if (this.$session.get("etapa_id") == 2) {
-            this.$refs.sugerencias.enviarPresupuesto(data);
-            this.$refs.sugerencias.registrarSugerencia(data);
-        } else {
-          this.$refs.sugerencias.subirValoracionSugerencias(data);
-        }
+      switch (this.$session.get("etapa_id")) {
+            case 3:
+                this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
+                break;
+            case 2:
+                this.$refs.sugerencias.enviarPresupuesto(data);
+                this.$refs.sugerencias.registrarSugerencia(data);
+                break;
+            case 4:
+                if(this.primerSelect.stage_id==5){
+                    this.$refs.sugerencias.subirValoracionSugerencias(data);
+                    this.$refs.sugerencias.enviarFacturaFinal(data);
+                }
+                break;
+
       }
+    //   if (this.$session.get("etapa_id") == 3) {
+    //     this.$refs.sugerencias.registrarSugerenciasAplicadas(data);
+    //   } else {
+    //     if (this.$session.get("etapa_id") == 2) {
+    //         this.$refs.sugerencias.enviarPresupuesto(data);
+    //         this.$refs.sugerencias.registrarSugerencia(data);
+    //     } else {
+    //         if(this.$session.get("etapa_id") == 4){
+
+    //         }else{
+    //             this.$refs.sugerencias.subirValoracionSugerencias(data);
+    //         }
+    //     }
+    //   }
     },
 
     actualizarCambioEstadoAnterior(data) {
@@ -362,7 +377,6 @@ export default {
         })
         .then((response) => {
           // Redirect on success
-          console.log(response);
           if (response.data.success) {
             this.$notify({
               group: "default",
@@ -388,7 +402,6 @@ export default {
         })
         .then((response) => {
           // Redirect on success
-          console.log(response);
           if (response.data.success) {
             this.$notify({
               group: "default",
@@ -416,7 +429,6 @@ export default {
         })
         .then((response) => {
           //****una vez guardado el comentario ahora guardo la relacion del comentario del empleado con el informe*/
-          //console.log(response);
           this.comentarioEmpleado = response.data.comentario;
           if (response.data.success) {
             data +=

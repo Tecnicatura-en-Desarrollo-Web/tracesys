@@ -132,7 +132,6 @@ export default {
   methods: {
     obtenerRepuestos() {
       axios.get("/api/replacements").then((response) => {
-        console.log(response);
         this.repuestos = response.data;
       });
     },

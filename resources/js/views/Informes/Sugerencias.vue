@@ -67,6 +67,9 @@ export default {
         subirValoracionSugerencias: function(data) {
         this.$refs.sugerenciasAplicadasTesteo.subirValoracionSugerencias(data);
         },
+        enviarFacturaFinal: function(data) {
+        this.$refs.sugerenciasAplicadasTesteo.enviarFacturaFinal(data);
+        },
     }
 
 }

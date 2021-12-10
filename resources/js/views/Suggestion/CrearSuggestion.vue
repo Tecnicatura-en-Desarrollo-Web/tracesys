@@ -77,7 +77,6 @@ export default {
   },
   methods: {
     obtenerProblemas() {
-      console.log("hola perri");
       /* console.log("hola man");
       axios.get("/api/issues/obtenerProblemas").then((response) => {
         this.problemas = response.data.issues;
@@ -100,7 +99,6 @@ export default {
           headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-          console.log(response);
           if (response.data.message) {
             this.$swal({
               title: "Sugerencia creada",

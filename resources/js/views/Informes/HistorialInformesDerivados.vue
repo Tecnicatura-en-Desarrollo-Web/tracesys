@@ -104,7 +104,6 @@ export default {
         if (!this.$session.exists()) {
             this.nombre_sector = "asdasd";
             this.$router.push("/login");
-            console.log("saaale", nombre_sector);
         }
         if (this.$session.exists()) {
             // this.nombre_sector = this.$session.get("nombre_sector");

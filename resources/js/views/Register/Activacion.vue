@@ -51,7 +51,6 @@ export default {
           headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-          console.log(response);
         });
     },
   },

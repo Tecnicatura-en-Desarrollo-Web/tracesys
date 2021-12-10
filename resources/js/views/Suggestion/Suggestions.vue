@@ -153,13 +153,11 @@ export default {
         hash: false,
         empty: true,
       });
-      console.log(data);
       axios
         .post(`/api/sugerenciarepuestos/add`, data, {
           headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-          console.log(response);
           if (response.data.message) {
             this.$swal({
               title: "Sugerencia y repuesto relacionados correctamente",

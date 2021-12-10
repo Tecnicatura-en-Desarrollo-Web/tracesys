@@ -141,7 +141,6 @@ export default {
           }
         )
         .then((response) => {
-          console.log(response);
           this.series = [
             {
               data: [response.data.data.mesPasado, response.data.data.esteMes],
@@ -160,7 +159,6 @@ export default {
       axios
         .get(`/api/replacements/obtenerRepuestosStockBajo`)
         .then((response) => {
-          console.log("aca salen los repuestos", response);
           this.repuestos = response.data;
         });
     },
