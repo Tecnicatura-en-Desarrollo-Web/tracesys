@@ -46,7 +46,7 @@ class ProblemasugerenciasController extends AppController
      */
     public function issuesByReport($id = null)
     {
-        $objSugerenciaRepuesto=new SugerenciarepuestosTable();
+        $objSugerenciaRepuesto = new SugerenciarepuestosTable();
 
         $this->paginate = [
             'contain' => [
@@ -62,18 +62,22 @@ class ProblemasugerenciasController extends AppController
         ];
         $problemasugerencias['suggestions'] = $this->paginate($this->Problemasugerencias);
         foreach ($problemasugerencias['suggestions'] as $problemasugerencia) {
-            $idSugesstion=$problemasugerencia->suggestion->suggestion_id;
-            $sugerenciaRepuesto=$objSugerenciaRepuesto->find()
+            $idSugesstion = $problemasugerencia->suggestion->suggestion_id;
+            $sugerenciaRepuesto = $objSugerenciaRepuesto->find()
                 ->contain(['Replacements'])
                 ->where(['sugerenciarepuestos_id' => $idSugesstion])
                 ->first();
-            if($sugerenciaRepuesto==null){
-                $cantStock=-1;
+            if ($sugerenciaRepuesto == null) {
+                $cantStock = -1;
+            } else {
+                $cantStock = $sugerenciaRepuesto->replacement->cantidad;
+                $marca = $sugerenciaRepuesto->replacement->marca;
+                $modelo = $sugerenciaRepuesto->replacement->modelo;
+
+                $problemasugerencia->{"marca"} = $marca;
+                $problemasugerencia->{"modelo"} = $modelo;
             }
-            else{
-                $cantStock=$sugerenciaRepuesto->replacement->cantidad;
-            }
-            $problemasugerencia->{"cantStock"}=$cantStock;
+            $problemasugerencia->{"cantStock"} = $cantStock;
         }
         return $this->setJsonResponse($problemasugerencias);
     }
@@ -242,34 +246,35 @@ class ProblemasugerenciasController extends AppController
             'subirValoracion' => "funcionoooo"
         ]);
     }
-    public function enviarFacturaFinal($idInforme){
+    public function enviarFacturaFinal($idInforme)
+    {
         $problemaSugerencias = $this->Problemasugerencias->find('all')
             ->contain(['Suggestions', 'Issues.Reports'])
             ->where(['Issues.report_id' => $idInforme, 'activo' => 1]);
-        $objSugerenciaRepuestos=new SugerenciarepuestosTable();
-        $objBill=new BillsTable();
-        $montoTotal=0;
-        $costoRepuesto=0;
+        $objSugerenciaRepuestos = new SugerenciarepuestosTable();
+        $objBill = new BillsTable();
+        $montoTotal = 0;
+        $costoRepuesto = 0;
         $datosProductos = array();
-        $descripcion="";
+        $descripcion = "";
         foreach ($problemaSugerencias as $problemaSugerencia) {
-            $sugerenciaRepuesto=$objSugerenciaRepuestos->find()
+            $sugerenciaRepuesto = $objSugerenciaRepuestos->find()
                 ->contain(['Replacements'])
                 ->where(['sugerenciarepuestos_id' => $problemaSugerencia->suggestion_id])
                 ->first();
-                if($sugerenciaRepuesto!=null){
-                    $costoRepuesto=$sugerenciaRepuesto->replacement->valor;
-                }
-                $montoTotal += $problemaSugerencia->suggestion->valorPrecio+$costoRepuesto;
-                $descripcion.=$problemaSugerencia->suggestion->nombre_sugerencia." : ".$problemaSugerencia->suggestion->valorPrecio.",costo del repuesto: ".$costoRepuesto.",";
-                array_push($datosProductos, [
-                    "nombreSugerencia" => $problemaSugerencia->suggestion->nombre_sugerencia,
-                    "precio" => $problemaSugerencia->suggestion->valorPrecio,
-                    "costoRepuesto"=>$costoRepuesto,
-                    "montoTotal" => $montoTotal
-                ]);
+            if ($sugerenciaRepuesto != null) {
+                $costoRepuesto = $sugerenciaRepuesto->replacement->valor;
+            }
+            $montoTotal += $problemaSugerencia->suggestion->valorPrecio + $costoRepuesto;
+            $descripcion .= $problemaSugerencia->suggestion->nombre_sugerencia . " : " . $problemaSugerencia->suggestion->valorPrecio . ",costo del repuesto: " . $costoRepuesto . ",";
+            array_push($datosProductos, [
+                "nombreSugerencia" => $problemaSugerencia->suggestion->nombre_sugerencia,
+                "precio" => $problemaSugerencia->suggestion->valorPrecio,
+                "costoRepuesto" => $costoRepuesto,
+                "montoTotal" => $montoTotal
+            ]);
         }
-        $descripcion.="monto total: ".$montoTotal;
+        $descripcion .= "monto total: " . $montoTotal;
         $dataNueva = [
             "descripcion" => $descripcion,
             "monto" => $montoTotal,
@@ -280,9 +285,9 @@ class ProblemasugerenciasController extends AppController
         $bill = $objBill->patchEntity($bill, $dataNueva);
         $result = $objBill->save($bill);
         $stringProductos = "";
-            //****Se envia el presupuesto al cliente */
-            foreach ($datosProductos as $datoProducto) {
-                $stringProductos .= '
+        //****Se envia el presupuesto al cliente */
+        foreach ($datosProductos as $datoProducto) {
+            $stringProductos .= '
                 <tr style="border:1px solid black;text-align: center;">
                     <td style="border:1px solid black;">' . $datoProducto['nombreSugerencia'] . '</td>
                     <td style="border:1px solid black;">' . $datoProducto['precio'] . '</td>
@@ -290,24 +295,24 @@ class ProblemasugerenciasController extends AppController
 
                 </tr>
                 ';
-                $stringMontoTotal = $datoProducto["montoTotal"];
-            }
-            $reports = new ReportsTable();
-            $report = $reports->get($idInforme, [
-                'contain' => ['Products.Clients'],
-            ]);
+            $stringMontoTotal = $datoProducto["montoTotal"];
+        }
+        $reports = new ReportsTable();
+        $report = $reports->get($idInforme, [
+            'contain' => ['Products.Clients'],
+        ]);
 
-            $product = $report['product'];
-            $client = $product['client'];
-            $mailer = new Mailer();
-            $mailer->setTransport('gmail');
-            $mailer
-                ->setEmailFormat('html')
-                ->setTo($client['email'])
-                ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
-                ->setSubject('Factura final de su producto')
+        $product = $report['product'];
+        $client = $product['client'];
+        $mailer = new Mailer();
+        $mailer->setTransport('gmail');
+        $mailer
+            ->setEmailFormat('html')
+            ->setTo($client['email'])
+            ->setFrom(['tracesysapp@gmail.com' => 'Tracesys'])
+            ->setSubject('Factura final de su producto')
 
-                ->deliver('
+            ->deliver('
                                 <table>
                                 <tr>
                                 <img src="https://i.ibb.co/jZcV0Lb/logo-Tracesysy-Chiquito.png" alt="Logo del sistema" />
@@ -334,13 +339,11 @@ class ProblemasugerenciasController extends AppController
                         ');
 
 
-            $mailer->deliver();
+        $mailer->deliver();
 
         return $this->setJsonResponse([
             'facturaaaa' => $descripcion
         ]);
-
-
     }
     public function enviarPresupuesto()
     {
@@ -354,15 +357,15 @@ class ProblemasugerenciasController extends AppController
             $sugerenciasIds = explode(",", $dataVue['sugerenciasSeleccionadas']);
             $montoTotal = 0;
             $datosProductos = array();
-            $objSugerenciaRepuesto=new SugerenciarepuestosTable();
-            $costoRepuesto=0;
+            $objSugerenciaRepuesto = new SugerenciarepuestosTable();
+            $costoRepuesto = 0;
             foreach ($sugerenciasIds as $idSugerencia) {
-                $sugerenciaRepuesto=$objSugerenciaRepuesto->find()
-                ->contain(['Replacements'])
-                ->where(['sugerenciarepuestos_id' => $idSugerencia])
-                ->first();
-                if($sugerenciaRepuesto!=null){
-                    $costoRepuesto=$sugerenciaRepuesto->replacement->valor;
+                $sugerenciaRepuesto = $objSugerenciaRepuesto->find()
+                    ->contain(['Replacements'])
+                    ->where(['sugerenciarepuestos_id' => $idSugerencia])
+                    ->first();
+                if ($sugerenciaRepuesto != null) {
+                    $costoRepuesto = $sugerenciaRepuesto->replacement->valor;
                 }
                 $problemasugerencia = $this->Problemasugerencias->get(
                     [$dataVue['idIssueReport'], (int)$idSugerencia],
@@ -370,11 +373,11 @@ class ProblemasugerenciasController extends AppController
                         'contain' => ['Suggestions']
                     ]
                 );
-                $montoTotal += $problemasugerencia->suggestion->valorPrecio+$costoRepuesto;
+                $montoTotal += $problemasugerencia->suggestion->valorPrecio + $costoRepuesto;
                 array_push($datosProductos, [
                     "nombreSugerencia" => $problemasugerencia->suggestion->nombre_sugerencia,
                     "precio" => $problemasugerencia->suggestion->valorPrecio,
-                    "costoRepuesto"=>$costoRepuesto,
+                    "costoRepuesto" => $costoRepuesto,
                     "montoTotal" => $montoTotal
                 ]);
             }
