@@ -176,9 +176,7 @@ export default {
       axios
         .get("api/informeempleadoestados", { params: query })
         .then((response) => {
-          console.log("aca lee jonita", response.data);
           this.reports = response.data.reports;
-          console.log("lee aca maxiiii", this.reports);
           this.queryParams = response.data.query;
         })
         .catch((error) => {
@@ -191,7 +189,6 @@ export default {
           `api/informeempleadoestados/obtenerInformesDerivados/${this.empleado_id}`
         )
         .then((response) => {
-          console.log("informes derivados", response);
           this.reportsDerivadosEmpleado = response.data;
         });
     },
@@ -200,7 +197,6 @@ export default {
     if (!this.$session.exists()) {
       this.nombre_sector = "asdasd";
       this.$router.push("/login");
-      console.log("saaale", nombre_sector);
     }
     if (this.$session.exists()) {
       this.nombre_sector = this.$session.get("nombre_sector");

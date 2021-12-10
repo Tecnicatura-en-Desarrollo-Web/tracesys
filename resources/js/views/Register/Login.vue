@@ -92,7 +92,6 @@ export default {
             }).then((result) => {
               //***Seteo true en la variable login******//
               this.login = true;
-              console.log(response.data);
               //***Se inicia session******//
               this.$session.start();
               //***Seteo el nombre del usuario logueado en la variable sesion para mostrar su nombre en su home******
@@ -125,7 +124,6 @@ export default {
         });
     },
     mostrarMensaje() {
-      console.log("metodo mostrarmensaje");
       if (!this.$session.exists()) {
         this.mensaje = "Datos incorrectos , intente nuevamente";
       } else {

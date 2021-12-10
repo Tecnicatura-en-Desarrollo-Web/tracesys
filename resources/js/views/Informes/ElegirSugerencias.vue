@@ -48,10 +48,7 @@ export default {
                 headers: { "X-Requested-With": "XMLHttpRequest" },
                 })
                 .then((response) => {
-                    // this.$router.push("/reports");
-                    console.log("respuestade sugerencia",response.data);
-                    // if (response.data.success) {
-                    // }
+
                 });
         },
         enviarPresupuesto: function(data) {
@@ -61,7 +58,6 @@ export default {
                 headers: { "X-Requested-With": "XMLHttpRequest" },
                 })
                 .then((response) => {
-                    console.log("PRESUPUESTOOOO:",response.data);
                     window.location = "http://localhost:8765/reports";
 
                 });

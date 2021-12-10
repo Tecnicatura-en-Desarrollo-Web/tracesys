@@ -377,7 +377,6 @@ export default {
           headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-          console.log("aca lee jonaaa", response.data);
           //******Guardamos en la data los datos necesarios para crear un nuevo estado */
           data += "&idInforme=" + response.data.idReporte;
           data += "&idEmpleado=" + response.data.idEmpleado;
@@ -385,7 +384,6 @@ export default {
           data += "&selectSector=" + 2;
 
           //****************************************************************************/
-          console.log(response);
           this.$swal({
             title: "Informe cargado correctamente",
             type: "success",
@@ -410,7 +408,6 @@ export default {
         })
         .then((response) => {
           // Seteo el comentario default "se envia al diagnostico" en la data
-          console.log(response);
           data += "&idComentarioEmpleado=" + 1;
           this.registrarComentarioDefault(data);
         })
@@ -429,7 +426,6 @@ export default {
           headers: { "X-Requested-With": "XMLHttpRequest" },
         })
         .then((response) => {
-          console.log(response.data);
           if (response.data.message) {
             this.$swal({
               title: "Informe creado",

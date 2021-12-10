@@ -146,7 +146,6 @@ export default {
         })
         .then((response) => {
           // Redirect on success
-          console.log(response.data);
           if (response.data.success) {
             this.$swal({
               title: "Usuario registrado con exito",

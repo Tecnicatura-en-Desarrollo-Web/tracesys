@@ -120,7 +120,6 @@ export default {
         })
         .then((response) => {
           this.realizoBusqueda = true;
-          console.log(response.data[0]);
           this.repuestos = response.data[0];
 
           if (

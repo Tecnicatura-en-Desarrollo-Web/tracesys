@@ -110,7 +110,6 @@ export default {
             headers: { "X-Requested-With": "XMLHttpRequest" },
           })
           .then((response) => {
-            console.log(response);
             if (response.data.message) {
               this.$swal({
                 title: "Sectores ordenados correctamente",

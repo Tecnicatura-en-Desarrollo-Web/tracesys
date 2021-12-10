@@ -47,7 +47,6 @@ export default {
                 })
                 .then((response) => {
                 if (response.data.suggestions[0] != null) {
-                    console.log("entro jonaaaaaaaa2");
                     this.sugerencias = response.data.suggestions;
                     //console.log("aca lee jonaaaaaaaaa", response.data.suggestions);
                     // this.idIssuesSelect =
@@ -61,7 +60,6 @@ export default {
                 });
         },
         registrarSugerenciasAplicadas: function(data){
-            console.log("jonaaa llegamos a registrarSugerenciasAplicadasssss");
             data += "&sugerenciasAplicadas=" + this.sugerenciasAplicadas;
             axios
                 .post(`/api/problemasugerencias/editarSugerenciasAplicadas`, data, {
@@ -69,7 +67,6 @@ export default {
                 })
                 .then((response) => {
                     this.registrarBajaStock(data);
-                    console.log("respuestaAplicarSugerencias",response.data);
                     window.location = "http://localhost:8765/reports";
                     // console.log("respuestade sugerencia",response.data);
                     // if (response.data.success) {
@@ -82,7 +79,6 @@ export default {
             headers: { "X-Requested-With": "XMLHttpRequest" },
             })
             .then((response) => {
-                console.log("se registro baja stock" , response);
                 // window.location = "http://localhost:8765/reports";
             })
         }

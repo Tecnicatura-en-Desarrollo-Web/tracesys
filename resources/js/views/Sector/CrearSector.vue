@@ -67,13 +67,11 @@ export default {
         .then((response) => {
           cantidadSectores = response.data.sectores.length;
           data += "&orden=" + (cantidadSectores + 1) + "&stage_id=3";
-          console.log("aca sale data", data);
           axios
             .post("/api/sectors/save", data, {
               headers: { "X-Requested-With": "XMLHttpRequest" },
             })
             .then((response) => {
-              console.log(response);
               if (response.data.message) {
                 this.$swal({
                   title: "Sector creado",

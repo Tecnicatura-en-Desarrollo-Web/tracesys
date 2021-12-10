@@ -60,7 +60,6 @@ export default {
                     headers: { "X-Requested-With": "XMLHttpRequest" },
                     })
                     .then((response) => {
-                        console.log("Hola jonaa llegamos al componente",response);
 
                         // this.series = [
                         // {
