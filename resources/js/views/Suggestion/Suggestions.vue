@@ -6,16 +6,17 @@
         <div class="card2 p-0 shadow-sm p-3 mb-5 bg-body rounded">
           <h3 class="card-title">Listado de sugerencias</h3>
           <div class="card-body table-full-width">
-            <!--             <div class="row px-4">
+            <div class="row px-4">
               <div class="col col-lg-3">
                 <input
                   type="text"
                   class="botonFiltro"
-                  name="filtroFecha"
-                  v-model="filtroPorFecha"
-                  placeholder="Filtrar por fecha"
+                  name="filtroNombre"
+                  v-model="filtroPorNombre"
+                  placeholder="Filtrar por nombre"
                 />
               </div>
+              <!--
               <div class="col col-lg-3">
                 <input
                   type="text"
@@ -33,8 +34,8 @@
                   v-model="filtroPorMotivo"
                   placeholder="Filtrar por motivo de reparacion"
                 />
-              </div>
-            </div> -->
+              </div>-->
+            </div>
 
             <table class="table table-striped p-4 mx-auto">
               <thead>
@@ -42,13 +43,18 @@
                   <th scope="col">#</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Descripcion</th>
-                  <th scope="col">Accion</th>
+                  <th scope="col">Relacionar repuesto</th>
                 </tr>
               </thead>
               <tbody>
                 <tr
                   v-for="(sugerencia, index) in sugerencias"
                   :key="sugerencia.suggestion_id"
+                  v-if="
+                    sugerencia.nombre_sugerencia
+                      .toLowerCase()
+                      .includes(filtroPorNombre.toLowerCase())
+                  "
                 >
                   <td scope="col">{{ sugerencia.suggestion_id }}</td>
                   <td>{{ sugerencia.nombre_sugerencia }}</td>
@@ -131,6 +137,7 @@ export default {
     return {
       sugerencias: [],
       repuestos: [],
+      filtroPorNombre: "",
     };
   },
   mounted() {
