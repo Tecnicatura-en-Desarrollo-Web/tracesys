@@ -1,7 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Api;
+
+use App\Controller\AppController;
+use App\Controller\Traits\ResponseTrait;
+use App\Model\Table\UsersTable;
 
 /**
  * Employees Controller
@@ -11,6 +15,7 @@ namespace App\Controller;
  */
 class EmployeesController extends AppController
 {
+    use ResponseTrait;
     /**
      * Index method
      *
@@ -19,11 +24,11 @@ class EmployeesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Profiles'],
+            'contain' => ['Profiles','Users.Sectors'],
         ];
         $employees = $this->paginate($this->Employees);
 
-        $this->set(compact('employees'));
+        return $this->setJsonResponse($employees);
     }
 
     /**
@@ -70,22 +75,29 @@ class EmployeesController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit()
     {
-        $employee = $this->Employees->get($id, [
-            'contain' => [],
+        $dataVue = $this->request->getData();
+        $employee = $this->Employees->get($dataVue['empleado_id'], [
+            'contain' => ['Users.Sectors'],
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
-            if ($this->Employees->save($employee)) {
-                $this->Flash->success(__('The employee has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The employee could not be saved. Please, try again.'));
+        $objUser=new UsersTable();
+        $usuario=$employee->user;
+        $dataNueva = [
+            "sector_id" => (int)$dataVue['selectSector']
+        ];
+        $usuario=$objUser->patchEntity($usuario,$dataNueva);
+        if ($objUser->save($usuario)) {
+            return $this->setJsonResponse(
+                [
+                    'message' => true,
+                ],
+            );
         }
-        $profiles = $this->Employees->Profiles->find('list', ['limit' => 200]);
-        $this->set(compact('employee', 'profiles'));
+        $this->Flash->error(__('The replacement could not be saved. Please, try again.'));
+        $this->set(compact('replacement'));
+
+
     }
 
     /**

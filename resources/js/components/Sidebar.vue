@@ -155,6 +155,21 @@
               id="10"
               class="header-menu"
               v-on:click="focus(10)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/empleados">
+                <icon
+                  class="icono"
+                  name="users"
+                  width="25px"
+                  height="25px"
+                />Empleados</router-link
+              >
+            </li>
+            <li
+              id="11"
+              class="header-menu"
+              v-on:click="focus(11)"
               v-if="empleadoEtapa == 2"
             >
               <router-link to="/suggestion/suggestions">
