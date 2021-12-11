@@ -181,9 +181,9 @@
               >
             </li>
             <li
-              id="11"
+              id="12"
               class="header-menu"
-              v-on:click="focus(11)"
+              v-on:click="focus(12)"
               v-if="empleadoEtapa == 1"
             >
               <router-link to="/replacement/new">
