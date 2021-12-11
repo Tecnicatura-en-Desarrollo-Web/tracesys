@@ -15,6 +15,7 @@ use Cake\ORM\Entity;
  * @property string $descripcion
  * @property \Cake\I18n\FrozenTime $fecha_ingreso
  * @property int $cantidad
+ * @property int $valor
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
  */
@@ -33,7 +34,6 @@ class Replacement extends Entity
         'marca' => true,
         'modelo' => true,
         'descripcion' => true,
-        'fecha_ingreso' => true,
         'cantidad' => true,
         'valor' => true,
         'created' => true,

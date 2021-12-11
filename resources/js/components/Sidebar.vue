@@ -180,6 +180,20 @@
                 >Sugerencias</router-link
               >
             </li>
+            <li
+              id="11"
+              class="header-menu"
+              v-on:click="focus(11)"
+              v-if="empleadoEtapa == 1"
+            >
+              <router-link to="/replacement/new">
+                <b-icon-tools
+                  class="icono"
+                  style="width: 25px; height: 25px"
+                ></b-icon-tools
+                >Cargar repuesto</router-link
+              >
+            </li>
           </ul>
         </div>
       </div>
