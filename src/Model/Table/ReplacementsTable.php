@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -63,7 +64,7 @@ class ReplacementsTable extends Table
             ->maxLength('marca', 255)
             ->requirePresence('marca', 'create')
             ->notEmptyString('marca');
-
+        /* 
         $validator
             ->scalar('modelo')
             ->maxLength('modelo', 255)
@@ -77,14 +78,14 @@ class ReplacementsTable extends Table
             ->notEmptyString('descripcion');
 
         $validator
-            ->dateTime('fecha_ingreso')
-            ->requirePresence('fecha_ingreso', 'create')
-            ->notEmptyDateTime('fecha_ingreso');
-
-        $validator
             ->integer('cantidad')
             ->requirePresence('cantidad', 'create')
             ->notEmptyString('cantidad');
+
+        $validator
+            ->integer('valor')
+            ->requirePresence('valor', 'create')
+            ->notEmptyString('valor'); */
 
         return $validator;
     }

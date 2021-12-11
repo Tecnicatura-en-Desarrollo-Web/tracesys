@@ -51,6 +51,7 @@ class ReplacementsController extends AppController
      */
     public function add()
     {
+        $dataVue = $this->request->getData();
         $replacement = $this->Replacements->newEmptyEntity();
         if ($this->request->is('post')) {
             $replacement = $this->Replacements->patchEntity($replacement, $this->request->getData());

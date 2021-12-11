@@ -23,6 +23,7 @@ class ReplacementsFixture extends TestFixture
         'descripcion' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8mb4_general_ci', 'comment' => '', 'precision' => null],
         'fecha_ingreso' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'cantidad' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'valor' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         'modified' => ['type' => 'datetime', 'length' => null, 'precision' => null, 'null' => false, 'default' => null, 'comment' => ''],
         '_constraints' => [
@@ -47,10 +48,11 @@ class ReplacementsFixture extends TestFixture
                 'marca' => 'Lorem ipsum dolor sit amet',
                 'modelo' => 'Lorem ipsum dolor sit amet',
                 'descripcion' => 'Lorem ipsum dolor sit amet',
-                'fecha_ingreso' => '2021-12-07 20:20:20',
+                'fecha_ingreso' => '2021-12-11 15:36:47',
                 'cantidad' => 1,
-                'created' => '2021-12-07 20:20:20',
-                'modified' => '2021-12-07 20:20:20',
+                'valor' => 1,
+                'created' => '2021-12-11 15:36:47',
+                'modified' => '2021-12-11 15:36:47',
             ],
         ];
         parent::init();

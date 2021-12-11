@@ -39,10 +39,6 @@ class CreateReplacements extends AbstractMigration
             'limit' => 255,
             'null' => false,
         ]);
-        $table->addColumn('fecha_ingreso', 'datetime', [
-            'default' => null,
-            'null' => false,
-        ]);
         $table->addColumn('cantidad', 'integer', [
             'default' => null,
             'limit' => 11,
